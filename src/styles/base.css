@@ -21,11 +21,12 @@ body.aui-body,
   background-color: var(--aui-bg-primary);
   color: var(--aui-text-primary);
   line-height: 1.55;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Accessible focus outline (scoped to aui contexts) */
+/* Accessible focus outline (surgical laser indicator) */
 .aui-body a:focus-visible,
 .aui-body button:focus-visible,
 .aui-body input:focus-visible,
@@ -38,7 +39,7 @@ body.aui-body,
 .aui-theme-root select:focus-visible,
 [class*="aui-"]:focus-visible,
 .aui-btn:focus-visible {
-  outline: 2px solid var(--aui-link) !important;
+  outline: 2px solid var(--aui-primary) !important;
   outline-offset: 2px;
   border-radius: var(--aui-radius-sm);
 }
@@ -48,7 +49,7 @@ body.aui-body,
 .aui-theme-root ::selection,
 [class*="aui-"]::selection,
 [class*="aui-"] *::selection {
-  background: color-mix(in srgb, var(--aui-link) 24%, transparent);
+  background: color-mix(in srgb, var(--aui-primary) 18%, transparent);
 }
 
 /* Ensure selected text is crystal clear on dark containers across both light and dark themes */
@@ -66,7 +67,7 @@ pre *::selection,
 .landing-install-pill *::selection,
 [data-theme="dark"] ::selection,
 .dark ::selection {
-  background: rgba(59, 130, 246, 0.45) !important;
+  background: rgba(229, 0, 15, 0.4) !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
@@ -95,6 +96,33 @@ pre *::selection,
 
 .aui-italic {
   font-style: italic;
+}
+
+.aui-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.aui-lead {
+  font-family: var(--aui-font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--aui-text-primary);
+}
+
+.aui-editorial-sub {
+  font-family: var(--aui-font-serif);
+  font-style: italic;
+  color: var(--aui-text-muted);
+}
+
+.aui-index-tag {
+  font-family: var(--aui-font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--aui-primary);
+  text-transform: uppercase;
 }
 
 .aui-text-primary-color {

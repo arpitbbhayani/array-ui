@@ -54,16 +54,16 @@ import {
 } from "../../../dist/react.js";
 
 const sidebarGroups = [
-  { title: "Start", links: [{ label: "Overview", href: "#overview" }, { label: "Install", href: "#install" }] },
+  { title: "[00] Start", links: [{ label: "Overview", href: "#overview" }, { label: "Install", href: "#install" }] },
   {
-    title: "Patterns",
+    title: "[01] Patterns",
     links: [
       { label: "Blog article", href: "#blog-article" },
       { label: "SaaS dashboard", href: "#saas-dashboard" },
     ],
   },
   {
-    title: "Foundations",
+    title: "[02] Foundations",
     links: [
       { label: "Colors", href: "#colors" },
       { label: "Typography", href: "#typography" },
@@ -71,7 +71,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Developer",
+    title: "[03] Developer",
     links: [
       { label: "Ping status", href: "#ping-status" },
       { label: "Diff block", href: "#diff-block" },
@@ -81,7 +81,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Actions",
+    title: "[04] Actions",
     links: [
       { label: "Button", href: "#buttons" },
       { label: "Segmented control", href: "#segmented" },
@@ -91,7 +91,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Forms",
+    title: "[05] Forms",
     links: [
       { label: "Input", href: "#input" },
       { label: "Search box", href: "#searchbox" },
@@ -100,7 +100,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Feedback",
+    title: "[06] Feedback",
     links: [
       { label: "Alert", href: "#alert" },
       { label: "Toast", href: "#toast" },
@@ -111,7 +111,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Data display",
+    title: "[07] Data display",
     links: [
       { label: "Badge", href: "#badge" },
       { label: "Avatar", href: "#avatar" },
@@ -123,7 +123,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Navigation",
+    title: "[08] Navigation",
     links: [
       { label: "Breadcrumbs", href: "#breadcrumbs" },
       { label: "Tabs", href: "#tabs" },
@@ -134,7 +134,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Content",
+    title: "[09] Content",
     links: [
       { label: "Hero", href: "#hero" },
       { label: "Callouts", href: "#callouts" },
@@ -148,7 +148,7 @@ const sidebarGroups = [
     ],
   },
   {
-    title: "Usage",
+    title: "[10] Usage",
     links: [
       { label: "Next.js", href: "#nextjs" },
       { label: "Astro", href: "#astro" },
@@ -190,19 +190,21 @@ const takeaways = [
 
 <Layout>
   <!-- Landing -->
-  <div class="aui-container aui-canvas-grid" style="border-radius: var(--aui-radius-lg); margin-top: 0.5rem;">
+  <div class="aui-container aui-canvas-grid" style="border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-lg); margin-top: 0.5rem; padding: 0.5rem 1.25rem;">
     <section id="overview" class="landing" style="position: relative;">
       <div class="landing-copy">
         <div class="spec-row" style="margin-bottom: 0.85rem;">
           <PingStatus status="operational" label="Array UI · 48 components · v0.1.0" client:load />
-          <Badge variant="light">React</Badge>
-          <Badge variant="light">Astro</Badge>
-          <Badge variant="light">Plain CSS</Badge>
+          <Badge variant="light">[01] React</Badge>
+          <Badge variant="light">[02] Astro</Badge>
+          <Badge variant="light">[03] Plain CSS</Badge>
         </div>
         <h1 class="landing-title">Don’t use this design system.</h1>
         <p class="landing-sub">
-          Seriously. Unless you’re an engineer who actually cares about words, typography, and clean code.
-          Fast, dense components for React, Astro, and plain CSS.
+          <span class="aui-font-serif aui-italic" style="font-size: 1.15rem; display: block; margin-bottom: 0.45rem; color: var(--aui-text-secondary); line-height: 1.45;">
+            "Unless you are an engineer who genuinely cares about words, typography, and mathematical rigor."
+          </span>
+          A dense, systems-first design system with zero-runtime CSS, React, and native Astro primitives.
         </p>
         <div class="spec-row" style="margin-bottom: 1rem;">
           <Button href="#ping-status" variant="primary" size="lg">Explore dev tools</Button>
@@ -239,13 +241,13 @@ const takeaways = [
     </section>
   </div>
 
-  <div class="aui-container">
-    <dl class="meta-strip">
-      <div><dt>version</dt><dd>0.1.0</dd></div>
-      <div><dt>license</dt><dd>MIT</dd></div>
-      <div><dt>components</dt><dd>45</dd></div>
-      <div><dt>runtime deps</dt><dd>0</dd></div>
-      <div><dt>themes</dt><dd>light · dark</dd></div>
+  <div class="aui-container" style="margin-top: 0.65rem;">
+    <dl class="meta-strip aui-corner-ticks">
+      <div><dt>[00] version</dt><dd>0.1.0</dd></div>
+      <div><dt>[01] license</dt><dd>MIT</dd></div>
+      <div><dt>[02] components</dt><dd>48</dd></div>
+      <div><dt>[03] runtime deps</dt><dd>0</dd></div>
+      <div><dt>[04] themes</dt><dd>light · dark</dd></div>
     </dl>
   </div>
 
@@ -297,7 +299,7 @@ const takeaways = [
 
       <main class="docs-main">
         <!-- Install -->
-        <h2 class="docs-h2">Getting started</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[00]</span> Getting started</h2>
         <div class="spec-grid">
           <Specimen id="install" name="Install" description="One package, three ways to consume it.">
             <Terminal title="bash" lines={["npm install github:arpitbbhayani/aui"]} />
@@ -324,7 +326,7 @@ const takeaways = [
         </div>
 
         <!-- Patterns -->
-        <h2 class="docs-h2">Patterns</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[01]</span> Patterns</h2>
         <div class="spec-grid">
           <Specimen id="blog-article" name="Blog article" description="Long-form reading: 17px prose, 70ch measure, restrained links, code, and table of contents." usage={`<div class="aui-layout-sidebar"><article class="aui-prose">…</article><TableOfContents /></div>`} span={2} tone="page">
             <div class="pattern pattern-article">
@@ -413,7 +415,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Foundations -->
-        <h2 class="docs-h2">Foundations</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[02]</span> Foundations</h2>
         <div class="spec-grid">
           <Specimen id="colors" name="Colors" description="Semantic tokens. Toggle the theme to watch them swap." span={2}>
             <div class="swatches">
@@ -466,7 +468,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Developer Primitives -->
-        <h2 class="docs-h2">Developer Primitives</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[03]</span> Developer Primitives</h2>
         <div class="spec-grid">
           <Specimen id="ping-status" name="Ping status" description="Live heartbeat indicator with smooth CSS pulse." usage={`<PingStatus variant="success" label="Operational" />`}>
             <div class="spec-col" style="gap:1rem;">
@@ -556,7 +558,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Actions -->
-        <h2 class="docs-h2">Actions</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[04]</span> Actions</h2>
         <div class="spec-grid">
           <Specimen id="buttons" name="Button" description="High-precision tactile variants, sizes and states." usage={`<Button variant="primary" size="md">Deploy</Button>`} span={2}>
             <div class="spec-label">Variants</div>
@@ -624,7 +626,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Forms -->
-        <h2 class="docs-h2">Forms</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[05]</span> Forms</h2>
         <div class="spec-grid">
           <Specimen id="input" name="Input" description="Label, shortcut hint, helper and error text." usage={`<Input label="Search" shortcut="⌘K" />`}>
             <FormDemo client:load />
@@ -660,7 +662,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Feedback -->
-        <h2 class="docs-h2">Feedback</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[06]</span> Feedback</h2>
         <div class="spec-grid">
           <Specimen id="alert" name="Alert" description="Inline, status-tinted." usage={`<Alert variant="warning" title="…">…</Alert>`} span={2}>
             <div class="spec-grid" style="margin:0;gap:0.5rem 1rem;">
@@ -716,7 +718,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Data display -->
-        <h2 class="docs-h2">Data display</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[07]</span> Data display</h2>
         <div class="spec-grid">
           <Specimen id="badge" name="Badge" description="Tags, statuses and counts." usage={`<Badge variant="green">Healthy</Badge>`}>
             <div class="spec-row">
@@ -803,7 +805,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Navigation -->
-        <h2 class="docs-h2">Navigation</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[08]</span> Navigation</h2>
         <div class="spec-grid">
           <Specimen id="breadcrumbs" name="Breadcrumbs" usage={`<Breadcrumbs items={[{ label, href }]} />`}>
             <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Docs", href: "#" }, { label: "Components", href: "#" }, { label: "Breadcrumbs", active: true }]} />
@@ -855,7 +857,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Content -->
-        <h2 class="docs-h2">Content</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[09]</span> Content</h2>
         <div class="spec-grid">
           <Specimen id="hero" name="Hero" usage={`<Hero title subtitle avatarUrl>…</Hero>`} span={2}>
             <Hero
@@ -963,7 +965,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
         </div>
 
         <!-- Usage -->
-        <h2 class="docs-h2">Usage</h2>
+        <h2 class="docs-h2"><span class="aui-index-tag">[10]</span> Usage & Frameworks</h2>
         <div class="spec-grid">
           <Specimen id="nextjs" name="Next.js / React" description="App Router and Pages Router.">
             <ReactCodeBlock
@@ -1065,14 +1067,25 @@ import Navbar from "aui/astro/Navbar.astro";
 
   .docs-main { padding: 0.75rem 0 1.5rem; min-width: 0; }
   .docs-h2 {
-    margin: 1.6rem 0 0.65rem;
-    padding-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 2rem 0 0.85rem;
+    padding-bottom: 0.45rem;
     border-bottom: 1px solid var(--aui-border-color);
     font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.03em;
   }
   .docs-h2:first-child { margin-top: 0; }
+  .docs-h2 .aui-index-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.12rem 0.45rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+  }
 
   .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.5rem; }
   .swatch { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); }

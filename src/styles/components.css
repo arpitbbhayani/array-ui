@@ -1147,13 +1147,13 @@
 }
 
 .aui-switch input:checked + .aui-switch-track {
-  background-color: var(--aui-text-secondary);
-  border-color: var(--aui-text-secondary);
+  background-color: var(--aui-primary);
+  border-color: var(--aui-primary);
 }
 
 .aui-switch input:checked + .aui-switch-track::before {
   transform: translateX(16px);
-  background-color: var(--aui-bg-primary);
+  background-color: #ffffff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
@@ -1168,7 +1168,7 @@
 
 .aui-switch input:focus-visible + .aui-switch-track {
   outline: none;
-  box-shadow: 0 0 0 2px var(--aui-bg-primary), 0 0 0 4px var(--aui-text-secondary);
+  box-shadow: 0 0 0 2px var(--aui-bg-primary), 0 0 0 4px var(--aui-primary);
 }
 
 .aui-switch input:disabled + .aui-switch-track {
@@ -1218,15 +1218,15 @@
 }
 
 .aui-checkbox:checked {
-  background-color: var(--aui-text-secondary);
-  border-color: var(--aui-text-secondary);
+  background-color: var(--aui-primary);
+  border-color: var(--aui-primary);
 }
 
 .aui-checkbox:checked::before {
   content: "";
   width: 10px;
   height: 10px;
-  background-color: var(--aui-bg-primary);
+  background-color: #ffffff;
   -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.2 8.5L6.2 11.5L12.8 4.5' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
   mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.2 8.5L6.2 11.5L12.8 4.5' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
   animation: aui-check-spring 0.18s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1462,8 +1462,8 @@
 
 .aui-tab-trigger.is-active {
   font-weight: 600;
-  color: var(--aui-text-primary);
-  border-bottom-color: var(--aui-text-primary);
+  color: var(--aui-text-secondary);
+  border-bottom-color: var(--aui-primary);
 }
 
 .aui-tab-panel {
@@ -2531,7 +2531,7 @@ a.aui-badge-interactive:not(.aui-badge-primary):hover {
   color: var(--aui-text-secondary);
   font-weight: 600;
   background: none;
-  border-bottom: 2px solid var(--aui-text-secondary);
+  border-bottom: 2px solid var(--aui-primary);
 }
 
 /* ---- Accordion ----------------------------------------------------------- */
@@ -2800,8 +2800,76 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-sidebar-title { margin: 0 0 0.35rem; padding: 0 0.6rem; font-family: var(--aui-font-sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--aui-text-muted); }
 .aui-sidebar-link { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.28rem 0.6rem; font-size: 0.95rem; color: var(--aui-text-primary) !important; text-decoration: none !important; border-radius: var(--aui-radius-md); transition: background-color 0.12s ease, color 0.12s ease, transform 0.12s cubic-bezier(0.16, 1, 0.3, 1); }
 .aui-sidebar-link:hover { background-color: var(--aui-clickable-hover); color: var(--aui-text-secondary) !important; transform: translateX(2px); }
-.aui-sidebar-link.is-active { font-weight: 600; color: var(--aui-text-secondary) !important; background-color: var(--aui-bg-tertiary); box-shadow: none; }
+.aui-sidebar-link.is-active {
+  font-weight: 600;
+  color: var(--aui-text-secondary) !important;
+  background-color: var(--aui-bg-tertiary);
+  border-left: 2.5px solid var(--aui-primary);
+  border-radius: 0 var(--aui-radius-sm) var(--aui-radius-sm) 0;
+  padding-left: calc(0.6rem - 2.5px);
+  box-shadow: 0 0 12px rgba(229, 0, 15, 0.08);
+}
 @media (max-width: 900px) { .aui-docs { grid-template-columns: minmax(0, 1fr); } .aui-sidebar { display: none; } }
+
+/* ==========================================================================
+   Architectural & Systems Detailing (Corner Ticks & Drafting Accents)
+   ========================================================================== */
+.aui-corner-ticks {
+  position: relative;
+}
+
+.aui-corner-ticks::before,
+.aui-corner-ticks::after {
+  content: "";
+  position: absolute;
+  width: var(--aui-tick-size, 8px);
+  height: var(--aui-tick-size, 8px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.aui-corner-ticks::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--aui-primary);
+  border-left: 2px solid var(--aui-primary);
+}
+
+.aui-corner-ticks::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--aui-primary);
+  border-right: 2px solid var(--aui-primary);
+}
+
+/* Card Gutter Accents */
+.aui-card-gutter {
+  border-left: 3px solid var(--aui-primary) !important;
+}
+
+.aui-card-gutter-amber {
+  border-left: 3px solid var(--aui-accent-yellow) !important;
+}
+
+.aui-card-gutter-muted {
+  border-left: 3px solid var(--aui-border-strong) !important;
+}
+
+/* Shared-border contiguous grid (border-collapse style) */
+.aui-grid-joined {
+  display: grid;
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-lg);
+  overflow: hidden;
+  background-color: var(--aui-border-color);
+  gap: 1px;
+}
+
+.aui-grid-joined > * {
+  background-color: var(--aui-bg-secondary);
+  border-radius: 0 !important;
+  border: none !important;
+}
 
 /* ==========================================================================
    Prose - long-form reading (blog posts, docs, changelogs)
@@ -2862,12 +2930,16 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-stat-card[class*="aui-accent-"] .aui-stat-value { color: var(--aui-accent); }
 
 /* ==========================================================================
-   Visual Utilities: Canvas Grid & Ambient Glow
+   Visual Utilities: Canvas Grid (Architectural Drafting Ledger)
    ========================================================================== */
 .aui-canvas-grid {
   position: relative;
-  background-image: radial-gradient(var(--aui-grid-dot, rgba(0, 0, 0, 0.08)) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, var(--aui-grid-major, rgba(229, 0, 15, 0.05)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--aui-grid-major, rgba(229, 0, 15, 0.05)) 1px, transparent 1px),
+    linear-gradient(to right, var(--aui-grid-color, rgba(60, 50, 40, 0.045)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--aui-grid-color, rgba(60, 50, 40, 0.045)) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
 }
 
 .aui-ambient-glow {

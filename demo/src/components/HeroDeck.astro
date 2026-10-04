@@ -21,13 +21,12 @@ const snippet = `<div class="cluster-card">
 </div>`;
 ---
 
-<div class="aui-hero-deck" id="aui-hero-deck">
+<div class="aui-hero-deck aui-corner-ticks" id="aui-hero-deck">
   {/* Deck Header */}
   <div class="aui-deck-header">
-    <div class="aui-deck-dots">
-      <span class="aui-deck-dot"></span>
-      <span class="aui-deck-dot"></span>
-      <span class="aui-deck-dot"></span>
+    <div class="aui-deck-dots" style="font-family:var(--aui-font-mono);font-size:0.75rem;font-weight:700;color:var(--aui-primary);letter-spacing:0.06em;display:flex;align-items:center;gap:0.35rem;">
+      <span style="display:inline-block;width:6px;height:6px;background-color:var(--aui-primary);border-radius:1px;"></span>
+      <span>[00]//SYS_CANVAS</span>
     </div>
     <div class="aui-deck-tabs">
       <button type="button" class="aui-deck-tab is-active" id="hero-tab-preview" data-deck-tab="preview">
