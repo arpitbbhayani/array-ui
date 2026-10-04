@@ -1,0 +1,79 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  action?: string;
+  placeholder?: string;
+  buttonText?: string;
+  linkedinUrl?: string;
+  substackUrl?: string;
+  className?: string;
+}
+
+const {
+  title = "Stay in the loop",
+  description = "No-fluff engineering essays, database teardowns, and system design insights delivered straight to your inbox.",
+  action,
+  placeholder = "Enter your email address...",
+  buttonText = "Subscribe",
+  linkedinUrl,
+  substackUrl,
+  className = "",
+} = Astro.props;
+---
+
+<div class={`aui-newsletter ${className}`}>
+  {title && <h3 class="aui-newsletter-title">{title}</h3>}
+  {description && <p class="aui-newsletter-desc">{description}</p>}
+
+  {
+    action ? (
+      <form action={action} method="POST" class="aui-newsletter-form">
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder={placeholder}
+          class="aui-newsletter-input"
+          aria-label={placeholder}
+        />
+        <Button variant="primary" type="submit">
+          {buttonText}
+        </Button>
+      </form>
+    ) : null
+  }
+
+  <slot />
+
+  {
+    (linkedinUrl || substackUrl) && (
+      <div class="aui-newsletter-buttons">
+        {linkedinUrl && (
+          <Button
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="secondary"
+            size="sm"
+          >
+            Subscribe on LinkedIn &rarr;
+          </Button>
+        )}
+        {substackUrl && (
+          <Button
+            href={substackUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outline"
+            size="sm"
+          >
+            Subscribe on Substack &rarr;
+          </Button>
+        )}
+      </div>
+    )
+  }
+</div>

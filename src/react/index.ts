@@ -44,3 +44,6 @@ export * from "./FileTree/FileTree";
 export * from "./PackageManager/PackageManager";
 export * from "./CommandPalette/CommandPalette";
 export * from "./CoverCard/CoverCard";
+export * from "./TableOfContents/TableOfContents";
+export * from "./SearchBox/SearchBox";
+export * from "./Newsletter/Newsletter";

@@ -1,0 +1,129 @@
+---
+interface Props {
+  placeholder?: string;
+  endpoint?: string;
+  action?: string;
+  name?: string;
+  shortcut?: string;
+  minChars?: number;
+  className?: string;
+  id?: string;
+}
+
+const {
+  placeholder = "Search writings, notes, and topics...",
+  endpoint,
+  action,
+  name = "q",
+  shortcut = "⌘K",
+  minChars = 2,
+  className = "",
+  id = "aui-search-" + Math.random().toString(36).substring(2, 7),
+} = Astro.props;
+---
+
+<div class={`aui-searchbox ${className}`} id={id} data-endpoint={endpoint} data-min-chars={minChars}>
+  <form action={action} method="GET" class="aui-searchbox-form" onsubmit="return false;">
+    <div class="aui-searchbox-field">
+      <span class="aui-searchbox-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+      <input
+        type="search"
+        name={name}
+        class="aui-searchbox-input"
+        placeholder={placeholder}
+        autocomplete="off"
+        spellcheck="false"
+        aria-label={placeholder}
+      />
+      <div class="aui-searchbox-actions">
+        {shortcut && <span class="aui-searchbox-kbd">{shortcut}</span>}
+      </div>
+    </div>
+  </form>
+
+  <ul class="aui-searchbox-results" style="display: none;" role="listbox"></ul>
+  <slot />
+</div>
+
+<script>
+  function initSearchBoxes() {
+    document.querySelectorAll(".aui-searchbox").forEach((box) => {
+      if (box.hasAttribute("data-aui-search-init")) return;
+      box.setAttribute("data-aui-search-init", "true");
+
+      const input = box.querySelector(".aui-searchbox-input") as HTMLInputElement | null;
+      const resultsList = box.querySelector(".aui-searchbox-results") as HTMLUListElement | null;
+      const endpoint = box.getAttribute("data-endpoint");
+      const minChars = parseInt(box.getAttribute("data-min-chars") || "2", 10);
+
+      if (!input || !resultsList) return;
+
+      let debounceTimer: any = null;
+
+      async function performSearch(query: string) {
+        if (!endpoint) return;
+        try {
+          const res = await fetch(endpoint + encodeURIComponent(query));
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : data.resources || data.results || [];
+
+          if (!items || items.length === 0) {
+            resultsList!.innerHTML = `<li class="aui-searchbox-empty">No results found for "${query}"</li>`;
+            resultsList!.style.display = "block";
+            return;
+          }
+
+          resultsList!.innerHTML = items
+            .slice(0, 10)
+            .map(
+              (item: any) => `
+              <li class="aui-searchbox-item">
+                <a href="${item.url || item.href || '#'}" class="aui-searchbox-result-link">
+                  <div class="aui-searchbox-result-title">${item.title || item.name}</div>
+                  ${item.description ? `<div class="aui-searchbox-result-desc">${item.description}</div>` : ""}
+                </a>
+              </li>
+            `
+            )
+            .join("");
+          resultsList!.style.display = "block";
+        } catch (e) {
+          console.error("aui search error", e);
+        }
+      }
+
+      input.addEventListener("input", (e) => {
+        const val = (e.target as HTMLInputElement).value.trim();
+        clearTimeout(debounceTimer);
+
+        if (val.length < minChars) {
+          resultsList.style.display = "none";
+          resultsList.innerHTML = "";
+          return;
+        }
+
+        debounceTimer = setTimeout(() => performSearch(val), 200);
+      });
+
+      // Close on outside click
+      document.addEventListener("click", (e) => {
+        if (!box.contains(e.target as Node)) {
+          resultsList.style.display = "none";
+        }
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSearchBoxes);
+  } else {
+    initSearchBoxes();
+  }
+
+  document.addEventListener("astro:page-load", initSearchBoxes);
+</script>

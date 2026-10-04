@@ -1,0 +1,93 @@
+---
+export interface HeadingItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings?: HeadingItem[];
+  title?: string;
+  minDepth?: number;
+  maxDepth?: number;
+  sticky?: boolean;
+  className?: string;
+}
+
+const {
+  headings = [],
+  title = "On this page",
+  minDepth = 2,
+  maxDepth = 3,
+  sticky = true,
+  className = "",
+} = Astro.props;
+
+const filteredHeadings = headings.filter(
+  (h) => h.depth >= minDepth && h.depth <= maxDepth
+);
+---
+
+{
+  filteredHeadings.length > 0 && (
+    <nav
+      class={`aui-toc ${sticky ? "aui-toc-sticky" : ""} ${className}`}
+      aria-label="Table of contents"
+    >
+      {title && (
+        <p class="aui-toc-title">
+          <span>{title}</span>
+        </p>
+      )}
+      <ul class="aui-toc-list">
+        {filteredHeadings.map((h) => (
+          <li class={`aui-toc-item aui-toc-depth-${h.depth}`}>
+            <a href={`#${h.slug}`} class="aui-toc-link" data-toc-slug={h.slug}>
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  function setupTocHighlight() {
+    const links = document.querySelectorAll(".aui-toc-link");
+    if (!links.length) return;
+
+    const slugs = Array.from(links).map((link) => link.getAttribute("data-toc-slug")).filter(Boolean) as string[];
+    const headings = slugs.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+    if (!headings.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            links.forEach((l) => {
+              if (l.getAttribute("data-toc-slug") === id) {
+                l.classList.add("is-active");
+              } else {
+                l.classList.remove("is-active");
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: "0px 0px -70% 0px", threshold: 0.1 }
+    );
+
+    headings.forEach((el) => observer.observe(el));
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupTocHighlight);
+  } else {
+    setupTocHighlight();
+  }
+
+  document.addEventListener("astro:page-load", setupTocHighlight);
+</script>

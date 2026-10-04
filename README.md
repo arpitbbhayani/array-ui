@@ -464,6 +464,9 @@ Compact, dense building blocks for dashboards and dev tools. Each exists in `aui
 | Terminal | `<Terminal lines={[…]} />` | `Terminal.astro` | `.aui-terminal` |
 | Sidebar | `<Sidebar groups={…} />` | `Sidebar.astro` | `.aui-sidebar` |
 | CoverCard | `<CoverCard title="…" />` | `CoverCard.astro` | `.aui-cover-card` |
+| TableOfContents | `<TableOfContents headings={…} />` | `TableOfContents.astro` | `.aui-toc` |
+| SearchBox | `<SearchBox endpoint="…" />` | `SearchBox.astro` | `.aui-searchbox` |
+| Newsletter | `<Newsletter linkedinUrl="…" />` | `Newsletter.astro` | `.aui-newsletter` |
 
 The base font size is 15px, so every `rem`-based size is compact by default.
 
