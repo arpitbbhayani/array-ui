@@ -33,7 +33,7 @@ export default defineConfig({
       : "";
 
     // Extract @import rules so they remain at the very top of fullBundle (required by CSS specification)
-    const importRegex = /@import\s+[^;]+;/g;
+    const importRegex = /@import\s+[^\n]+;/g;
     const imports = tokensCss.match(importRegex) || [];
     const tokensWithoutImports = tokensCss.replace(importRegex, "").trim();
 
