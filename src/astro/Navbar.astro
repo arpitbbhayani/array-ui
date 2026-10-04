@@ -105,13 +105,18 @@ const currentPath = Astro.url.pathname;
 
 <script>
   function setupNavBurger() {
-    const burger = document.getElementById("aui-nav-burger");
-    const menu = document.getElementById("aui-nav-menu");
-    if (!burger || !menu) return;
+    document.querySelectorAll(".aui-navbar").forEach((navbar) => {
+      const burger = navbar.querySelector(".aui-nav-burger");
+      const menu = navbar.querySelector(".aui-nav-menu");
+      if (!burger || !menu) return;
 
-    burger.addEventListener("click", () => {
-      const isOpen = menu.classList.toggle("is-open");
-      burger.setAttribute("aria-expanded", String(isOpen));
+      if (burger.hasAttribute("data-aui-initialized")) return;
+      burger.setAttribute("data-aui-initialized", "true");
+
+      burger.addEventListener("click", () => {
+        const isOpen = menu.classList.toggle("is-open");
+        burger.setAttribute("aria-expanded", String(isOpen));
+      });
     });
   }
 

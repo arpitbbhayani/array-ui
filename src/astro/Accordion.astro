@@ -52,6 +52,9 @@ const { items = [], className = "" } = Astro.props;
   function setupAccordions() {
     document.querySelectorAll("[data-aui-accordion]").forEach((acc) => {
       acc.querySelectorAll(".aui-accordion-trigger").forEach((btn) => {
+        if (btn.hasAttribute("data-aui-initialized")) return;
+        btn.setAttribute("data-aui-initialized", "true");
+
         btn.addEventListener("click", () => {
           const item = btn.closest(".aui-accordion-item");
           if (!item) return;

@@ -13,17 +13,17 @@
       "require": "./dist/index.cjs"
     },
     "./react": {
-      "types": "./dist/react.d.ts",
+      "types": "./dist/react/index.d.ts",
       "import": "./dist/react.js",
       "require": "./dist/react.cjs"
     },
     "./tokens": {
-      "types": "./dist/tokens.d.ts",
+      "types": "./dist/tokens/index.d.ts",
       "import": "./dist/tokens.js",
       "require": "./dist/tokens.cjs"
     },
     "./tailwind": {
-      "types": "./dist/tailwind.d.ts",
+      "types": "./dist/tailwind/index.d.ts",
       "import": "./dist/tailwind.js",
       "require": "./dist/tailwind.cjs"
     },
@@ -67,15 +67,13 @@
       "optional": true
     }
   },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
   "devDependencies": {
     "@astrojs/react": "^4.2.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "astro": "^5.4.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "tsup": "^8.4.0",
     "typescript": "^5.7.3"
   }

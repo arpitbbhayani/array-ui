@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { ThemeToggle } from "../Theme/ThemeToggle";
 import { MenuIcon, CloseIcon } from "../Icons";

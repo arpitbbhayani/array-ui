@@ -58,6 +58,9 @@ const activeId = defaultTabId || (tabs[0] ? tabs[0].id : "");
     document.querySelectorAll("[data-aui-tabs]").forEach((tabRoot) => {
       const triggers = tabRoot.querySelectorAll(".aui-tab-trigger");
       triggers.forEach((btn) => {
+        if (btn.hasAttribute("data-aui-initialized")) return;
+        btn.setAttribute("data-aui-initialized", "true");
+
         btn.addEventListener("click", () => {
           const targetId = btn.getAttribute("data-tab-target");
           if (!targetId) return;

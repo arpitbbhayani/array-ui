@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { CopyIcon, CheckIcon } from "../Icons";
 import { highlight } from "./highlight";

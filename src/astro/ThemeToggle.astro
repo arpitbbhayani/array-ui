@@ -9,13 +9,12 @@ const { className = "", size = 20 } = Astro.props;
 
 <button
   type="button"
-  id="aui-theme-toggle"
   class={`aui-theme-toggle ${className}`}
   aria-label="Toggle dark mode"
   title="Toggle dark mode"
 >
   <svg
-    id="aui-sun-icon"
+    class="aui-sun-icon"
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
@@ -37,7 +36,7 @@ const { className = "", size = 20 } = Astro.props;
     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
   </svg>
   <svg
-    id="aui-moon-icon"
+    class="aui-moon-icon"
     xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
@@ -55,38 +54,49 @@ const { className = "", size = 20 } = Astro.props;
 
 <script>
   function setupThemeToggle() {
-    const toggle = document.getElementById("aui-theme-toggle");
-    const sunIcon = document.getElementById("aui-sun-icon");
-    const moonIcon = document.getElementById("aui-moon-icon");
+    const toggles = document.querySelectorAll(".aui-theme-toggle");
+    if (!toggles.length) return;
 
-    if (!toggle || !sunIcon || !moonIcon) return;
-
-    function syncIcons(currentTheme: string) {
-      if (currentTheme === "dark") {
-        sunIcon!.style.display = "none";
-        moonIcon!.style.display = "block";
-      } else {
-        sunIcon!.style.display = "block";
-        moonIcon!.style.display = "none";
-      }
+    function syncAllIcons(theme: string) {
+      document.querySelectorAll(".aui-theme-toggle").forEach((toggle) => {
+        const sun = toggle.querySelector(".aui-sun-icon") as HTMLElement | null;
+        const moon = toggle.querySelector(".aui-moon-icon") as HTMLElement | null;
+        if (!sun || !moon) return;
+        if (theme === "dark") {
+          sun.style.display = "none";
+          moon.style.display = "block";
+        } else {
+          sun.style.display = "block";
+          moon.style.display = "none";
+        }
+      });
     }
 
-    const currentTheme = document.documentElement.getAttribute("data-theme") || localStorage.getItem("theme") || "light";
-    syncIcons(currentTheme);
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") ||
+      localStorage.getItem("theme") ||
+      "light";
+    syncAllIcons(currentTheme);
 
-    toggle.addEventListener("click", () => {
-      const activeTheme = document.documentElement.getAttribute("data-theme");
-      const nextTheme = activeTheme === "dark" ? "light" : "dark";
+    toggles.forEach((toggle) => {
+      if (toggle.hasAttribute("data-aui-initialized")) return;
+      toggle.setAttribute("data-aui-initialized", "true");
 
-      document.documentElement.setAttribute("data-theme", nextTheme);
-      if (nextTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      toggle.addEventListener("click", () => {
+        const activeTheme = document.documentElement.getAttribute("data-theme");
+        const nextTheme = activeTheme === "dark" ? "light" : "dark";
 
-      localStorage.setItem("theme", nextTheme);
-      syncIcons(nextTheme);
+        document.documentElement.setAttribute("data-theme", nextTheme);
+        if (nextTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        localStorage.setItem("theme", nextTheme);
+        syncAllIcons(nextTheme);
+        window.dispatchEvent(new CustomEvent("aui:theme-change", { detail: { theme: nextTheme } }));
+      });
     });
   }
 

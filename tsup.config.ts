@@ -13,7 +13,7 @@ export default defineConfig({
   dts: false,
   splitting: false,
   sourcemap: true,
-  clean: false,
+  clean: true,
   external: ["react", "react-dom", "astro"],
   async onSuccess() {
     // Ensure dist directory exists
@@ -31,6 +31,11 @@ export default defineConfig({
     fs.writeFileSync("dist/tokens.css", tokensCss);
     fs.writeFileSync("dist/base.css", baseCss);
     fs.writeFileSync("dist/components.css", componentsCss);
+
+    // Provide root d.ts shims for maximum bundler / TypeScript resolution compatibility
+    fs.writeFileSync("dist/react.d.ts", 'export * from "./react/index";\n');
+    fs.writeFileSync("dist/tokens.d.ts", 'export * from "./tokens/index";\n');
+    fs.writeFileSync("dist/tailwind.d.ts", 'export * from "./tailwind/index";\n');
 
     // Copy Astro files directly to dist/astro so they can be imported as aui/astro/*
     const astroDir = "src/astro";

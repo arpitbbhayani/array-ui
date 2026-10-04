@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { useTheme } from "./ThemeProvider";
 import { SunIcon, MoonIcon } from "../Icons";

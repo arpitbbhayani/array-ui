@@ -1,4 +1,7 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { SearchIcon, Kbd, CloseIcon, ArrowUpRightIcon } from "..";
 
 export interface CommandItem {
@@ -20,7 +23,7 @@ export interface CommandPaletteProps {
 const defaultCommandItems: CommandItem[] = [
   // Actions
   { id: "toggle-theme", label: "Toggle Dark / Light Theme", category: "Actions", shortcut: "⌘D", action: () => {
-    const btn = document.getElementById("aui-theme-toggle");
+    const btn = document.querySelector<HTMLElement>(".aui-theme-toggle, #aui-theme-toggle");
     if (btn) btn.click();
   }},
   { id: "copy-install", label: "Copy Install Command", category: "Actions", action: () => {
@@ -62,9 +65,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   enableGlobalShortcut = true,
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const close = () => {
@@ -134,10 +142,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
-    <div className="aui-command-backdrop" onClick={close}>
+  const paletteNode = (
+    <div className="aui-command-backdrop" onClick={close} role="dialog" aria-modal="true" aria-label="Command palette">
       <div className="aui-command-dialog" onClick={(e) => e.stopPropagation()} onKeyDown={handleKeyDown}>
         <div className="aui-command-input-wrapper">
           <SearchIcon size={18} />
@@ -151,6 +159,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           <button
             type="button"
             onClick={close}
+            aria-label="Close command palette"
             style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--aui-text-muted)" }}
           >
             <CloseIcon size={16} />
@@ -197,4 +206,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== "undefined" ? createPortal(paletteNode, document.body) : null;
 };

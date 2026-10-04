@@ -1,9 +1,12 @@
-*, *::before, *::after {
+/* Scoped box-sizing reset */
+:where(body.aui-body, .aui-theme-root, [class*="aui-"]),
+:where(body.aui-body, .aui-theme-root, [class*="aui-"]) *,
+:where(body.aui-body, .aui-theme-root, [class*="aui-"]) *::before,
+:where(body.aui-body, .aui-theme-root, [class*="aui-"]) *::after {
   box-sizing: border-box;
 }
 
 html {
-  font-size: 15px;
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
   color-scheme: light dark;
@@ -11,6 +14,7 @@ html {
 
 body.aui-body,
 .aui-theme-root {
+  font-size: 15px;
   margin: 0;
   padding: 0;
   font-family: var(--aui-font-sans);
@@ -21,20 +25,29 @@ body.aui-body,
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Accessible focus outline */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible,
+/* Accessible focus outline (scoped to aui contexts) */
+.aui-body a:focus-visible,
+.aui-body button:focus-visible,
+.aui-body input:focus-visible,
+.aui-body textarea:focus-visible,
+.aui-body select:focus-visible,
+.aui-theme-root a:focus-visible,
+.aui-theme-root button:focus-visible,
+.aui-theme-root input:focus-visible,
+.aui-theme-root textarea:focus-visible,
+.aui-theme-root select:focus-visible,
+[class*="aui-"]:focus-visible,
 .aui-btn:focus-visible {
   outline: 2px solid var(--aui-link) !important;
   outline-offset: 2px;
   border-radius: var(--aui-radius-sm);
 }
 
-/* Accessible Selection */
-::selection {
+/* Accessible Selection (scoped to aui contexts) */
+.aui-body ::selection,
+.aui-theme-root ::selection,
+[class*="aui-"]::selection,
+[class*="aui-"] *::selection {
   background: color-mix(in srgb, var(--aui-link) 24%, transparent);
 }
 
