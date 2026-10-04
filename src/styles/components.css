@@ -540,6 +540,8 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  margin-left: auto;
+  margin-right: 0.75rem;
 }
 
 .aui-nav-item {
@@ -595,6 +597,8 @@
     top: 100%;
     left: 0;
     right: 0;
+    margin-left: 0;
+    margin-right: 0;
     flex-direction: column;
     align-items: flex-start;
     background-color: var(--aui-bg-primary);
