@@ -719,10 +719,42 @@
 }
 
 .aui-social-pill:hover {
-  border-color: var(--aui-primary);
-  color: var(--aui-primary) !important;
+  border-color: var(--aui-border-strong);
+  color: var(--aui-text-primary) !important;
   transform: translateY(-2px);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.aui-social-pill[data-platform="youtube"]:hover,
+.aui-social-pill.youtube:hover {
+  border-color: #e5000f;
+  color: #e5000f !important;
+}
+
+.aui-social-pill[data-platform="twitter"]:hover,
+.aui-social-pill[data-platform="x"]:hover,
+.aui-social-pill.twitter:hover,
+.aui-social-pill.x:hover {
+  border-color: #1d9bf0;
+  color: #1d9bf0 !important;
+}
+
+.aui-social-pill[data-platform="linkedin"]:hover,
+.aui-social-pill.linkedin:hover {
+  border-color: #0a66c2;
+  color: #0a66c2 !important;
+}
+
+.aui-social-pill[data-platform="github"]:hover,
+.aui-social-pill.github:hover {
+  border-color: #8b5cf6;
+  color: #8b5cf6 !important;
+}
+
+.aui-social-pill[data-platform="rss"]:hover,
+.aui-social-pill.rss:hover {
+  border-color: #ff8c00;
+  color: #ff8c00 !important;
 }
 
 [data-theme="dark"] .aui-social-pill:hover,
@@ -2359,7 +2391,7 @@ h1, h2, h3, h4,
   font-size: 0.85rem;
 }
 
-.aui-social-pill:hover { background-color: var(--aui-clickable-hover); border-color: var(--aui-border-strong); color: var(--aui-text-secondary) !important; }
+.aui-social-pill:hover { background-color: var(--aui-clickable-hover); border-color: var(--aui-border-strong); }
 
 /* Minimal Badges (Vercel Style) */
 .aui-badge {

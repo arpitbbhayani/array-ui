@@ -79,6 +79,7 @@ export const SocialPill = React.forwardRef<HTMLAnchorElement, SocialPillProps>(
         href={href}
         target={target}
         rel={rel}
+        data-platform={platform}
         className={cn("aui-social-pill", className)}
         {...props}
       >

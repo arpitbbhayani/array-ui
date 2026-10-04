@@ -200,6 +200,13 @@ const componentsConfig = [
     file: "src/registry/aui/ui/empty-state.tsx",
     target: "ui/empty-state.tsx",
   },
+  {
+    name: "footer",
+    title: "Footer",
+    description: "Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.",
+    file: "src/registry/aui/ui/footer.tsx",
+    target: "ui/footer.tsx",
+  },
 ];
 
 export async function buildRegistry() {

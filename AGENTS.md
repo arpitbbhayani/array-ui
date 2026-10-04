@@ -256,6 +256,23 @@ Minimalist dashed container for empty states and zero-data screens.
 </EmptyState>
 ```
 
+#### 14. `Footer`
+Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.
+```tsx
+<Footer
+  copyright={`© ${new Date().getFullYear()} Arpit Bhayani. Built for curious engineers.`}
+  disclaimer="Masterclasses and educational programs are offered by Relog Deeptech Pvt. Ltd."
+  socialPills={
+    <div style={{ display: "flex", gap: "0.5rem" }}>
+      <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
+      <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
+      <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
+      <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+    </div>
+  }
+/>
+```
+
 ---
 
 ## 4. UI Actions & Layout

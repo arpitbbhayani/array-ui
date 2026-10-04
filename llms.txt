@@ -121,6 +121,10 @@ Teach your AI coding agent the Array UI aesthetic and component APIs by adding t
   Endpoint: `https://ui.arpitbhayani.me/r/empty-state.json`
   Install: `npx shadcn@latest add @aui/empty-state`
 
+- **Footer** (`@aui/footer`): Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.
+  Endpoint: `https://ui.arpitbhayani.me/r/footer.json`
+  Install: `npx shadcn@latest add @aui/footer`
+
 - **Theme Style** (`@aui/aui`): Base CSS variables, typography, and color tokens.
   Endpoint: `https://ui.arpitbhayani.me/r/aui.json`
   Install: `npx shadcn@latest add @aui/aui`

@@ -33,6 +33,7 @@ import CoverCard from "../../../src/astro/CoverCard.astro";
 import TableOfContents from "../../../src/astro/TableOfContents.astro";
 import SearchBox from "../../../src/astro/SearchBox.astro";
 import Newsletter from "../../../src/astro/Newsletter.astro";
+import Footer from "../../../src/astro/Footer.astro";
 
 import {
   CodeBlock as ReactCodeBlock,
@@ -154,6 +155,7 @@ const sidebarGroups = [
       { label: "Cover card (og:image)", href: "#cover-card" },
       { label: "Course card", href: "#course" },
       { label: "Social pill", href: "#social" },
+      { label: "Footer", href: "#footer" },
       { label: "Divider", href: "#divider" },
     ],
   },
@@ -1228,6 +1230,30 @@ page.apply(record)      // safe to do lazily`}</code></pre>
                 theme="dark"
                 pattern="dots"
               />
+            </div>
+          </Specimen>
+
+          <Specimen
+            id="footer"
+            name="Footer"
+            description="Editorial 4-column engineering directory with category link hints, highlighted courses, legal registration disclaimer, and brand-accented social pills."
+            usage={`<Footer copyright="© 2026 Arpit Bhayani. Built for curious engineers." disclaimer="Masterclasses and educational programs are offered by Relog Deeptech Pvt. Ltd.">\n  <div slot="socials" class="aui-social-pill-group">\n    <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />\n    <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />\n    <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />\n    <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />\n    <SocialPill platform="rss" href="/rss.xml" />\n  </div>\n</Footer>`}
+            span={2}
+            shadcnName="footer"
+          >
+            <div style="border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); overflow: hidden; width: 100%;">
+              <Footer
+                copyright="© 2026 Arpit Bhayani. Built for curious engineers."
+                disclaimer="Masterclasses and educational programs are offered by Relog Deeptech Pvt. Ltd. 203, Sagar Apartment, Camp Road, Mangilal Plot, Amravati, Maharashtra, 444602 · GSTIN: 27AALCR5165R1ZF"
+              >
+                <div slot="socials" class="aui-social-pill-group">
+                  <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
+                  <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
+                  <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
+                  <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+                  <SocialPill platform="rss" href="/rss.xml" />
+                </div>
+              </Footer>
             </div>
           </Specimen>
         </div>

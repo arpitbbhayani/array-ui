@@ -34,6 +34,7 @@ const displayLabel = label || defaultLabels[platform] || "";
   target="_blank"
   rel="noopener noreferrer"
   class={`aui-social-pill ${className}`}
+  data-platform={platform}
   {...rest}
 >
   <slot name="icon">
