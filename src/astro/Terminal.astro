@@ -1,0 +1,22 @@
+---
+type Line = string | { text: string; kind?: "cmd" | "out" | "ok" | "err" };
+interface Props {
+  title?: string;
+  lines: Line[];
+  className?: string;
+}
+const { title = "bash", lines, className = "" } = Astro.props;
+const norm = lines.map((l) => (typeof l === "string" ? { text: l, kind: "cmd" } : { kind: "cmd", ...l }));
+---
+
+<div class={`aui-terminal ${className}`}>
+  <div class="aui-terminal-bar">
+    <span class="aui-terminal-dot"></span>
+    <span class="aui-terminal-dot"></span>
+    <span class="aui-terminal-dot"></span>
+    <span class="aui-terminal-title">{title}</span>
+  </div>
+  <div class="aui-terminal-body">
+    {norm.map((l) => <span class={`aui-terminal-line aui-terminal-${l.kind}`}>{l.text}</span>)}
+  </div>
+</div>

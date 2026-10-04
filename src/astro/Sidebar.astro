@@ -1,0 +1,31 @@
+---
+interface Link {
+  label: string;
+  href: string;
+  active?: boolean;
+  badge?: string;
+}
+interface Group {
+  title?: string;
+  links: Link[];
+}
+interface Props {
+  groups: Group[];
+  className?: string;
+}
+const { groups, className = "" } = Astro.props;
+---
+
+<nav class={`aui-sidebar ${className}`} aria-label="Sidebar">
+  {groups.map((g) => (
+    <div class="aui-sidebar-group">
+      {g.title && <p class="aui-sidebar-title">{g.title}</p>}
+      {g.links.map((l) => (
+        <a href={l.href} class={`aui-sidebar-link ${l.active ? "is-active" : ""}`}>
+          <span>{l.label}</span>
+          {l.badge && <span class="aui-badge">{l.badge}</span>}
+        </a>
+      ))}
+    </div>
+  ))}
+</nav>

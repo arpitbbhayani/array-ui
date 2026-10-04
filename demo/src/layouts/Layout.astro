@@ -2,6 +2,7 @@
 import ThemeScript from "../../../src/astro/ThemeScript.astro";
 import Navbar from "../../../src/astro/Navbar.astro";
 import Footer from "../../../src/astro/Footer.astro";
+import Kbd from "../../../src/astro/Kbd.astro";
 import "../../../dist/styles.css";
 
 interface Props {
@@ -10,16 +11,15 @@ interface Props {
 }
 
 const {
-  title = "aui — Design System for Astro, Next.js & Beyond",
-  description = "A clean, typography-first design system with light and dark mode inspired by arpitbhayani.me",
+  title = "aui — dense, developer-first design system",
+  description = "Compact light and dark UI components for React, Astro and plain CSS.",
 } = Astro.props;
 
 const navLinks = [
   { label: "Overview", href: "#overview" },
-  { label: "Tokens", href: "#tokens" },
-  { label: "Components", href: "#components" },
-  { label: "Usage (Next.js)", href: "#nextjs" },
-  { label: "Usage (Astro)", href: "#astro" },
+  { label: "Foundations", href: "#colors" },
+  { label: "Components", href: "#buttons" },
+  { label: "Usage", href: "#install" },
 ];
 ---
 
@@ -30,23 +30,20 @@ const navLinks = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23fa0000'/><text x='16' y='22' font-family='sans-serif' font-size='18' font-weight='bold' text-anchor='middle' fill='white'>A</text></svg>" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e5000f'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='800' text-anchor='middle' fill='white'>a</text></svg>" />
     <ThemeScript />
   </head>
   <body class="aui-body">
     <Navbar brandName="aui" links={navLinks}>
-      <div slot="actions" style="margin-right: 0.5rem;">
-        <span class="aui-badge aui-badge-primary">v1.0.0</span>
+      <div slot="actions" style="display:flex;align-items:center;gap:0.6rem;margin-right:0.25rem;">
+        <span class="aui-badge aui-badge-light">v1.0.0</span>
+        <a class="aui-btn aui-btn-secondary aui-btn-sm" href="https://github.com/arpitbbhayani/aui" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </Navbar>
-
-    <main class="aui-container" style="padding-top: 2rem; padding-bottom: 4rem;">
-      <slot />
-    </main>
-
+    <slot />
     <Footer
-      copyright="aui — MIT Licensed. Built for all Arpit Bhayani projects & any modern web app."
-      disclaimer="aui is an open design system inspired by arpitbhayani.me. It provides drop-in CSS tokens, React components, and native Astro components for seamless cross-framework reusability."
+      copyright="aui — MIT licensed."
+      disclaimer="aui is an open design system inspired by arpitbhayani.me. Drop-in CSS tokens, React components and native Astro components."
     />
   </body>
 </html>

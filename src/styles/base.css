@@ -3,8 +3,9 @@
 }
 
 html {
+  font-size: 15px;
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4.5rem;
   color-scheme: light dark;
 }
 
@@ -15,8 +16,7 @@ body.aui-body,
   font-family: var(--aui-font-sans);
   background-color: var(--aui-bg-primary);
   color: var(--aui-text-primary);
-  line-height: 1.6;
-  font-feature-settings: "cv11", "ss01";
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -28,13 +28,13 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 .aui-btn:focus-visible {
-  outline: 2px solid var(--aui-primary) !important;
-  outline-offset: 3px;
+  outline: 2px solid var(--aui-link) !important;
+  outline-offset: 2px;
   border-radius: var(--aui-radius-sm);
 }
 
 ::selection {
-  background: var(--aui-primary-ring);
+  background: color-mix(in srgb, var(--aui-link) 24%, transparent);
   color: var(--aui-text-secondary);
 }
 
@@ -81,18 +81,6 @@ select:focus-visible,
   color: var(--aui-text-muted);
 }
 
-/* Links */
-.aui-link {
-  color: var(--aui-link);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.aui-link:hover {
-  text-decoration: underline;
-  color: var(--aui-link-hover);
-}
-
 /* Code & Pre */
 pre.aui-pre {
   background-color: var(--aui-pre-bg) !important;
@@ -115,17 +103,4 @@ code.aui-code {
   padding: 0.15em 0.4em;
   border-radius: 5px;
   border: 1px solid var(--aui-border-light);
-}
-
-/* Unclassed links inherit theme link colours */
-body.aui-body a:not([class]),
-.aui-theme-root a:not([class]) {
-  color: var(--aui-link);
-  text-underline-offset: 3px;
-  transition: color 0.15s ease;
-}
-
-body.aui-body a:not([class]):hover,
-.aui-theme-root a:not([class]):hover {
-  color: var(--aui-link-hover);
 }

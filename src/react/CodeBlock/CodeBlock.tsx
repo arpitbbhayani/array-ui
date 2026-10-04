@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { CopyIcon, CheckIcon } from "../Icons";
+import { highlight } from "./highlight";
 
 export interface CodeBlockProps {
   code: string;
   language?: string;
   filename?: string;
+  /** Syntax-colour the snippet (default true). */
+  highlight?: boolean;
   className?: string;
 }
 
@@ -12,6 +15,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   code,
   language = "bash",
   filename,
+  highlight: shouldHighlight = true,
   className = "",
 }) => {
   const [copied, setCopied] = useState(false);
@@ -50,7 +54,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         </button>
       </div>
       <pre className="aui-codeblock-pre aui-pre">
-        <code>{code}</code>
+        <code>{shouldHighlight ? highlight(code) : code}</code>
       </pre>
     </div>
   );

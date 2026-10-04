@@ -1,0 +1,13 @@
+---
+interface Props {
+  content: string;
+  placement?: "top" | "bottom";
+  className?: string;
+}
+const { content, placement = "top", className = "" } = Astro.props;
+---
+
+<span class={`aui-tooltip ${placement === "bottom" ? "aui-tooltip-bottom" : ""} ${className}`}>
+  <slot />
+  <span role="tooltip" class="aui-tooltip-content">{content}</span>
+</span>

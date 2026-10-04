@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Specimen from "../components/Specimen.astro";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo } from "../components/Interactive";
+
+import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
 import Button from "../../../src/astro/Button.astro";
 import Card from "../../../src/astro/Card.astro";
@@ -11,550 +15,886 @@ import Badge from "../../../src/astro/Badge.astro";
 import Breadcrumbs from "../../../src/astro/Breadcrumbs.astro";
 import CourseCard from "../../../src/astro/CourseCard.astro";
 import Newsletter from "../../../src/astro/Newsletter.astro";
-
 import Alert from "../../../src/astro/Alert.astro";
 import StatCard from "../../../src/astro/StatCard.astro";
 import Timeline from "../../../src/astro/Timeline.astro";
 import Accordion from "../../../src/astro/Accordion.astro";
 import Tabs from "../../../src/astro/Tabs.astro";
+import ThemeToggle from "../../../src/astro/ThemeToggle.astro";
+import Kbd from "../../../src/astro/Kbd.astro";
+import Tooltip from "../../../src/astro/Tooltip.astro";
+import Progress from "../../../src/astro/Progress.astro";
+import Spinner from "../../../src/astro/Spinner.astro";
+import Divider from "../../../src/astro/Divider.astro";
+import EmptyState from "../../../src/astro/EmptyState.astro";
+import Terminal from "../../../src/astro/Terminal.astro";
+import Toast from "../../../src/astro/Toast.astro";
 
-// Also import React components to verify dual-engine support!
 import {
   PricingCard as ReactPricingCard,
-  ThemeToggle as ReactThemeToggle,
   CodeBlock as ReactCodeBlock,
-  Tabs as ReactTabs,
-  Input as ReactInput,
-  Switch as ReactSwitch,
-  Checkbox as ReactCheckbox,
+  Skeleton,
+  Avatar,
+  AvatarGroup,
+  Switch,
+  Checkbox,
+  Select,
+  Textarea,
 } from "../../../dist/react.js";
 
-const breadcrumbItems = [
-  { label: "Home", href: "/" },
-  { label: "Design System", href: "#" },
-  { label: "Components", active: true },
+const sidebarGroups = [
+  { title: "Start", links: [{ label: "Overview", href: "#overview" }, { label: "Install", href: "#install" }] },
+  {
+    title: "Patterns",
+    links: [
+      { label: "Blog article", href: "#blog-article" },
+      { label: "SaaS dashboard", href: "#saas-dashboard" },
+    ],
+  },
+  {
+    title: "Foundations",
+    links: [
+      { label: "Colors", href: "#colors" },
+      { label: "Typography", href: "#typography" },
+      { label: "Radius & elevation", href: "#elevation" },
+    ],
+  },
+  {
+    title: "Actions",
+    links: [
+      { label: "Button", href: "#buttons" },
+      { label: "Segmented control", href: "#segmented" },
+      { label: "Kbd", href: "#kbd" },
+      { label: "Tooltip", href: "#tooltip" },
+      { label: "Theme toggle", href: "#theme-toggle" },
+    ],
+  },
+  {
+    title: "Forms",
+    links: [
+      { label: "Input", href: "#input" },
+      { label: "Select & textarea", href: "#select" },
+      { label: "Switch & checkbox", href: "#switch" },
+    ],
+  },
+  {
+    title: "Feedback",
+    links: [
+      { label: "Alert", href: "#alert" },
+      { label: "Toast", href: "#toast" },
+      { label: "Progress", href: "#progress" },
+      { label: "Spinner & skeleton", href: "#spinner" },
+      { label: "Empty state", href: "#empty" },
+      { label: "Modal", href: "#modal" },
+    ],
+  },
+  {
+    title: "Data display",
+    links: [
+      { label: "Badge", href: "#badge" },
+      { label: "Avatar", href: "#avatar" },
+      { label: "Stat card", href: "#stat" },
+      { label: "Table", href: "#table" },
+      { label: "Timeline", href: "#timeline" },
+      { label: "Code block", href: "#codeblock" },
+      { label: "Terminal", href: "#terminal" },
+    ],
+  },
+  {
+    title: "Navigation",
+    links: [
+      { label: "Breadcrumbs", href: "#breadcrumbs" },
+      { label: "Tabs", href: "#tabs" },
+      { label: "Pagination", href: "#pagination" },
+      { label: "Accordion", href: "#accordion" },
+      { label: "Sidebar & navbar", href: "#sidebar" },
+    ],
+  },
+  {
+    title: "Content",
+    links: [
+      { label: "Hero", href: "#hero" },
+      { label: "Callouts", href: "#callouts" },
+      { label: "Notice box", href: "#notice" },
+      { label: "Card", href: "#card" },
+      { label: "Course card", href: "#course" },
+      { label: "Pricing card", href: "#pricing" },
+      { label: "Newsletter", href: "#newsletter" },
+      { label: "Social pill", href: "#social" },
+      { label: "Divider", href: "#divider" },
+    ],
+  },
+  {
+    title: "Usage",
+    links: [
+      { label: "Next.js", href: "#nextjs" },
+      { label: "Astro", href: "#astro" },
+      { label: "Plain CSS", href: "#css" },
+    ],
+  },
+];
+
+const colorTokens = [
+  { name: "primary", v: "--aui-primary" },
+  { name: "primary-soft", v: "--aui-primary-soft" },
+  { name: "bg-primary", v: "--aui-bg-primary" },
+  { name: "bg-secondary", v: "--aui-bg-secondary" },
+  { name: "bg-tertiary", v: "--aui-bg-tertiary" },
+  { name: "text-secondary", v: "--aui-text-secondary" },
+  { name: "text-primary", v: "--aui-text-primary" },
+  { name: "text-muted", v: "--aui-text-muted" },
+  { name: "border-color", v: "--aui-border-color" },
+  { name: "border-strong", v: "--aui-border-strong" },
+  { name: "success", v: "--aui-success" },
+  { name: "info", v: "--aui-info" },
+  { name: "warning", v: "--aui-warning" },
+  { name: "danger", v: "--aui-danger" },
+];
+
+const tableRows = [
+  { service: "api-gateway", region: "eu-west-1", p99: "42 ms", status: "Healthy" },
+  { service: "ledger-db", region: "us-east-1", p99: "118 ms", status: "Degraded" },
+  { service: "search-index", region: "ap-south-1", p99: "67 ms", status: "Healthy" },
+  { service: "payments-queue", region: "eu-west-1", p99: "—", status: "Down" },
 ];
 
 const takeaways = [
-  "Zero-dependency core: Works with pure CSS tokens, React, or native Astro.",
-  "Theme-first: Native light and dark modes matching arpitbhayani.me with anti-FOUC support.",
-  "Signature aesthetic: 40px grid background, Assistant + Lora typography, crimson red accents.",
-  "Cross-framework ready: Drop into Next.js App/Pages router, Astro static sites, Remix, or Vite.",
+  "Zero-dependency core: pure CSS tokens, React, or native Astro.",
+  "Theme-first: light and dark with anti-FOUC script.",
+  "Dense by default: 15px base, compact controls, tight rhythm.",
 ];
 ---
 
-<Layout title="aui — Design System Showcase">
-  <!-- Hero Section -->
-  <section id="overview">
-    <Hero
-      title="aui design system"
-      subtitle="engineering, databases, and systems. always building."
-      avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
-      avatarAlt="Arpit Bhayani"
-    >
-      <p>
-        A clean, typography-led design system extracted and refined from
-        <a href="https://arpitbhayani.me" target="_blank" rel="noopener noreferrer">arpitbhayani.me</a>.
-        Built with first-class light and dark themes, pure CSS custom properties, responsive layout primitives,
-        and dual component targets: <strong>React (for Next.js / Remix / Vite)</strong> and
-        <strong>Astro (for zero-JS static sites)</strong>.
-      </p>
-
-      <div slot="actions" style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
-        <Button href="#components" variant="primary">Explore Components ↓</Button>
-        <Button href="#nextjs" variant="secondary">Next.js Setup</Button>
-        <Button href="#astro" variant="outline">Astro Setup</Button>
-      </div>
-
-      <div slot="socials" style="margin-top: 1.5rem;">
-        <div class="aui-social-pill-group">
-          <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
-          <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
-          <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
-          <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
-          <SocialPill platform="rss" href="/rss.xml" />
+<Layout>
+  <!-- Landing -->
+  <div class="aui-container">
+    <section id="overview" class="landing">
+      <div class="landing-copy">
+        <div class="spec-row" style="margin-bottom: 1rem;">
+          <Badge variant="light">v1.0.0</Badge>
+          <Badge variant="light">React</Badge>
+          <Badge variant="light">Astro</Badge>
+          <Badge variant="light">Plain CSS</Badge>
         </div>
-      </div>
-    </Hero>
-  </section>
-
-  <hr class="aui-pricing-divider" style="margin: 3rem 0;" />
-
-  <!-- Breadcrumbs Preview -->
-  <section style="margin-bottom: 2.5rem;">
-    <h3 style="font-family: var(--aui-font-mono); font-size: 0.85rem; text-transform: uppercase; color: var(--aui-text-muted);">
-      Breadcrumbs Navigation
-    </h3>
-    <Breadcrumbs items={breadcrumbItems} />
-  </section>
-
-  <!-- Design Tokens & Theme -->
-  <section id="tokens" style="margin-bottom: 3.5rem;">
-    <h2 style="font-weight: 800; letter-spacing: -0.03em; font-size: 2rem; margin-bottom: 0.5rem;">
-      Theme & Design Tokens
-    </h2>
-    <p style="color: var(--aui-text-muted); margin-bottom: 1.5rem;">
-      CSS variables configured for both Light and Dark themes, accessible via <code>data-theme="dark"</code> or the <code>.dark</code> class.
-    </p>
-
-    <div class="aui-grid aui-grid-cols-4" style="margin-bottom: 2rem;">
-      <Card>
-        <div style="width: 100%; height: 48px; background: var(--aui-primary); border-radius: 6px; margin-bottom: 0.75rem;"></div>
-        <strong style="display: block;">Primary</strong>
-        <code class="aui-code">#e5000f</code>
-      </Card>
-      <Card>
-        <div style="width: 100%; height: 48px; background: var(--aui-bg-primary); border: 1px solid var(--aui-border-color); border-radius: 6px; margin-bottom: 0.75rem;"></div>
-        <strong style="display: block;">Background Primary</strong>
-        <code class="aui-code">var(--aui-bg-primary)</code>
-      </Card>
-      <Card>
-        <div style="width: 100%; height: 48px; background: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: 6px; margin-bottom: 0.75rem;"></div>
-        <strong style="display: block;">Background Card</strong>
-        <code class="aui-code">var(--aui-bg-secondary)</code>
-      </Card>
-      <Card>
-        <div style="width: 100%; height: 48px; background: var(--aui-accent-yellow); border-radius: 6px; margin-bottom: 0.75rem;"></div>
-        <strong style="display: block;">Maxim Amber</strong>
-        <code class="aui-code">#cc9900</code>
-      </Card>
-    </div>
-  </section>
-
-  <!-- Components -->
-  <section id="components" style="margin-bottom: 3.5rem;">
-    <h2 style="font-weight: 800; letter-spacing: -0.03em; font-size: 2rem; margin-bottom: 0.5rem;">
-      Components
-    </h2>
-    <p style="color: var(--aui-text-muted); margin-bottom: 2rem;">
-      Modular, accessible, and responsive components matching arpitbhayani.me.
-    </p>
-
-    <!-- Buttons -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Buttons</h3>
-      <div class="aui-card" style="padding: 1.5rem;">
-        <div style="margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; color: var(--aui-text-muted);">Variants:</div>
-        <div class="aui-btn-group" style="margin-bottom: 1.5rem;">
-          <Button variant="primary">Primary Button</Button>
-          <Button variant="secondary">Secondary Button</Button>
-          <Button variant="light">Light Button</Button>
-          <Button variant="outline">Outline Button</Button>
-          <Button variant="ghost">Ghost Button</Button>
-          <Button variant="primary" disabled>Disabled</Button>
-        </div>
-
-        <div style="margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; color: var(--aui-text-muted);">Sizes:</div>
-        <div class="aui-btn-group">
-          <Button size="sm" variant="primary">Small</Button>
-          <Button size="md" variant="primary">Medium (Default)</Button>
-          <Button size="lg" variant="primary">Large</Button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Callouts & Maxim -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Editorial Callouts</h3>
-      <Maxim author="Arpit Bhayani" source="Asli Engineering" sourceUrl="https://arpitbhayani.me">
-        "Simplicity is prerequisite for reliability. Complex systems always fail in complex ways."
-      </Maxim>
-
-      <TakeawaysBox title="Key Takeaways" items={takeaways} />
-    </div>
-
-    <!-- Notice Box -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Notice Box</h3>
-      <NoticeBox
-        title="Access presentation decks and notes in"
-        driveUrl="https://drive.google.com"
-        driveLabel="this Google Drive folder"
-      >
-        <p slot="footer" class="aui-notice-footer">
-          Like this tool? Give <a href="https://github.com/arpitbbhayani/deckrun" target="_blank" rel="noopener noreferrer">deckrun on GitHub</a> a star.
+        <h1 class="landing-title">Interface foundations for products and publications.</h1>
+        <p class="landing-sub">
+          Light and dark components for SaaS apps and long-form blogs. Compact where you need density,
+          comfortable where you need to read.
         </p>
-      </NoticeBox>
-    </div>
-
-    <!-- Badges -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Badges & Tags</h3>
-      <div class="aui-card" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
-        <Badge variant="default">System Design</Badge>
-        <Badge variant="primary">Featured</Badge>
-        <Badge variant="dark">Database Internals</Badge>
-        <Badge variant="light">Valkey / Redis</Badge>
-        <Badge href="/blogs" interactive>Clickable Tag →</Badge>
-      </div>
-    </div>
-
-    <!-- Cards & Grid -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Course & Project Cards</h3>
-      <div class="aui-grid aui-grid-cols-2">
-        <CourseCard
-          title="System Design Masterclass"
-          description="A comprehensive, deep-dive masterclass covering distributed consensus, storage engines, sharding, caching strategies, and large-scale architectural trade-offs."
-          href="https://arpitbhayani.me/courses"
-          badge="Live Cohort"
-          tags={["Distributed Systems", "Architecture", "Scaling"]}
-          ctaText="Explore Masterclass →"
-        />
-        <CourseCard
-          title="DiceDB"
-          description="An open-source, in-memory, real-time database with multi-threading, multi-tiering, and query subscriptions, built from scratch in Go."
-          href="https://github.com/DiceDB/Dice"
-          badge="Open Source"
-          tags={["Database", "Golang", "In-Memory"]}
-          ctaText="View on GitHub →"
-        />
-      </div>
-    </div>
-
-    <!-- Pricing Card (Rendered via React component to verify integration) -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Pricing Card (React Island)</h3>
-      <div style="max-width: 580px; margin: 0 auto;">
-        <ReactPricingCard
-          title="System Design Fellowship"
-          duration="8 Weeks"
-          cohortDate="Starts Next Month"
-          cohortTimings="Saturdays & Sundays, 7:00 PM IST"
-          benefits={[
-            "Live interactive weekend classes with real-time Q&A",
-            "Exclusive access to lifetime recordings and presentation decks",
-            "Real-world architecture design teardowns and mock interviews",
-            "Private Discord community access with 1-on-1 mentorship",
-          ]}
-          valueProposition={[
-            "Certificate of completion verified on LinkedIn",
-            "Hands-on architectural capstone project reviewed by staff engineers",
-            "Direct referral opportunities to top product companies",
-          ]}
-          priceInr="₹29,999"
-          priceUsd="$420"
-          ctaText="Enroll in Fellowship →"
-          ctaHref="https://arpitbhayani.me"
-          note="Discounted early-bird pricing. Corporate sponsorships and reimbursements accepted."
-          client:load
-        />
-      </div>
-    </div>
-
-    <!-- Stat Cards / Metrics -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Metrics & Stats</h3>
-      <div class="aui-grid aui-grid-cols-4">
-        <StatCard value="250+" label="YouTube Videos" description="Deep-dive systems engineering" />
-        <StatCard value="100+" label="Essays & Blogs" description="Production architecture teardowns" />
-        <StatCard value="40k+" label="Subscribers" description="Curious engineers reading weekly" />
-        <StatCard value="< 1ms" label="px0.ai Boot" description="Sub-millisecond code inspection" />
-      </div>
-    </div>
-
-    <!-- Form Inputs & Controls -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Form Controls & Inputs</h3>
-      <div class="aui-card">
-        <div class="aui-grid aui-grid-cols-2">
-          <div>
-            <ReactInput
-              label="Search Query"
-              placeholder="Search databases, notes, algorithms..."
-              shortcut="⌘K"
-              helperText="Press ⌘K anytime to open search"
-              client:load
-            />
-            <ReactInput
-              label="Your Email"
-              type="email"
-              placeholder="arpit@example.com"
-              client:load
-            />
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 1rem; justify-content: center;">
-            <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
-              <ReactSwitch label="Dark Mode Sync" defaultChecked client:load />
-              <ReactSwitch label="Auto-scroll TOC" client:load />
-            </div>
-            <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
-              <ReactCheckbox label="System Design" defaultChecked client:load />
-              <ReactCheckbox label="Database Internals" defaultChecked client:load />
-              <ReactCheckbox label="Distributed Consensus" client:load />
-            </div>
-          </div>
+        <div class="spec-row" style="margin-bottom: 1.25rem;">
+          <Button href="#buttons" variant="primary" size="lg">Browse components</Button>
+          <Button href="#blog-article" variant="secondary" size="lg">See patterns</Button>
         </div>
+        <p class="landing-hint">
+          Toggle theme with <Kbd keys={["⌘", "D"]} /> or the button in the header.
+        </p>
       </div>
-    </div>
 
-    <!-- CodeBlock with Copy Button -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Code Block (with 1-Click Copy)</h3>
-      <ReactCodeBlock
-        language="bash"
-        code="npx deckrun system-design-consensus.md"
-        client:load
-      />
-      <ReactCodeBlock
-        language="typescript"
-        filename="distributed-lock.ts"
-        code={`import { Redis } from 'ioredis';
-
-async function acquireLock(key: string, ttlMs: number): Promise<boolean> {
-  const result = await redis.set(key, 'locked', 'PX', ttlMs, 'NX');
-  return result === 'OK';
-}`}
-        client:load
-      />
-    </div>
-
-    <!-- Tabs -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Tabs</h3>
-      <div class="aui-card">
-        <Tabs
-          tabs={[
-            {
-              id: "nextjs",
-              label: "Next.js",
-              content: "<p>In Next.js App Router, import from <code>aui/react</code> directly:</p><pre class=\"aui-pre\"><code>import { Button, Card } from 'aui/react';</code></pre>",
-            },
-            {
-              id: "astro",
-              label: "Astro",
-              content: "<p>In Astro, use 0kb JS native components from <code>aui/astro</code>:</p><pre class=\"aui-pre\"><code>import Button from 'aui/astro/Button.astro';</code></pre>",
-            },
-            {
-              id: "css",
-              label: "Plain HTML / CSS",
-              content: "<p>Include <code>aui/styles.css</code> and use class names:</p><pre class=\"aui-pre\"><code>&lt;button class=\"aui-btn aui-btn-primary\"&gt;Action&lt;/button&gt;</code></pre>",
-            },
+      <div class="landing-preview">
+        <Terminal
+          title="~/my-app"
+          lines={[
+            "npm install github:arpitbbhayani/aui",
+            { text: "added 1 package in 2s", kind: "out" },
+            "echo \"import 'aui/styles.css'\" >> src/main.ts",
+            { text: "✓ ready — 43 components, light + dark, 0 runtime deps", kind: "ok" },
           ]}
         />
       </div>
-    </div>
+    </section>
+  </div>
 
-    <!-- Accordion -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Accordion (Syllabus & FAQs)</h3>
-      <Accordion
-        items={[
-          {
-            id: "q1",
-            title: "What prerequisites are needed for the masterclass?",
-            content: "A solid working knowledge of any backend programming language and basic data structures. We build distributed primitives from first principles.",
-          },
-          {
-            id: "q2",
-            title: "Will I receive access to presentation decks and session recordings?",
-            content: "Yes, all cohort members get lifetime access to GoodNotes files, PDFs, Markdown decks compatible with deckrun, and video recordings.",
-          },
-          {
-            id: "q3",
-            title: "Can I get my enrollment reimbursed by my employer?",
-            content: "Yes, many attendees have their tuition reimbursed under their company learning and development stipend. Invoices with GST are provided.",
-          },
-        ]}
-      />
-    </div>
+  <div class="aui-container">
+    <dl class="meta-strip">
+      <div><dt>version</dt><dd>1.0.0</dd></div>
+      <div><dt>license</dt><dd>MIT</dd></div>
+      <div><dt>components</dt><dd>43</dd></div>
+      <div><dt>runtime deps</dt><dd>0</dd></div>
+      <div><dt>themes</dt><dd>light · dark</dd></div>
+    </dl>
+  </div>
 
-    <!-- Alerts / Notifications -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Alerts & Contextual Notices</h3>
-      <Alert variant="info" title="System Design Cohort">
-        Applications for the upcoming weekend cohort close in 3 days. Seats are filled on a rolling basis.
-      </Alert>
-      <Alert variant="success" title="Payment Verified">
-        Your registration has been confirmed. Check your email for Discord community invite.
-      </Alert>
-      <Alert variant="warning" title="Prerequisite Checklist">
-        Ensure Docker and Go 1.22+ are installed before module 2 on storage engines.
-      </Alert>
-      <Alert variant="error" title="Capacity Limit Reached">
-        This batch is currently sold out. Join the waitlist for the next cohort.
-      </Alert>
-    </div>
+  <div class="aui-container">
+    <div class="aui-docs">
+      <Sidebar groups={sidebarGroups} />
 
-    <!-- Responsive Table -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Comparison Table</h3>
-      <div class="aui-table-wrapper">
-        <table class="aui-table">
-          <thead>
-            <tr>
-              <th>Feature / Component</th>
-              <th>aui React</th>
-              <th>aui Astro</th>
-              <th>aui CSS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Target Environment</strong></td>
-              <td>Next.js, Remix, Vite</td>
-              <td>Astro Pages</td>
-              <td>Any Framework / HTML</td>
-            </tr>
-            <tr>
-              <td><strong>Client JS Payload</strong></td>
-              <td>Tree-shakeable</td>
-              <td>0 KB JS (Static)</td>
-              <td>0 KB JS</td>
-            </tr>
-            <tr>
-              <td><strong>Light & Dark Themes</strong></td>
-              <td>Full Context API</td>
-              <td>data-theme / script</td>
-              <td>CSS Custom Properties</td>
-            </tr>
-            <tr>
-              <td><strong>TypeScript Support</strong></td>
-              <td>First-class .d.ts</td>
-              <td>Type checked</td>
-              <td>N/A</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <main class="docs-main">
+        <!-- Install -->
+        <h2 class="docs-h2">Getting started</h2>
+        <div class="spec-grid">
+          <Specimen id="install" name="Install" description="One package, three ways to consume it.">
+            <Terminal title="bash" lines={["npm install github:arpitbbhayani/aui"]} />
+            <div class="spec-row">
+              <Badge variant="light">aui/styles.css</Badge>
+              <Badge variant="light">aui/react</Badge>
+              <Badge variant="light">aui/astro/*</Badge>
+              <Badge variant="light">aui/tokens</Badge>
+              <Badge variant="light">aui/tailwind</Badge>
+            </div>
+          </Specimen>
+          <Specimen id="theme-note" name="Theming" description="Attribute- or class-driven.">
+            <Terminal
+              title="html"
+              lines={[
+                { text: '<html data-theme="dark">', kind: "out" },
+                { text: '<html class="dark">', kind: "out" },
+              ]}
+            />
+            <p style="margin:0;font-size:0.93rem;color:var(--aui-text-muted);">
+              All colors resolve through <code class="aui-code">--aui-*</code> custom properties, so any component re-themes instantly.
+            </p>
+          </Specimen>
+        </div>
 
-    <!-- Career Timeline -->
-    <div style="margin-bottom: 3rem;">
-      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Timeline</h3>
-      <Timeline
-        events={[
-          {
-            date: "2024 — Present",
-            title: "Principal Engineer II at Razorpay",
-            body: "Leading Agent Studio at the intersection of Data & Applied AI, Customer Data Platform, and Merchant Developer Experience.",
-          },
-          {
-            date: "2024",
-            title: "Co-founded Profile.fyi (Acquired by Mercor)",
-            body: "Built developer profile platform later acquired by Mercor.",
-          },
-          {
-            date: "2021 — 2024",
-            title: "Staff Engineer at Google",
-            body: "Worked on GCP Memorystore and GCP Dataproc infrastructure.",
-          },
-          {
-            date: "2018 — 2021",
-            title: "Director of Engineering at Unacademy",
-            body: "Built and scaled Search, Site Reliability Engineering (SRE), and Data Engineering teams from 0 to 1.",
-          },
-        ]}
-      />
-    </div>
+        <!-- Patterns -->
+        <h2 class="docs-h2">Patterns</h2>
+        <div class="spec-grid">
+          <Specimen id="blog-article" name="Blog article" description="Long-form reading: 17px prose, 70ch measure, restrained links and code." usage={`<article class="aui-prose">…</article>`} span={2} tone="page">
+            <div class="pattern pattern-article">
+              <Breadcrumbs items={[{ label: "Blog", href: "#" }, { label: "Databases", href: "#" }, { label: "Write-ahead logging", active: true }]} />
+              <article class="aui-prose">
+                <h1>Why every database writes before it writes</h1>
+                <div class="aui-prose-meta">
+                  <Avatar size="sm" fallback="AB" />
+                  <span><strong style="color:var(--aui-text-secondary)">Arpit Bhayani</strong></span>
+                  <span>·</span><span>Oct 4, 2026</span><span>·</span><span>9 min read</span>
+                  <Badge>Databases</Badge><Badge>Internals</Badge>
+                </div>
+                <p>
+                  A write-ahead log is the simplest idea in storage engineering and the one most systems get subtly wrong.
+                  Before a change touches a data page, the intent is appended to a sequential file, so a crash can be
+                  replayed instead of repaired by hand.
+                </p>
+                <h2>The contract</h2>
+                <p>
+                  The rule has two halves: a page may only be flushed once its log record is durable, and a commit is only
+                  acknowledged after the log is synced. Everything else, including <code>fsync</code> batching and
+                  <a href="#blog-article">group commit</a>, is an optimisation of those two sentences.
+                </p>
+                <blockquote><p>Durability is not a property of the disk. It is a property of the order in which you wait.</p></blockquote>
+                <pre><code>{`wal.append(record)      // sequential, cheap
+wal.sync()              // the only expensive call
+page.apply(record)      // safe to do lazily`}</code></pre>
+                <h3>What to measure</h3>
+                <ul>
+                  <li>Sync latency at p50, p99 and p99.9, not just the mean.</li>
+                  <li>Bytes written per transaction, to spot log amplification.</li>
+                  <li>Recovery time after an unclean shutdown.</li>
+                </ul>
+              </article>
+            </div>
+          </Specimen>
 
-    <!-- Newsletter -->
-    <div style="margin-bottom: 3rem;">
-      <Card>
-        <Newsletter
-          avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
-          title="Asli Engineering Newsletter"
-          subtitle="Deep dives into systems and database internals"
-          statsText="Read by 40,000+ curious engineers"
-          description="Every Sunday morning, get practical, production-tested essays on backend architecture, caching pitfalls, consensus protocols, and real-world system trade-offs."
-        />
-      </Card>
-    </div>
-  </section>
+          <Specimen id="saas-dashboard" name="SaaS dashboard" description="Dense, scannable product UI: toolbar, key metrics, status table, inline alert." usage={`<StatCard /> <table class="aui-table"> <Alert />`} span={2} tone="page">
+            <div class="pattern pattern-app">
+              <div class="app-toolbar">
+                <div>
+                  <h2 class="app-title">Services</h2>
+                  <p class="app-sub">Production · last 24 hours</p>
+                </div>
+                <div class="spec-row">
+                  <div class="aui-segmented">
+                    <button class="aui-segmented-item is-active" type="button">24h</button>
+                    <button class="aui-segmented-item" type="button">7d</button>
+                    <button class="aui-segmented-item" type="button">30d</button>
+                  </div>
+                  <Button variant="secondary" size="sm">Export</Button>
+                  <Button variant="primary" size="sm">New service</Button>
+                </div>
+              </div>
+              <div class="aui-grid aui-grid-cols-4" style="gap:0.75rem;margin-bottom:1rem;">
+                <StatCard value="99.98%" label="Uptime" description="rolling 30 days" />
+                <StatCard value="42 ms" label="p99 latency" description="eu-west-1" />
+                <StatCard value="1.2M" label="Requests / min" description="peak today" />
+                <StatCard value="3" label="Open incidents" description="1 critical" />
+              </div>
+              <Alert variant="warning" title="Replica lag above threshold">ledger-db in us-east-1 is 240 ms behind the primary. Writes are unaffected.</Alert>
+              <div class="aui-table-wrapper">
+                <table class="aui-table">
+                  <thead><tr><th>Service</th><th>Region</th><th>p99</th><th>Status</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>api-gateway</strong></td><td>eu-west-1</td><td>42 ms</td><td><span class="aui-badge aui-badge-green">Healthy</span></td><td style="text-align:right"><Button variant="ghost" size="sm">Open</Button></td></tr>
+                    <tr><td><strong>ledger-db</strong></td><td>us-east-1</td><td>118 ms</td><td><span class="aui-badge aui-badge-amber">Degraded</span></td><td style="text-align:right"><Button variant="ghost" size="sm">Open</Button></td></tr>
+                    <tr><td><strong>search-index</strong></td><td>ap-south-1</td><td>67 ms</td><td><span class="aui-badge aui-badge-green">Healthy</span></td><td style="text-align:right"><Button variant="ghost" size="sm">Open</Button></td></tr>
+                    <tr><td><strong>payments-queue</strong></td><td>eu-west-1</td><td>—</td><td><span class="aui-badge aui-badge-red">Down</span></td><td style="text-align:right"><Button variant="ghost" size="sm">Open</Button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </Specimen>
+        </div>
 
-  <!-- Usage Guides -->
-  <section id="nextjs" style="margin-bottom: 3.5rem;">
-    <h2 style="font-weight: 800; letter-spacing: -0.03em; font-size: 2rem; margin-bottom: 0.75rem;">
-      How to use in Next.js
-    </h2>
-    <p style="color: var(--aui-text-muted); margin-bottom: 1.25rem;">
-      Works with Next.js App Router (Next.js 13/14/15) and Pages Router out of the box.
-    </p>
+        <!-- Foundations -->
+        <h2 class="docs-h2">Foundations</h2>
+        <div class="spec-grid">
+          <Specimen id="colors" name="Colors" description="Semantic tokens. Toggle the theme to watch them swap." span={2}>
+            <div class="swatches">
+              {colorTokens.map((t) => (
+                <div class="swatch">
+                  <span class="swatch-chip" style={`background: var(${t.v});`}></span>
+                  <div>
+                    <div class="swatch-name">{t.name}</div>
+                    <code class="swatch-var">{t.v}</code>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Specimen>
 
-    <div class="aui-card">
-      <h4 style="font-weight: 700; margin-bottom: 0.5rem;">1. Install from GitHub</h4>
-      <pre class="aui-pre"><code>npm install github:arpitbbhayani/aui</code></pre>
+          <Specimen id="typography" name="Typography" description="Space Grotesk headings, Assistant body, system mono for data.">
+            <div class="spec-col" style="gap:0.4rem;">
+              <div style="font-size:2rem;font-family:var(--aui-font-heading);font-weight:700;letter-spacing:-0.03em;line-height:1.15;color:var(--aui-text-secondary);">Heading 1 · 30</div>
+              <div style="font-family:var(--aui-font-heading);font-size:1.45rem;font-weight:700;letter-spacing:-0.025em;color:var(--aui-text-secondary);">Heading 2 · 22</div>
+              <div style="font-family:var(--aui-font-heading);font-size:1.1rem;font-weight:700;color:var(--aui-text-secondary);">Heading 3 · 16</div>
+              <div>Body · 15 — The quick brown fox jumps over the lazy dog.</div>
+              <div style="font-size:0.86rem;color:var(--aui-text-muted);">Small · 13 — secondary and helper text</div>
+              <div style="font-family:var(--aui-font-mono);font-size:0.9rem;">Mono · 13.5 — SELECT * FROM users;</div>
+              <div style="font-family:var(--aui-font-serif);font-style:italic;font-size:1.1rem;">Lora italic — kept for pull quotes</div>
+            </div>
+          </Specimen>
 
-      <h4 style="font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Import Styles in <code>app/layout.tsx</code></h4>
-      <pre class="aui-pre"><code>// app/layout.tsx
-import 'aui/styles.css';
-import &#123; ThemeProvider, ThemeScript, Navbar, Footer &#125; from 'aui/react';
+          <Specimen id="elevation" name="Radius & elevation" description="Small radii, 1px borders, restrained shadows.">
+            <div class="spec-label">Radius</div>
+            <div class="spec-row" style="margin-bottom:1rem;">
+              {[
+                ["sm · 4", "--aui-radius-sm"],
+                ["md · 8", "--aui-radius-md"],
+                ["lg · 12", "--aui-radius-lg"],
+              ].map(([label, v]) => (
+                <div class="elev" style={`border-radius: var(${v});`}>{label}</div>
+              ))}
+            </div>
+            <div class="spec-label">Shadow</div>
+            <div class="spec-row">
+              {[
+                ["xs", "--aui-shadow-xs"],
+                ["md", "--aui-box-shadow-hover"],
+                ["lg", "--aui-box-shadow-lg"],
+              ].map(([label, v]) => (
+                <div class="elev" style={`box-shadow: var(${v});`}>{label}</div>
+              ))}
+            </div>
+          </Specimen>
+        </div>
 
-export default function RootLayout(&#123; children &#125;: &#123; children: React.ReactNode &#125;) &#123;
+        <!-- Actions -->
+        <h2 class="docs-h2">Actions</h2>
+        <div class="spec-grid">
+          <Specimen id="buttons" name="Button" description="Five variants, three sizes." usage={`<Button variant="primary" size="md">Deploy</Button>`} span={2}>
+            <div class="spec-label">Variants</div>
+            <div class="aui-btn-group" style="margin-bottom:1rem;">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="light">Light</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="primary" disabled>Disabled</Button>
+            </div>
+            <div class="spec-label">Sizes</div>
+            <div class="aui-btn-group">
+              <Button size="sm" variant="primary">Small</Button>
+              <Button size="md" variant="primary">Medium</Button>
+              <Button size="lg" variant="primary">Large</Button>
+              <Button size="sm" variant="secondary"><Spinner size="sm" /> Loading</Button>
+            </div>
+          </Specimen>
+
+          <Specimen id="segmented" name="Segmented control" description="Mutually exclusive view switcher." usage={`<SegmentedControl options={[…]} onChange={setView} />`}>
+            <SegmentedDemo client:load />
+          </Specimen>
+
+          <Specimen id="kbd" name="Kbd" description="Keyboard shortcuts." usage={`<Kbd keys={["⌘", "K"]} />`}>
+            <div class="spec-col">
+              <div>Open command menu <Kbd keys={["⌘", "K"]} /></div>
+              <div>Save <Kbd keys={["Ctrl", "S"]} /> · Close <Kbd>Esc</Kbd></div>
+              <div>Navigate <Kbd keys={["↑", "↓"]} /> then <Kbd>Enter</Kbd></div>
+            </div>
+          </Specimen>
+
+          <Specimen id="tooltip" name="Tooltip" description="CSS-only, shows on hover and focus." usage={`<Tooltip content="Copy to clipboard">…</Tooltip>`}>
+            <div class="spec-row" style="padding-top:1.5rem;">
+              <Tooltip content="Copy to clipboard"><Button variant="secondary" size="sm">Hover me</Button></Tooltip>
+              <Tooltip content="Shown below" placement="bottom"><Button variant="secondary" size="sm">Bottom</Button></Tooltip>
+              <Tooltip content="Keyboard focus works too"><Button variant="ghost" size="sm">Focus me</Button></Tooltip>
+            </div>
+          </Specimen>
+
+          <Specimen id="theme-toggle" name="Theme toggle" description="Persists to localStorage." usage={`<ThemeToggle />`}>
+            <div class="spec-row"><ThemeToggle /><span style="color:var(--aui-text-muted);font-size:0.93rem;">Click to switch light / dark</span></div>
+          </Specimen>
+        </div>
+
+        <!-- Forms -->
+        <h2 class="docs-h2">Forms</h2>
+        <div class="spec-grid">
+          <Specimen id="input" name="Input" description="Label, shortcut hint, helper and error text." usage={`<Input label="Search" shortcut="⌘K" />`}>
+            <FormDemo client:load />
+          </Specimen>
+
+          <Specimen id="select" name="Select & textarea" usage={`<Select label="Region" options={[…]} />`}>
+            <Select
+              label="Region"
+              options={[
+                { label: "eu-west-1 (Ireland)", value: "eu" },
+                { label: "us-east-1 (Virginia)", value: "us" },
+                { label: "ap-south-1 (Mumbai)", value: "ap" },
+              ]}
+            />
+            <Textarea label="Notes" placeholder="Rollout notes…" rows={3} />
+          </Specimen>
+
+          <Specimen id="switch" name="Switch & checkbox" usage={`<Switch label="Auto-deploy" defaultChecked />`} span={2}>
+            <div class="spec-row" style="gap:1.5rem;">
+              <Switch label="Auto-deploy" defaultChecked />
+              <Switch label="Maintenance mode" />
+              <Checkbox label="Run tests" defaultChecked />
+              <Checkbox label="Lint" defaultChecked />
+              <Checkbox label="Type-check" />
+            </div>
+          </Specimen>
+        </div>
+
+        <!-- Feedback -->
+        <h2 class="docs-h2">Feedback</h2>
+        <div class="spec-grid">
+          <Specimen id="alert" name="Alert" description="Inline, status-tinted." usage={`<Alert variant="warning" title="…">…</Alert>`} span={2}>
+            <div class="spec-grid" style="margin:0;gap:0.5rem 1rem;">
+              <Alert variant="info" title="Heads up">Schema migration scheduled for 02:00 UTC.</Alert>
+              <Alert variant="success" title="Deployed">build #4821 is live in all regions.</Alert>
+              <Alert variant="warning" title="Degraded">Replica lag above 200 ms in eu-west-1.</Alert>
+              <Alert variant="error" title="Failed">Health check timed out after 30 s.</Alert>
+            </div>
+          </Specimen>
+
+          <Specimen id="toast" name="Toast" description="Transient, stackable messages." usage={`<Toast variant="success" title="Saved" onClose={…} />`}>
+            <div class="spec-col">
+              <Toast variant="success" title="Deployed to production" description="build #4821 · 38s" />
+              <Toast variant="error" title="Build failed" description="exit code 137 (OOM)" />
+              <ToastDemo client:load />
+            </div>
+          </Specimen>
+
+          <Specimen id="progress" name="Progress" usage={`<Progress value={72} label="Upload" showValue />`}>
+            <div class="spec-col">
+              <Progress value={72} label="Uploading assets" showValue />
+              <Progress value={100} label="Tests passed" showValue variant="success" size="sm" />
+              <Progress value={38} label="Migration" showValue variant="info" />
+              <Progress value={86} label="Disk usage" showValue variant="warning" size="lg" />
+            </div>
+          </Specimen>
+
+          <Specimen id="spinner" name="Spinner & skeleton" description="Loading states." usage={`<Spinner size="lg" />   <Skeleton height={12} />`}>
+            <div class="spec-row" style="margin-bottom:1rem;gap:1rem;">
+              <Spinner size="sm" /><Spinner /><Spinner size="lg" />
+              <span style="color:var(--aui-text-muted);font-size:0.93rem;">Fetching metrics…</span>
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <Skeleton width={40} height={40} circle />
+              <div style="flex:1;display:flex;flex-direction:column;gap:0.45rem;">
+                <Skeleton width="60%" height={12} />
+                <Skeleton height={10} />
+                <Skeleton width="80%" height={10} />
+              </div>
+            </div>
+          </Specimen>
+
+          <Specimen id="modal" name="Modal" description="Esc and backdrop close. Locks scroll." usage={`<Modal isOpen={open} onClose={…} title="…" footer={…} />`}>
+            <ModalDemo client:load />
+          </Specimen>
+
+          <Specimen id="empty" name="Empty state" usage={`<EmptyState title="No deployments" description="…" />`} span={2}>
+            <EmptyState title="No deployments yet" description="Connect a repository to ship your first build.">
+              <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <Button size="sm" variant="primary">Connect repo</Button>
+            </EmptyState>
+          </Specimen>
+        </div>
+
+        <!-- Data display -->
+        <h2 class="docs-h2">Data display</h2>
+        <div class="spec-grid">
+          <Specimen id="badge" name="Badge" description="Tags, statuses and counts." usage={`<Badge variant="green">Healthy</Badge>`}>
+            <div class="spec-row">
+              <Badge>Default</Badge>
+              <Badge variant="primary">Primary</Badge>
+              <Badge variant="dark">Dark</Badge>
+              <Badge variant="light">Light</Badge>
+              <Badge href="#badge" interactive>Link →</Badge>
+            </div>
+            <div class="spec-row" style="margin-top:0.6rem;">
+              <Badge variant="red">red</Badge>
+              <Badge variant="blue">blue</Badge>
+              <Badge variant="violet">violet</Badge>
+              <Badge variant="green">green</Badge>
+              <Badge variant="amber">amber</Badge>
+              <Badge variant="pink">pink</Badge>
+              <Badge variant="cyan">cyan</Badge>
+            </div>
+          </Specimen>
+
+          <Specimen id="avatar" name="Avatar" usage={`<Avatar src="…" size="md" />   <AvatarGroup>…</AvatarGroup>`}>
+            <div class="spec-row" style="gap:1.25rem;">
+              <Avatar size="sm" fallback="AB" />
+              <Avatar size="md" src="https://edge.arpitbhayani.me/img/arpit-6.jpg" alt="Arpit" />
+              <Avatar size="lg" fallback="JS" />
+              <AvatarGroup>
+                <Avatar size="sm" fallback="AB" />
+                <Avatar size="sm" fallback="CD" />
+                <Avatar size="sm" fallback="EF" />
+                <Avatar size="sm" fallback="+4" />
+              </AvatarGroup>
+            </div>
+          </Specimen>
+
+          <Specimen id="stat" name="Stat card" usage={`<StatCard value="99.98%" label="Uptime" />`} span={2}>
+            <div class="aui-grid aui-grid-cols-4" style="gap:0.75rem;">
+              <StatCard value="99.98%" label="Uptime" description="rolling 30 days" />
+              <StatCard value="42 ms" label="p99 latency" description="eu-west-1" />
+              <StatCard value="1.2M" label="Requests / min" description="peak today" />
+              <StatCard value="0" label="Open incidents" description="all clear" />
+            </div>
+          </Specimen>
+
+          <Specimen id="table" name="Table" description="Typed columns; custom renderers." usage={`<Table columns={[…]} data={rows} />`} span={2}>
+            <TableDemo rows={tableRows} />
+          </Specimen>
+
+          <Specimen id="timeline" name="Timeline" usage={`<Timeline events={[{ date, title, body }]} />`}>
+            <Timeline
+              events={[
+                { date: "2024 — now", title: "Principal Engineer II", body: "Agent Studio, data & applied AI." },
+                { date: "2021 — 2024", title: "Staff Engineer, Google", body: "GCP Memorystore and Dataproc." },
+                { date: "2018 — 2021", title: "Director of Eng, Unacademy", body: "Search, SRE and data teams 0→1." },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="codeblock" name="Code block" description="Language label with one-click copy." usage={`<CodeBlock language="ts" filename="lock.ts" code={…} />`}>
+            <ReactCodeBlock
+              language="typescript"
+              filename="lock.ts"
+              code={`async function acquire(key: string, ttl: number) {
+  const ok = await redis.set(key, "1", "PX", ttl, "NX");
+  return ok === "OK";
+}`}
+              client:load
+            />
+          </Specimen>
+
+          <Specimen id="terminal" name="Terminal" description="Commands, output, status lines." usage={`<Terminal title="bash" lines={[…]} />`} span={2}>
+            <Terminal
+              title="~/ledger"
+              lines={[
+                "go test ./... -race",
+                { text: "ok  ledger/store   0.412s", kind: "ok" },
+                { text: "ok  ledger/replica 1.087s", kind: "ok" },
+                { text: "FAIL ledger/queue  panic: send on closed channel", kind: "err" },
+                { text: "exit status 1", kind: "out" },
+              ]}
+            />
+          </Specimen>
+        </div>
+
+        <!-- Navigation -->
+        <h2 class="docs-h2">Navigation</h2>
+        <div class="spec-grid">
+          <Specimen id="breadcrumbs" name="Breadcrumbs" usage={`<Breadcrumbs items={[{ label, href }]} />`}>
+            <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Docs", href: "#" }, { label: "Components", href: "#" }, { label: "Breadcrumbs", active: true }]} />
+          </Specimen>
+
+          <Specimen id="pagination" name="Pagination" usage={`<Pagination currentPage={3} totalPages={7} … />`}>
+            <PaginationDemo client:load />
+          </Specimen>
+
+          <Specimen id="tabs" name="Tabs" description="Underline tabs, keyboard accessible." usage={`<Tabs tabs={[{ id, label, content }]} />`}>
+            <Tabs
+              tabs={[
+                { id: "t-react", label: "React", content: "<p style='margin:0'>Import from <code class='aui-code'>aui/react</code>.</p>" },
+                { id: "t-astro", label: "Astro", content: "<p style='margin:0'>Import from <code class='aui-code'>aui/astro/*.astro</code>.</p>" },
+                { id: "t-css", label: "CSS", content: "<p style='margin:0'>Use <code class='aui-code'>.aui-*</code> classes directly.</p>" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="accordion" name="Accordion" usage={`<Accordion items={[{ id, title, content }]} />`}>
+            <Accordion
+              items={[
+                { id: "a1", title: "Does it need JavaScript?", content: "Astro components and plain CSS ship zero JS. React islands hydrate only where used." },
+                { id: "a2", title: "Can I theme it?", content: "Override any --aui-* custom property, globally or per subtree." },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="sidebar" name="Sidebar & navbar" description="The sidebar on the left and the navbar above are live examples." usage={`<Sidebar groups={[{ title, links }]} />`} span={2}>
+            <div class="spec-row">
+              <Badge variant="light">aui-nav-*</Badge>
+              <Badge variant="light">aui-sidebar-*</Badge>
+              <span style="font-size:0.93rem;color:var(--aui-text-muted);">Sticky, scroll-spy aware, collapses on narrow screens.</span>
+            </div>
+          </Specimen>
+        </div>
+
+        <!-- Content -->
+        <h2 class="docs-h2">Content</h2>
+        <div class="spec-grid">
+          <Specimen id="hero" name="Hero" usage={`<Hero title subtitle avatarUrl>…</Hero>`} span={2}>
+            <Hero
+              title="Hey, I am Arpit"
+              subtitle="engineering, databases, and systems."
+              avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
+              avatarAlt="Arpit Bhayani"
+            >
+              <p>Principal engineer writing about the internals of systems that scale.</p>
+              <div slot="actions" class="aui-btn-group">
+                <Button variant="primary" size="sm">Read essays</Button>
+                <Button variant="secondary" size="sm">Watch videos</Button>
+              </div>
+            </Hero>
+          </Specimen>
+
+          <Specimen id="callouts" name="Callouts" description="Maxim and takeaways." usage={`<Maxim author="…">…</Maxim>   <TakeawaysBox items={[…]} />`}>
+            <Maxim author="Arpit Bhayani" source="Asli Engineering" sourceUrl="https://arpitbhayani.me">
+              Simplicity is a prerequisite for reliability.
+            </Maxim>
+            <TakeawaysBox title="Key takeaways" items={takeaways} />
+          </Specimen>
+
+          <Specimen id="notice" name="Notice box" usage={`<NoticeBox title driveUrl>…</NoticeBox>`}>
+            <NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
+              <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></p>
+            </NoticeBox>
+          </Specimen>
+
+          <Specimen id="card" name="Card" description="Base surface; hover lifts border and shadow." usage={`<Card hoverable>…</Card>`}>
+            <div class="aui-grid aui-grid-cols-2" style="gap:0.75rem;">
+              <Card><strong>Hoverable</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">Border and shadow respond.</p></Card>
+              <Card hoverable={false}><strong>Static</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">No hover effect.</p></Card>
+            </div>
+          </Specimen>
+
+          <Specimen id="social" name="Social pill" usage={`<SocialPill platform="github" href count="7k" />`}>
+            <div class="aui-social-pill-group">
+              <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
+              <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
+              <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
+              <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+              <SocialPill platform="rss" href="/rss.xml" />
+            </div>
+          </Specimen>
+
+          <Specimen id="divider" name="Divider" usage={`<Divider label="or" />`}>
+            <Divider />
+            <Divider label="or continue with" />
+          </Specimen>
+
+          <Specimen id="course" name="Course card" usage={`<CourseCard title description badge tags … />`} span={2}>
+            <div class="aui-grid aui-grid-cols-2" style="gap:0.75rem;">
+              <CourseCard
+                title="System Design Masterclass"
+                description="Consensus, storage engines, sharding, caching and the trade-offs behind large-scale systems."
+                href="https://arpitbhayani.me/courses"
+                badge="Live Cohort"
+                tags={["Distributed", "Architecture"]}
+                ctaText="Explore →"
+              />
+              <CourseCard
+                title="DiceDB"
+                description="Open-source, in-memory, real-time database with query subscriptions, built in Go."
+                href="https://github.com/DiceDB/Dice"
+                badge="Open Source"
+                tags={["Database", "Golang"]}
+                ctaText="View on GitHub →"
+              />
+            </div>
+          </Specimen>
+
+          <Specimen id="pricing" name="Pricing card" usage={`<PricingCard title price benefits … />`}>
+            <ReactPricingCard
+              title="System Design Fellowship"
+              duration="8 Weeks"
+              cohortDate="Starts next month"
+              cohortTimings="Sat & Sun, 7:00 PM IST"
+              benefits={["Live weekend classes", "Lifetime recordings", "Mock interviews", "1-on-1 mentorship"]}
+              valueProposition={["Verified certificate", "Capstone reviewed by staff engineers"]}
+              priceInr="₹29,999"
+              priceUsd="$420"
+              ctaText="Enroll →"
+              ctaHref="https://arpitbhayani.me"
+              note="Early-bird pricing."
+              client:load
+            />
+          </Specimen>
+
+          <Specimen id="newsletter" name="Newsletter" usage={`<Newsletter title subtitle statsText … />`}>
+            <Newsletter
+              avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
+              title="Asli Engineering"
+              subtitle="Systems and database internals"
+              statsText="Read by 40,000+ engineers"
+              description="Practical, production-tested essays every Sunday."
+            />
+          </Specimen>
+        </div>
+
+        <!-- Usage -->
+        <h2 class="docs-h2">Usage</h2>
+        <div class="spec-grid">
+          <Specimen id="nextjs" name="Next.js / React" description="App Router and Pages Router.">
+            <ReactCodeBlock
+              language="tsx"
+              filename="app/layout.tsx"
+              code={`import "aui/styles.css";
+import { ThemeProvider, ThemeScript } from "aui/react";
+
+export default function Root({ children }) {
   return (
-    &lt;html lang="en" suppressHydrationWarning&gt;
-      &lt;head&gt;
-        &lt;ThemeScript /&gt;
-      &lt;/head&gt;
-      &lt;body className="aui-body"&gt;
-        &lt;ThemeProvider defaultTheme="light"&gt;
-          &lt;Navbar brand=&#123;&#123; name: "My App", href: "/" &#125;&#125; /&gt;
-          &lt;main className="aui-container"&gt;&#123;children&#125;&lt;/main&gt;
-          &lt;Footer /&gt;
-        &lt;/ThemeProvider&gt;
-      &lt;/body&gt;
-    &lt;/html&gt;
+    <html lang="en" suppressHydrationWarning>
+      <head><ThemeScript /></head>
+      <body className="aui-body">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
   );
-&#125;</code></pre>
+}`}
+              client:load
+            />
+          </Specimen>
 
-      <h4 style="font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Use Components in Any Page</h4>
-      <pre class="aui-pre"><code>// app/page.tsx
-import &#123; Hero, Button, Card, Maxim, TakeawaysBox, SocialPill &#125; from 'aui/react';
-
-export default function Home() &#123;
-  return (
-    &lt;&gt;
-      &lt;Hero title="Welcome to my Project" subtitle="Powered by aui" /&gt;
-      &lt;Maxim author="Arpit"&gt;"Always building."&lt;/Maxim&gt;
-      &lt;Button variant="primary" href="/explore"&gt;Get Started →&lt;/Button&gt;
-    &lt;/&gt;
-  );
-&#125;</code></pre>
-    </div>
-  </section>
-
-  <section id="astro" style="margin-bottom: 3.5rem;">
-    <h2 style="font-weight: 800; letter-spacing: -0.03em; font-size: 2rem; margin-bottom: 0.75rem;">
-      How to use in Astro
-    </h2>
-    <p style="color: var(--aui-text-muted); margin-bottom: 1.25rem;">
-      Use native <code>.astro</code> components for zero JavaScript client payload, or use React components.
-    </p>
-
-    <div class="aui-card">
-      <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Using Native Astro Components</h4>
-      <pre class="aui-pre"><code>---
-// src/layouts/Layout.astro
-import 'aui/styles.css';
-import ThemeScript from 'aui/astro/ThemeScript.astro';
-import Navbar from 'aui/astro/Navbar.astro';
-import Footer from 'aui/astro/Footer.astro';
+          <Specimen id="astro" name="Astro" description="Zero client JS for native components.">
+            <ReactCodeBlock
+              language="astro"
+              filename="Layout.astro"
+              code={`---
+import "aui/styles.css";
+import ThemeScript from "aui/astro/ThemeScript.astro";
+import Navbar from "aui/astro/Navbar.astro";
 ---
-&lt;html lang="en"&gt;
-  &lt;head&gt;
-    &lt;ThemeScript /&gt;
-  &lt;/head&gt;
-  &lt;body class="aui-body"&gt;
-    &lt;Navbar brandName="Arpit Bhayani" /&gt;
-    &lt;slot /&gt;
-    &lt;Footer /&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<html lang="en">
+  <head><ThemeScript /></head>
+  <body class="aui-body">
+    <Navbar brandName="my app" />
+    <slot />
+  </body>
+</html>`}
+              client:load
+            />
+          </Specimen>
 
-      <h4 style="font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem;">In your pages</h4>
-      <pre class="aui-pre"><code>---
-import Layout from '../layouts/Layout.astro';
-import Hero from 'aui/astro/Hero.astro';
-import Button from 'aui/astro/Button.astro';
-import Maxim from 'aui/astro/Maxim.astro';
-import SocialPill from 'aui/astro/SocialPill.astro';
----
-&lt;Layout&gt;
-  &lt;Hero title="Hey, I am Arpit" avatarUrl="/avatar.jpg"&gt;
-    &lt;p&gt;engineering, databases, and systems.&lt;/p&gt;
-  &lt;/Hero&gt;
-  &lt;Button variant="primary" href="/blogs"&gt;Read Blogs&lt;/Button&gt;
-&lt;/Layout&gt;</code></pre>
+          <Specimen id="css" name="Plain CSS" description="Any framework, or none." span={2}>
+            <ReactCodeBlock
+              language="html"
+              code={`<link rel="stylesheet" href="node_modules/aui/dist/styles.css" />
+<body class="aui-body">
+  <button class="aui-btn aui-btn-primary aui-btn-md">Deploy</button>
+  <span class="aui-badge">beta</span>
+</body>`}
+              client:load
+            />
+          </Specimen>
+        </div>
+      </main>
     </div>
-  </section>
+  </div>
 </Layout>
+
+<style is:global>
+  .landing {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: center;
+    padding: 3.5rem 0 2.5rem;
+  }
+  .landing-title {
+    margin: 0 0 0.9rem;
+    font-size: clamp(2.2rem, 4.4vw, 3.3rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.08;
+  }
+  .landing-sub { margin: 0 0 1.5rem; max-width: 52ch; font-size: 1.15rem; line-height: 1.6; color: var(--aui-text-primary); }
+  .landing-hint { margin: 0; font-size: 0.93rem; color: var(--aui-text-muted); }
+  .landing-preview .aui-terminal { margin: 0; }
+  @media (max-width: 900px) {
+    .landing { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-top: 1.5rem; }
+  }
+
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin: 0 0 0.5rem;
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-lg);
+    overflow: hidden;
+  }
+  .meta-strip > div { padding: 0.7rem 1rem; border-right: 1px solid var(--aui-border-color); }
+  .meta-strip > div:last-child { border-right: none; }
+  .meta-strip dt { font-size: 0.78rem; font-weight: 600; color: var(--aui-text-muted); }
+  .meta-strip dd { margin: 0.1rem 0 0; font-family: var(--aui-font-heading); font-size: 1.1rem; font-weight: 600; color: var(--aui-text-secondary); }
+  @media (max-width: 760px) {
+    .meta-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .meta-strip > div { border-bottom: 1px solid var(--aui-border-color); }
+  }
+
+  .docs-main { padding: 1.5rem 0 2rem; min-width: 0; }
+  .docs-h2 {
+    margin: 2.5rem 0 1.1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--aui-border-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .docs-h2:first-child { margin-top: 0; }
+
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.6rem; }
+  .swatch { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); }
+  .swatch-chip { width: 34px; height: 34px; flex-shrink: 0; border-radius: var(--aui-radius-sm); border: 1px solid var(--aui-border-color); }
+  .swatch-name { font-size: 0.93rem; font-weight: 600; color: var(--aui-text-secondary); line-height: 1.2; }
+  .swatch-var { font-family: var(--aui-font-mono); font-size: 0.75rem; color: var(--aui-text-muted); }
+
+  .elev { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; height: 44px; padding: 0 0.75rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); font-family: var(--aui-font-mono); font-size: 0.8rem; color: var(--aui-text-muted); }
+
+  .pattern { padding: 1.75rem; }
+  .pattern-article { padding: 2rem 2.25rem 2.5rem; }
+  .app-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; }
+  .app-title { margin: 0; font-size: 1.4rem; font-weight: 600; letter-spacing: -0.03em; }
+  .app-sub { margin: 0; font-size: 0.93rem; color: var(--aui-text-muted); }
+</style>
+
+<script>
+  // Scroll-spy for the sidebar
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".aui-sidebar-link"));
+  const map = new Map<string, HTMLAnchorElement>();
+  links.forEach((a) => map.set(a.getAttribute("href")!.slice(1), a));
+
+  const setActive = (id: string) => {
+    links.forEach((a) => a.classList.remove("is-active"));
+    const link = map.get(id);
+    if (link) {
+      link.classList.add("is-active");
+      link.scrollIntoView({ block: "nearest" });
+    }
+  };
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setActive(visible[0].target.id);
+    },
+    { rootMargin: "-10% 0px -75% 0px" }
+  );
+  map.forEach((_, id) => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+
+  // ⌘/Ctrl + D toggles theme
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "d") {
+      e.preventDefault();
+      document.getElementById("aui-theme-toggle")?.click();
+    }
+  });
+</script>

@@ -1,0 +1,9 @@
+---
+interface Props {
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}
+const { size = "md", className = "" } = Astro.props;
+---
+
+<span role="status" aria-label="Loading" class={`aui-spinner ${size !== "md" ? `aui-spinner-${size}` : ""} ${className}`}></span>

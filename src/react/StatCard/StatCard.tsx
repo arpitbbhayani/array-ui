@@ -5,6 +5,7 @@ export interface StatCardProps {
   label: React.ReactNode;
   description?: React.ReactNode;
   trend?: React.ReactNode;
+  accent?: "red" | "blue" | "violet" | "green" | "amber" | "pink" | "cyan";
   className?: string;
 }
 
@@ -13,10 +14,11 @@ export const StatCard: React.FC<StatCardProps> = ({
   label,
   description,
   trend,
+  accent,
   className = "",
 }) => {
   return (
-    <div className={`aui-stat-card ${className}`}>
+    <div className={`aui-stat-card ${accent ? `aui-accent-${accent}` : ""} ${className}`}>
       <div className="aui-stat-value">{value}</div>
       <div className="aui-stat-label">{label}</div>
       {description && <div className="aui-stat-desc">{description}</div>}

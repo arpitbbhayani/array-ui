@@ -40,7 +40,7 @@
   "scripts": {
     "build": "tsup && tsc --emitDeclarationOnly",
     "prepare": "npm run build",
-    "dev": "astro dev --root demo",
+    "dev": "astro dev --root demo --port 6145",
     "demo:build": "astro build --root demo",
     "demo:preview": "astro preview --root demo"
   },

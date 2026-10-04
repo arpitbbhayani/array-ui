@@ -1,0 +1,78 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  description?: string;
+  usage?: string;
+  span?: 1 | 2;
+  /** "page" renders the preview on the page background with no padding (for full patterns). */
+  tone?: "canvas" | "page";
+}
+const { id, name, description, usage, span = 1, tone = "canvas" } = Astro.props;
+---
+
+<section id={id} class:list={["spec", span === 2 && "spec-wide"]}>
+  <header class="spec-head">
+    <h3 class="spec-name">{name}</h3>
+    {description && <p class="spec-desc">{description}</p>}
+  </header>
+  <div class:list={["spec-preview", tone === "page" && "spec-preview-page"]}><slot /></div>
+  {usage && <pre class="spec-usage"><code>{usage}</code></pre>}
+</section>
+
+<style is:global>
+  .spec { min-width: 0; }
+  .spec-head { margin-bottom: 0.5rem; }
+  .spec-name {
+    margin: 0;
+    font-family: var(--aui-font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--aui-text-secondary);
+  }
+  .spec-desc { margin: 0.1rem 0 0; font-size: 0.95rem; color: var(--aui-text-muted); }
+  .spec-preview {
+    padding: 1.25rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-lg);
+  }
+  .spec-preview-page { padding: 0; background-color: var(--aui-bg-primary); overflow: hidden; }
+  .spec-preview:has(+ .spec-usage) { border-radius: var(--aui-radius-lg) var(--aui-radius-lg) 0 0; }
+  .spec-preview > :first-child { margin-top: 0 !important; }
+  .spec-preview > :last-child { margin-bottom: 0 !important; }
+  .spec-usage {
+    margin: 0;
+    padding: 0.55rem 0.9rem;
+    overflow-x: auto;
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    border-top: none;
+    border-radius: 0 0 var(--aui-radius-lg) var(--aui-radius-lg);
+    font-family: var(--aui-font-mono);
+    font-size: 0.82rem;
+    color: var(--aui-text-muted);
+  }
+  .spec-usage code { font-family: inherit; }
+  .spec-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .spec-col { display: flex; flex-direction: column; gap: 0.75rem; }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .spec-grid .spec-wide { grid-column: 1 / -1; }
+  .spec-label {
+    margin: 0 0 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--aui-text-muted);
+  }
+  @media (max-width: 760px) {
+    .spec-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

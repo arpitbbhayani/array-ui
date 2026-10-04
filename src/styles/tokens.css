@@ -1,12 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
   /* Fonts */
-  --aui-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --aui-font-sans: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --aui-font-heading: "Space Grotesk", "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --aui-font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
-  --aui-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --aui-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
   /* Brand */
   --aui-primary: #e5000f;
@@ -15,9 +16,16 @@
   --aui-primary-text: #ffffff;
   --aui-primary-accent: #ff5a64;
   --aui-primary-soft: rgba(229, 0, 15, 0.08);
-  --aui-primary-ring: rgba(229, 0, 15, 0.28);
 
-  /* Accents */
+  /* Accent palette (for tags, charts, status — not used for chrome) */
+  --aui-c-red: #dc2626;
+  --aui-c-blue: #2563eb;
+  --aui-c-violet: #7c3aed;
+  --aui-c-green: #059669;
+  --aui-c-amber: #d97706;
+  --aui-c-pink: #db2777;
+  --aui-c-cyan: #0891b2;
+
   --aui-accent-yellow: #b45309;
   --aui-accent-orange: #ea580c;
   --aui-accent-blue: #2563eb;
@@ -25,21 +33,17 @@
 
   /* Status */
   --aui-info: #2563eb;
-  --aui-info-soft: #eff6ff;
-  --aui-success: #16a34a;
-  --aui-success-soft: #f0fdf4;
+  --aui-success: #059669;
   --aui-warning: #d97706;
-  --aui-warning-soft: #fffbeb;
-  --aui-danger: #e5000f;
-  --aui-danger-soft: #fef2f2;
+  --aui-danger: #dc2626;
 
   /* Radii */
-  --aui-radius-sm: 4px;
-  --aui-radius-md: 8px;
-  --aui-radius-lg: 12px;
-  --aui-radius-xl: 12px;
+  --aui-radius-sm: 3px;
+  --aui-radius-md: 6px;
+  --aui-radius-lg: 8px;
+  --aui-radius-xl: 10px;
   --aui-radius-pill: 9999px;
-  --aui-radius-avatar: 24px;
+  --aui-radius-avatar: 8px;
 
   /* Motion */
   --aui-ease: cubic-bezier(0.2, 0, 0, 1);
@@ -49,80 +53,94 @@
 /* Light (default) */
 :root,
 [data-theme="light"] {
-  --aui-bg-primary: #fafafa;
+  --aui-bg-primary: #ffffff;
   --aui-bg-secondary: #ffffff;
-  --aui-bg-tertiary: #f4f4f5;
-  --aui-bg-glass: rgba(255, 255, 255, 0.92);
-  --aui-text-primary: #3f3f46;
-  --aui-text-secondary: #09090b;
-  --aui-text-muted: #71717a;
-  --aui-border-color: #e4e4e7;
-  --aui-border-light: #f0f0f2;
-  --aui-border-strong: #a1a1aa;
-  --aui-shadow-xs: 0 1px 2px rgba(9, 9, 11, 0.05);
-  --aui-box-shadow: 0 1px 2px rgba(9, 9, 11, 0.05);
-  --aui-box-shadow-hover: 0 4px 12px -2px rgba(9, 9, 11, 0.12);
-  --aui-box-shadow-lg: 0 20px 40px -12px rgba(9, 9, 11, 0.3);
+  --aui-bg-tertiary: #f6f6f7;
+  --aui-bg-glass: rgba(255, 255, 255, 0.88);
+  --aui-text-primary: #3b3b44;
+  --aui-text-secondary: #0b0b0f;
+  --aui-text-muted: #6a6a75;
+  --aui-border-color: #e4e4e8;
+  --aui-border-light: #eeeef1;
+  --aui-border-strong: #cfcfd6;
+  --aui-shadow-xs: 0 1px 2px rgba(11, 11, 15, 0.05);
+  --aui-box-shadow: 0 1px 2px rgba(11, 11, 15, 0.05);
+  --aui-box-shadow-hover: 0 4px 14px -4px rgba(11, 11, 15, 0.14);
+  --aui-box-shadow-lg: 0 20px 40px -12px rgba(11, 11, 15, 0.28);
   --aui-inset-highlight: inset 0 0 0 0 transparent;
-  --aui-clickable-hover: #f4f4f5;
-  --aui-clickable-active: #e4e4e7;
-  --aui-maxim-bg: #fffbeb;
-  --aui-maxim-border: #d97706;
-  --aui-takeaways-bg: #ffffff;
-  --aui-takeaways-border: #e5000f;
+  --aui-clickable-hover: #f4f4f6;
+  --aui-clickable-active: #e9e9ed;
+  --aui-maxim-bg: transparent;
+  --aui-maxim-border: #cfcfd6;
+  --aui-takeaways-bg: #f6f6f7;
+  --aui-takeaways-border: #e4e4e8;
   --aui-grid-color: transparent;
+  --aui-grid-major: transparent;
+  --aui-dot-color: transparent;
   --aui-glow: transparent;
-  --aui-link: #2563eb;
-  --aui-link-hover: #e5000f;
-  --aui-tag-bg: #f4f4f5;
-  --aui-tag-text: #27272a;
-  --aui-tag-border: #e4e4e7;
-  --aui-code-bg: #f4f4f5;
-  --aui-code-text: #18181b;
-  --aui-pre-bg: #111113;
-  --aui-pre-text: #f4f4f5;
+  --aui-link: #1d4ed8;
+  --aui-link-hover: #1e40af;
+  --aui-ring: rgba(37, 99, 235, 0.35);
+  --aui-tag-bg: #f6f6f7;
+  --aui-tag-text: #3b3b44;
+  --aui-tag-border: #e4e4e8;
+  --aui-code-bg: #f3f3f5;
+  --aui-code-text: #1c1c22;
+  --aui-pre-bg: #14141a;
+  --aui-pre-text: #ececf1;
+  --aui-info-soft: #eff4ff;
+  --aui-success-soft: #ecfdf5;
+  --aui-warning-soft: #fffaeb;
+  --aui-danger-soft: #fef2f2;
 }
 
 /* Dark */
 [data-theme="dark"],
 .dark {
-  --aui-bg-primary: #09090b;
-  --aui-bg-secondary: #111113;
-  --aui-bg-tertiary: #18181b;
-  --aui-bg-glass: rgba(9, 9, 11, 0.92);
-  --aui-text-primary: #d4d4d8;
-  --aui-text-secondary: #fafafa;
-  --aui-text-muted: #8b8b94;
-  --aui-border-color: #27272a;
-  --aui-border-light: #1f1f23;
-  --aui-border-strong: #52525b;
-  --aui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --aui-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --aui-box-shadow-hover: 0 6px 16px -4px rgba(0, 0, 0, 0.7);
-  --aui-box-shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.9);
-  --aui-clickable-hover: #1c1c20;
-  --aui-clickable-active: #27272a;
-  --aui-maxim-bg: #1a1608;
-  --aui-maxim-border: #d97706;
-  --aui-takeaways-bg: #111113;
-  --aui-takeaways-border: #ff5a64;
-  --aui-link: #60a5fa;
-  --aui-link-hover: #ff5a64;
-  --aui-tag-bg: #18181b;
-  --aui-tag-text: #e4e4e7;
-  --aui-tag-border: #27272a;
-  --aui-code-bg: #1c1c20;
-  --aui-code-text: #e4e4e7;
-  --aui-pre-bg: #000000;
-  --aui-pre-text: #e4e4e7;
+  --aui-bg-primary: #0c0c0e;
+  --aui-bg-secondary: #131316;
+  --aui-bg-tertiary: #18181c;
+  --aui-bg-glass: rgba(12, 12, 14, 0.85);
+  --aui-text-primary: #cfcfd6;
+  --aui-text-secondary: #fafafb;
+  --aui-text-muted: #9a9aa6;
+  --aui-border-color: #26262c;
+  --aui-border-light: #1e1e23;
+  --aui-border-strong: #3a3a43;
+  --aui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --aui-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --aui-box-shadow-hover: 0 6px 18px -6px rgba(0, 0, 0, 0.7);
+  --aui-box-shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.85);
+  --aui-clickable-hover: #1c1c21;
+  --aui-clickable-active: #26262c;
+  --aui-maxim-bg: transparent;
+  --aui-maxim-border: #3a3a43;
+  --aui-takeaways-bg: #18181c;
+  --aui-takeaways-border: #26262c;
+  --aui-link: #7fb0ff;
+  --aui-link-hover: #a9c9ff;
+  --aui-ring: rgba(127, 176, 255, 0.4);
+  --aui-tag-bg: #18181c;
+  --aui-tag-text: #e4e4e9;
+  --aui-tag-border: #26262c;
+  --aui-code-bg: #1c1c21;
+  --aui-code-text: #e4e4e9;
+  --aui-pre-bg: #08080a;
+  --aui-pre-text: #e4e4e9;
   --aui-primary-soft: rgba(255, 90, 100, 0.12);
-  --aui-primary-ring: rgba(255, 90, 100, 0.35);
-  --aui-info: #60a5fa;
-  --aui-info-soft: rgba(96, 165, 250, 0.1);
-  --aui-success: #4ade80;
-  --aui-success-soft: rgba(74, 222, 128, 0.1);
+  --aui-c-red: #f87171;
+  --aui-c-blue: #7fb0ff;
+  --aui-c-violet: #b9a2ff;
+  --aui-c-green: #34d399;
+  --aui-c-amber: #fbbf24;
+  --aui-c-pink: #f472b6;
+  --aui-c-cyan: #22d3ee;
+  --aui-info: #7fb0ff;
+  --aui-success: #34d399;
   --aui-warning: #fbbf24;
-  --aui-warning-soft: rgba(251, 191, 36, 0.1);
-  --aui-danger: #ff5a64;
-  --aui-danger-soft: rgba(255, 90, 100, 0.1);
+  --aui-danger: #f87171;
+  --aui-info-soft: rgba(127, 176, 255, 0.09);
+  --aui-success-soft: rgba(52, 211, 153, 0.09);
+  --aui-warning-soft: rgba(251, 191, 36, 0.09);
+  --aui-danger-soft: rgba(248, 113, 113, 0.09);
 }

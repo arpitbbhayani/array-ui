@@ -1,0 +1,17 @@
+---
+interface Props {
+  keys?: string[];
+  className?: string;
+}
+const { keys, className = "" } = Astro.props;
+---
+
+{
+  keys && keys.length > 0 ? (
+    <span class={`aui-kbd-group ${className}`}>
+      {keys.map((k) => <kbd class="aui-kbd">{k}</kbd>)}
+    </span>
+  ) : (
+    <kbd class={`aui-kbd ${className}`}><slot /></kbd>
+  )
+}

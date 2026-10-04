@@ -1,0 +1,18 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  variant?: "default" | "success" | "error" | "warning" | "info";
+  className?: string;
+}
+const { title, description, variant = "default", className = "" } = Astro.props;
+const glyph = { default: "i", info: "i", success: "✓", warning: "!", error: "×" }[variant];
+---
+
+<div role="status" class={`aui-toast aui-toast-${variant} ${className}`}>
+  <span class="aui-toast-icon" aria-hidden="true">{glyph}</span>
+  <div class="aui-toast-body">
+    <p class="aui-toast-title">{title}</p>
+    {description && <p class="aui-toast-desc">{description}</p>}
+  </div>
+</div>

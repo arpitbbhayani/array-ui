@@ -3,6 +3,7 @@ interface Props {
   value: string;
   label: string;
   description?: string;
+  accent?: "red" | "blue" | "violet" | "green" | "amber" | "pink" | "cyan";
   className?: string;
 }
 
@@ -10,11 +11,12 @@ const {
   value,
   label,
   description,
+  accent,
   className = "",
 } = Astro.props;
 ---
 
-<div class={`aui-stat-card ${className}`}>
+<div class={`aui-stat-card ${accent ? `aui-accent-${accent}` : ""} ${className}`}>
   <div class="aui-stat-value">{value}</div>
   <div class="aui-stat-label">{label}</div>
   {description && <div class="aui-stat-desc">{description}</div>}

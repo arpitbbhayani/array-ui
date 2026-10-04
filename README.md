@@ -449,3 +449,31 @@ npm run demo:build
 ## License
 
 MIT © [Arpit Bhayani](https://arpitbhayani.me)
+
+## Developer components (new)
+
+Compact, dense building blocks for dashboards and dev tools. Each exists in `aui/react`; the static ones also ship as `aui/astro/*.astro`.
+
+| Component | React | Astro | CSS class |
+| --- | --- | --- | --- |
+| Kbd | `<Kbd keys={["⌘","K"]} />` | `Kbd.astro` | `.aui-kbd` |
+| Tooltip | `<Tooltip content="…">` | `Tooltip.astro` | `.aui-tooltip` |
+| Progress | `<Progress value={72} showValue />` | `Progress.astro` | `.aui-progress` |
+| Spinner | `<Spinner size="lg" />` | `Spinner.astro` | `.aui-spinner` |
+| Divider | `<Divider label="or" />` | `Divider.astro` | `.aui-divider` |
+| EmptyState | `<EmptyState title="…" />` | `EmptyState.astro` | `.aui-empty` |
+| SegmentedControl | `<SegmentedControl options={…} />` | – | `.aui-segmented` |
+| Toast | `<Toast variant="success" title="…" />` | `Toast.astro` | `.aui-toast` |
+| Terminal | `<Terminal lines={[…]} />` | `Terminal.astro` | `.aui-terminal` |
+| Sidebar | `<Sidebar groups={…} />` | `Sidebar.astro` | `.aui-sidebar` |
+
+The base font size is 15px, so every `rem`-based size is compact by default.
+
+## Design principles
+
+- **One border colour**, flat surfaces, minimal shadow. Brand red is reserved for primary actions and the active nav/tab state.
+- **Two contexts, one system.** Use compact components for product UI; wrap long-form content in `.aui-prose` (17px, 70ch measure, generous rhythm) for blogs and docs.
+- Headings use Space Grotesk (`--aui-font-heading`), body is Assistant, code is the system mono stack. Lora is kept for pull quotes.
+- Status colours (`--aui-success`, `--aui-warning`, `--aui-danger`, `--aui-info`) drive alerts and tinted `Badge` variants (`green | amber | red | blue | violet | pink | cyan`).
+- `CodeBlock` syntax-colours snippets (`highlight={false}` to disable). Links are blue and underlined everywhere, including inside prose.
+- The demo's **Patterns** section shows a blog article and a SaaS dashboard built from the same components.

@@ -1,0 +1,15 @@
+---
+interface Props {
+  label?: string;
+  className?: string;
+}
+const { label, className = "" } = Astro.props;
+---
+
+{
+  label ? (
+    <div role="separator" class={`aui-divider-labeled ${className}`}>{label}</div>
+  ) : (
+    <hr class={`aui-divider ${className}`} />
+  )
+}

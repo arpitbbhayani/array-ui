@@ -1,0 +1,15 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  className?: string;
+}
+const { title, description, className = "" } = Astro.props;
+---
+
+<div class={`aui-empty ${className}`}>
+  <span class="aui-empty-icon"><slot name="icon" /></span>
+  <h4 class="aui-empty-title">{title}</h4>
+  {description && <p class="aui-empty-desc">{description}</p>}
+  <slot />
+</div>

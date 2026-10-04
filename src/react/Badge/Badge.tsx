@@ -1,6 +1,17 @@
 import React from "react";
 
-export type BadgeVariant = "default" | "primary" | "dark" | "light";
+export type BadgeVariant =
+  | "default"
+  | "primary"
+  | "dark"
+  | "light"
+  | "red"
+  | "blue"
+  | "violet"
+  | "green"
+  | "amber"
+  | "pink"
+  | "cyan";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
   variant?: BadgeVariant;
