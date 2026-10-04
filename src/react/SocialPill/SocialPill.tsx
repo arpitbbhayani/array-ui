@@ -6,6 +6,7 @@ import {
   GithubIcon,
   RssIcon,
 } from "../Icons";
+import { cn } from "../../utils/cn";
 
 export type SocialPlatform = "youtube" | "twitter" | "x" | "linkedin" | "github" | "rss" | "custom";
 
@@ -53,45 +54,59 @@ const getPlatformDefaultLabel = (platform: SocialPlatform): string => {
   }
 };
 
-export const SocialPill: React.FC<SocialPillProps> = ({
-  platform = "custom",
-  label,
-  count,
-  icon,
-  href,
-  className = "",
-  children,
-  target = "_blank",
-  rel = "noopener noreferrer",
-  ...props
-}) => {
-  const renderedIcon = icon || (platform !== "custom" ? getPlatformIcon(platform) : null);
-  const displayLabel = label || (platform !== "custom" ? getPlatformDefaultLabel(platform) : "");
+export const SocialPill = React.forwardRef<HTMLAnchorElement, SocialPillProps>(
+  (
+    {
+      platform = "custom",
+      label,
+      count,
+      icon,
+      href,
+      className,
+      children,
+      target = "_blank",
+      rel = "noopener noreferrer",
+      ...props
+    },
+    ref
+  ) => {
+    const renderedIcon = icon || (platform !== "custom" ? getPlatformIcon(platform) : null);
+    const displayLabel = label || (platform !== "custom" ? getPlatformDefaultLabel(platform) : "");
 
-  return (
-    <a
-      href={href}
-      target={target}
-      rel={rel}
-      className={`aui-social-pill ${className}`}
-      {...props}
-    >
-      {renderedIcon && <span className="icon">{renderedIcon}</span>}
-      <span>{displayLabel}</span>
-      {count && <span className="aui-text-muted" style={{ fontSize: "0.75rem" }}>({count})</span>}
-      {children}
-    </a>
-  );
-};
+    return (
+      <a
+        ref={ref}
+        href={href}
+        target={target}
+        rel={rel}
+        className={cn("aui-social-pill", className)}
+        {...props}
+      >
+        {renderedIcon && <span className="icon">{renderedIcon}</span>}
+        <span>{displayLabel}</span>
+        {count && (
+          <span className="aui-text-muted" style={{ fontSize: "0.75rem" }}>
+            ({count})
+          </span>
+        )}
+        {children}
+      </a>
+    );
+  }
+);
+SocialPill.displayName = "SocialPill";
 
-export interface SocialPillGroupProps {
+export interface SocialPillGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  className?: string;
 }
 
-export const SocialPillGroup: React.FC<SocialPillGroupProps> = ({
-  children,
-  className = "",
-}) => {
-  return <div className={`aui-social-pill-group ${className}`}>{children}</div>;
-};
+export const SocialPillGroup = React.forwardRef<HTMLDivElement, SocialPillGroupProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <div ref={ref} className={cn("aui-social-pill-group", className)} {...props}>
+        {children}
+      </div>
+    );
+  }
+);
+SocialPillGroup.displayName = "SocialPillGroup";

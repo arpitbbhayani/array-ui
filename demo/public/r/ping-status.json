@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ping-status",
+  "type": "registry:ui",
+  "title": "PingStatus",
+  "description": "Live telemetry pulsing dot indicator with label.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/ping-status.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type PingVariant = \"success\" | \"warning\" | \"danger\" | \"info\" | \"neutral\";\nexport type PingSize = \"sm\" | \"md\" | \"lg\";\n\nexport interface PingStatusProps extends React.HTMLAttributes<HTMLDivElement> {\n  variant?: PingVariant;\n  size?: PingSize;\n  label?: React.ReactNode;\n  pulse?: boolean;\n}\n\nconst variantStyles: Record<PingVariant, { dot: string; ring: string }> = {\n  success: { dot: \"bg-emerald-500\", ring: \"bg-emerald-400\" },\n  warning: { dot: \"bg-amber-500\", ring: \"bg-amber-400\" },\n  danger: { dot: \"bg-red-500\", ring: \"bg-red-400\" },\n  info: { dot: \"bg-blue-500\", ring: \"bg-blue-400\" },\n  neutral: { dot: \"bg-zinc-400\", ring: \"bg-zinc-300\" },\n};\n\nconst sizeStyles: Record<PingSize, { dot: string; wrapper: string }> = {\n  sm: { dot: \"w-1.5 h-1.5\", wrapper: \"w-2.5 h-2.5\" },\n  md: { dot: \"w-2 h-2\", wrapper: \"w-3 h-3\" },\n  lg: { dot: \"w-2.5 h-2.5\", wrapper: \"w-4 h-4\" },\n};\n\nexport function PingStatus({\n  variant = \"success\",\n  size = \"md\",\n  label,\n  pulse = true,\n  className,\n  ...props\n}: PingStatusProps) {\n  const v = variantStyles[variant];\n  const s = sizeStyles[size];\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex items-center gap-2 text-xs font-mono font-medium text-muted-foreground\",\n        className\n      )}\n      {...props}\n    >\n      <span className={cn(\"relative flex items-center justify-center\", s.wrapper)}>\n        {pulse && (\n          <span\n            className={cn(\n              \"absolute inset-0 rounded-full opacity-75 motion-safe:animate-ping\",\n              v.ring\n            )}\n          />\n        )}\n        <span className={cn(\"relative rounded-full\", v.dot, s.dot)} />\n      </span>\n      {label && <span>{label}</span>}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

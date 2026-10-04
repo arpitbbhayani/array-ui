@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "property-grid",
+  "type": "registry:ui",
+  "title": "PropertyGrid",
+  "description": "Key-value metadata inspector with one-click copy functionality.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/property-grid.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PropertyItem {\n  label: string;\n  value: React.ReactNode;\n  copyable?: boolean;\n  copyValue?: string;\n}\n\nexport interface PropertyGridProps extends React.HTMLAttributes<HTMLDivElement> {\n  items: PropertyItem[];\n}\n\nexport function PropertyGrid({ items, className, ...props }: PropertyGridProps) {\n  const [copiedKey, setCopiedKey] = React.useState<string | null>(null);\n\n  const handleCopy = (key: string, val: string) => {\n    navigator.clipboard.writeText(val);\n    setCopiedKey(key);\n    setTimeout(() => setCopiedKey(null), 1800);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border divide-y divide-border bg-card text-card-foreground text-sm overflow-hidden my-4 shadow-xs\",\n        className\n      )}\n      {...props}\n    >\n      {items.map((item, idx) => {\n        const strVal =\n          item.copyValue ?? (typeof item.value === \"string\" ? item.value : undefined);\n        const isCopied = copiedKey === item.label;\n\n        return (\n          <div\n            key={idx}\n            className=\"flex items-center justify-between px-4 py-2.5 hover:bg-muted/40 transition-colors\"\n          >\n            <span className=\"font-mono text-xs text-muted-foreground uppercase tracking-wider\">\n              {item.label}\n            </span>\n            <div className=\"flex items-center gap-2 font-mono text-sm text-foreground\">\n              <span>{item.value}</span>\n              {item.copyable !== false && strVal && (\n                <button\n                  type=\"button\"\n                  className=\"p-1 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer\"\n                  title=\"Copy value\"\n                  onClick={() => handleCopy(item.label, strVal)}\n                >\n                  {isCopied ? (\n                    <span className=\"text-xs text-emerald-500 font-semibold\">Copied</span>\n                  ) : (\n                    <svg\n                      width=\"13\"\n                      height=\"13\"\n                      viewBox=\"0 0 24 24\"\n                      fill=\"none\"\n                      stroke=\"currentColor\"\n                      strokeWidth=\"2\"\n                      strokeLinecap=\"round\"\n                      strokeLinejoin=\"round\"\n                    >\n                      <rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" />\n                      <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />\n                    </svg>\n                  )}\n                </button>\n              )}\n            </div>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { SearchIcon, Kbd, CloseIcon, ArrowUpRightIcon } from "..";
+import { cn } from "../../utils/cn";
 
 export interface CommandItem {
   id: string;
@@ -13,7 +14,7 @@ export interface CommandItem {
   action?: () => void;
 }
 
-export interface CommandPaletteProps {
+export interface CommandPaletteProps extends React.HTMLAttributes<HTMLDivElement> {
   items?: CommandItem[];
   isOpen?: boolean;
   onClose?: () => void;
@@ -58,154 +59,174 @@ const defaultCommandItems: CommandItem[] = [
   { id: "tabs", label: "Tabs", category: "Navigation", href: "#tabs" },
 ];
 
-export const CommandPalette: React.FC<CommandPaletteProps> = ({
-  items = defaultCommandItems,
-  isOpen: controlledOpen,
-  onClose: controlledClose,
-  enableGlobalShortcut = true,
-}) => {
-  const [internalOpen, setInternalOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [query, setQuery] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+export const CommandPalette = React.forwardRef<HTMLDivElement, CommandPaletteProps>(
+  (
+    {
+      items = defaultCommandItems,
+      isOpen: controlledOpen,
+      onClose: controlledClose,
+      enableGlobalShortcut = true,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const [internalOpen, setInternalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [query, setQuery] = useState("");
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+    useEffect(() => {
+      setMounted(true);
+    }, []);
 
-  const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
-  const close = () => {
-    if (controlledClose) controlledClose();
-    setInternalOpen(false);
-    setQuery("");
-  };
+    const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
+    const close = () => {
+      if (controlledClose) controlledClose();
+      setInternalOpen(false);
+      setQuery("");
+    };
 
-  useEffect(() => {
-    if (!enableGlobalShortcut) return;
+    useEffect(() => {
+      if (!enableGlobalShortcut) return;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setInternalOpen((prev) => !prev);
-      } else if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
-        e.preventDefault();
-        setInternalOpen(true);
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          setInternalOpen((prev) => !prev);
+        } else if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
+          e.preventDefault();
+          setInternalOpen(true);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [enableGlobalShortcut]);
+
+    useEffect(() => {
+      if (isOpen) {
+        setTimeout(() => inputRef.current?.focus(), 50);
+      }
+    }, [isOpen]);
+
+    const filteredItems = items.filter(
+      (item) =>
+        item.label.toLowerCase().includes(query.toLowerCase()) ||
+        item.category.toLowerCase().includes(query.toLowerCase())
+    );
+
+    useEffect(() => {
+      setSelectedIndex(0);
+    }, [query]);
+
+    const handleSelect = (item: CommandItem) => {
+      close();
+      if (item.action) {
+        item.action();
+      } else if (item.href) {
+        if (item.href.startsWith("http")) {
+          window.open(item.href, "_blank");
+        } else {
+          window.location.hash = item.href;
+        }
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [enableGlobalShortcut]);
-
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-    }
-  }, [isOpen]);
-
-  const filteredItems = items.filter(
-    (item) =>
-      item.label.toLowerCase().includes(query.toLowerCase()) ||
-      item.category.toLowerCase().includes(query.toLowerCase())
-  );
-
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
-
-  const handleSelect = (item: CommandItem) => {
-    close();
-    if (item.action) {
-      item.action();
-    } else if (item.href) {
-      if (item.href.startsWith("http")) {
-        window.open(item.href, "_blank");
-      } else {
-        window.location.hash = item.href;
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        close();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev + 1) % Math.max(1, filteredItems.length));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev - 1 + filteredItems.length) % Math.max(1, filteredItems.length));
+      } else if (e.key === "Enter" && filteredItems[selectedIndex]) {
+        e.preventDefault();
+        handleSelect(filteredItems[selectedIndex]);
       }
-    }
-  };
+    };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      close();
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % Math.max(1, filteredItems.length));
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev - 1 + filteredItems.length) % Math.max(1, filteredItems.length));
-    } else if (e.key === "Enter" && filteredItems[selectedIndex]) {
-      e.preventDefault();
-      handleSelect(filteredItems[selectedIndex]);
-    }
-  };
+    if (!isOpen || !mounted) return null;
 
-  if (!isOpen || !mounted) return null;
-
-  const paletteNode = (
-    <div className="aui-command-backdrop" onClick={close} role="dialog" aria-modal="true" aria-label="Command palette">
-      <div className="aui-command-dialog" onClick={(e) => e.stopPropagation()} onKeyDown={handleKeyDown}>
-        <div className="aui-command-input-wrapper">
-          <SearchIcon size={18} />
-          <input
-            ref={inputRef}
-            className="aui-command-input"
-            placeholder="Search components, tokens, actions..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close command palette"
-            style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--aui-text-muted)" }}
-          >
-            <CloseIcon size={16} />
-          </button>
-        </div>
-
-        <div className="aui-command-list">
-          {filteredItems.length === 0 ? (
-            <div style={{ padding: "1.5rem", textAlign: "center", color: "var(--aui-text-muted)", fontSize: "0.9rem" }}>
-              No matching results found for "{query}"
-            </div>
-          ) : (
-            filteredItems.map((item, idx) => (
-              <div
-                key={item.id}
-                className={`aui-command-item ${idx === selectedIndex ? "is-selected" : ""}`}
-                onClick={() => handleSelect(item)}
-                onMouseEnter={() => setSelectedIndex(idx)}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <span style={{ fontSize: "0.75rem", color: "var(--aui-text-muted)", textTransform: "uppercase" }}>
-                    {item.category}
-                  </span>
-                  <span>·</span>
-                  <span style={{ fontWeight: 500 }}>{item.label}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  {item.shortcut && <Kbd>{item.shortcut}</Kbd>}
-                  {item.href?.startsWith("http") && <ArrowUpRightIcon size={12} />}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        <div className="aui-command-footer">
-          <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
-            <span><Kbd>↑</Kbd> <Kbd>↓</Kbd> navigate</span>
-            <span><Kbd>↵</Kbd> select</span>
-            <span><Kbd>esc</Kbd> close</span>
+    const paletteNode = (
+      <div
+        ref={ref}
+        className={cn("aui-command-backdrop", className)}
+        onClick={close}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command palette"
+        {...props}
+      >
+        <div className="aui-command-dialog" onClick={(e) => e.stopPropagation()} onKeyDown={handleKeyDown}>
+          <div className="aui-command-input-wrapper">
+            <SearchIcon size={18} />
+            <input
+              ref={inputRef}
+              className="aui-command-input"
+              placeholder="Search components, tokens, actions..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Close command palette"
+              style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--aui-text-muted)" }}
+            >
+              <CloseIcon size={16} />
+            </button>
           </div>
-          <span style={{ color: "var(--aui-primary)", fontWeight: 600 }}>aui</span>
+
+          <div className="aui-command-list">
+            {filteredItems.length === 0 ? (
+              <div style={{ padding: "1.5rem", textAlign: "center", color: "var(--aui-text-muted)", fontSize: "0.9rem" }}>
+                No matching results found for "{query}"
+              </div>
+            ) : (
+              filteredItems.map((item, idx) => (
+                <div
+                  key={item.id}
+                  className={cn(
+                    "aui-command-item",
+                    idx === selectedIndex && "is-selected"
+                  )}
+                  onClick={() => handleSelect(item)}
+                  onMouseEnter={() => setSelectedIndex(idx)}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <span style={{ fontSize: "0.75rem", color: "var(--aui-text-muted)", textTransform: "uppercase" }}>
+                      {item.category}
+                    </span>
+                    <span>·</span>
+                    <span style={{ fontWeight: 500 }}>{item.label}</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    {item.shortcut && <Kbd>{item.shortcut}</Kbd>}
+                    {item.href?.startsWith("http") && <ArrowUpRightIcon size={12} />}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="aui-command-footer">
+            <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+              <span><Kbd>↑</Kbd> <Kbd>↓</Kbd> navigate</span>
+              <span><Kbd>↵</Kbd> select</span>
+              <span><Kbd>esc</Kbd> close</span>
+            </div>
+            <span style={{ color: "var(--aui-primary)", fontWeight: 600 }}>aui</span>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
 
-  return typeof document !== "undefined" ? createPortal(paletteNode, document.body) : null;
-};
+    return typeof document !== "undefined" ? createPortal(paletteNode, document.body) : null;
+  }
+);
+
+CommandPalette.displayName = "CommandPalette";

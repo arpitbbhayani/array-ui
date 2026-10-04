@@ -1,0 +1,123 @@
+# Array UI (aui) - shadcn Registry
+
+> The arpitbhayani.me look as a shadcn registry: paper light & obsidian carbon themes, Plus Jakarta Sans & Lora typography, signature crimson accent (#e5000f), amber maxim callouts, machined telemetry terminals, and systems engineering developer primitives. Components are copied into your app with the shadcn CLI.
+
+## Quick Installation
+
+Add the registry to your `components.json`:
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "registries": {
+    "@aui": "https://ui.arpitbhayani.me/r/{name}.json"
+  }
+}
+```
+
+Install the theme and any components:
+```bash
+# 1. Install theme tokens, CSS variables & typography
+npx shadcn@latest add @aui/aui
+
+# 2. Install any component directly
+npx shadcn@latest add @aui/terminal
+npx shadcn@latest add @aui/diff-block
+npx shadcn@latest add @aui/file-tree
+npx shadcn@latest add @aui/ping-status
+npx shadcn@latest add @aui/property-grid
+npx shadcn@latest add @aui/package-manager
+npx shadcn@latest add @aui/hero
+npx shadcn@latest add @aui/maxim
+npx shadcn@latest add @aui/takeaways-box
+npx shadcn@latest add @aui/course-card
+npx shadcn@latest add @aui/stat-card
+npx shadcn@latest add @aui/social-pill
+```
+
+Or add directly via URL without touching `components.json`:
+```bash
+npx shadcn@latest add https://ui.arpitbhayani.me/r/terminal.json
+```
+
+## AI Coding Agent Setup (Cursor, Claude Code, Windsurf)
+
+Teach your AI coding agent the Array UI aesthetic and component APIs by adding the following prompt to your `.cursorrules`, `AGENTS.md`, or system instructions:
+
+```markdown
+# Design System: Array UI (@aui)
+- Registry URL: https://ui.arpitbhayani.me/r/{name}.json
+- GitHub Repository: github:arpitbbhayani/aui (not on npm registry; install via GitHub or shadcn registry)
+- Style: Editorial engineering aesthetic inspired by arpitbhayani.me.
+- Colors:
+  - Light mode: paper background (#f9f8f5), warm hairline borders (#dfded9), dark carbon text (#2b2a30).
+  - Dark mode: obsidian background (#0a0a0c), crisp dark borders (#24242c), soft white text (#d4d4db).
+  - Accents: Signature crimson (#e5000f) for primary actions; amber (#cc9900) for engineering maxims; emerald (#10b981) for online/ok.
+- Typography:
+  - Headings: Plus Jakarta Sans / Space Grotesk (bold, tight tracking).
+  - Body: Assistant (clean, dense, 15px base size).
+  - Pull quotes & Maxims: Lora italic serif.
+  - Code & Telemetry: Geist Mono / system monospace.
+- Rules:
+  - Keep borders subtle (1px, single color).
+  - Minimal elevation/shadows; use flat tinted card surfaces.
+  - Prefer compact, information-dense components for developer dashboards and tools.
+  - Always use `cn()` from `@/lib/utils` for className composition.
+```
+
+## Available Components:
+- **Terminal** (`@aui/terminal`): Machined telemetry terminal with bash command dots and styled outputs.
+  Endpoint: `https://ui.arpitbhayani.me/r/terminal.json`
+  Install: `npx shadcn@latest add @aui/terminal`
+
+- **DiffBlock** (`@aui/diff-block`): Git patch viewer with line gutters, additions, and deletions.
+  Endpoint: `https://ui.arpitbhayani.me/r/diff-block.json`
+  Install: `npx shadcn@latest add @aui/diff-block`
+
+- **PingStatus** (`@aui/ping-status`): Live telemetry pulsing dot indicator with label.
+  Endpoint: `https://ui.arpitbhayani.me/r/ping-status.json`
+  Install: `npx shadcn@latest add @aui/ping-status`
+
+- **PropertyGrid** (`@aui/property-grid`): Key-value metadata inspector with one-click copy functionality.
+  Endpoint: `https://ui.arpitbhayani.me/r/property-grid.json`
+  Install: `npx shadcn@latest add @aui/property-grid`
+
+- **PackageManager** (`@aui/package-manager`): pnpm/npm/bun/yarn command switcher with copy button.
+  Endpoint: `https://ui.arpitbhayani.me/r/package-manager.json`
+  Install: `npx shadcn@latest add @aui/package-manager`
+
+- **Maxim** (`@aui/maxim`): Editorial quote callout with amber left rail and citation.
+  Endpoint: `https://ui.arpitbhayani.me/r/maxim.json`
+  Install: `npx shadcn@latest add @aui/maxim`
+
+- **TakeawaysBox** (`@aui/takeaways-box`): Key takeaways container with bulleted highlights.
+  Endpoint: `https://ui.arpitbhayani.me/r/takeaways-box.json`
+  Install: `npx shadcn@latest add @aui/takeaways-box`
+
+- **Hero** (`@aui/hero`): Editorial profile hero section with avatar, heading, and bio.
+  Endpoint: `https://ui.arpitbhayani.me/r/hero.json`
+  Install: `npx shadcn@latest add @aui/hero`
+
+- **FileTree** (`@aui/file-tree`): Directory explorer tree with collapsible folders and item selection.
+  Endpoint: `https://ui.arpitbhayani.me/r/file-tree.json`
+  Install: `npx shadcn@latest add @aui/file-tree`
+
+- **SocialPill** (`@aui/social-pill`): Clean pill button with platform icon, handle, and follower count.
+  Endpoint: `https://ui.arpitbhayani.me/r/social-pill.json`
+  Install: `npx shadcn@latest add @aui/social-pill`
+
+- **CourseCard** (`@aui/course-card`): Editorial course and project card with badges, tags, and CTA.
+  Endpoint: `https://ui.arpitbhayani.me/r/course-card.json`
+  Install: `npx shadcn@latest add @aui/course-card`
+
+- **StatCard** (`@aui/stat-card`): Large key metric display card with optional trend indicator.
+  Endpoint: `https://ui.arpitbhayani.me/r/stat-card.json`
+  Install: `npx shadcn@latest add @aui/stat-card`
+
+- **EmptyState** (`@aui/empty-state`): Dashed container for empty content and call-to-actions.
+  Endpoint: `https://ui.arpitbhayani.me/r/empty-state.json`
+  Install: `npx shadcn@latest add @aui/empty-state`
+
+- **Theme Style** (`@aui/aui`): Base CSS variables, typography, and color tokens.
+  Endpoint: `https://ui.arpitbhayani.me/r/aui.json`
+  Install: `npx shadcn@latest add @aui/aui`

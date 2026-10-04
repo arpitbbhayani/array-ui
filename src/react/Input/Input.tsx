@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "../../utils/cn";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -10,16 +11,43 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, leftIcon, rightIcon, shortcut, error, helperText, className = "", id, ...props }, ref) => {
+  (
+    {
+      label,
+      leftIcon,
+      rightIcon,
+      shortcut,
+      error,
+      helperText,
+      className,
+      id,
+      ...props
+    },
+    ref
+  ) => {
     const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
-    const wrapperClasses = [
+    const hasWrapper = label || leftIcon || rightIcon || shortcut || error || helperText;
+
+    const inputElement = (
+      <input
+        ref={ref}
+        id={inputId}
+        className={cn("aui-input", className)}
+        aria-invalid={Boolean(error)}
+        {...props}
+      />
+    );
+
+    if (!hasWrapper) {
+      return inputElement;
+    }
+
+    const wrapperClasses = cn(
       "aui-input-wrapper",
-      leftIcon ? "aui-input-has-left-icon" : "",
-      rightIcon || shortcut ? "aui-input-has-right-icon" : "",
-    ]
-      .filter(Boolean)
-      .join(" ");
+      leftIcon && "aui-input-has-left-icon",
+      (rightIcon || shortcut) && "aui-input-has-right-icon"
+    );
 
     return (
       <div className="aui-form-group">
@@ -30,13 +58,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className={wrapperClasses}>
           {leftIcon && <span className="aui-input-icon-left">{leftIcon}</span>}
-          <input
-            ref={ref}
-            id={inputId}
-            className={`aui-input ${className}`}
-            aria-invalid={Boolean(error)}
-            {...props}
-          />
+          {inputElement}
           {rightIcon && <span className="aui-input-icon-right">{rightIcon}</span>}
           {shortcut && <span className="aui-input-shortcut">{shortcut}</span>}
         </div>
@@ -54,18 +76,32 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
-
 Input.displayName = "Input";
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
   helperText?: string;
 }
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ label, error, helperText, className = "", id, ...props }, ref) => {
+  ({ label, error, helperText, className, id, ...props }, ref) => {
     const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
+    const textareaElement = (
+      <textarea
+        ref={ref}
+        id={inputId}
+        className={cn("aui-textarea", className)}
+        aria-invalid={Boolean(error)}
+        {...props}
+      />
+    );
+
+    if (!label && !error && !helperText) {
+      return textareaElement;
+    }
+
     return (
       <div className="aui-form-group">
         {label && (
@@ -73,13 +109,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             {label}
           </label>
         )}
-        <textarea
-          ref={ref}
-          id={inputId}
-          className={`aui-textarea ${className}`}
-          aria-invalid={Boolean(error)}
-          {...props}
-        />
+        {textareaElement}
         {error && (
           <p style={{ color: "var(--aui-primary)", fontSize: "0.82rem", margin: "0.3rem 0 0 0" }}>
             {error}
@@ -94,18 +124,34 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
   }
 );
-
 Textarea.displayName = "Textarea";
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   options?: Array<{ label: string; value: string }>;
   error?: string;
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, options, error, className = "", id, children, ...props }, ref) => {
+  ({ label, options, error, className, id, children, ...props }, ref) => {
     const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
+    const selectElement = (
+      <select ref={ref} id={inputId} className={cn("aui-select", className)} {...props}>
+        {options
+          ? options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))
+          : children}
+      </select>
+    );
+
+    if (!label && !error) {
+      return selectElement;
+    }
+
     return (
       <div className="aui-form-group">
         {label && (
@@ -113,15 +159,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {label}
           </label>
         )}
-        <select ref={ref} id={inputId} className={`aui-select ${className}`} {...props}>
-          {options
-            ? options.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))
-            : children}
-        </select>
+        {selectElement}
         {error && (
           <p style={{ color: "var(--aui-primary)", fontSize: "0.82rem", margin: "0.3rem 0 0 0" }}>
             {error}
@@ -131,34 +169,40 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     );
   }
 );
-
 Select.displayName = "Select";
 
 export interface SwitchProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;
 }
 
-export const Switch: React.FC<SwitchProps> = ({ label, className = "", ...props }) => {
-  return (
-    <label className={`aui-switch-label ${className}`}>
-      <span className="aui-switch">
-        <input type="checkbox" role="switch" {...props} />
-        <span className="aui-switch-track" />
-      </span>
-      {label && <span>{label}</span>}
-    </label>
-  );
-};
+export const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
+  ({ label, className, ...props }, ref) => {
+    return (
+      <label className={cn("aui-switch-label", className)}>
+        <span className="aui-switch">
+          <input ref={ref} type="checkbox" role="switch" {...props} />
+          <span className="aui-switch-track" />
+        </span>
+        {label && <span>{label}</span>}
+      </label>
+    );
+  }
+);
+Switch.displayName = "Switch";
 
-export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({ label, className = "", ...props }) => {
-  return (
-    <label className={`aui-checkbox-label ${className}`}>
-      <input type="checkbox" className="aui-checkbox" {...props} />
-      {label && <span>{label}</span>}
-    </label>
-  );
-};
+export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ label, className, ...props }, ref) => {
+    return (
+      <label className={cn("aui-checkbox-label", className)}>
+        <input ref={ref} type="checkbox" className="aui-checkbox" {...props} />
+        {label && <span>{label}</span>}
+      </label>
+    );
+  }
+);
+Checkbox.displayName = "Checkbox";

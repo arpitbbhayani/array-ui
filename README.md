@@ -23,6 +23,9 @@
 
 ## Installation
 
+> [!IMPORTANT]
+> `aui` is **not published on the public npm registry**. Install directly from GitHub (`github:arpitbbhayani/aui`) using your package manager of choice, or copy components via the shadcn CLI.
+
 Install directly from the GitHub repository into any project:
 
 ```bash
@@ -421,6 +424,110 @@ export default {
 ```
 
 This makes tokens like `bg-aui-bg-primary`, `text-aui-primary`, `font-serif`, etc., available directly in Tailwind classes!
+
+---
+
+## Using with shadcn/ui
+
+Array UI supports two first-class ways to integrate with **shadcn/ui**:
+1. **Official shadcn Registry (Copy-Paste CLI)**: Add signature `aui` primitives directly into your codebase using `npx shadcn add`. Zero runtime package dependency. Pure Tailwind CSS + Lucide icons.
+2. **GitHub Package Dependency + Preset**: Install `aui` directly from GitHub (`npm install github:arpitbbhayani/aui`) with compound subcomponents, `@layer` CSS isolation, and automatic token synchronization.
+
+---
+
+### Option A: The shadcn CLI Registry (Recommended)
+
+Just like `ui.chaicode.com` or `21st.dev`, you can pull `aui` components directly into your shadcn project using the official CLI.
+
+#### 1. Configure the Registry
+Add the `@aui` registry namespace in your `components.json`:
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "registries": {
+    "@aui": "https://ui.arpitbhayani.me/r/{name}.json"
+  }
+}
+```
+
+#### 2. Install Signature Components
+```bash
+# Add components by namespace
+npx shadcn@latest add @aui/terminal
+npx shadcn@latest add @aui/diff-block
+npx shadcn@latest add @aui/property-grid
+npx shadcn@latest add @aui/file-tree
+npx shadcn@latest add @aui/package-manager
+npx shadcn@latest add @aui/ping-status
+npx shadcn@latest add @aui/maxim
+npx shadcn@latest add @aui/takeaways-box
+npx shadcn@latest add @aui/course-card
+npx shadcn@latest add @aui/stat-card
+npx shadcn@latest add @aui/empty-state
+npx shadcn@latest add @aui/hero
+
+# Or install directly via URL (without editing components.json)
+npx shadcn@latest add https://ui.arpitbhayani.me/r/terminal.json
+```
+
+All components are installed directly into your `@/components/ui/` directory with full TypeScript types, standard `cn()` utilities, and Tailwind CSS.
+
+#### 3. Full Registry Catalog & LLM Guide
+- Registry index: `https://ui.arpitbhayani.me/r/registry.json`
+- LLM prompt context: `https://ui.arpitbhayani.me/llms.txt`
+
+---
+
+### Option B: GitHub Package Dependency + Preset
+
+If you prefer installing the full package directly from GitHub (`npm install github:arpitbbhayani/aui`):
+
+1. **`cn()` Utility**: Exported directly from `aui`, `aui/react`, `aui/utils`, and `aui/lib/utils` for slotting into shadcn's `@/lib/utils`.
+2. **`React.forwardRef` on All Components**: Standardized on interactive and content components, enabling seamless integration with Radix UI primitives and shadcn triggers.
+3. **`asChild` and Radix Slot Support**: Pass `asChild` on `<Button>` or use directly with Radix primitives (e.g. `<DialogTrigger asChild><Button>Open</Button></DialogTrigger>`).
+4. **CSS Cascade Layers (`@layer`)**: `aui/styles.css` organizes styles into `@layer aui-tokens, aui-base, components`. This guarantees Tailwind utility classes passed via `className` (e.g., `className="p-6 bg-primary text-sm shadow-md"`) cleanly override defaults without `!important`.
+5. **Drop-in Preset & CSS Theme Bridge**:
+   - `auiShadcnPreset` from `aui/tailwind` (or `aui/shadcn`) automatically sets up shadcn color tokens, radii, fonts, and animations.
+   - `aui/shadcn.css` provides bidirectional variable mapping between Array UI's editorial aesthetic and shadcn's tokens.
+6. **Compound Component API**: Supports both concise prop-driven configurations and shadcn-style compound subcomponents:
+   - `<Card><CardHeader><CardTitle>...</CardTitle><CardDescription>...</CardDescription></CardHeader><CardContent>...</CardContent></Card>`
+   - `<Tabs defaultValue="tab1"><TabsList><TabsTrigger value="tab1">Tab 1</TabsTrigger></TabsList><TabsContent value="tab1">...</TabsContent></Tabs>`
+   - `<Accordion type="single" collapsible><AccordionItem value="item-1"><AccordionTrigger>...</AccordionTrigger><AccordionContent>...</AccordionContent></AccordionItem></Accordion>`
+   - `<Table><TableHeader><TableRow><TableHead>...</TableHead></TableRow></TableHeader><TableBody><TableRow><TableCell>...</TableCell></TableRow></TableBody></Table>`
+   - `<Alert><AlertTitle>...</AlertTitle><AlertDescription>...</AlertDescription></Alert>`
+
+### Quick Setup in a shadcn/ui Project:
+
+#### 1. In `tailwind.config.js` (or `.mjs`):
+```js
+import { auiShadcnPreset } from 'aui/tailwind';
+
+export default {
+  presets: [auiShadcnPreset],
+  content: [
+    './app/**/*.{ts,tsx,js,jsx}',
+    './components/**/*.{ts,tsx,js,jsx}',
+    './node_modules/aui/**/*.{js,ts,jsx,tsx}',
+  ],
+};
+```
+
+#### 2. In your global CSS (`app/globals.css`):
+```css
+@import "aui/styles.css";
+@import "aui/shadcn.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+#### 3. In `lib/utils.ts`:
+```ts
+export { cn } from "aui/lib/utils";
+```
 
 ---
 

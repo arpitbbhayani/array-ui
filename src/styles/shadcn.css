@@ -1,0 +1,83 @@
+/**
+ * aui - shadcn/ui Theme & Bridge Stylesheet
+ * 
+ * Provides:
+ * 1. shadcn CSS variables mapped to aui's signature editorial design system (paper light & obsidian dark)
+ * 2. Bridge mapping aui CSS variables to shadcn CSS variables for seamless bidirectional interoperability
+ */
+
+@layer base {
+  :root {
+    /* Base shadcn HSL channels themed with aui Light (Paper / Ledger) */
+    --background: 43 25% 97%;          /* #faf9f5 */
+    --foreground: 247 7% 19%;          /* #2d2c33 */
+    --card: 0 0% 100%;                 /* #ffffff */
+    --card-foreground: 247 7% 19%;     /* #2d2c33 */
+    --popover: 0 0% 100%;              /* #ffffff */
+    --popover-foreground: 247 7% 19%;  /* #2d2c33 */
+    --primary: 356 100% 45%;           /* #e5000f */
+    --primary-foreground: 0 0% 100%;   /* #ffffff */
+    --secondary: 41 24% 93%;           /* #f2efe6 */
+    --secondary-foreground: 250 14% 8%;/* #121116 */
+    --muted: 41 24% 93%;               /* #f2efe6 */
+    --muted-foreground: 253 4% 44%;    /* #6e6b75 */
+    --accent: 41 24% 93%;              /* #f2efe6 */
+    --accent-foreground: 250 14% 8%;   /* #121116 */
+    --destructive: 0 84% 60%;          /* #dc2626 */
+    --destructive-foreground: 0 0% 100%;
+    --border: 41 24% 86%;              /* #e5e0d3 */
+    --input: 41 24% 86%;               /* #e5e0d3 */
+    --ring: 356 100% 45%;              /* #e5000f */
+    --radius: 0.375rem;                /* 6px */
+
+    /* aui token bridge to shadcn variables */
+    --aui-primary: hsl(var(--primary));
+    --aui-primary-text: hsl(var(--primary-foreground));
+    --aui-bg-primary: hsl(var(--background));
+    --aui-bg-secondary: hsl(var(--card));
+    --aui-bg-tertiary: hsl(var(--muted));
+    --aui-text-primary: hsl(var(--foreground));
+    --aui-text-secondary: hsl(var(--card-foreground));
+    --aui-text-muted: hsl(var(--muted-foreground));
+    --aui-border-color: hsl(var(--border));
+    --aui-border-light: hsl(var(--border) / 0.7);
+    --aui-radius-md: var(--radius);
+  }
+
+  [data-theme="dark"],
+  .dark {
+    /* Base shadcn HSL channels themed with aui Dark (Obsidian Carbon) */
+    --background: 240 10% 3.9%;        /* #09090b */
+    --foreground: 240 5% 83%;          /* #cfcfd6 */
+    --card: 240 6% 7%;                 /* #111114 */
+    --card-foreground: 240 5% 83%;     /* #cfcfd6 */
+    --popover: 240 6% 7%;              /* #111114 */
+    --popover-foreground: 240 5% 83%;  /* #cfcfd6 */
+    --primary: 356 100% 45%;           /* #e5000f */
+    --primary-foreground: 0 0% 100%;   /* #ffffff */
+    --secondary: 240 6% 10%;           /* #17171c */
+    --secondary-foreground: 240 14% 98%;/* #fafafc */
+    --muted: 240 6% 10%;               /* #17171c */
+    --muted-foreground: 240 5% 58%;    /* #8b8b99 */
+    --accent: 240 6% 10%;              /* #17171c */
+    --accent-foreground: 240 14% 98%;  /* #fafafc */
+    --destructive: 0 63% 31%;          /* #7f1d1d */
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 16%;              /* #24242c */
+    --input: 240 6% 16%;               /* #24242c */
+    --ring: 356 100% 45%;              /* #e5000f */
+
+    /* aui dark token bridge */
+    --aui-primary: hsl(var(--primary));
+    --aui-primary-text: hsl(var(--primary-foreground));
+    --aui-bg-primary: hsl(var(--background));
+    --aui-bg-secondary: hsl(var(--card));
+    --aui-bg-tertiary: hsl(var(--muted));
+    --aui-text-primary: hsl(var(--foreground));
+    --aui-text-secondary: hsl(var(--card-foreground));
+    --aui-text-muted: hsl(var(--muted-foreground));
+    --aui-border-color: hsl(var(--border));
+    --aui-border-light: hsl(var(--border) / 0.7);
+    --aui-radius-md: var(--radius);
+  }
+}

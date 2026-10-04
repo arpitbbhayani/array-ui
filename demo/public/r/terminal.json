@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "terminal",
+  "type": "registry:ui",
+  "title": "Terminal",
+  "description": "Machined telemetry terminal with bash command dots and styled outputs.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/terminal.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type TerminalLine =\n  | string\n  | { text: string; kind?: \"cmd\" | \"out\" | \"ok\" | \"err\" };\n\nexport interface TerminalProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  lines: TerminalLine[];\n}\n\nexport function Terminal({\n  title = \"bash\",\n  lines,\n  className,\n  ...props\n}: TerminalProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-[#070709] text-[#ececf1] font-mono text-[0.88rem] overflow-hidden shadow-md my-4\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center gap-1.5 px-3 py-2 bg-[#121217] border-b border-[#24242c]\">\n        <span className=\"w-2.5 h-2.5 rounded-full bg-[#ff5f56]\" />\n        <span className=\"w-2.5 h-2.5 rounded-full bg-[#ffbd2e]\" />\n        <span className=\"w-2.5 h-2.5 rounded-full bg-[#27c93f]\" />\n        <span className=\"text-xs text-muted-foreground font-sans ml-2 font-medium\">\n          {title}\n        </span>\n      </div>\n      <div className=\"p-3.5 space-y-1.5 overflow-x-auto leading-relaxed\">\n        {lines.map((line, i) => {\n          const { text, kind } =\n            typeof line === \"string\"\n              ? { text: line, kind: \"cmd\" as const }\n              : { kind: \"cmd\" as const, ...line };\n\n          let colorClass = \"text-[#cfcfd6]\";\n          let prefix = \"\";\n\n          if (kind === \"cmd\") {\n            colorClass = \"text-white font-medium\";\n            prefix = \"$ \";\n          } else if (kind === \"ok\") {\n            colorClass = \"text-emerald-400\";\n            prefix = \"✔ \";\n          } else if (kind === \"err\") {\n            colorClass = \"text-rose-400\";\n            prefix = \"✖ \";\n          }\n\n          return (\n            <div key={i} className={cn(\"whitespace-pre\", colorClass)}>\n              {prefix && (\n                <span className=\"select-none opacity-60 mr-1.5\">{prefix}</span>\n              )}\n              <span>{text}</span>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

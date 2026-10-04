@@ -1,0 +1,312 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "aui",
+  "homepage": "https://ui.arpitbhayani.me",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "aui",
+      "type": "registry:style",
+      "title": "Array UI Theme",
+      "description": "The arpitbhayani.me look: paper light & obsidian carbon themes, Plus Jakarta Sans & Lora typography, signature crimson accent (#e5000f), and systems engineering aesthetics.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [],
+      "cssVars": {
+        "theme": {
+          "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          "font-heading": "'Plus Jakarta Sans', 'Assistant', sans-serif",
+          "font-serif": "'Lora', Georgia, Cambria, serif",
+          "font-mono": "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
+          "radius-sm": "calc(var(--radius) - 4px)",
+          "radius-md": "calc(var(--radius) - 2px)",
+          "radius-lg": "var(--radius)",
+          "radius-xl": "calc(var(--radius) + 4px)",
+          "color-background": "var(--background)",
+          "color-foreground": "var(--foreground)",
+          "color-card": "var(--card)",
+          "color-card-foreground": "var(--card-foreground)",
+          "color-popover": "var(--popover)",
+          "color-popover-foreground": "var(--popover-foreground)",
+          "color-primary": "var(--primary)",
+          "color-primary-foreground": "var(--primary-foreground)",
+          "color-secondary": "var(--secondary)",
+          "color-secondary-foreground": "var(--secondary-foreground)",
+          "color-muted": "var(--muted)",
+          "color-muted-foreground": "var(--muted-foreground)",
+          "color-accent": "var(--accent)",
+          "color-accent-foreground": "var(--accent-foreground)",
+          "color-destructive": "var(--destructive)",
+          "color-border": "var(--border)",
+          "color-input": "var(--input)",
+          "color-ring": "var(--ring)"
+        },
+        "light": {
+          "radius": "0.5rem",
+          "background": "43 25% 97%",
+          "foreground": "247 7% 19%",
+          "card": "0 0% 100%",
+          "card-foreground": "247 7% 19%",
+          "popover": "0 0% 100%",
+          "popover-foreground": "247 7% 19%",
+          "primary": "356 100% 45%",
+          "primary-foreground": "0 0% 100%",
+          "secondary": "41 24% 93%",
+          "secondary-foreground": "250 14% 8%",
+          "muted": "41 24% 93%",
+          "muted-foreground": "253 4% 44%",
+          "accent": "41 24% 93%",
+          "accent-foreground": "250 14% 8%",
+          "destructive": "0 84% 60%",
+          "border": "41 24% 86%",
+          "input": "41 24% 86%",
+          "ring": "356 100% 45%"
+        },
+        "dark": {
+          "background": "240 10% 3.9%",
+          "foreground": "240 5% 83%",
+          "card": "240 6% 7%",
+          "card-foreground": "240 5% 83%",
+          "popover": "240 6% 7%",
+          "popover-foreground": "240 5% 83%",
+          "primary": "356 100% 45%",
+          "primary-foreground": "0 0% 100%",
+          "secondary": "240 6% 10%",
+          "secondary-foreground": "240 14% 98%",
+          "muted": "240 6% 10%",
+          "muted-foreground": "240 5% 58%",
+          "accent": "240 6% 10%",
+          "accent-foreground": "240 14% 98%",
+          "destructive": "0 63% 31%",
+          "border": "240 6% 16%",
+          "input": "240 6% 16%",
+          "ring": "356 100% 45%"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "terminal",
+      "type": "registry:ui",
+      "title": "Terminal",
+      "description": "Machined telemetry terminal with bash command dots and styled outputs.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/terminal.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type TerminalLine =\n  | string\n  | { text: string; kind?: \"cmd\" | \"out\" | \"ok\" | \"err\" };\n\nexport interface TerminalProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  lines: TerminalLine[];\n}\n\nexport function Terminal({\n  title = \"bash\",\n  lines,\n  className,\n  ...props\n}: TerminalProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-[#070709] text-[#ececf1] font-mono text-[0.88rem] overflow-hidden shadow-md my-4\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center gap-1.5 px-3 py-2 bg-[#121217] border-b border-[#24242c]\">\n        <span className=\"w-2.5 h-2.5 rounded-full bg-[#ff5f56]\" />\n        <span className=\"w-2.5 h-2.5 rounded-full bg-[#ffbd2e]\" />\n        <span className=\"w-2.5 h-2.5 rounded-full bg-[#27c93f]\" />\n        <span className=\"text-xs text-muted-foreground font-sans ml-2 font-medium\">\n          {title}\n        </span>\n      </div>\n      <div className=\"p-3.5 space-y-1.5 overflow-x-auto leading-relaxed\">\n        {lines.map((line, i) => {\n          const { text, kind } =\n            typeof line === \"string\"\n              ? { text: line, kind: \"cmd\" as const }\n              : { kind: \"cmd\" as const, ...line };\n\n          let colorClass = \"text-[#cfcfd6]\";\n          let prefix = \"\";\n\n          if (kind === \"cmd\") {\n            colorClass = \"text-white font-medium\";\n            prefix = \"$ \";\n          } else if (kind === \"ok\") {\n            colorClass = \"text-emerald-400\";\n            prefix = \"✔ \";\n          } else if (kind === \"err\") {\n            colorClass = \"text-rose-400\";\n            prefix = \"✖ \";\n          }\n\n          return (\n            <div key={i} className={cn(\"whitespace-pre\", colorClass)}>\n              {prefix && (\n                <span className=\"select-none opacity-60 mr-1.5\">{prefix}</span>\n              )}\n              <span>{text}</span>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "diff-block",
+      "type": "registry:ui",
+      "title": "DiffBlock",
+      "description": "Git patch viewer with line gutters, additions, and deletions.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/diff-block.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface DiffLine {\n  type: \"add\" | \"del\" | \"normal\" | \"meta\";\n  content: string;\n  oldNum?: number | string;\n  newNum?: number | string;\n}\n\nexport interface DiffBlockProps extends React.HTMLAttributes<HTMLDivElement> {\n  file?: string;\n  diff?: string;\n  lines?: DiffLine[];\n}\n\nexport function parseDiff(raw: string): { lines: DiffLine[]; adds: number; dels: number } {\n  const rawLines = raw.trim().split(\"\\n\");\n  const lines: DiffLine[] = [];\n  let adds = 0;\n  let dels = 0;\n  let oldIndex = 1;\n  let newIndex = 1;\n\n  for (const line of rawLines) {\n    if (line.startsWith(\"@@\")) {\n      lines.push({ type: \"meta\", content: line, oldNum: \"...\", newNum: \"...\" });\n    } else if (line.startsWith(\"+\")) {\n      adds++;\n      lines.push({ type: \"add\", content: line.slice(1), newNum: newIndex++ });\n    } else if (line.startsWith(\"-\")) {\n      dels++;\n      lines.push({ type: \"del\", content: line.slice(1), oldNum: oldIndex++ });\n    } else {\n      lines.push({\n        type: \"normal\",\n        content: line.startsWith(\" \") ? line.slice(1) : line,\n        oldNum: oldIndex++,\n        newNum: newIndex++,\n      });\n    }\n  }\n\n  return { lines, adds, dels };\n}\n\nexport function DiffBlock({\n  file,\n  diff,\n  lines: customLines,\n  className,\n  ...props\n}: DiffBlockProps) {\n  const parsed = React.useMemo(() => (diff ? parseDiff(diff) : { lines: customLines || [], adds: 0, dels: 0 }), [diff, customLines]);\n  const lines = customLines || parsed.lines;\n  const adds = customLines ? customLines.filter((l) => l.type === \"add\").length : parsed.adds;\n  const dels = customLines ? customLines.filter((l) => l.type === \"del\").length : parsed.dels;\n\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-[#070709] text-[#ececf1] font-mono text-[0.84rem] overflow-hidden shadow-md my-4\",\n        className\n      )}\n      {...props}\n    >\n      {file && (\n        <div className=\"flex items-center justify-between px-3.5 py-2 bg-[#121217] border-b border-[#24242c] text-xs\">\n          <span className=\"text-zinc-300 font-medium\">{file}</span>\n          <div className=\"flex items-center gap-2 font-mono text-[0.75rem]\">\n            {adds > 0 && <span className=\"text-emerald-400\">+{adds}</span>}\n            {dels > 0 && <span className=\"text-rose-400\">-{dels}</span>}\n          </div>\n        </div>\n      )}\n      <div className=\"p-2 overflow-x-auto leading-relaxed\">\n        {lines.map((l, idx) => {\n          let lineBg = \"hover:bg-zinc-800/40\";\n          let textColor = \"text-zinc-300\";\n          let symbol = \" \";\n\n          if (l.type === \"add\") {\n            lineBg = \"bg-emerald-950/40 text-emerald-300 border-l-2 border-emerald-500\";\n            textColor = \"text-emerald-300\";\n            symbol = \"+\";\n          } else if (l.type === \"del\") {\n            lineBg = \"bg-rose-950/40 text-rose-300 border-l-2 border-rose-500\";\n            textColor = \"text-rose-300\";\n            symbol = \"-\";\n          } else if (l.type === \"meta\") {\n            lineBg = \"text-cyan-400 bg-cyan-950/20\";\n            textColor = \"text-cyan-400 font-semibold\";\n            symbol = \"@\";\n          }\n\n          return (\n            <div\n              key={idx}\n              className={cn(\n                \"flex items-center px-2 py-0.5 rounded-xs transition-colors\",\n                lineBg\n              )}\n            >\n              <span className=\"w-12 select-none text-[0.72rem] text-zinc-600 font-mono text-right pr-3 flex-shrink-0\">\n                {l.oldNum ?? \" \"} {l.newNum ?? \" \"}\n              </span>\n              <span className=\"w-4 select-none text-zinc-500 font-semibold flex-shrink-0\">\n                {symbol}\n              </span>\n              <span className={cn(\"whitespace-pre flex-1\", textColor)}>\n                {l.content}\n              </span>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "ping-status",
+      "type": "registry:ui",
+      "title": "PingStatus",
+      "description": "Live telemetry pulsing dot indicator with label.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/ping-status.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type PingVariant = \"success\" | \"warning\" | \"danger\" | \"info\" | \"neutral\";\nexport type PingSize = \"sm\" | \"md\" | \"lg\";\n\nexport interface PingStatusProps extends React.HTMLAttributes<HTMLDivElement> {\n  variant?: PingVariant;\n  size?: PingSize;\n  label?: React.ReactNode;\n  pulse?: boolean;\n}\n\nconst variantStyles: Record<PingVariant, { dot: string; ring: string }> = {\n  success: { dot: \"bg-emerald-500\", ring: \"bg-emerald-400\" },\n  warning: { dot: \"bg-amber-500\", ring: \"bg-amber-400\" },\n  danger: { dot: \"bg-red-500\", ring: \"bg-red-400\" },\n  info: { dot: \"bg-blue-500\", ring: \"bg-blue-400\" },\n  neutral: { dot: \"bg-zinc-400\", ring: \"bg-zinc-300\" },\n};\n\nconst sizeStyles: Record<PingSize, { dot: string; wrapper: string }> = {\n  sm: { dot: \"w-1.5 h-1.5\", wrapper: \"w-2.5 h-2.5\" },\n  md: { dot: \"w-2 h-2\", wrapper: \"w-3 h-3\" },\n  lg: { dot: \"w-2.5 h-2.5\", wrapper: \"w-4 h-4\" },\n};\n\nexport function PingStatus({\n  variant = \"success\",\n  size = \"md\",\n  label,\n  pulse = true,\n  className,\n  ...props\n}: PingStatusProps) {\n  const v = variantStyles[variant];\n  const s = sizeStyles[size];\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex items-center gap-2 text-xs font-mono font-medium text-muted-foreground\",\n        className\n      )}\n      {...props}\n    >\n      <span className={cn(\"relative flex items-center justify-center\", s.wrapper)}>\n        {pulse && (\n          <span\n            className={cn(\n              \"absolute inset-0 rounded-full opacity-75 motion-safe:animate-ping\",\n              v.ring\n            )}\n          />\n        )}\n        <span className={cn(\"relative rounded-full\", v.dot, s.dot)} />\n      </span>\n      {label && <span>{label}</span>}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "property-grid",
+      "type": "registry:ui",
+      "title": "PropertyGrid",
+      "description": "Key-value metadata inspector with one-click copy functionality.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/property-grid.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PropertyItem {\n  label: string;\n  value: React.ReactNode;\n  copyable?: boolean;\n  copyValue?: string;\n}\n\nexport interface PropertyGridProps extends React.HTMLAttributes<HTMLDivElement> {\n  items: PropertyItem[];\n}\n\nexport function PropertyGrid({ items, className, ...props }: PropertyGridProps) {\n  const [copiedKey, setCopiedKey] = React.useState<string | null>(null);\n\n  const handleCopy = (key: string, val: string) => {\n    navigator.clipboard.writeText(val);\n    setCopiedKey(key);\n    setTimeout(() => setCopiedKey(null), 1800);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border divide-y divide-border bg-card text-card-foreground text-sm overflow-hidden my-4 shadow-xs\",\n        className\n      )}\n      {...props}\n    >\n      {items.map((item, idx) => {\n        const strVal =\n          item.copyValue ?? (typeof item.value === \"string\" ? item.value : undefined);\n        const isCopied = copiedKey === item.label;\n\n        return (\n          <div\n            key={idx}\n            className=\"flex items-center justify-between px-4 py-2.5 hover:bg-muted/40 transition-colors\"\n          >\n            <span className=\"font-mono text-xs text-muted-foreground uppercase tracking-wider\">\n              {item.label}\n            </span>\n            <div className=\"flex items-center gap-2 font-mono text-sm text-foreground\">\n              <span>{item.value}</span>\n              {item.copyable !== false && strVal && (\n                <button\n                  type=\"button\"\n                  className=\"p-1 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer\"\n                  title=\"Copy value\"\n                  onClick={() => handleCopy(item.label, strVal)}\n                >\n                  {isCopied ? (\n                    <span className=\"text-xs text-emerald-500 font-semibold\">Copied</span>\n                  ) : (\n                    <svg\n                      width=\"13\"\n                      height=\"13\"\n                      viewBox=\"0 0 24 24\"\n                      fill=\"none\"\n                      stroke=\"currentColor\"\n                      strokeWidth=\"2\"\n                      strokeLinecap=\"round\"\n                      strokeLinejoin=\"round\"\n                    >\n                      <rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" />\n                      <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />\n                    </svg>\n                  )}\n                </button>\n              )}\n            </div>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "package-manager",
+      "type": "registry:ui",
+      "title": "PackageManager",
+      "description": "pnpm/npm/bun/yarn command switcher with copy button.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/package-manager.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport type PackageManagerType = \"pnpm\" | \"npm\" | \"bun\" | \"yarn\";\n\nexport interface PackageManagerProps extends React.HTMLAttributes<HTMLDivElement> {\n  pkg?: string;\n  defaultManager?: PackageManagerType;\n}\n\nexport function PackageManager({\n  pkg = \"github:arpitbbhayani/aui\",\n  defaultManager = \"pnpm\",\n  className,\n  ...props\n}: PackageManagerProps) {\n  const [manager, setManager] = React.useState<PackageManagerType>(defaultManager);\n  const [copied, setCopied] = React.useState(false);\n\n  const getCommand = (pm: PackageManagerType) => {\n    switch (pm) {\n      case \"pnpm\":\n        return `pnpm add ${pkg}`;\n      case \"bun\":\n        return `bun add ${pkg}`;\n      case \"yarn\":\n        return `yarn add ${pkg}`;\n      case \"npm\":\n      default:\n        return `npm install ${pkg}`;\n    }\n  };\n\n  const command = getCommand(manager);\n\n  const handleCopy = () => {\n    navigator.clipboard.writeText(command);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-card text-card-foreground overflow-hidden shadow-xs my-4\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/30 px-3 py-1.5\">\n        <div className=\"flex items-center gap-1\">\n          {([\"pnpm\", \"npm\", \"bun\", \"yarn\"] as PackageManagerType[]).map((pm) => (\n            <button\n              key={pm}\n              type=\"button\"\n              className={cn(\n                \"px-2.5 py-1 text-xs font-mono font-medium rounded-md transition-colors cursor-pointer\",\n                manager === pm\n                  ? \"bg-background text-foreground shadow-2xs border border-border\"\n                  : \"text-muted-foreground hover:text-foreground\"\n              )}\n              onClick={() => setManager(pm)}\n            >\n              {pm}\n            </button>\n          ))}\n        </div>\n      </div>\n      <div className=\"flex items-center justify-between px-4 py-3 bg-[#09090b] text-[#ececf1]\">\n        <code className=\"font-mono text-sm\">{command}</code>\n        <button\n          type=\"button\"\n          className=\"text-xs px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors cursor-pointer\"\n          onClick={handleCopy}\n        >\n          {copied ? \"Copied!\" : \"Copy\"}\n        </button>\n      </div>\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "maxim",
+      "type": "registry:ui",
+      "title": "Maxim",
+      "description": "Editorial quote callout with amber left rail and citation.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/maxim.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MaximProps extends React.HTMLAttributes<HTMLQuoteElement> {\n  quote?: React.ReactNode;\n  author?: string;\n  source?: string;\n  sourceUrl?: string;\n}\n\nexport function Maxim({\n  quote,\n  author,\n  source,\n  sourceUrl,\n  children,\n  className,\n  ...props\n}: MaximProps) {\n  return (\n    <blockquote\n      className={cn(\n        \"relative pl-4 py-1.5 my-6 border-l-[3px] border-[#cc9900] dark:border-[#fbbf24] font-serif italic text-lg leading-relaxed text-foreground/90\",\n        className\n      )}\n      {...props}\n    >\n      <p>{quote || children}</p>\n      {(author || source) && (\n        <cite className=\"block not-italic font-sans text-xs text-muted-foreground font-medium uppercase tracking-wider mt-2\">\n          {author && <span>— {author}</span>}\n          {source && (\n            <span>\n              {author ? \", \" : \"— \"}\n              {sourceUrl ? (\n                <a\n                  href={sourceUrl}\n                  target=\"_blank\"\n                  rel=\"noopener noreferrer\"\n                  className=\"underline hover:text-foreground transition-colors\"\n                >\n                  {source}\n                </a>\n              ) : (\n                source\n              )}\n            </span>\n          )}\n        </cite>\n      )}\n    </blockquote>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "takeaways-box",
+      "type": "registry:ui",
+      "title": "TakeawaysBox",
+      "description": "Key takeaways container with bulleted highlights.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/takeaways-box.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TakeawaysBoxProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  items?: React.ReactNode[];\n}\n\nexport function TakeawaysBox({\n  title = \"Key Takeaways\",\n  items,\n  children,\n  className,\n  ...props\n}: TakeawaysBoxProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-muted/40 p-5 my-6 shadow-2xs\",\n        className\n      )}\n      {...props}\n    >\n      {title && (\n        <h4 className=\"font-heading font-semibold text-base text-foreground mb-3 flex items-center gap-2\">\n          <span className=\"w-1.5 h-1.5 rounded-full bg-primary\" />\n          {title}\n        </h4>\n      )}\n      {items && items.length > 0 ? (\n        <ul className=\"space-y-2 text-sm text-foreground/85 list-disc list-inside\">\n          {items.map((item, idx) => (\n            <li key={idx} className=\"leading-relaxed\">\n              {item}\n            </li>\n          ))}\n        </ul>\n      ) : (\n        children\n      )}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "hero",
+      "type": "registry:ui",
+      "title": "Hero",
+      "description": "Editorial profile hero section with avatar, heading, and bio.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/hero.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface HeroProps extends React.HTMLAttributes<HTMLElement> {\n  title?: string;\n  subtitle?: string;\n  bio?: React.ReactNode;\n  avatarUrl?: string;\n  avatarAlt?: string;\n  actions?: React.ReactNode;\n  socialLinks?: React.ReactNode;\n}\n\nexport function Hero({\n  title = \"Hey, I am Arpit\",\n  subtitle = \"engineering, databases, and systems. always building.\",\n  bio,\n  avatarUrl,\n  avatarAlt = \"Portrait\",\n  actions,\n  socialLinks,\n  className,\n  ...props\n}: HeroProps) {\n  return (\n    <section\n      className={cn(\"py-12 md:py-16 border-b border-border\", className)}\n      {...props}\n    >\n      <div className=\"flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12\">\n        <div className=\"flex-1 space-y-4 text-left\">\n          {title && (\n            <h1 className=\"text-3xl md:text-5xl font-heading font-extrabold tracking-tight text-foreground\">\n              {title}\n            </h1>\n          )}\n          {subtitle && (\n            <p className=\"font-serif italic text-lg md:text-xl text-muted-foreground leading-relaxed\">\n              {subtitle}\n            </p>\n          )}\n          {bio && <div className=\"text-base text-foreground/80 leading-relaxed pt-2\">{bio}</div>}\n          {actions && <div className=\"pt-2 flex items-center gap-3\">{actions}</div>}\n          {socialLinks && <div className=\"pt-3\">{socialLinks}</div>}\n        </div>\n        {avatarUrl && (\n          <div className=\"relative flex-shrink-0\">\n            <img\n              src={avatarUrl}\n              alt={avatarAlt}\n              className=\"w-32 h-32 md:w-44 md:h-44 rounded-xl object-cover border-2 border-border shadow-lg\"\n              loading=\"eager\"\n            />\n          </div>\n        )}\n      </div>\n    </section>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "file-tree",
+      "type": "registry:ui",
+      "title": "FileTree",
+      "description": "Directory explorer tree with collapsible folders and item selection.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/file-tree.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface FileTreeNode {\n  name: string;\n  type?: \"file\" | \"folder\";\n  children?: FileTreeNode[];\n  badge?: string;\n  defaultOpen?: boolean;\n}\n\nexport interface FileTreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onSelect\"> {\n  data: FileTreeNode[];\n  onSelect?: (item: FileTreeNode) => void;\n  selected?: string;\n}\n\nfunction FileTreeNodeItem({\n  node,\n  onSelect,\n  selected,\n}: {\n  node: FileTreeNode;\n  onSelect?: (item: FileTreeNode) => void;\n  selected?: string;\n}) {\n  const isFolder = node.type === \"folder\" || Boolean(node.children && node.children.length > 0);\n  const [isOpen, setIsOpen] = React.useState(node.defaultOpen ?? true);\n  const isSelected = selected === node.name;\n\n  return (\n    <div className=\"text-xs font-mono select-none\">\n      <div\n        className={cn(\n          \"flex items-center gap-1.5 px-2 py-1 rounded cursor-pointer transition-colors\",\n          isSelected ? \"bg-muted font-semibold text-foreground\" : \"text-muted-foreground hover:text-foreground hover:bg-muted/50\"\n        )}\n        onClick={(e) => {\n          e.stopPropagation();\n          if (isFolder) setIsOpen(!isOpen);\n          onSelect?.(node);\n        }}\n      >\n        <span className=\"w-3 text-center text-[10px] text-muted-foreground\">\n          {isFolder ? (isOpen ? \"▾\" : \"▸\") : \"•\"}\n        </span>\n        <span className=\"flex-1\">{node.name}</span>\n        {node.badge && (\n          <span className=\"text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground\">\n            {node.badge}\n          </span>\n        )}\n      </div>\n      {isFolder && isOpen && node.children && (\n        <div className=\"pl-4 border-l border-border/60 ml-2 space-y-0.5 mt-0.5\">\n          {node.children.map((child, idx) => (\n            <FileTreeNodeItem\n              key={idx}\n              node={child}\n              onSelect={onSelect}\n              selected={selected}\n            />\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}\n\nexport function FileTree({ data, onSelect, selected, className, ...props }: FileTreeProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-card p-3 shadow-2xs space-y-0.5 my-4\",\n        className\n      )}\n      {...props}\n    >\n      {data.map((node, idx) => (\n        <FileTreeNodeItem key={idx} node={node} onSelect={onSelect} selected={selected} />\n      ))}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "social-pill",
+      "type": "registry:ui",
+      "title": "SocialPill",
+      "description": "Clean pill button with platform icon, handle, and follower count.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/social-pill.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SocialPillProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {\n  platform: string;\n  count?: string | number;\n  icon?: React.ReactNode;\n}\n\nexport function SocialPill({\n  platform,\n  count,\n  icon,\n  className,\n  children,\n  target = \"_blank\",\n  rel = \"noopener noreferrer\",\n  ...props\n}: SocialPillProps) {\n  return (\n    <a\n      target={target}\n      rel={rel}\n      className={cn(\n        \"inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-border bg-card text-foreground hover:bg-muted hover:border-foreground/30 transition-all cursor-pointer shadow-2xs\",\n        className\n      )}\n      {...props}\n    >\n      {icon && <span className=\"opacity-80\">{icon}</span>}\n      <span className=\"capitalize\">{platform}</span>\n      {count && <span className=\"text-muted-foreground text-[11px]\">({count})</span>}\n      {children}\n    </a>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "course-card",
+      "type": "registry:ui",
+      "title": "CourseCard",
+      "description": "Editorial course and project card with badges, tags, and CTA.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/course-card.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface CourseCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  title: string;\n  description: string;\n  href: string;\n  badge?: string;\n  tags?: string[];\n  ctaText?: string;\n}\n\nexport function CourseCard({\n  title,\n  description,\n  href,\n  badge,\n  tags = [],\n  ctaText = \"View details →\",\n  className,\n  ...props\n}: CourseCardProps) {\n  return (\n    <div\n      className={cn(\n        \"group relative rounded-xl border border-border bg-card p-6 shadow-xs hover:shadow-md hover:border-primary/40 transition-all duration-200 flex flex-col justify-between my-4\",\n        className\n      )}\n      {...props}\n    >\n      <div>\n        <div className=\"flex items-start justify-between gap-3 mb-2\">\n          <h3 className=\"font-heading text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors\">\n            <a href={href}>\n              <span className=\"absolute inset-0\" aria-hidden=\"true\" />\n              {title}\n            </a>\n          </h3>\n          {badge && (\n            <span className=\"relative z-10 px-2 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20\">\n              {badge}\n            </span>\n          )}\n        </div>\n        <p className=\"text-sm text-muted-foreground leading-relaxed mb-4\">\n          {description}\n        </p>\n      </div>\n\n      <div>\n        {tags.length > 0 && (\n          <div className=\"flex flex-wrap gap-1.5 mb-5 relative z-10\">\n            {tags.map((t) => (\n              <span\n                key={t}\n                className=\"px-2 py-0.5 rounded text-[11px] font-mono bg-muted text-muted-foreground border border-border\"\n              >\n                {t}\n              </span>\n            ))}\n          </div>\n        )}\n\n        <div className=\"flex items-center justify-end pt-3 border-t border-border/70 relative z-10\">\n          <span className=\"text-sm font-semibold text-primary group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1\">\n            {ctaText}\n          </span>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "StatCard",
+      "description": "Large key metric display card with optional trend indicator.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/stat-card.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface StatCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  value: React.ReactNode;\n  label: React.ReactNode;\n  description?: React.ReactNode;\n  trend?: React.ReactNode;\n}\n\nexport function StatCard({\n  value,\n  label,\n  description,\n  trend,\n  className,\n  ...props\n}: StatCardProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-xl border border-border bg-card p-6 shadow-xs flex flex-col justify-between my-3\",\n        className\n      )}\n      {...props}\n    >\n      <div>\n        <div className=\"font-heading text-3xl md:text-4xl font-extrabold text-foreground tracking-tight tabular-nums\">\n          {value}\n        </div>\n        <div className=\"font-sans text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-1\">\n          {label}\n        </div>\n      </div>\n      {(description || trend) && (\n        <div className=\"mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground\">\n          {description && <div>{description}</div>}\n          {trend && <div className=\"font-mono text-emerald-500 font-semibold\">{trend}</div>}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "EmptyState",
+      "description": "Dashed container for empty content and call-to-actions.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/empty-state.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {\n  icon?: React.ReactNode;\n  title: string;\n  description?: string;\n}\n\nexport function EmptyState({\n  icon,\n  title,\n  description,\n  children,\n  className,\n  ...props\n}: EmptyStateProps) {\n  return (\n    <div\n      className={cn(\n        \"flex flex-col items-center justify-center p-8 text-center rounded-xl border border-dashed border-border bg-card/50 my-4\",\n        className\n      )}\n      {...props}\n    >\n      {icon && (\n        <div className=\"w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-muted-foreground mb-3\">\n          {icon}\n        </div>\n      )}\n      <h4 className=\"font-heading font-semibold text-lg text-foreground mb-1\">\n        {title}\n      </h4>\n      {description && (\n        <p className=\"text-sm text-muted-foreground max-w-sm mb-4\">\n          {description}\n        </p>\n      )}\n      {children}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

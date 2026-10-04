@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import { CopyIcon, CheckIcon } from "../Icons";
 import { highlight } from "./highlight";
+import { cn } from "../../utils/cn";
 
-export interface CodeBlockProps {
+export interface CodeBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   code: string;
   language?: string;
   filename?: string;
@@ -14,80 +15,91 @@ export interface CodeBlockProps {
   showLineNumbers?: boolean;
   /** 1-based line numbers to highlight with subtle rail highlight. */
   highlightLines?: number[];
-  className?: string;
 }
 
-export const CodeBlock: React.FC<CodeBlockProps> = ({
-  code,
-  language = "bash",
-  filename,
-  highlight: shouldHighlight = true,
-  showLineNumbers = false,
-  highlightLines = [],
-  className = "",
-}) => {
-  const [copied, setCopied] = useState(false);
+export const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
+  (
+    {
+      code,
+      language = "bash",
+      filename,
+      highlight: shouldHighlight = true,
+      showLineNumbers = false,
+      highlightLines = [],
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback
-    }
-  };
+    const handleCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        // Fallback
+      }
+    };
 
-  const lines = code.replace(/\r\n/g, "\n").trimEnd().split("\n");
+    const lines = code.replace(/\r\n/g, "\n").trimEnd().split("\n");
 
-  return (
-    <div className={`aui-codeblock ${className}`}>
-      <div className="aui-codeblock-header">
-        <span className="aui-codeblock-lang">{filename || language}</span>
-        <button
-          type="button"
-          onClick={handleCopy}
-          className="aui-codeblock-copy"
-          aria-label="Copy code to clipboard"
-        >
-          {copied ? (
-            <>
-              <CheckIcon size={13} />
-              <span>Copied!</span>
-            </>
-          ) : (
-            <>
-              <CopyIcon size={13} />
-              <span>Copy</span>
-            </>
-          )}
-        </button>
-      </div>
-      <pre className="aui-codeblock-pre aui-pre">
-        <code className="aui-codeblock-code">
-          {lines.map((line, idx) => {
-            const lineNum = idx + 1;
-            const isHighlighted = highlightLines.includes(lineNum);
-            return (
-              <div
-                key={idx}
-                className={`aui-codeblock-line ${isHighlighted ? "is-highlighted" : ""}`}
-              >
-                {showLineNumbers ? (
-                  <span className="aui-codeblock-lineno">{lineNum}</span>
-                ) : null}
-                <span
-                  className={`aui-codeblock-line-text ${
-                    !showLineNumbers ? "aui-codeblock-line-text-pad" : ""
-                  }`}
+    return (
+      <div ref={ref} className={cn("aui-codeblock", className)} {...props}>
+        <div className="aui-codeblock-header">
+          <span className="aui-codeblock-lang">{filename || language}</span>
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="aui-codeblock-copy"
+            aria-label="Copy code to clipboard"
+          >
+            {copied ? (
+              <>
+                <CheckIcon size={13} />
+                <span>Copied!</span>
+              </>
+            ) : (
+              <>
+                <CopyIcon size={13} />
+                <span>Copy</span>
+              </>
+            )}
+          </button>
+        </div>
+        <pre className="aui-codeblock-pre aui-pre">
+          <code className="aui-codeblock-code">
+            {lines.map((line, idx) => {
+              const lineNum = idx + 1;
+              const isHighlighted = highlightLines.includes(lineNum);
+              return (
+                <div
+                  key={idx}
+                  className={cn(
+                    "aui-codeblock-line",
+                    isHighlighted && "is-highlighted"
+                  )}
                 >
-                  {shouldHighlight ? highlight(line || " ") : line || " "}
-                </span>
-              </div>
-            );
-          })}
-        </code>
-      </pre>
-    </div>
-  );
-};
+                  {showLineNumbers ? (
+                    <span className="aui-codeblock-lineno">{lineNum}</span>
+                  ) : null}
+                  <span
+                    className={cn(
+                      "aui-codeblock-line-text",
+                      !showLineNumbers && "aui-codeblock-line-text-pad"
+                    )}
+                  >
+                    {shouldHighlight ? highlight(line || " ") : line || " "}
+                  </span>
+                </div>
+              );
+            })}
+          </code>
+        </pre>
+      </div>
+    );
+  }
+);
+
+CodeBlock.displayName = "CodeBlock";

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state",
+  "type": "registry:ui",
+  "title": "EmptyState",
+  "description": "Dashed container for empty content and call-to-actions.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/empty-state.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {\n  icon?: React.ReactNode;\n  title: string;\n  description?: string;\n}\n\nexport function EmptyState({\n  icon,\n  title,\n  description,\n  children,\n  className,\n  ...props\n}: EmptyStateProps) {\n  return (\n    <div\n      className={cn(\n        \"flex flex-col items-center justify-center p-8 text-center rounded-xl border border-dashed border-border bg-card/50 my-4\",\n        className\n      )}\n      {...props}\n    >\n      {icon && (\n        <div className=\"w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-muted-foreground mb-3\">\n          {icon}\n        </div>\n      )}\n      <h4 className=\"font-heading font-semibold text-lg text-foreground mb-1\">\n        {title}\n      </h4>\n      {description && (\n        <p className=\"text-sm text-muted-foreground max-w-sm mb-4\">\n          {description}\n        </p>\n      )}\n      {children}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

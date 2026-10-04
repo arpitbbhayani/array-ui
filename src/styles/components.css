@@ -169,6 +169,43 @@
   background-color: var(--aui-clickable-hover);
 }
 
+.aui-btn-danger {
+  background-color: var(--aui-danger);
+  color: #ffffff !important;
+  border-color: var(--aui-danger);
+}
+
+.aui-btn-danger:hover {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+  color: #ffffff !important;
+}
+
+.aui-btn-link {
+  background-color: transparent !important;
+  color: var(--aui-link) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 0 !important;
+  height: auto;
+}
+
+.aui-btn-link:hover {
+  color: var(--aui-link-hover) !important;
+  background-color: transparent !important;
+}
+
+.aui-btn-icon-only {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Color Palette Buttons */
 .aui-btn-color-red, .aui-btn-color-danger, .aui-btn-red { --btn-c: var(--aui-c-red); }
 .aui-btn-color-green, .aui-btn-color-success, .aui-btn-green, .aui-btn-success { --btn-c: var(--aui-c-green); }
@@ -371,6 +408,42 @@
 .aui-card-interactive:active {
   transform: translateY(0) scale(0.995);
   background-color: var(--aui-clickable-active);
+}
+
+/* Card Subcomponents (shadcn/ui compatible) */
+.aui-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.aui-card-title {
+  font-family: var(--aui-font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--aui-text-secondary);
+  margin: 0;
+}
+
+.aui-card-description {
+  font-size: 0.875rem;
+  color: var(--aui-text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.aui-card-content {
+  /* content container */
+}
+
+.aui-card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--aui-border-light);
 }
 
 /* ==========================================================================
@@ -2484,7 +2557,8 @@ a.aui-badge-interactive:not(.aui-badge-primary):hover {
   flex-shrink: 0;
 }
 
-.aui-alert-desc {
+.aui-alert-desc,
+.aui-alert-description {
   font-size: 0.88rem;
   color: var(--aui-text-muted);
   line-height: 1.5;
@@ -2567,17 +2641,21 @@ a.aui-badge-interactive:not(.aui-badge-primary):hover {
 /* ---- Table (Machined Telemetry Table) ----------------------------------- */
 .aui-table-wrapper { margin: 1rem 0; overflow-x: auto; border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-lg); box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow); background-color: var(--aui-bg-secondary); }
 .aui-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
-.aui-table th, .aui-table td { padding: 0.65rem 0.95rem; border-bottom: 1px solid var(--aui-border-color); }
-.aui-table th { background-color: var(--aui-bg-tertiary); font-family: var(--aui-font-mono); font-size: 0.73rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--aui-text-muted); }
-.aui-table td { font-variant-numeric: tabular-nums; color: var(--aui-text-primary); }
-.aui-table tbody tr:last-child td { border-bottom: none; }
-.aui-table tbody tr:hover td { background-color: var(--aui-clickable-hover); color: var(--aui-text-secondary); }
+.aui-table th, .aui-table td, .aui-table-head, .aui-table-cell { padding: 0.65rem 0.95rem; border-bottom: 1px solid var(--aui-border-color); }
+.aui-table th, .aui-table-head { background-color: var(--aui-bg-tertiary); font-family: var(--aui-font-mono); font-size: 0.73rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--aui-text-muted); text-align: left; }
+.aui-table td, .aui-table-cell { font-variant-numeric: tabular-nums; color: var(--aui-text-primary); }
+.aui-table tbody tr:last-child td, .aui-table-body tr:last-child .aui-table-cell { border-bottom: none; }
+.aui-table tbody tr:hover td, .aui-table-body tr:hover .aui-table-cell, .aui-table-row:hover { background-color: var(--aui-clickable-hover); color: var(--aui-text-secondary); }
+.aui-table-caption { margin-top: 0.5rem; font-size: 0.82rem; color: var(--aui-text-muted); text-align: center; }
 
 /* ---- Pagination (Minimal Flat Controls) -------------------------------- */
-.aui-pagination { margin: 1rem 0; }
-.aui-pagination-item { min-width: 32px; height: 32px; font-size: 0.86rem; font-weight: 500; border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); background: var(--aui-bg-secondary); color: var(--aui-text-primary); transition: all 0.12s ease; }
+.aui-pagination { margin: 1rem 0; display: flex; align-items: center; gap: 0.35rem; }
+.aui-pagination-content { display: flex; align-items: center; gap: 0.35rem; list-style: none; padding: 0; margin: 0; }
+.aui-pagination-list-item { list-style: none; }
+.aui-pagination-item { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; height: 32px; padding: 0 0.5rem; font-size: 0.86rem; font-weight: 500; border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); background: var(--aui-bg-secondary); color: var(--aui-text-primary); text-decoration: none; transition: all 0.12s ease; cursor: pointer; }
 .aui-pagination-item:hover { background: var(--aui-clickable-hover); border-color: var(--aui-border-strong); color: var(--aui-text-secondary); }
 .aui-pagination-item.is-active { background: var(--aui-text-secondary); border-color: var(--aui-text-secondary); color: var(--aui-bg-primary); }
+.aui-pagination-ellipsis { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; color: var(--aui-text-muted); }
 
 /* ---- Code ---------------------------------------------------------------- */
 .aui-codeblock { margin: 1rem 0; border-radius: var(--aui-radius-lg); background-color: var(--aui-pre-bg); border-color: var(--aui-border-strong); }
@@ -2714,6 +2792,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-divider { border: none; border-top: 1px solid var(--aui-border-color); margin: 1rem 0; }
 .aui-divider-labeled { display: flex; align-items: center; gap: 0.75rem; margin: 1rem 0; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aui-text-muted); }
 .aui-divider-labeled::before, .aui-divider-labeled::after { content: ""; flex: 1; height: 1px; background-color: var(--aui-border-color); }
+.aui-divider-vertical { display: inline-block; width: 1px; height: 1rem; background-color: var(--aui-border-color); margin: 0 0.5rem; vertical-align: middle; }
 
 /* Empty state */
 .aui-empty { display: flex; flex-direction: column; align-items: center; padding: 2rem 1.5rem; text-align: center; background-color: var(--aui-bg-secondary); border: 1px dashed var(--aui-border-strong); border-radius: var(--aui-radius-lg); }

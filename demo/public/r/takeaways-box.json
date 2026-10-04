@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "takeaways-box",
+  "type": "registry:ui",
+  "title": "TakeawaysBox",
+  "description": "Key takeaways container with bulleted highlights.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/takeaways-box.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TakeawaysBoxProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  items?: React.ReactNode[];\n}\n\nexport function TakeawaysBox({\n  title = \"Key Takeaways\",\n  items,\n  children,\n  className,\n  ...props\n}: TakeawaysBoxProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-muted/40 p-5 my-6 shadow-2xs\",\n        className\n      )}\n      {...props}\n    >\n      {title && (\n        <h4 className=\"font-heading font-semibold text-base text-foreground mb-3 flex items-center gap-2\">\n          <span className=\"w-1.5 h-1.5 rounded-full bg-primary\" />\n          {title}\n        </h4>\n      )}\n      {items && items.length > 0 ? (\n        <ul className=\"space-y-2 text-sm text-foreground/85 list-disc list-inside\">\n          {items.map((item, idx) => (\n            <li key={idx} className=\"leading-relaxed\">\n              {item}\n            </li>\n          ))}\n        </ul>\n      ) : (\n        children\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

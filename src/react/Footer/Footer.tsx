@@ -1,5 +1,6 @@
 import React from "react";
 import { RssIcon } from "../Icons";
+import { cn } from "../../utils/cn";
 
 export interface FooterLink {
   label: string;
@@ -16,12 +17,11 @@ export interface FooterColumn {
   links: FooterLink[];
 }
 
-export interface FooterProps {
+export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   columns?: FooterColumn[];
   disclaimer?: React.ReactNode;
   copyright?: string;
   socialPills?: React.ReactNode;
-  className?: string;
 }
 
 const defaultColumns: FooterColumn[] = [
@@ -65,49 +65,81 @@ const defaultColumns: FooterColumn[] = [
   },
 ];
 
-export const Footer: React.FC<FooterProps> = ({
-  columns = defaultColumns,
-  disclaimer,
-  copyright = `© ${new Date().getFullYear()} Arpit Bhayani. All rights reserved.`,
-  socialPills,
-  className = "",
-}) => {
-  return (
-    <footer className={`aui-footer ${className}`}>
-      <div className="aui-container">
-        {columns && columns.length > 0 && (
-          <div className="aui-footer-grid">
-            {columns.map((col, idx) => (
-              <div key={idx} className="aui-footer-col">
-                <h4 className="aui-footer-heading">{col.heading}</h4>
-                <ul className="aui-footer-links">
-                  {col.links.map((link, lIdx) => (
-                    <li key={lIdx} className={link.isHighlight ? "aui-footer-highlight" : ""}>
-                      <a
-                        href={link.href}
-                        target={link.external ? "_blank" : undefined}
-                        rel={link.external ? "noopener noreferrer" : undefined}
-                        style={link.isRss ? { color: "#ff8c00" } : link.isHighlight ? { color: "var(--aui-primary)", fontWeight: 600 } : undefined}
+export const Footer = React.forwardRef<HTMLElement, FooterProps>(
+  (
+    {
+      columns = defaultColumns,
+      disclaimer,
+      copyright = `© ${new Date().getFullYear()} Arpit Bhayani. All rights reserved.`,
+      socialPills,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <footer ref={ref} className={cn("aui-footer", className)} {...props}>
+        <div className="aui-container">
+          {columns && columns.length > 0 && (
+            <div className="aui-footer-grid">
+              {columns.map((col, idx) => (
+                <div key={idx} className="aui-footer-col">
+                  <h4 className="aui-footer-heading">{col.heading}</h4>
+                  <ul className="aui-footer-links">
+                    {col.links.map((link, lIdx) => (
+                      <li
+                        key={lIdx}
+                        className={link.isHighlight ? "aui-footer-highlight" : ""}
                       >
-                        {link.icon && <span style={{ display: "inline-flex", alignItems: "center" }}>{link.icon}</span>}
-                        <span>{link.label}</span>
-                        {link.hint && <span className="aui-link-hint">{link.hint}</span>}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                        <a
+                          href={link.href}
+                          target={link.external ? "_blank" : undefined}
+                          rel={link.external ? "noopener noreferrer" : undefined}
+                          style={
+                            link.isRss
+                              ? { color: "#ff8c00" }
+                              : link.isHighlight
+                              ? { color: "var(--aui-primary)", fontWeight: 600 }
+                              : undefined
+                          }
+                        >
+                          {link.icon && (
+                            <span
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              {link.icon}
+                            </span>
+                          )}
+                          <span>{link.label}</span>
+                          {link.hint && (
+                            <span className="aui-link-hint">{link.hint}</span>
+                          )}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {disclaimer && (
+            <div className="aui-footer-disclaimer">{disclaimer}</div>
+          )}
+
+          <div className="aui-footer-bottom">
+            <div>{copyright}</div>
+            {socialPills && (
+              <div className="aui-footer-socials">{socialPills}</div>
+            )}
           </div>
-        )}
-
-        {disclaimer && <div className="aui-footer-disclaimer">{disclaimer}</div>}
-
-        <div className="aui-footer-bottom">
-          <div>{copyright}</div>
-          {socialPills && <div className="aui-footer-socials">{socialPills}</div>}
         </div>
-      </div>
-    </footer>
-  );
-};
+      </footer>
+    );
+  }
+);
+
+Footer.displayName = "Footer";

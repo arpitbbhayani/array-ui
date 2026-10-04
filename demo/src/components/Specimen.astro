@@ -7,6 +7,7 @@ interface Props {
   reactUsage?: string;
   astroUsage?: string;
   htmlUsage?: string;
+  shadcnName?: string;
   span?: 1 | 2;
   tone?: "canvas" | "page";
 }
@@ -18,9 +19,12 @@ const {
   reactUsage = usage,
   astroUsage = usage,
   htmlUsage,
+  shadcnName,
   span = 1,
   tone = "canvas",
 } = Astro.props;
+
+const shadcnUsage = shadcnName ? `npx shadcn@latest add @aui/${shadcnName}` : undefined;
 
 // Auto-derive HTML snippet fallback if not explicitly provided
 let derivedHtml = htmlUsage;
@@ -37,8 +41,24 @@ if (!derivedHtml && usage) {
 <section id={id} class:list={["spec", span === 2 && "spec-wide"]}>
   <header class="spec-head">
     <div class="spec-head-row">
-      <h3 class="spec-name">{name}</h3>
-      <a href={`#${id}`} class="spec-anchor-link" title="Direct link">#</a>
+      <div class="spec-head-title-wrap">
+        <h3 class="spec-name">{name}</h3>
+        <a href={`#${id}`} class="spec-anchor-link" title="Direct link">#</a>
+      </div>
+      {shadcnName && (
+        <button
+          type="button"
+          class="spec-shadcn-pill"
+          title={`Copy CLI command: npx shadcn@latest add @aui/${shadcnName}`}
+          onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${shadcnName}'); this.classList.add('is-copied'); const t=this.querySelector('.spec-shadcn-btn-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='add @aui/${shadcnName}'; }, 1600);`}
+        >
+          <span class="spec-shadcn-icon">⚡</span>
+          <code class="spec-shadcn-btn-text">add @aui/{shadcnName}</code>
+          <svg class="spec-shadcn-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </button>
+      )}
     </div>
     {description && <p class="spec-desc">{description}</p>}
   </header>
@@ -51,6 +71,7 @@ if (!derivedHtml && usage) {
       data-react={reactUsage}
       data-astro={astroUsage}
       data-html={derivedHtml || usage}
+      data-shadcn={shadcnUsage || reactUsage}
     >
       <pre class="spec-usage"><code class="spec-code-text">{reactUsage}</code></pre>
       <button
@@ -81,6 +102,42 @@ if (!derivedHtml && usage) {
     justify-content: space-between;
     gap: 0.5rem;
   }
+  .spec-head-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .spec-shadcn-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.5rem;
+    font-family: var(--aui-font-mono);
+    font-size: 0.72rem;
+    color: var(--aui-text-muted);
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+  }
+  .spec-shadcn-pill:hover {
+    color: var(--aui-text-secondary);
+    border-color: var(--aui-border-strong);
+    background-color: var(--aui-clickable-hover);
+  }
+  .spec-shadcn-pill:active {
+    transform: scale(0.96);
+  }
+  .spec-shadcn-pill.is-copied {
+    color: var(--aui-success);
+    border-color: var(--aui-success);
+    background-color: var(--aui-bg-primary);
+  }
+  .spec-shadcn-check { display: none; }
+  .spec-shadcn-pill.is-copied .spec-shadcn-icon { display: none; }
+  .spec-shadcn-pill.is-copied .spec-shadcn-check { display: inline-block; }
   .spec-name {
     margin: 0;
     font-family: var(--aui-font-heading);

@@ -1,41 +1,83 @@
 import React from "react";
+import { cn } from "../../utils/cn";
 
 export type AvatarSize = "sm" | "md" | "lg";
 
-export interface AvatarProps {
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   src?: string;
   alt?: string;
   fallback?: string;
   size?: AvatarSize;
-  className?: string;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({
-  src,
-  alt = "Avatar",
-  fallback,
-  size = "md",
-  className = "",
-}) => {
-  return (
-    <div className={`aui-avatar aui-avatar-${size} ${className}`}>
-      {src ? (
-        <img src={src} alt={alt} />
-      ) : (
-        <span>{fallback || alt.slice(0, 2).toUpperCase()}</span>
-      )}
-    </div>
-  );
-};
+export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
+  (
+    {
+      src,
+      alt = "Avatar",
+      fallback,
+      size = "md",
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <div
+        ref={ref}
+        className={cn("aui-avatar", `aui-avatar-${size}`, className)}
+        {...props}
+      >
+        {children ? (
+          children
+        ) : src ? (
+          <img src={src} alt={alt} />
+        ) : (
+          <span>{fallback || alt.slice(0, 2).toUpperCase()}</span>
+        )}
+      </div>
+    );
+  }
+);
+Avatar.displayName = "Avatar";
 
-export interface AvatarGroupProps {
+export const AvatarImage = React.forwardRef<
+  HTMLImageElement,
+  React.ImgHTMLAttributes<HTMLImageElement>
+>(({ className, alt = "Avatar", ...props }, ref) => (
+  <img
+    ref={ref}
+    alt={alt}
+    className={cn("aui-avatar-image", className)}
+    {...props}
+  />
+));
+AvatarImage.displayName = "AvatarImage";
+
+export const AvatarFallback = React.forwardRef<
+  HTMLSpanElement,
+  React.HTMLAttributes<HTMLSpanElement>
+>(({ className, ...props }, ref) => (
+  <span
+    ref={ref}
+    className={cn("aui-avatar-fallback", className)}
+    {...props}
+  />
+));
+AvatarFallback.displayName = "AvatarFallback";
+
+export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  className?: string;
 }
 
-export const AvatarGroup: React.FC<AvatarGroupProps> = ({
-  children,
-  className = "",
-}) => {
-  return <div className={`aui-avatar-group ${className}`}>{children}</div>;
-};
+export const AvatarGroup = React.forwardRef<HTMLDivElement, AvatarGroupProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <div ref={ref} className={cn("aui-avatar-group", className)} {...props}>
+        {children}
+      </div>
+    );
+  }
+);
+AvatarGroup.displayName = "AvatarGroup";

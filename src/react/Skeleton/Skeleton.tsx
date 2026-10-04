@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "../../utils/cn";
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number;
@@ -6,25 +7,37 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   circle?: boolean;
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({
-  width = "100%",
-  height = "1rem",
-  circle = false,
-  className = "",
-  style,
-  ...props
-}) => {
-  return (
-    <div
-      className={`aui-skeleton ${className}`}
-      style={{
-        width,
-        height,
-        borderRadius: circle ? "50%" : undefined,
-        ...style,
-      }}
-      aria-hidden="true"
-      {...props}
-    />
-  );
-};
+export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
+  (
+    {
+      width,
+      height,
+      circle = false,
+      className,
+      style,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "aui-skeleton",
+          !width && !height && "aui-skeleton-default",
+          className
+        )}
+        style={{
+          width,
+          height,
+          borderRadius: circle ? "50%" : undefined,
+          ...style,
+        }}
+        aria-hidden="true"
+        {...props}
+      />
+    );
+  }
+);
+
+Skeleton.displayName = "Skeleton";

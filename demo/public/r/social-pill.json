@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-pill",
+  "type": "registry:ui",
+  "title": "SocialPill",
+  "description": "Clean pill button with platform icon, handle, and follower count.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/social-pill.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SocialPillProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {\n  platform: string;\n  count?: string | number;\n  icon?: React.ReactNode;\n}\n\nexport function SocialPill({\n  platform,\n  count,\n  icon,\n  className,\n  children,\n  target = \"_blank\",\n  rel = \"noopener noreferrer\",\n  ...props\n}: SocialPillProps) {\n  return (\n    <a\n      target={target}\n      rel={rel}\n      className={cn(\n        \"inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-border bg-card text-foreground hover:bg-muted hover:border-foreground/30 transition-all cursor-pointer shadow-2xs\",\n        className\n      )}\n      {...props}\n    >\n      {icon && <span className=\"opacity-80\">{icon}</span>}\n      <span className=\"capitalize\">{platform}</span>\n      {count && <span className=\"text-muted-foreground text-[11px]\">({count})</span>}\n      {children}\n    </a>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

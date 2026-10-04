@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "maxim",
+  "type": "registry:ui",
+  "title": "Maxim",
+  "description": "Editorial quote callout with amber left rail and citation.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/maxim.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MaximProps extends React.HTMLAttributes<HTMLQuoteElement> {\n  quote?: React.ReactNode;\n  author?: string;\n  source?: string;\n  sourceUrl?: string;\n}\n\nexport function Maxim({\n  quote,\n  author,\n  source,\n  sourceUrl,\n  children,\n  className,\n  ...props\n}: MaximProps) {\n  return (\n    <blockquote\n      className={cn(\n        \"relative pl-4 py-1.5 my-6 border-l-[3px] border-[#cc9900] dark:border-[#fbbf24] font-serif italic text-lg leading-relaxed text-foreground/90\",\n        className\n      )}\n      {...props}\n    >\n      <p>{quote || children}</p>\n      {(author || source) && (\n        <cite className=\"block not-italic font-sans text-xs text-muted-foreground font-medium uppercase tracking-wider mt-2\">\n          {author && <span>— {author}</span>}\n          {source && (\n            <span>\n              {author ? \", \" : \"— \"}\n              {sourceUrl ? (\n                <a\n                  href={sourceUrl}\n                  target=\"_blank\"\n                  rel=\"noopener noreferrer\"\n                  className=\"underline hover:text-foreground transition-colors\"\n                >\n                  {source}\n                </a>\n              ) : (\n                source\n              )}\n            </span>\n          )}\n        </cite>\n      )}\n    </blockquote>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

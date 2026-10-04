@@ -1,5 +1,6 @@
 "use client";
 
+export * from "../utils";
 export * from "./Theme/ThemeProvider";
 export * from "./Theme/ThemeToggle";
 export * from "./Theme/ThemeScript";

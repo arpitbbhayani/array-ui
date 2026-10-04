@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { FolderIcon, FolderOpenIcon, FileIcon, ChevronRightIcon, ChevronDownIcon } from "../Icons";
+import { cn } from "../../utils/cn";
 
 export interface FileTreeNode {
   name: string;
@@ -39,7 +40,7 @@ const FileTreeNodeItem: React.FC<{
   return (
     <div className="aui-filetree-node">
       <div
-        className={`aui-filetree-item ${isSelected ? "is-selected" : ""}`}
+        className={cn("aui-filetree-item", isSelected && "is-selected")}
         onClick={handleClick}
       >
         <span className="aui-filetree-icon">
@@ -76,23 +77,21 @@ const FileTreeNodeItem: React.FC<{
   );
 };
 
-export const FileTree: React.FC<FileTreeProps> = ({
-  data,
-  onSelect,
-  selected,
-  className = "",
-  ...props
-}) => {
-  return (
-    <div className={`aui-filetree ${className}`} {...props}>
-      {data.map((node, idx) => (
-        <FileTreeNodeItem
-          key={idx}
-          node={node}
-          onSelect={onSelect}
-          selected={selected}
-        />
-      ))}
-    </div>
-  );
-};
+export const FileTree = React.forwardRef<HTMLDivElement, FileTreeProps>(
+  ({ data, onSelect, selected, className, ...props }, ref) => {
+    return (
+      <div ref={ref} className={cn("aui-filetree", className)} {...props}>
+        {data.map((node, idx) => (
+          <FileTreeNodeItem
+            key={idx}
+            node={node}
+            onSelect={onSelect}
+            selected={selected}
+          />
+        ))}
+      </div>
+    );
+  }
+);
+
+FileTree.displayName = "FileTree";

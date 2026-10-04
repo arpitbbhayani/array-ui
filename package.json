@@ -27,8 +27,24 @@
       "import": "./dist/tailwind.js",
       "require": "./dist/tailwind.cjs"
     },
+    "./shadcn": {
+      "types": "./dist/shadcn/index.d.ts",
+      "import": "./dist/shadcn.js",
+      "require": "./dist/shadcn.cjs"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    },
+    "./lib/utils": {
+      "types": "./dist/lib/utils.d.ts",
+      "import": "./dist/lib/utils.js",
+      "require": "./dist/lib/utils.cjs"
+    },
     "./astro/*": "./dist/astro/*",
     "./styles.css": "./dist/styles.css",
+    "./shadcn.css": "./dist/shadcn.css",
     "./tokens.css": "./dist/tokens.css",
     "./base.css": "./dist/base.css",
     "./components.css": "./dist/components.css"
@@ -38,10 +54,11 @@
     "src"
   ],
   "scripts": {
-    "build": "tsup && tsc --emitDeclarationOnly",
+    "build:registry": "tsx scripts/build-registry.ts",
+    "build": "tsup && tsc --emitDeclarationOnly && npm run build:registry",
     "prepare": "npm run build",
-    "dev": "astro dev --root demo --port 6145",
-    "demo:build": "astro build --root demo",
+    "dev": "npm run build:registry && astro dev --root demo --port 6145",
+    "demo:build": "npm run build:registry && astro build --root demo",
     "demo:preview": "astro preview --root demo",
     "vercel-build": "npm run build && npm run demo:build"
   },
@@ -76,6 +93,13 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.4.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.7.0"
   }
 }
