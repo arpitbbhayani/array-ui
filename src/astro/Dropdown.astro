@@ -1,0 +1,74 @@
+---
+interface Props {
+  align?: "left" | "right";
+  className?: string;
+  id?: string;
+}
+
+const { align = "right", className = "", id } = Astro.props;
+---
+
+<div id={id} class={`aui-dropdown ${className}`} data-aui-dropdown>
+  <div class="aui-dropdown-trigger" data-aui-dropdown-trigger>
+    <slot name="trigger" />
+  </div>
+  <div
+    class={`aui-dropdown-menu ${align === "left" ? "aui-dropdown-menu-left" : ""}`}
+    data-aui-dropdown-menu
+  >
+    <slot />
+  </div>
+</div>
+
+<script>
+  function setupDropdowns() {
+    document.querySelectorAll<HTMLElement>("[data-aui-dropdown]").forEach((dd) => {
+      if (dd.hasAttribute("data-aui-initialized")) return;
+      dd.setAttribute("data-aui-initialized", "true");
+
+      const trigger = dd.querySelector<HTMLElement>("[data-aui-dropdown-trigger]");
+      const menu = dd.querySelector<HTMLElement>("[data-aui-dropdown-menu]");
+      if (!trigger || !menu) return;
+
+      trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        // Close other dropdowns
+        document.querySelectorAll<HTMLElement>("[data-aui-dropdown-menu].is-open").forEach((m) => {
+          if (m !== menu) {
+            m.classList.remove("is-open");
+            m.closest("[data-aui-dropdown]")?.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
+          }
+        });
+        const isOpen = menu.classList.toggle("is-open");
+        trigger.setAttribute("aria-expanded", String(isOpen));
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      document.querySelectorAll<HTMLElement>("[data-aui-dropdown-menu].is-open").forEach((menu) => {
+        const dd = menu.closest("[data-aui-dropdown]");
+        if (dd && !dd.contains(e.target as Node)) {
+          menu.classList.remove("is-open");
+          dd.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll<HTMLElement>("[data-aui-dropdown-menu].is-open").forEach((menu) => {
+          menu.classList.remove("is-open");
+          const dd = menu.closest("[data-aui-dropdown]");
+          dd?.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupDropdowns);
+  } else {
+    setupDropdowns();
+  }
+  document.addEventListener("astro:page-load", setupDropdowns);
+</script>

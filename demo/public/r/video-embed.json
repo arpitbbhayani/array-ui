@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "video-embed",
+  "type": "registry:ui",
+  "title": "VideoEmbed",
+  "description": "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/video-embed.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface VideoEmbedProps extends React.HTMLAttributes<HTMLDivElement> {\n  src?: string;\n  title?: string;\n  aspectRatio?: \"16/9\" | \"4/3\" | \"1/1\" | string;\n  allowFullScreen?: boolean;\n}\n\nexport function VideoEmbed({\n  src,\n  title = \"Video player\",\n  aspectRatio = \"16 / 9\",\n  allowFullScreen = true,\n  className,\n  children,\n  style,\n  ...props\n}: VideoEmbedProps) {\n  return (\n    <div\n      className={cn(\n        \"relative w-full rounded-xl overflow-hidden border border-border bg-card my-5\",\n        className\n      )}\n      style={{ aspectRatio, ...style }}\n      {...props}\n    >\n      {src ? (\n        <iframe\n          src={src}\n          title={title}\n          className=\"absolute inset-0 w-full h-full border-0\"\n          allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"\n          allowFullScreen={allowFullScreen}\n        />\n      ) : (\n        children\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

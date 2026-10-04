@@ -1,0 +1,117 @@
+---
+interface Props {
+  id: string;
+  title?: string;
+  open?: boolean;
+  maxWidth?: string;
+  closeOnBackdropClick?: boolean;
+  className?: string;
+}
+
+const {
+  id,
+  title,
+  open = false,
+  maxWidth = "540px",
+  closeOnBackdropClick = true,
+  className = "",
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class={`aui-modal-backdrop ${className}`}
+  style={open ? "" : "display: none;"}
+  data-aui-modal
+  data-close-on-backdrop={closeOnBackdropClick ? "true" : "false"}
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={title ? `${id}-title` : undefined}
+>
+  <div class="aui-modal" style={`max-width: ${maxWidth};`}>
+    {(title || Astro.slots.has("header")) && (
+      <div class="aui-modal-header">
+        {Astro.slots.has("header") ? (
+          <slot name="header" />
+        ) : (
+          <h3 id={`${id}-title`} class="aui-modal-title">{title}</h3>
+        )}
+        <button
+          type="button"
+          class="aui-modal-close"
+          data-aui-modal-close
+          aria-label="Close dialog"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    )}
+
+    <div class="aui-modal-body">
+      <slot />
+    </div>
+
+    {Astro.slots.has("footer") && (
+      <div class="aui-modal-footer">
+        <slot name="footer" />
+      </div>
+    )}
+  </div>
+</div>
+
+<script>
+  function setupModals() {
+    document.querySelectorAll<HTMLElement>("[data-aui-modal]").forEach((modal) => {
+      if (modal.hasAttribute("data-aui-initialized")) return;
+      modal.setAttribute("data-aui-initialized", "true");
+
+      const closeBtn = modal.querySelector("[data-aui-modal-close]");
+      const closeOnBackdrop = modal.getAttribute("data-close-on-backdrop") !== "false";
+
+      const closeModal = () => {
+        modal.style.display = "none";
+        document.body.style.overflow = "";
+      };
+
+      closeBtn?.addEventListener("click", closeModal);
+
+      if (closeOnBackdrop) {
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll<HTMLElement>("[data-aui-modal]").forEach((m) => {
+          if (m.style.display !== "none") {
+            m.style.display = "none";
+            document.body.style.overflow = "";
+          }
+        });
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupModals);
+  } else {
+    setupModals();
+  }
+  document.addEventListener("astro:page-load", setupModals);
+</script>

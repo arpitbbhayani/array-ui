@@ -48,3 +48,5 @@ export * from "./CoverCard/CoverCard";
 export * from "./TableOfContents/TableOfContents";
 export * from "./SearchBox/SearchBox";
 export * from "./Newsletter/Newsletter";
+export * from "./Dropdown/Dropdown";
+export * from "./VideoEmbed/VideoEmbed";

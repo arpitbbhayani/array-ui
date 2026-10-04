@@ -10,6 +10,8 @@ import {
   Kbd,
   Table,
   SearchBox,
+  Dropdown,
+  VideoEmbed,
 } from "../../../dist/react.js";
 
 export function ModalDemo() {
@@ -193,3 +195,31 @@ export function SearchBoxDemo() {
     </div>
   );
 }
+
+export function DropdownDemo() {
+  return (
+    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <Dropdown
+        trigger={
+          <Button variant="secondary" size="sm">
+            <span>Actions</span>
+            <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>▼</span>
+          </Button>
+        }
+      >
+        <div className="aui-dropdown-header">Manage Service</div>
+        <button type="button" className="aui-dropdown-item">
+          Deploy Revision
+        </button>
+        <button type="button" className="aui-dropdown-item">
+          View Logs
+        </button>
+        <div className="aui-dropdown-divider" />
+        <button type="button" className="aui-dropdown-item is-destructive">
+          Terminate Service
+        </button>
+      </Dropdown>
+    </div>
+  );
+}
+

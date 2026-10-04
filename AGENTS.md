@@ -273,6 +273,63 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
 />
 ```
 
+#### 15. `Modal`
+Accessible dialog modal with backdrop blur, focus trapping, and escape-key dismissal.
+```tsx
+// React
+<Modal isOpen={open} onClose={() => setOpen(false)} title="Confirmation" footer={<Button size="sm">Confirm</Button>}>
+  Content goes here
+</Modal>
+
+// Astro
+<Modal id="my-modal" title="Confirmation">
+  <p>Modal body content</p>
+  <div slot="footer">
+    <Button size="sm" variant="secondary">Close</Button>
+  </div>
+</Modal>
+```
+
+#### 16. `VideoEmbed`
+Responsive 16:9 media player container with hairline border and fallback loading slot.
+```tsx
+<VideoEmbed
+  src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+  title="System Architecture Walkthrough"
+  aspectRatio="16 / 9"
+/>
+```
+
+#### 17. `Dropdown`
+Accessible action menu with click-outside dismissal and keyboard escape support.
+```tsx
+// React
+<Dropdown trigger={<Button variant="secondary" size="sm">Actions ▼</Button>}>
+  <div className="aui-dropdown-header">Options</div>
+  <button type="button" className="aui-dropdown-item">Edit</button>
+  <div className="aui-dropdown-divider" />
+  <button type="button" className="aui-dropdown-item is-destructive">Delete</button>
+</Dropdown>
+
+// Astro
+<Dropdown align="right">
+  <Button slot="trigger" variant="secondary" size="sm">Actions ▼</Button>
+  <div class="aui-dropdown-header">Options</div>
+  <a href="/edit" class="aui-dropdown-item">Edit</a>
+  <div class="aui-dropdown-divider"></div>
+  <button type="button" class="aui-dropdown-item is-destructive">Delete</button>
+</Dropdown>
+```
+
+### Layout & Utility Classes
+
+- `.aui-container-md`: Intermediate max-width (900px) container for forms, reading, and account pages.
+- `.aui-prose-compact` / `.aui-prose-app`: Compact 15px prose typography scale tuned for tab panels, cards, and modal dialogs (unlike editorial long-form `.aui-prose` which is 18px).
+- `.aui-theatre-grid`: Responsive 2-column player layout (`minmax(0, 1fr) 340px`) with sticky right sidebar that collapses on mobile screens (`< 900px`).
+- `.aui-input-row`: Flex row for inline inputs with adjacent action buttons.
+- `.aui-form-hint`: Subtle helper text beneath inputs.
+
+
 ---
 
 ## 4. UI Actions & Layout

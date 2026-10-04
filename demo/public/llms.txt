@@ -125,6 +125,18 @@ Teach your AI coding agent the Array UI aesthetic and component APIs by adding t
   Endpoint: `https://ui.arpitbhayani.me/r/footer.json`
   Install: `npx shadcn@latest add @aui/footer`
 
+- **Modal** (`@aui/modal`): Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal.
+  Endpoint: `https://ui.arpitbhayani.me/r/modal.json`
+  Install: `npx shadcn@latest add @aui/modal`
+
+- **VideoEmbed** (`@aui/video-embed`): Responsive 16:9 aspect ratio video embed wrapper with border hairline styling.
+  Endpoint: `https://ui.arpitbhayani.me/r/video-embed.json`
+  Install: `npx shadcn@latest add @aui/video-embed`
+
+- **Dropdown** (`@aui/dropdown`): Minimal click-trigger dropdown menu with click outside dismissal and actions.
+  Endpoint: `https://ui.arpitbhayani.me/r/dropdown.json`
+  Install: `npx shadcn@latest add @aui/dropdown`
+
 - **Theme Style** (`@aui/aui`): Base CSS variables, typography, and color tokens.
   Endpoint: `https://ui.arpitbhayani.me/r/aui.json`
   Install: `npx shadcn@latest add @aui/aui`

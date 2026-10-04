@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo } from "../components/Interactive";
 import HeroDeck from "../components/HeroDeck.astro";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
@@ -34,6 +34,9 @@ import TableOfContents from "../../../src/astro/TableOfContents.astro";
 import SearchBox from "../../../src/astro/SearchBox.astro";
 import Newsletter from "../../../src/astro/Newsletter.astro";
 import Footer from "../../../src/astro/Footer.astro";
+import Dropdown from "../../../src/astro/Dropdown.astro";
+import VideoEmbed from "../../../src/astro/VideoEmbed.astro";
+import Modal from "../../../src/astro/Modal.astro";
 
 import {
   CodeBlock as ReactCodeBlock,
@@ -98,6 +101,7 @@ const sidebarGroups = [
       { label: "Kbd", href: "#kbd" },
       { label: "Tooltip", href: "#tooltip" },
       { label: "Theme toggle", href: "#theme-toggle" },
+      { label: "Dropdown", href: "#dropdown" },
     ],
   },
   {
@@ -152,6 +156,7 @@ const sidebarGroups = [
       { label: "Notice box", href: "#notice" },
       { label: "Newsletter", href: "#newsletter" },
       { label: "Card", href: "#card" },
+      { label: "Video embed", href: "#video-embed" },
       { label: "Cover card (og:image)", href: "#cover-card" },
       { label: "Course card", href: "#course" },
       { label: "Social pill", href: "#social" },
@@ -707,6 +712,12 @@ page.apply(record)      // safe to do lazily`}</code></pre>
               <div style="font-size:0.86rem;color:var(--aui-text-muted);">Small · 13 - secondary and helper text</div>
               <div style="font-family:var(--aui-font-mono);font-size:0.9rem;">Mono · 13.5 - SELECT * FROM users;</div>
               <div style="font-family:var(--aui-font-serif);font-style:italic;font-size:1.1rem;">Lora italic - kept for pull quotes</div>
+              <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--aui-border-color);">
+                <div class="aui-prose-compact">
+                  <h4 style="margin: 0 0 0.25rem;">.aui-prose-compact (App Prose)</h4>
+                  <p style="margin: 0;">Compact 15px scale tuned for app dashboards, tab views, and modal notes.</p>
+                </div>
+              </div>
             </div>
           </Specimen>
 
@@ -890,6 +901,29 @@ page.apply(record)      // safe to do lazily`}</code></pre>
           <Specimen id="theme-toggle" name="Theme toggle" description="Persists to localStorage." usage={`<ThemeToggle />`}>
             <div class="spec-row"><ThemeToggle /><span style="color:var(--aui-text-muted);font-size:0.93rem;">Click to switch light / dark</span></div>
           </Specimen>
+
+          <Specimen id="dropdown" name="Dropdown" description="Clean action menu with click outside dismissal and keyboard escape." usage={`<Dropdown trigger={<Button>…</Button>}>…</Dropdown>`} shadcnName="dropdown">
+            <div class="spec-row" style="align-items: flex-start; gap: 2rem;">
+              <div>
+                <div class="spec-label" style="margin-bottom:0.5rem;">React Component</div>
+                <DropdownDemo client:load />
+              </div>
+              <div>
+                <div class="spec-label" style="margin-bottom:0.5rem;">Astro Component</div>
+                <Dropdown align="left">
+                  <Button slot="trigger" variant="secondary" size="sm">
+                    <span>Options</span>
+                    <span style="font-size:0.75rem;opacity:0.7;">▼</span>
+                  </Button>
+                  <div class="aui-dropdown-header">Configuration</div>
+                  <a href="#dropdown" class="aui-dropdown-item">View Details</a>
+                  <a href="#dropdown" class="aui-dropdown-item">Audit Trail</a>
+                  <div class="aui-dropdown-divider"></div>
+                  <button type="button" class="aui-dropdown-item is-destructive">Delete</button>
+                </Dropdown>
+              </div>
+            </div>
+          </Specimen>
         </div>
 
         <!-- Forms -->
@@ -972,7 +1006,7 @@ page.apply(record)      // safe to do lazily`}</code></pre>
             </div>
           </Specimen>
 
-          <Specimen id="modal" name="Modal" description="Esc and backdrop close. Locks scroll." usage={`<Modal isOpen={open} onClose={…} title="…" footer={…} />`}>
+          <Specimen id="modal" name="Modal" description="Esc and backdrop close. Locks scroll." usage={`<Modal isOpen={open} onClose={…} title="…" footer={…} />`} shadcnName="modal">
             <ModalDemo client:load />
           </Specimen>
 
@@ -1172,6 +1206,12 @@ page.apply(record)      // safe to do lazily`}</code></pre>
             <div class="aui-grid aui-grid-cols-2" style="gap:0.75rem;">
               <Card><strong>Hoverable</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">Border and shadow respond.</p></Card>
               <Card hoverable={false}><strong>Static</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">No hover effect.</p></Card>
+            </div>
+          </Specimen>
+
+          <Specimen id="video-embed" name="Video embed" description="Responsive 16:9 media player container with hairline border." usage={`<VideoEmbed src="https://www.youtube.com/embed/..." title="Video" />`} span={2} shadcnName="video-embed">
+            <div style="max-width: 640px; margin: 0 auto; width: 100%;">
+              <VideoEmbed src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Array UI Video Player Demo" />
             </div>
           </Specimen>
 

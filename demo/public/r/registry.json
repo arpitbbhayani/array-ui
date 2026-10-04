@@ -324,6 +324,57 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/modal.tsx",
+          "content": "import * as React from \"react\";\nimport { createPortal } from \"react-dom\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ModalProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  isOpen?: boolean;\n  open?: boolean;\n  onClose?: () => void;\n  title?: React.ReactNode;\n  footer?: React.ReactNode;\n  closeOnBackdropClick?: boolean;\n}\n\nexport function Modal({\n  isOpen,\n  open,\n  onClose,\n  title,\n  children,\n  footer,\n  className,\n  closeOnBackdropClick = true,\n  ...props\n}: ModalProps) {\n  const isVisible = open !== undefined ? open : Boolean(isOpen);\n  const [mounted, setMounted] = React.useState(false);\n  const modalRef = React.useRef<HTMLDivElement>(null);\n\n  React.useEffect(() => {\n    setMounted(true);\n  }, []);\n\n  React.useEffect(() => {\n    if (!isVisible) return;\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") {\n        e.stopPropagation();\n        onClose?.();\n      }\n    };\n    document.addEventListener(\"keydown\", handleKeyDown);\n    const originalOverflow = document.body.style.overflow;\n    document.body.style.overflow = \"hidden\";\n    return () => {\n      document.removeEventListener(\"keydown\", handleKeyDown);\n      document.body.style.overflow = originalOverflow;\n    };\n  }, [isVisible, onClose]);\n\n  if (!isVisible || !mounted) return null;\n\n  const modalNode = (\n    <div\n      className=\"fixed inset-0 z-50 bg-black/55 backdrop-blur-[3px] flex items-center justify-center p-4 animate-in fade-in-0\"\n      onClick={(e) => {\n        if (closeOnBackdropClick && e.target === e.currentTarget) {\n          onClose?.();\n        }\n      }}\n      role=\"dialog\"\n      aria-modal=\"true\"\n    >\n      <div\n        ref={modalRef}\n        className={cn(\n          \"w-full max-w-lg bg-card text-card-foreground border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95\",\n          className\n        )}\n        tabIndex={-1}\n        {...props}\n      >\n        {(title || onClose) && (\n          <div className=\"flex items-center justify-between px-5 py-4 border-b border-border\">\n            {title && (\n              <h3 className=\"font-heading font-semibold text-lg text-foreground\">\n                {title}\n              </h3>\n            )}\n            {onClose && (\n              <button\n                type=\"button\"\n                className=\"w-7 h-7 inline-flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer ml-auto\"\n                onClick={onClose}\n                aria-label=\"Close dialog\"\n              >\n                ✕\n              </button>\n            )}\n          </div>\n        )}\n\n        <div className=\"p-5 text-sm\">{children}</div>\n\n        {footer && (\n          <div className=\"flex items-center justify-end gap-2 px-5 py-3 bg-muted/30 border-t border-border\">\n            {footer}\n          </div>\n        )}\n      </div>\n    </div>\n  );\n\n  return typeof document !== \"undefined\"\n    ? createPortal(modalNode, document.body)\n    : null;\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "video-embed",
+      "type": "registry:ui",
+      "title": "VideoEmbed",
+      "description": "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/video-embed.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface VideoEmbedProps extends React.HTMLAttributes<HTMLDivElement> {\n  src?: string;\n  title?: string;\n  aspectRatio?: \"16/9\" | \"4/3\" | \"1/1\" | string;\n  allowFullScreen?: boolean;\n}\n\nexport function VideoEmbed({\n  src,\n  title = \"Video player\",\n  aspectRatio = \"16 / 9\",\n  allowFullScreen = true,\n  className,\n  children,\n  style,\n  ...props\n}: VideoEmbedProps) {\n  return (\n    <div\n      className={cn(\n        \"relative w-full rounded-xl overflow-hidden border border-border bg-card my-5\",\n        className\n      )}\n      style={{ aspectRatio, ...style }}\n      {...props}\n    >\n      {src ? (\n        <iframe\n          src={src}\n          title={title}\n          className=\"absolute inset-0 w-full h-full border-0\"\n          allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"\n          allowFullScreen={allowFullScreen}\n        />\n      ) : (\n        children\n      )}\n    </div>\n  );\n}\n",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dropdown",
+      "type": "registry:ui",
+      "title": "Dropdown",
+      "description": "Minimal click-trigger dropdown menu with click outside dismissal and actions.",
+      "registryDependencies": [
+        "https://ui.arpitbhayani.me/r/aui.json"
+      ],
+      "files": [
+        {
+          "path": "ui/dropdown.tsx",
+          "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {\n  trigger: React.ReactNode;\n  align?: \"left\" | \"right\";\n  children: React.ReactNode;\n  isOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n}\n\nexport function Dropdown({\n  trigger,\n  align = \"right\",\n  children,\n  className,\n  isOpen: controlledOpen,\n  onOpenChange,\n  ...props\n}: DropdownProps) {\n  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false);\n  const isControlled = controlledOpen !== undefined;\n  const open = isControlled ? controlledOpen : uncontrolledOpen;\n  const containerRef = React.useRef<HTMLDivElement>(null);\n\n  const toggle = () => {\n    const next = !open;\n    if (!isControlled) setUncontrolledOpen(next);\n    onOpenChange?.(next);\n  };\n\n  const close = () => {\n    if (!isControlled) setUncontrolledOpen(false);\n    onOpenChange?.(false);\n  };\n\n  React.useEffect(() => {\n    if (!open) return;\n    const handleClickOutside = (e: MouseEvent) => {\n      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {\n        close();\n      }\n    };\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") {\n        close();\n      }\n    };\n    document.addEventListener(\"click\", handleClickOutside);\n    document.addEventListener(\"keydown\", handleKeyDown);\n    return () => {\n      document.removeEventListener(\"click\", handleClickOutside);\n      document.removeEventListener(\"keydown\", handleKeyDown);\n    };\n  }, [open]);\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\"relative inline-flex\", className)}\n      {...props}\n    >\n      <div\n        className=\"inline-flex items-center gap-1 cursor-pointer\"\n        onClick={toggle}\n        aria-haspopup=\"menu\"\n        aria-expanded={open}\n      >\n        {trigger}\n      </div>\n      {open && (\n        <div\n          className={cn(\n            \"absolute top-[calc(100%+0.35rem)] min-w-[180px] bg-card border border-border rounded-md shadow-lg p-1.5 z-50 flex flex-col animate-in fade-in-0 zoom-in-95\",\n            align === \"left\" ? \"left-0\" : \"right-0\"\n          )}\n          role=\"menu\"\n        >\n          {children}\n        </div>\n      )}\n    </div>\n  );\n}\n\nexport interface DropdownItemProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  destructive?: boolean;\n}\n\nexport function DropdownItem({\n  destructive,\n  className,\n  children,\n  ...props\n}: DropdownItemProps) {\n  return (\n    <button\n      type=\"button\"\n      className={cn(\n        \"flex items-center gap-2 w-full px-3 py-1.5 text-sm font-medium text-left rounded cursor-pointer transition-colors text-foreground hover:bg-muted focus:bg-muted outline-none\",\n        destructive && \"text-red-500 hover:text-red-500 hover:bg-red-500/10 focus:bg-red-500/10\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </button>\n  );\n}\n\nexport function DropdownDivider({ className }: { className?: string }) {\n  return <div className={cn(\"h-px bg-border my-1\", className)} />;\n}\n",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

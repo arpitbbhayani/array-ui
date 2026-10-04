@@ -207,6 +207,27 @@ const componentsConfig = [
     file: "src/registry/aui/ui/footer.tsx",
     target: "ui/footer.tsx",
   },
+  {
+    name: "modal",
+    title: "Modal",
+    description: "Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal.",
+    file: "src/registry/aui/ui/modal.tsx",
+    target: "ui/modal.tsx",
+  },
+  {
+    name: "video-embed",
+    title: "VideoEmbed",
+    description: "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling.",
+    file: "src/registry/aui/ui/video-embed.tsx",
+    target: "ui/video-embed.tsx",
+  },
+  {
+    name: "dropdown",
+    title: "Dropdown",
+    description: "Minimal click-trigger dropdown menu with click outside dismissal and actions.",
+    file: "src/registry/aui/ui/dropdown.tsx",
+    target: "ui/dropdown.tsx",
+  },
 ];
 
 export async function buildRegistry() {
