@@ -9,6 +9,7 @@ import {
   Input,
   Kbd,
   Table,
+  SearchBox,
 } from "../../../dist/react.js";
 
 export function ModalDemo() {
@@ -154,6 +155,40 @@ export function TableDemo({ rows }: { rows: { service: string; region: string; p
             ),
           },
         ]}
+      />
+    </div>
+  );
+}
+
+export function SearchBoxDemo() {
+  const [results, setResults] = useState<Array<{ title: string; url: string; description?: string }>>([]);
+  const items = [
+    { title: "Write-Ahead Logging in PostgreSQL", description: "Deep dive into WAL buffers, fsync, and crash recovery.", url: "#blog-article" },
+    { title: "Distributed Consensus with Raft", description: "Leader election, log replication, and safety invariants.", url: "#cover-card" },
+    { title: "Table of Contents Component", description: "Scroll-spy aware outline with depth indentation and active states.", url: "#toc" },
+    { title: "Newsletter Callout", description: "Lead-capture box with email input and social subscription links.", url: "#newsletter" },
+    { title: "Package Manager Switcher", description: "Multi-manager installer switcher with click-to-copy.", url: "#package-manager" },
+  ];
+
+  return (
+    <div style={{ width: "100%", maxWidth: "480px" }}>
+      <SearchBox
+        placeholder="Type 'wal', 'raft', 'toc', 'news', 'pack'..."
+        onSearch={(query) => {
+          const q = query.toLowerCase();
+          setResults(
+            items.filter(
+              (i) =>
+                i.title.toLowerCase().includes(q) ||
+                (i.description && i.description.toLowerCase().includes(q))
+            )
+          );
+        }}
+        results={results}
+        onSelectResult={(item) => {
+          const el = document.querySelector(item.url);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }}
       />
     </div>
   );

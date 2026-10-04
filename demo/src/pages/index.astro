@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo } from "../components/Interactive";
 import HeroDeck from "../components/HeroDeck.astro";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
@@ -30,6 +30,9 @@ import EmptyState from "../../../src/astro/EmptyState.astro";
 import Terminal from "../../../src/astro/Terminal.astro";
 import Toast from "../../../src/astro/Toast.astro";
 import CoverCard from "../../../src/astro/CoverCard.astro";
+import TableOfContents from "../../../src/astro/TableOfContents.astro";
+import SearchBox from "../../../src/astro/SearchBox.astro";
+import Newsletter from "../../../src/astro/Newsletter.astro";
 
 import {
   CodeBlock as ReactCodeBlock,
@@ -45,6 +48,9 @@ import {
   PropertyGrid,
   FileTree,
   PackageManager,
+  TableOfContents as ReactTableOfContents,
+  SearchBox as ReactSearchBox,
+  Newsletter as ReactNewsletter,
 } from "../../../dist/react.js";
 
 const sidebarGroups = [
@@ -71,6 +77,7 @@ const sidebarGroups = [
       { label: "Diff block", href: "#diff-block" },
       { label: "Property grid", href: "#property-grid" },
       { label: "File tree", href: "#file-tree" },
+      { label: "Package manager", href: "#package-manager" },
     ],
   },
   {
@@ -87,6 +94,7 @@ const sidebarGroups = [
     title: "Forms",
     links: [
       { label: "Input", href: "#input" },
+      { label: "Search box", href: "#searchbox" },
       { label: "Select & textarea", href: "#select" },
       { label: "Switch & checkbox", href: "#switch" },
     ],
@@ -121,6 +129,7 @@ const sidebarGroups = [
       { label: "Tabs", href: "#tabs" },
       { label: "Pagination", href: "#pagination" },
       { label: "Accordion", href: "#accordion" },
+      { label: "Table of contents", href: "#toc" },
       { label: "Sidebar & navbar", href: "#sidebar" },
     ],
   },
@@ -130,6 +139,7 @@ const sidebarGroups = [
       { label: "Hero", href: "#hero" },
       { label: "Callouts", href: "#callouts" },
       { label: "Notice box", href: "#notice" },
+      { label: "Newsletter", href: "#newsletter" },
       { label: "Card", href: "#card" },
       { label: "Cover card (og:image)", href: "#cover-card" },
       { label: "Course card", href: "#course" },
@@ -184,7 +194,7 @@ const takeaways = [
     <section id="overview" class="landing" style="position: relative;">
       <div class="landing-copy">
         <div class="spec-row" style="margin-bottom: 0.85rem;">
-          <PingStatus status="operational" label="Array UI · 45 components · v0.1.0" client:load />
+          <PingStatus status="operational" label="Array UI · 48 components · v0.1.0" client:load />
           <Badge variant="light">React</Badge>
           <Badge variant="light">Astro</Badge>
           <Badge variant="light">Plain CSS</Badge>
@@ -316,39 +326,50 @@ const takeaways = [
         <!-- Patterns -->
         <h2 class="docs-h2">Patterns</h2>
         <div class="spec-grid">
-          <Specimen id="blog-article" name="Blog article" description="Long-form reading: 17px prose, 70ch measure, restrained links and code." usage={`<article class="aui-prose">…</article>`} span={2} tone="page">
+          <Specimen id="blog-article" name="Blog article" description="Long-form reading: 17px prose, 70ch measure, restrained links, code, and table of contents." usage={`<div class="aui-layout-sidebar"><article class="aui-prose">…</article><TableOfContents /></div>`} span={2} tone="page">
             <div class="pattern pattern-article">
               <Breadcrumbs items={[{ label: "Blog", href: "#" }, { label: "Databases", href: "#" }, { label: "Write-ahead logging", active: true }]} />
-              <article class="aui-prose">
-                <h1>Why every database writes before it writes</h1>
-                <div class="aui-prose-meta">
-                  <Avatar size="sm" fallback="AB" />
-                  <span><strong style="color:var(--aui-text-secondary)">Arpit Bhayani</strong></span>
-                  <span>·</span><span>Oct 4, 2026</span><span>·</span><span>9 min read</span>
-                  <Badge>Databases</Badge><Badge>Internals</Badge>
-                </div>
-                <p>
-                  A write-ahead log is the simplest idea in storage engineering and the one most systems get subtly wrong.
-                  Before a change touches a data page, the intent is appended to a sequential file, so a crash can be
-                  replayed instead of repaired by hand.
-                </p>
-                <h2>The contract</h2>
-                <p>
-                  The rule has two halves: a page may only be flushed once its log record is durable, and a commit is only
-                  acknowledged after the log is synced. Everything else, including <code>fsync</code> batching and
-                  <a href="#blog-article">group commit</a>, is an optimisation of those two sentences.
-                </p>
-                <blockquote><p>Durability is not a property of the disk. It is a property of the order in which you wait.</p></blockquote>
-                <pre><code>{`wal.append(record)      // sequential, cheap
+              <div class="aui-layout-sidebar" style="margin-top: 1.25rem;">
+                <article class="aui-prose" style="max-width: 100%;">
+                  <h1>Why every database writes before it writes</h1>
+                  <div class="aui-prose-meta">
+                    <Avatar size="sm" fallback="AB" />
+                    <span><strong style="color:var(--aui-text-secondary)">Arpit Bhayani</strong></span>
+                    <span>·</span><span>Oct 4, 2026</span><span>·</span><span>9 min read</span>
+                    <Badge>Databases</Badge><Badge>Internals</Badge>
+                  </div>
+                  <p>
+                    A write-ahead log is the simplest idea in storage engineering and the one most systems get subtly wrong.
+                    Before a change touches a data page, the intent is appended to a sequential file, so a crash can be
+                    replayed instead of repaired by hand.
+                  </p>
+                  <h2 id="the-contract">The contract</h2>
+                  <p>
+                    The rule has two halves: a page may only be flushed once its log record is durable, and a commit is only
+                    acknowledged after the log is synced. Everything else, including <code>fsync</code> batching and
+                    <a href="#blog-article">group commit</a>, is an optimisation of those two sentences.
+                  </p>
+                  <blockquote><p>Durability is not a property of the disk. It is a property of the order in which you wait.</p></blockquote>
+                  <pre><code>{`wal.append(record)      // sequential, cheap
 wal.sync()              // the only expensive call
 page.apply(record)      // safe to do lazily`}</code></pre>
-                <h3>What to measure</h3>
-                <ul>
-                  <li>Sync latency at p50, p99 and p99.9, not just the mean.</li>
-                  <li>Bytes written per transaction, to spot log amplification.</li>
-                  <li>Recovery time after an unclean shutdown.</li>
-                </ul>
-              </article>
+                  <h3 id="what-to-measure">What to measure</h3>
+                  <ul>
+                    <li>Sync latency at p50, p99 and p99.9, not just the mean.</li>
+                    <li>Bytes written per transaction, to spot log amplification.</li>
+                    <li>Recovery time after an unclean shutdown.</li>
+                  </ul>
+                </article>
+                <aside class="aui-sticky-sidebar" style="position: static; max-height: none;">
+                  <TableOfContents
+                    sticky={false}
+                    headings={[
+                      { depth: 2, slug: "the-contract", text: "The contract" },
+                      { depth: 3, slug: "what-to-measure", text: "What to measure" },
+                    ]}
+                  />
+                </aside>
+              </div>
             </div>
           </Specimen>
 
@@ -528,6 +549,10 @@ page.apply(record)      // safe to do lazily`}</code></pre>
               ]}
             />
           </Specimen>
+
+          <Specimen id="package-manager" name="Package manager" description="Multi-manager installer switcher with click-to-copy." usage={`<PackageManager pkg="github:arpitbbhayani/aui" />`} span={2}>
+            <PackageManager client:load pkg="github:arpitbbhayani/aui" />
+          </Specimen>
         </div>
 
         <!-- Actions -->
@@ -615,6 +640,12 @@ page.apply(record)      // safe to do lazily`}</code></pre>
               ]}
             />
             <Textarea label="Notes" placeholder="Rollout notes…" rows={3} />
+          </Specimen>
+
+          <Specimen id="searchbox" name="Search box" description="Debounced search input with shortcut hint and live results dropdown." usage={`<SearchBox placeholder="Search writings and topics…" shortcut="⌘K" />`} span={2}>
+            <div style="max-width: 520px; width: 100%;">
+              <SearchBoxDemo client:load />
+            </div>
           </Specimen>
 
           <Specimen id="switch" name="Switch & checkbox" usage={`<Switch label="Auto-deploy" defaultChecked />`} span={2}>
@@ -801,6 +832,19 @@ page.apply(record)      // safe to do lazily`}</code></pre>
             />
           </Specimen>
 
+          <Specimen id="toc" name="Table of contents" description="Scroll-spy aware outline with depth indentation and active states." usage={`<TableOfContents headings={[{ depth: 2, slug: "overview", text: "Overview" }, …]} />`} span={2}>
+            <TableOfContents
+              sticky={false}
+              headings={[
+                { depth: 2, slug: "overview", text: "Overview & Features" },
+                { depth: 2, slug: "architecture", text: "Architecture & Storage Engine" },
+                { depth: 3, slug: "storage-engine", text: "LSM Tree & MemTable Compaction" },
+                { depth: 3, slug: "wal-internals", text: "Write-Ahead Log Durability" },
+                { depth: 2, slug: "benchmarks", text: "Performance & Recovery Benchmarks" },
+              ]}
+            />
+          </Specimen>
+
           <Specimen id="sidebar" name="Sidebar & navbar" description="The sidebar on the left and the navbar above are live examples." usage={`<Sidebar groups={[{ title, links }]} />`} span={2}>
             <div class="spec-row">
               <Badge variant="light">aui-nav-*</Badge>
@@ -839,6 +883,17 @@ page.apply(record)      // safe to do lazily`}</code></pre>
             <NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
               <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></p>
             </NoticeBox>
+          </Specimen>
+
+          <Specimen id="newsletter" name="Newsletter" description="Lead-capture callout with email input, CTA, and external platform links." usage={`<Newsletter title="Stay in the loop" linkedinUrl="…" substackUrl="…" />`} span={2}>
+            <Newsletter
+              title="Stay in the loop"
+              description="No-fluff engineering essays, database teardowns, and system design insights delivered straight to your inbox."
+              action="#"
+              buttonText="Subscribe"
+              linkedinUrl="https://linkedin.com/in/arpitbhayani"
+              substackUrl="https://arpitbhayani.substack.com"
+            />
           </Specimen>
 
           <Specimen id="card" name="Card" description="Base surface; hover lifts border and shadow." usage={`<Card hoverable>…</Card>`}>
