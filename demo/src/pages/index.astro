@@ -242,7 +242,7 @@ const takeaways = [
   </div>
 
   <div class="aui-container" style="margin-top: 0.65rem;">
-    <dl class="meta-strip aui-corner-ticks">
+    <dl class="meta-strip">
       <div><dt>[00] version</dt><dd>0.1.0</dd></div>
       <div><dt>[01] license</dt><dd>MIT</dd></div>
       <div><dt>[02] components</dt><dd>48</dd></div>
@@ -1319,7 +1319,6 @@ import Navbar from "aui/astro/Navbar.astro";
     const link = map.get(id);
     if (link) {
       link.classList.add("is-active");
-      link.scrollIntoView({ block: "nearest" });
     }
   };
 

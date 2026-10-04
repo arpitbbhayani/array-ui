@@ -117,34 +117,7 @@ if (!derivedHtml && usage) {
     box-shadow: var(--aui-box-shadow);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .spec-preview::before,
-  .spec-preview::after {
-    content: "";
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    pointer-events: none;
-    z-index: 2;
-    opacity: 0.75;
-    transition: border-color 0.15s ease, opacity 0.15s ease;
-  }
-  .spec-preview::before {
-    top: -1px;
-    left: -1px;
-    border-top: 1.5px solid var(--aui-tick-color);
-    border-left: 1.5px solid var(--aui-tick-color);
-  }
-  .spec-preview::after {
-    bottom: -1px;
-    right: -1px;
-    border-bottom: 1.5px solid var(--aui-tick-color);
-    border-right: 1.5px solid var(--aui-tick-color);
-  }
-  .spec:hover .spec-preview::before,
-  .spec:hover .spec-preview::after {
-    border-color: var(--aui-primary);
-    opacity: 1;
-  }
+
   .spec-preview-page { padding: 0; background-color: var(--aui-bg-primary); overflow: hidden; }
   .spec-preview:has(+ .spec-usage-bar) { border-radius: var(--aui-radius-md) var(--aui-radius-md) 0 0; }
   .spec-preview > :first-child { margin-top: 0 !important; }

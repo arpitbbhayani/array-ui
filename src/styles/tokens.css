@@ -51,8 +51,6 @@
   --aui-transition-fast: all 0.08s var(--aui-ease);
   --aui-transition-smooth: all 0.22s var(--aui-ease);
 
-  /* Architectural Framing Ticks */
-  --aui-tick-size: 8px;
 }
 
 /* Light (Architectural Paper / Ledger) */
@@ -68,7 +66,6 @@
   --aui-border-color: #e5e0d3;
   --aui-border-light: #eee9dd;
   --aui-border-strong: #cecaa8;
-  --aui-tick-color: #c4beaf;
   --aui-shadow-xs: 0 1px 2px rgba(25, 20, 15, 0.04);
   --aui-box-shadow: 0 1px 3px rgba(25, 20, 15, 0.05);
   --aui-box-shadow-hover: 0 4px 14px -3px rgba(25, 20, 15, 0.12);
@@ -116,7 +113,6 @@
   --aui-border-color: #24242c;
   --aui-border-light: #1c1c23;
   --aui-border-strong: #383844;
-  --aui-tick-color: #3e3e4a;
   --aui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
   --aui-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   --aui-box-shadow-hover: 0 6px 18px -6px rgba(0, 0, 0, 0.75);

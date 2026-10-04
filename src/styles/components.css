@@ -2845,36 +2845,6 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 @media (max-width: 900px) { .aui-docs { grid-template-columns: minmax(0, 1fr); } .aui-sidebar { display: none; } }
 
 /* ==========================================================================
-   Architectural & Systems Detailing (Corner Ticks & Drafting Accents)
-   ========================================================================== */
-.aui-corner-ticks {
-  position: relative;
-}
-
-.aui-corner-ticks::before,
-.aui-corner-ticks::after {
-  content: "";
-  position: absolute;
-  width: var(--aui-tick-size, 8px);
-  height: var(--aui-tick-size, 8px);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.aui-corner-ticks::before {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid var(--aui-primary);
-  border-left: 2px solid var(--aui-primary);
-}
-
-.aui-corner-ticks::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid var(--aui-primary);
-  border-right: 2px solid var(--aui-primary);
-}
-
 /* Card Gutter Accents */
 .aui-card-gutter {
   border-left: 3px solid var(--aui-primary) !important;
