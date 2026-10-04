@@ -17,7 +17,7 @@
   - 40px grid background pattern with subtle gradients.
   - Editorial typography: `Assistant` (sans) for headings and UI, paired with `Lora` (italic serif) for editorial flair.
   - Signature crimson accent (`#fa0000`), amber maxim callouts (`#cc9900`), and dark card elevation.
-- **Complete Component Suite**: Navbar, Footer, Hero, Buttons, Cards, Social Pills, Maxim Quote, Takeaways Box, Decks Notice Box, Badges, Breadcrumbs, Pricing Card, Course Cards, Newsletter, and Theme Toggles.
+- **Complete Component Suite**: Navbar, Footer, Hero, Buttons, Cards, Social Pills, Maxim Quote, Takeaways Box, Decks Notice Box, Badges, Breadcrumbs, Course Cards, Developer Primitives (PingStatus, DiffBlock, PropertyGrid, FileTree, CommandPalette, PackageManager), and Theme Toggles.
 
 ---
 
@@ -259,51 +259,7 @@ import { CourseCard } from 'aui/react';
 
 ---
 
-### 7. Pricing Card
-Full pricing tier card with curriculum benefits checklist, INR/USD currency display, and enrollment CTA.
-
-```tsx
-import { PricingCard } from 'aui/react';
-
-<PricingCard
-  title="System Design Fellowship"
-  duration="8 Weeks"
-  cohortDate="Starts Next Month"
-  cohortTimings="Saturdays & Sundays, 7:00 PM IST"
-  benefits={[
-    "Live interactive weekend classes with real-time Q&A",
-    "Lifetime recordings and slides",
-  ]}
-  valueProposition={[
-    "Verified LinkedIn certificate",
-    "Hands-on architectural capstone project",
-  ]}
-  priceInr="₹29,999"
-  priceUsd="$420"
-  ctaText="Enroll Now →"
-  ctaHref="https://arpitbhayani.me"
-/>
-```
-
----
-
-### 8. Newsletter
-Newsletter box with avatar, reader stats, and LinkedIn / Substack subscription CTAs.
-
-```tsx
-import { Newsletter } from 'aui/react';
-
-<Newsletter
-  title="Arpit's Newsletter"
-  subtitle="Newsletter for the curious engineers"
-  statsText="Read by 40,000+ engineers"
-  avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
-/>
-```
-
----
-
-### 9. Form Controls (Input, Textarea, Select, Switch, Checkbox)
+### 7. Form Controls (Input, Textarea, Select, Switch, Checkbox)
 ```tsx
 import { Input, Switch, Checkbox, Select, Textarea } from 'aui/react';
 

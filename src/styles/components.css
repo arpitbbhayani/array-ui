@@ -62,6 +62,10 @@
   white-space: nowrap;
 }
 
+.aui-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
 .aui-btn:disabled,
 .aui-btn.is-disabled {
   opacity: 0.6;
@@ -71,18 +75,18 @@
 
 /* Sizes */
 .aui-btn-sm {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.85rem;
+  padding: 0.22rem 0.6rem;
+  font-size: 0.82rem;
 }
 
 .aui-btn-md {
-  padding: 0.6rem 1.25rem;
-  font-size: 0.95rem;
+  padding: 0.38rem 0.85rem;
+  font-size: 0.9rem;
 }
 
 .aui-btn-lg {
-  padding: 0.8rem 1.6rem;
-  font-size: 1.1rem;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.98rem;
 }
 
 /* Variants */
@@ -166,14 +170,14 @@
   background-color: var(--aui-bg-secondary);
   border: 1px solid var(--aui-border-color);
   border-radius: var(--aui-radius-lg);
-  padding: 1.5rem;
-  box-shadow: var(--aui-box-shadow);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow);
   transition: var(--aui-transition);
   position: relative;
 }
 
 .aui-card-hover:hover {
-  box-shadow: var(--aui-box-shadow-hover);
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow-hover);
   transform: translateY(-2px);
   border-color: var(--aui-border-light);
 }
@@ -203,7 +207,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4rem;
+  height: 3.25rem;
 }
 
 .aui-nav-brand {
@@ -651,137 +655,6 @@
   color: var(--aui-text-primary);
   font-weight: 600;
   pointer-events: none;
-}
-
-/* ==========================================================================
-   Pricing Card
-   ========================================================================== */
-.aui-pricing-card {
-  background-color: var(--aui-bg-secondary);
-  border: 1px solid var(--aui-border-color);
-  border-radius: var(--aui-radius-lg);
-  padding: 2rem;
-  box-shadow: var(--aui-box-shadow);
-}
-
-.aui-pricing-title {
-  color: var(--aui-primary);
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem 0;
-}
-
-[data-theme="dark"] .aui-pricing-title,
-.dark .aui-pricing-title {
-  color: var(--aui-primary-accent);
-}
-
-.aui-pricing-meta {
-  font-size: 1rem;
-  color: var(--aui-text-muted);
-  margin-bottom: 1.25rem;
-}
-
-.aui-pricing-divider {
-  border: none;
-  border-top: 1px solid var(--aui-border-light);
-  margin: 1.25rem 0;
-}
-
-.aui-pricing-benefits {
-  margin-bottom: 1.5rem;
-}
-
-.aui-pricing-benefits ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.aui-pricing-benefits li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 0.65rem;
-  font-size: 0.95rem;
-}
-
-.aui-pricing-price {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: var(--aui-primary);
-  line-height: 1.1;
-  margin: 1rem 0;
-}
-
-[data-theme="dark"] .aui-pricing-price,
-.dark .aui-pricing-price {
-  color: var(--aui-primary-accent);
-}
-
-.aui-pricing-price-usd {
-  font-size: 1.25rem;
-  color: var(--aui-text-muted);
-  margin-left: 0.5rem;
-  font-weight: 500;
-}
-
-.aui-pricing-tax-note {
-  font-size: 0.85rem;
-  color: var(--aui-text-muted);
-  font-weight: 400;
-}
-
-/* ==========================================================================
-   Newsletter Box
-   ========================================================================== */
-.aui-newsletter {
-  text-align: center;
-  padding: 3rem 1.5rem;
-  max-width: 680px;
-  margin: 0 auto;
-}
-
-.aui-newsletter-avatar {
-  width: 140px;
-  height: 140px;
-  border-radius: var(--aui-radius-avatar);
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--aui-border-color);
-  box-shadow: var(--aui-box-shadow);
-}
-
-.aui-newsletter-title {
-  color: var(--aui-primary);
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem 0;
-}
-
-[data-theme="dark"] .aui-newsletter-title,
-.dark .aui-newsletter-title {
-  color: var(--aui-primary-accent);
-}
-
-.aui-newsletter-subtitle {
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--aui-text-secondary);
-  margin: 0 0 0.5rem 0;
-}
-
-.aui-newsletter-stats {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--aui-text-primary);
-  margin: 0 0 1.25rem 0;
-}
-
-.aui-newsletter-desc {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: var(--aui-text-primary);
-  margin-bottom: 1.75rem;
 }
 
 /* ==========================================================================
@@ -1690,8 +1563,6 @@ h1, h2, h3, h4,
 .aui-nav-title,
 .aui-hero-title,
 .aui-hero-subtitle,
-.aui-newsletter-title,
-.aui-pricing-title,
 .aui-project-card-title,
 .aui-modal-title,
 .aui-timeline-title,
@@ -1767,12 +1638,10 @@ h1, h2, h3, h4,
 
 /* ---- Surfaces ------------------------------------------------------------ */
 .aui-card,
-.aui-pricing-card,
 .aui-stat-card,
 .aui-notice-box,
 .aui-accordion,
 .aui-table-wrapper,
-.aui-newsletter,
 .aui-modal,
 .aui-toast,
 .aui-codeblock {
@@ -1781,26 +1650,18 @@ h1, h2, h3, h4,
 }
 
 .aui-card,
-.aui-pricing-card,
 .aui-stat-card,
-.aui-newsletter,
 .aui-accordion,
 .aui-table-wrapper { background-color: var(--aui-bg-secondary); border-radius: var(--aui-radius-lg); }
 
-.aui-card { padding: 1.15rem; }
+.aui-card { padding: 0.9rem 1.05rem; }
 .aui-card-hover:hover { transform: none; border-color: var(--aui-border-strong); box-shadow: var(--aui-box-shadow-hover); }
 
-.aui-stat-card { padding: 1rem 1.15rem; }
-.aui-stat-value { font-family: var(--aui-font-heading); font-size: 1.85rem; font-weight: 600; letter-spacing: -0.03em; color: var(--aui-text-secondary); font-variant-numeric: tabular-nums; }
+.aui-stat-card { padding: 0.7rem 0.9rem; }
+.aui-stat-value { font-family: var(--aui-font-heading); font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; color: var(--aui-text-secondary); font-variant-numeric: tabular-nums; }
 [data-theme="dark"] .aui-stat-value, .dark .aui-stat-value { color: var(--aui-text-secondary); }
-.aui-stat-label { font-size: 0.86rem; font-weight: 600; color: var(--aui-text-muted); }
-.aui-stat-desc { font-size: 0.86rem; color: var(--aui-text-muted); }
-
-.aui-pricing-card { padding: 1.5rem; }
-.aui-pricing-title { font-size: 1.35rem; color: var(--aui-text-secondary); }
-.aui-pricing-price { font-family: var(--aui-font-heading); font-size: 1.9rem; font-weight: 600; letter-spacing: -0.03em; color: var(--aui-text-secondary); margin: 0.75rem 0; }
-[data-theme="dark"] .aui-pricing-title, .dark .aui-pricing-title,
-[data-theme="dark"] .aui-pricing-price, .dark .aui-pricing-price { color: var(--aui-text-secondary); }
+.aui-stat-label { font-size: 0.84rem; font-weight: 600; color: var(--aui-text-muted); }
+.aui-stat-desc { font-size: 0.82rem; color: var(--aui-text-muted); }
 
 /* ---- Navbar -------------------------------------------------------------- */
 .aui-nav-wrapper {
@@ -1810,7 +1671,7 @@ h1, h2, h3, h4,
   border-bottom: 1px solid var(--aui-border-color);
 }
 
-.aui-nav { height: 3.5rem; }
+.aui-nav { height: 3.25rem; }
 .aui-nav-title { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.04em; }
 
 .aui-nav-item {
@@ -2093,12 +1954,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-timeline-title { font-size: 1.05rem; font-weight: 600; }
 .aui-timeline-body { font-size: 0.97rem; }
 
-/* ---- Newsletter, avatar, skeleton --------------------------------------- */
-.aui-newsletter { padding: 2rem 1.5rem; }
-.aui-newsletter-avatar { width: 96px; height: 96px; margin-bottom: 1rem; border: 1px solid var(--aui-border-color); box-shadow: none; }
-.aui-newsletter-title { font-size: 1.6rem; font-weight: 700; color: var(--aui-text-secondary); }
-[data-theme="dark"] .aui-newsletter-title, .dark .aui-newsletter-title { color: var(--aui-text-secondary); }
-.aui-newsletter-subtitle { font-family: var(--aui-font-heading); font-size: 1.1rem; font-weight: 500; }
+/* ---- Avatar, skeleton ---------------------------------------------------- */
 
 .aui-avatar { border: 1px solid var(--aui-border-color); box-shadow: none; border-radius: var(--aui-radius-md); }
 .aui-avatar-group .aui-avatar { border: 2px solid var(--aui-bg-secondary); }
@@ -2284,3 +2140,493 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-accent-pink { --aui-accent: var(--aui-c-pink); }
 .aui-accent-cyan { --aui-accent: var(--aui-c-cyan); }
 .aui-stat-card[class*="aui-accent-"] .aui-stat-value { color: var(--aui-accent); }
+
+/* ==========================================================================
+   Visual Utilities: Canvas Grid & Ambient Glow
+   ========================================================================== */
+.aui-canvas-grid {
+  position: relative;
+  background-image: radial-gradient(var(--aui-grid-dot, rgba(0, 0, 0, 0.08)) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.aui-ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, var(--aui-glow-brand, rgba(229, 0, 15, 0.12)), transparent 70%);
+  filter: blur(50px);
+  z-index: 0;
+}
+
+/* ==========================================================================
+   PingStatus (Live Service Status Indicator)
+   ========================================================================== */
+.aui-ping-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--aui-font-sans);
+  font-size: 0.88rem;
+  color: var(--aui-text-primary);
+}
+
+.aui-ping {
+  position: relative;
+  display: inline-flex;
+  width: 0.625rem;
+  height: 0.625rem;
+  flex-shrink: 0;
+}
+
+.aui-ping-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  opacity: 0.75;
+  animation: aui-ping-pulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.aui-ping-dot {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+}
+
+@keyframes aui-ping-pulse {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.aui-ping-success .aui-ping-ring,
+.aui-ping-success .aui-ping-dot { background-color: var(--aui-success); }
+
+.aui-ping-warning .aui-ping-ring,
+.aui-ping-warning .aui-ping-dot { background-color: var(--aui-warning); }
+
+.aui-ping-danger .aui-ping-ring,
+.aui-ping-danger .aui-ping-dot,
+.aui-ping-error .aui-ping-ring,
+.aui-ping-error .aui-ping-dot { background-color: var(--aui-danger); }
+
+.aui-ping-info .aui-ping-ring,
+.aui-ping-info .aui-ping-dot { background-color: var(--aui-info); }
+
+.aui-ping-neutral .aui-ping-ring,
+.aui-ping-neutral .aui-ping-dot { background-color: var(--aui-text-muted); }
+
+/* Sizes */
+.aui-ping-sm { width: 0.5rem; height: 0.5rem; }
+.aui-ping-md { width: 0.625rem; height: 0.625rem; }
+.aui-ping-lg { width: 0.75rem; height: 0.75rem; }
+
+/* ==========================================================================
+   DiffBlock (Unified Git Diff / Patch Viewer)
+   ========================================================================== */
+.aui-diff {
+  background-color: var(--aui-pre-bg);
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-lg);
+  overflow: hidden;
+  font-family: var(--aui-font-mono);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow);
+}
+
+.aui-diff-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.85rem;
+  background-color: var(--aui-bg-secondary);
+  border-bottom: 1px solid var(--aui-border-color);
+  font-size: 0.8rem;
+  color: var(--aui-text-secondary);
+  font-weight: 500;
+}
+
+.aui-diff-file {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.aui-diff-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+}
+
+.aui-diff-stat-add { color: var(--aui-success); font-weight: 600; }
+.aui-diff-stat-del { color: var(--aui-danger); font-weight: 600; }
+
+.aui-diff-content {
+  overflow-x: auto;
+  padding: 0.4rem 0;
+  margin: 0;
+}
+
+.aui-diff-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.08rem 0.75rem;
+  white-space: pre;
+}
+
+.aui-diff-line-add {
+  background-color: rgba(5, 150, 105, 0.16);
+  color: var(--aui-success);
+}
+
+.aui-diff-line-del {
+  background-color: rgba(220, 38, 38, 0.16);
+  color: var(--aui-danger);
+}
+
+.aui-diff-line-normal {
+  color: var(--aui-pre-text);
+}
+
+.aui-diff-line-meta {
+  color: var(--aui-text-muted);
+  background-color: rgba(255, 255, 255, 0.03);
+  font-style: italic;
+}
+
+.aui-diff-gutter {
+  user-select: none;
+  min-width: 2.5rem;
+  color: var(--aui-text-muted);
+  opacity: 0.6;
+  text-align: right;
+  padding-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.aui-diff-symbol {
+  user-select: none;
+  width: 1.25rem;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+.aui-diff-text {
+  flex-grow: 1;
+}
+
+/* ==========================================================================
+   PropertyGrid (Entity / Metadata Inspector)
+   ========================================================================== */
+.aui-property-grid {
+  background-color: var(--aui-bg-secondary);
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow);
+}
+
+.aui-property-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--aui-border-light);
+  font-size: 0.88rem;
+  gap: 1rem;
+}
+
+.aui-property-row:last-child {
+  border-bottom: none;
+}
+
+.aui-property-row:hover {
+  background-color: var(--aui-clickable-hover);
+}
+
+.aui-property-key {
+  font-family: var(--aui-font-sans);
+  color: var(--aui-text-muted);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.aui-property-val {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--aui-font-mono);
+  color: var(--aui-text-secondary);
+  font-size: 0.84rem;
+  word-break: break-all;
+}
+
+.aui-property-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--aui-text-muted);
+  border-radius: var(--aui-radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.aui-property-copy-btn:hover {
+  color: var(--aui-text-secondary);
+  background-color: var(--aui-clickable-active);
+}
+
+/* ==========================================================================
+   FileTree (Directory & File Structure Explorer)
+   ========================================================================== */
+.aui-filetree {
+  background-color: var(--aui-bg-secondary);
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-lg);
+  padding: 0.75rem 0.5rem;
+  font-family: var(--aui-font-mono);
+  font-size: 0.84rem;
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow);
+  user-select: none;
+}
+
+.aui-filetree-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: var(--aui-radius-md);
+  color: var(--aui-text-primary);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.aui-filetree-item:hover {
+  background-color: var(--aui-clickable-hover);
+  color: var(--aui-text-secondary);
+}
+
+.aui-filetree-item.is-selected {
+  background-color: var(--aui-bg-tertiary);
+  color: var(--aui-text-secondary);
+  font-weight: 600;
+}
+
+.aui-filetree-icon {
+  display: inline-flex;
+  align-items: center;
+  color: var(--aui-text-muted);
+  flex-shrink: 0;
+}
+
+.aui-filetree-badge {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--aui-text-muted);
+  background-color: var(--aui-bg-tertiary);
+  padding: 0.05rem 0.35rem;
+  border-radius: var(--aui-radius-sm);
+}
+
+.aui-filetree-children {
+  margin-left: 1rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--aui-border-color);
+}
+
+/* ==========================================================================
+   CommandPalette (⌘K Spotlight Quick Search)
+   ========================================================================== */
+.aui-command-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+  animation: aui-fade-in 0.15s ease-out;
+}
+
+.aui-command-dialog {
+  width: 100%;
+  max-width: 560px;
+  background-color: var(--aui-bg-primary);
+  border: 1px solid var(--aui-border-strong);
+  border-radius: var(--aui-radius-xl);
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow-lg);
+  overflow: hidden;
+  animation: aui-slide-down 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aui-command-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--aui-border-color);
+}
+
+.aui-command-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--aui-font-sans);
+  font-size: 1.05rem;
+  color: var(--aui-text-secondary);
+}
+
+.aui-command-input::placeholder {
+  color: var(--aui-text-muted);
+}
+
+.aui-command-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.aui-command-group-title {
+  padding: 0.4rem 0.6rem 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--aui-text-muted);
+}
+
+.aui-command-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--aui-radius-md);
+  font-size: 0.92rem;
+  color: var(--aui-text-primary);
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.aui-command-item:hover,
+.aui-command-item.is-selected {
+  background-color: var(--aui-clickable-hover);
+  color: var(--aui-text-secondary);
+}
+
+.aui-command-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--aui-bg-secondary);
+  border-top: 1px solid var(--aui-border-color);
+  font-size: 0.78rem;
+  color: var(--aui-text-muted);
+}
+
+/* ==========================================================================
+   PackageManager Switcher (Hero CLI Tool)
+   ========================================================================== */
+.aui-pm-switcher {
+  background-color: var(--aui-bg-secondary);
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow);
+}
+
+.aui-pm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.5rem;
+  background-color: var(--aui-bg-tertiary);
+  border-bottom: 1px solid var(--aui-border-color);
+}
+
+.aui-pm-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.aui-pm-tab {
+  padding: 0.2rem 0.6rem;
+  font-family: var(--aui-font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--aui-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--aui-radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.aui-pm-tab:hover {
+  color: var(--aui-text-secondary);
+}
+
+.aui-pm-tab.is-active {
+  color: var(--aui-text-secondary);
+  background-color: var(--aui-bg-primary);
+  box-shadow: var(--aui-shadow-xs);
+}
+
+.aui-pm-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  font-family: var(--aui-font-mono);
+  font-size: 0.86rem;
+  background-color: var(--aui-pre-bg);
+  color: var(--aui-pre-text);
+  gap: 1rem;
+}
+
+.aui-pm-code {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.aui-pm-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--aui-font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--aui-text-muted);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--aui-radius-md);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  flex-shrink: 0;
+}
+
+.aui-pm-copy-btn:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.aui-pm-copy-btn.is-copied {
+  color: var(--aui-success);
+  border-color: var(--aui-success);
+}

@@ -1,0 +1,30 @@
+---
+interface Props {
+  variant?: "success" | "warning" | "danger" | "error" | "info" | "neutral";
+  size?: "sm" | "md" | "lg";
+  label?: string;
+  pulse?: boolean;
+  class?: string;
+}
+
+const {
+  variant = "success",
+  size = "md",
+  label,
+  pulse = true,
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const variantClass = `aui-ping-${variant}`;
+const sizeClass = `aui-ping-${size}`;
+---
+
+<div class:list={["aui-ping-wrapper", className]} {...props}>
+  <span class:list={["aui-ping", variantClass, sizeClass]}>
+    {pulse && <span class="aui-ping-ring" />}
+    <span class="aui-ping-dot" />
+  </span>
+  {label && <span>{label}</span>}
+  <slot />
+</div>

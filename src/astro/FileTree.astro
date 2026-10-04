@@ -1,0 +1,62 @@
+---
+import type { FileTreeNode } from "../react/FileTree/FileTree";
+
+interface Props {
+  data: FileTreeNode[];
+  class?: string;
+}
+
+const { data, class: className = "", ...props } = Astro.props;
+---
+
+<div class:list={["aui-filetree", className]} {...props}>
+  {data.map((node) => {
+    const isFolder = node.type === "folder" || (node.children && node.children.length > 0);
+    return (
+      <div class="aui-filetree-node">
+        <div class="aui-filetree-item">
+          <span class="aui-filetree-icon">
+            {isFolder ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            ) : (
+              <span style="display:inline-block;width:13px;" />
+            )}
+          </span>
+          <span class="aui-filetree-icon">
+            {isFolder ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                <polyline points="13 2 13 9 20 9" />
+              </svg>
+            )}
+          </span>
+          <span class="aui-filetree-name">{node.name}</span>
+          {node.badge && <span class="aui-filetree-badge">{node.badge}</span>}
+        </div>
+        {isFolder && node.children && (
+          <div class="aui-filetree-children">
+            {node.children.map((child) => (
+              <div class="aui-filetree-item">
+                <span class="aui-filetree-icon" style="width:13px;" />
+                <span class="aui-filetree-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                    <polyline points="13 2 13 9 20 9" />
+                  </svg>
+                </span>
+                <span class="aui-filetree-name">{child.name}</span>
+                {child.badge && <span class="aui-filetree-badge">{child.badge}</span>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  })}
+</div>

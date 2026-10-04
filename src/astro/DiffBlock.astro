@@ -1,0 +1,65 @@
+---
+import { parseDiff, type DiffLine } from "../react/DiffBlock/DiffBlock";
+
+interface Props {
+  file?: string;
+  diff?: string;
+  lines?: DiffLine[];
+  class?: string;
+}
+
+const { file, diff, lines: customLines, class: className = "", ...props } = Astro.props;
+
+const parsed = diff ? parseDiff(diff) : { lines: customLines || [], adds: 0, dels: 0 };
+const lines = customLines || parsed.lines;
+const adds = customLines
+  ? customLines.filter((l) => l.type === "add").length
+  : parsed.adds;
+const dels = customLines
+  ? customLines.filter((l) => l.type === "del").length
+  : parsed.dels;
+---
+
+<div class:list={["aui-diff", className]} {...props}>
+  {file && (
+    <div class="aui-diff-header">
+      <div class="aui-diff-file">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+          <polyline points="13 2 13 9 20 9" />
+        </svg>
+        <span>{file}</span>
+      </div>
+      <div class="aui-diff-stats">
+        {adds > 0 && <span class="aui-diff-stat-add">+{adds}</span>}
+        {dels > 0 && <span class="aui-diff-stat-del">-{dels}</span>}
+      </div>
+    </div>
+  )}
+  <div class="aui-diff-content">
+    {lines.map((l) => {
+      let lineClass = "aui-diff-line-normal";
+      let symbol = " ";
+      if (l.type === "add") {
+        lineClass = "aui-diff-line-add";
+        symbol = "+";
+      } else if (l.type === "del") {
+        lineClass = "aui-diff-line-del";
+        symbol = "-";
+      } else if (l.type === "meta") {
+        lineClass = "aui-diff-line-meta";
+        symbol = "@";
+      }
+
+      return (
+        <div class:list={["aui-diff-line", lineClass]}>
+          <span class="aui-diff-gutter">
+            {l.oldNum ?? " "} {l.newNum ?? " "}
+          </span>
+          <span class="aui-diff-symbol">{symbol}</span>
+          <span class="aui-diff-text">{l.content}</span>
+        </div>
+      );
+    })}
+  </div>
+</div>

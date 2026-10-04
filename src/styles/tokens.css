@@ -1,13 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
   /* Fonts */
   --aui-font-sans: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --aui-font-heading: "Space Grotesk", "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --aui-font-heading: "Plus Jakarta Sans", "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --aui-font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
-  --aui-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --aui-font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
   /* Brand */
   --aui-primary: #e5000f;
@@ -67,6 +67,7 @@
   --aui-box-shadow: 0 1px 2px rgba(11, 11, 15, 0.05);
   --aui-box-shadow-hover: 0 4px 14px -4px rgba(11, 11, 15, 0.14);
   --aui-box-shadow-lg: 0 20px 40px -12px rgba(11, 11, 15, 0.28);
+  --aui-card-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
   --aui-inset-highlight: inset 0 0 0 0 transparent;
   --aui-clickable-hover: #f4f4f6;
   --aui-clickable-active: #e9e9ed;
@@ -74,10 +75,12 @@
   --aui-maxim-border: #cfcfd6;
   --aui-takeaways-bg: #f6f6f7;
   --aui-takeaways-border: #e4e4e8;
-  --aui-grid-color: transparent;
-  --aui-grid-major: transparent;
-  --aui-dot-color: transparent;
-  --aui-glow: transparent;
+  --aui-grid-color: rgba(0, 0, 0, 0.05);
+  --aui-grid-dot: rgba(0, 0, 0, 0.08);
+  --aui-grid-major: rgba(0, 0, 0, 0.08);
+  --aui-dot-color: rgba(0, 0, 0, 0.08);
+  --aui-glow: rgba(229, 0, 15, 0.05);
+  --aui-glow-brand: rgba(229, 0, 15, 0.06);
   --aui-link: #1d4ed8;
   --aui-link-hover: #1e40af;
   --aui-ring: rgba(37, 99, 235, 0.35);
@@ -111,12 +114,20 @@
   --aui-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   --aui-box-shadow-hover: 0 6px 18px -6px rgba(0, 0, 0, 0.7);
   --aui-box-shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.85);
+  --aui-card-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  --aui-inset-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   --aui-clickable-hover: #1c1c21;
   --aui-clickable-active: #26262c;
   --aui-maxim-bg: transparent;
   --aui-maxim-border: #3a3a43;
   --aui-takeaways-bg: #18181c;
   --aui-takeaways-border: #26262c;
+  --aui-grid-color: rgba(255, 255, 255, 0.04);
+  --aui-grid-dot: rgba(255, 255, 255, 0.07);
+  --aui-grid-major: rgba(255, 255, 255, 0.07);
+  --aui-dot-color: rgba(255, 255, 255, 0.07);
+  --aui-glow: rgba(229, 0, 15, 0.12);
+  --aui-glow-brand: rgba(229, 0, 15, 0.14);
   --aui-link: #7fb0ff;
   --aui-link-hover: #a9c9ff;
   --aui-ring: rgba(127, 176, 255, 0.4);

@@ -14,7 +14,6 @@ import NoticeBox from "../../../src/astro/NoticeBox.astro";
 import Badge from "../../../src/astro/Badge.astro";
 import Breadcrumbs from "../../../src/astro/Breadcrumbs.astro";
 import CourseCard from "../../../src/astro/CourseCard.astro";
-import Newsletter from "../../../src/astro/Newsletter.astro";
 import Alert from "../../../src/astro/Alert.astro";
 import StatCard from "../../../src/astro/StatCard.astro";
 import Timeline from "../../../src/astro/Timeline.astro";
@@ -31,7 +30,6 @@ import Terminal from "../../../src/astro/Terminal.astro";
 import Toast from "../../../src/astro/Toast.astro";
 
 import {
-  PricingCard as ReactPricingCard,
   CodeBlock as ReactCodeBlock,
   Skeleton,
   Avatar,
@@ -40,6 +38,11 @@ import {
   Checkbox,
   Select,
   Textarea,
+  PingStatus,
+  DiffBlock,
+  PropertyGrid,
+  FileTree,
+  PackageManager,
 } from "../../../dist/react.js";
 
 const sidebarGroups = [
@@ -57,6 +60,15 @@ const sidebarGroups = [
       { label: "Colors", href: "#colors" },
       { label: "Typography", href: "#typography" },
       { label: "Radius & elevation", href: "#elevation" },
+    ],
+  },
+  {
+    title: "Developer",
+    links: [
+      { label: "Ping status", href: "#ping-status" },
+      { label: "Diff block", href: "#diff-block" },
+      { label: "Property grid", href: "#property-grid" },
+      { label: "File tree", href: "#file-tree" },
     ],
   },
   {
@@ -118,8 +130,6 @@ const sidebarGroups = [
       { label: "Notice box", href: "#notice" },
       { label: "Card", href: "#card" },
       { label: "Course card", href: "#course" },
-      { label: "Pricing card", href: "#pricing" },
-      { label: "Newsletter", href: "#newsletter" },
       { label: "Social pill", href: "#social" },
       { label: "Divider", href: "#divider" },
     ],
@@ -167,8 +177,8 @@ const takeaways = [
 
 <Layout>
   <!-- Landing -->
-  <div class="aui-container">
-    <section id="overview" class="landing">
+  <div class="aui-container aui-canvas-grid" style="border-radius: var(--aui-radius-lg); margin-top: 0.5rem;">
+    <section id="overview" class="landing" style="position: relative;">
       <div class="landing-copy">
         <div class="spec-row" style="margin-bottom: 1rem;">
           <Badge variant="light">v1.0.0</Badge>
@@ -182,24 +192,28 @@ const takeaways = [
           comfortable where you need to read.
         </p>
         <div class="spec-row" style="margin-bottom: 1.25rem;">
-          <Button href="#buttons" variant="primary" size="lg">Browse components</Button>
+          <Button href="#ping-status" variant="primary" size="lg">Explore dev tools</Button>
           <Button href="#blog-article" variant="secondary" size="lg">See patterns</Button>
         </div>
         <p class="landing-hint">
-          Toggle theme with <Kbd keys={["⌘", "D"]} /> or the button in the header.
+          Toggle theme <Kbd keys={["⌘", "D"]} /> · Search <Kbd keys={["⌘", "K"]} /> · Jump sections <Kbd>J</Kbd> / <Kbd>K</Kbd>
         </p>
       </div>
 
-      <div class="landing-preview">
-        <Terminal
-          title="~/my-app"
-          lines={[
-            "npm install github:arpitbbhayani/aui",
-            { text: "added 1 package in 2s", kind: "out" },
-            "echo \"import 'aui/styles.css'\" >> src/main.ts",
-            { text: "✓ ready — 43 components, light + dark, 0 runtime deps", kind: "ok" },
-          ]}
-        />
+      <div class="landing-preview" style="position: relative;">
+        <div class="aui-ambient-glow" style="width: 280px; height: 160px; top: -20px; right: 20px;"></div>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;position:relative;z-index:1;">
+          <PackageManager client:load />
+          <Terminal
+            title="~/my-app"
+            lines={[
+              "npm install github:arpitbbhayani/aui",
+              { text: "added 1 package in 2s", kind: "out" },
+              "echo \"import 'aui/styles.css'\" >> src/main.ts",
+              { text: "✓ ready — 45 components, light + dark, 0 runtime deps", kind: "ok" },
+            ]}
+          />
+        </div>
       </div>
     </section>
   </div>
@@ -208,13 +222,28 @@ const takeaways = [
     <dl class="meta-strip">
       <div><dt>version</dt><dd>1.0.0</dd></div>
       <div><dt>license</dt><dd>MIT</dd></div>
-      <div><dt>components</dt><dd>43</dd></div>
+      <div><dt>components</dt><dd>45</dd></div>
       <div><dt>runtime deps</dt><dd>0</dd></div>
       <div><dt>themes</dt><dd>light · dark</dd></div>
     </dl>
   </div>
 
   <div class="aui-container">
+    <!-- Mobile Jump Selector -->
+    <div class="mobile-jump-bar">
+      <span class="mobile-jump-label">Jump to section:</span>
+      <select class="mobile-jump-select" onchange="if(this.value) window.location.hash = this.value;">
+        <option value="">Select component / section...</option>
+        {sidebarGroups.map((g) => (
+          <optgroup label={g.title}>
+            {g.links.map((l) => (
+              <option value={l.href}>{l.label}</option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
+    </div>
+
     <div class="aui-docs">
       <Sidebar groups={sidebarGroups} />
 
@@ -374,6 +403,92 @@ page.apply(record)      // safe to do lazily`}</code></pre>
                 <div class="elev" style={`box-shadow: var(${v});`}>{label}</div>
               ))}
             </div>
+          </Specimen>
+        </div>
+
+        <!-- Developer Primitives -->
+        <h2 class="docs-h2">Developer Primitives</h2>
+        <div class="spec-grid">
+          <Specimen id="ping-status" name="Ping status" description="Live heartbeat indicator with smooth CSS pulse." usage={`<PingStatus variant="success" label="Operational" />`}>
+            <div class="spec-col" style="gap:1rem;">
+              <div class="spec-row" style="gap:1.5rem;">
+                <PingStatus variant="success" label="Operational" client:load />
+                <PingStatus variant="warning" label="Degraded lag" client:load />
+                <PingStatus variant="danger" label="Cluster outage" client:load />
+                <PingStatus variant="info" label="Deploying" client:load />
+              </div>
+              <div class="spec-row" style="gap:1.5rem;padding-top:0.4rem;border-top:1px solid var(--aui-border-light);">
+                <span style="font-size:0.8rem;color:var(--aui-text-muted);">Sizes:</span>
+                <PingStatus size="sm" variant="success" label="sm · 8px" client:load />
+                <PingStatus size="md" variant="success" label="md · 10px" client:load />
+                <PingStatus size="lg" variant="success" label="lg · 12px" client:load />
+              </div>
+            </div>
+          </Specimen>
+
+          <Specimen id="property-grid" name="Property grid" description="Dense inspector for infrastructure entities with click-to-copy." usage={`<PropertyGrid items={[…]} />`}>
+            <PropertyGrid
+              client:load
+              items={[
+                { label: "Cluster ID", value: "cls_01HX98Z", copyValue: "cls_01HX98Z" },
+                { label: "Region", value: "eu-west-1 (Ireland)" },
+                { label: "Kubernetes", value: "v1.31.2-eks" },
+                { label: "VPC CIDR", value: "10.140.0.0/16", copyValue: "10.140.0.0/16" },
+                { label: "TLS Version", value: "TLS 1.3 (X25519)" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="diff-block" name="Diff block" description="Unified git patch block with syntax additions and deletions." usage={`<DiffBlock file="migrations/0042.sql" diff={…} />`} span={2}>
+            <DiffBlock
+              client:load
+              file="migrations/0042_cluster_status.sql"
+              diff={`@@ -12,7 +12,8 @@
+ id: uuid PRIMARY KEY,
+ created_at: timestamp NOT NULL DEFAULT now(),
+-status: varchar(32) DEFAULT 'pending',
++status: cluster_status NOT NULL DEFAULT 'provisioning',
++replicas: integer NOT NULL DEFAULT 3,
+ region: text NOT NULL`}
+            />
+          </Specimen>
+
+          <Specimen id="file-tree" name="File tree" description="Interactive, collapsible directory and file hierarchy." usage={`<FileTree data={[…]} />`} span={2}>
+            <FileTree
+              client:load
+              data={[
+                {
+                  name: "src",
+                  type: "folder",
+                  defaultOpen: true,
+                  children: [
+                    {
+                      name: "components",
+                      type: "folder",
+                      defaultOpen: true,
+                      children: [
+                        { name: "Button.tsx", type: "file", badge: "React" },
+                        { name: "DiffBlock.tsx", type: "file", badge: "React" },
+                        { name: "PingStatus.astro", type: "file", badge: "Astro" },
+                      ],
+                    },
+                    {
+                      name: "styles",
+                      type: "folder",
+                      defaultOpen: true,
+                      children: [
+                        { name: "tokens.css", type: "file" },
+                        { name: "components.css", type: "file" },
+                      ],
+                    },
+                    { name: "index.ts", type: "file" },
+                  ],
+                },
+                { name: "package.json", type: "file", badge: "1.0.0" },
+                { name: "tsconfig.json", type: "file" },
+                { name: "README.md", type: "file" },
+              ]}
+            />
           </Specimen>
         </div>
 
@@ -707,33 +822,6 @@ page.apply(record)      // safe to do lazily`}</code></pre>
               />
             </div>
           </Specimen>
-
-          <Specimen id="pricing" name="Pricing card" usage={`<PricingCard title price benefits … />`}>
-            <ReactPricingCard
-              title="System Design Fellowship"
-              duration="8 Weeks"
-              cohortDate="Starts next month"
-              cohortTimings="Sat & Sun, 7:00 PM IST"
-              benefits={["Live weekend classes", "Lifetime recordings", "Mock interviews", "1-on-1 mentorship"]}
-              valueProposition={["Verified certificate", "Capstone reviewed by staff engineers"]}
-              priceInr="₹29,999"
-              priceUsd="$420"
-              ctaText="Enroll →"
-              ctaHref="https://arpitbhayani.me"
-              note="Early-bird pricing."
-              client:load
-            />
-          </Specimen>
-
-          <Specimen id="newsletter" name="Newsletter" usage={`<Newsletter title subtitle statsText … />`}>
-            <Newsletter
-              avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
-              title="Asli Engineering"
-              subtitle="Systems and database internals"
-              statsText="Read by 40,000+ engineers"
-              description="Practical, production-tested essays every Sunday."
-            />
-          </Specimen>
         </div>
 
         <!-- Usage -->
@@ -801,22 +889,22 @@ import Navbar from "aui/astro/Navbar.astro";
   .landing {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: 3rem;
+    gap: 1.75rem;
     align-items: center;
-    padding: 3.5rem 0 2.5rem;
+    padding: 1.75rem 0 1.25rem;
   }
   .landing-title {
-    margin: 0 0 0.9rem;
-    font-size: clamp(2.2rem, 4.4vw, 3.3rem);
-    font-weight: 700;
+    margin: 0 0 0.5rem;
+    font-size: clamp(2rem, 3.8vw, 2.85rem);
+    font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1.08;
   }
-  .landing-sub { margin: 0 0 1.5rem; max-width: 52ch; font-size: 1.15rem; line-height: 1.6; color: var(--aui-text-primary); }
-  .landing-hint { margin: 0; font-size: 0.93rem; color: var(--aui-text-muted); }
+  .landing-sub { margin: 0 0 1rem; max-width: 52ch; font-size: 1.05rem; line-height: 1.55; color: var(--aui-text-primary); }
+  .landing-hint { margin: 0; font-size: 0.88rem; color: var(--aui-text-muted); }
   .landing-preview .aui-terminal { margin: 0; }
   @media (max-width: 900px) {
-    .landing { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-top: 1.5rem; }
+    .landing { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; padding-top: 1.25rem; }
   }
 
   .meta-strip {
@@ -828,39 +916,69 @@ import Navbar from "aui/astro/Navbar.astro";
     border-radius: var(--aui-radius-lg);
     overflow: hidden;
   }
-  .meta-strip > div { padding: 0.7rem 1rem; border-right: 1px solid var(--aui-border-color); }
+  .meta-strip > div { padding: 0.45rem 0.8rem; border-right: 1px solid var(--aui-border-color); }
   .meta-strip > div:last-child { border-right: none; }
-  .meta-strip dt { font-size: 0.78rem; font-weight: 600; color: var(--aui-text-muted); }
-  .meta-strip dd { margin: 0.1rem 0 0; font-family: var(--aui-font-heading); font-size: 1.1rem; font-weight: 600; color: var(--aui-text-secondary); }
+  .meta-strip dt { font-size: 0.74rem; font-weight: 600; color: var(--aui-text-muted); }
+  .meta-strip dd { margin: 0.05rem 0 0; font-family: var(--aui-font-heading); font-size: 1.05rem; font-weight: 700; color: var(--aui-text-secondary); }
   @media (max-width: 760px) {
     .meta-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .meta-strip > div { border-bottom: 1px solid var(--aui-border-color); }
   }
 
-  .docs-main { padding: 1.5rem 0 2rem; min-width: 0; }
+  .docs-main { padding: 0.75rem 0 1.5rem; min-width: 0; }
   .docs-h2 {
-    margin: 2.5rem 0 1.1rem;
-    padding-bottom: 0.6rem;
+    margin: 1.6rem 0 0.65rem;
+    padding-bottom: 0.35rem;
     border-bottom: 1px solid var(--aui-border-color);
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 700;
     letter-spacing: -0.03em;
   }
   .docs-h2:first-child { margin-top: 0; }
 
-  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.6rem; }
-  .swatch { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); }
-  .swatch-chip { width: 34px; height: 34px; flex-shrink: 0; border-radius: var(--aui-radius-sm); border: 1px solid var(--aui-border-color); }
-  .swatch-name { font-size: 0.93rem; font-weight: 600; color: var(--aui-text-secondary); line-height: 1.2; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.5rem; }
+  .swatch { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); }
+  .swatch-chip { width: 30px; height: 30px; flex-shrink: 0; border-radius: var(--aui-radius-sm); border: 1px solid var(--aui-border-color); }
+  .swatch-name { font-size: 0.9rem; font-weight: 600; color: var(--aui-text-secondary); line-height: 1.2; }
   .swatch-var { font-family: var(--aui-font-mono); font-size: 0.75rem; color: var(--aui-text-muted); }
 
-  .elev { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; height: 44px; padding: 0 0.75rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); font-family: var(--aui-font-mono); font-size: 0.8rem; color: var(--aui-text-muted); }
+  .elev { display: inline-flex; align-items: center; justify-content: center; min-width: 60px; height: 38px; padding: 0 0.65rem; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); font-family: var(--aui-font-mono); font-size: 0.78rem; color: var(--aui-text-muted); }
 
-  .pattern { padding: 1.75rem; }
-  .pattern-article { padding: 2rem 2.25rem 2.5rem; }
-  .app-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; }
-  .app-title { margin: 0; font-size: 1.4rem; font-weight: 600; letter-spacing: -0.03em; }
-  .app-sub { margin: 0; font-size: 0.93rem; color: var(--aui-text-muted); }
+  .pattern { padding: 1.15rem; }
+  .pattern-article { padding: 1.25rem 1.4rem; }
+  .app-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.65rem; margin-bottom: 0.65rem; }
+  .app-title { margin: 0; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.03em; }
+  .app-sub { margin: 0; font-size: 0.88rem; color: var(--aui-text-muted); }
+
+  .mobile-jump-bar {
+    display: none;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.55rem 0.85rem;
+    margin: 0.75rem 0;
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+  }
+  .mobile-jump-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--aui-text-muted);
+    white-space: nowrap;
+  }
+  .mobile-jump-select {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    font-family: var(--aui-font-sans);
+    font-size: 0.88rem;
+    background-color: var(--aui-bg-tertiary);
+    color: var(--aui-text-secondary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+  }
+  @media (max-width: 900px) {
+    .mobile-jump-bar { display: flex; }
+  }
 </style>
 
 <script>
@@ -895,6 +1013,30 @@ import Navbar from "aui/astro/Navbar.astro";
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "d") {
       e.preventDefault();
       document.getElementById("aui-theme-toggle")?.click();
+    }
+  });
+
+  // J / K keyboard navigation across sections
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id]"));
+  document.addEventListener("keydown", (e) => {
+    if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA" || document.activeElement?.tagName === "SELECT") return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === "j" || e.key === "k") {
+      let currentIndex = sections.findIndex((sec) => {
+        const top = sec.getBoundingClientRect().top;
+        return top > 80;
+      });
+      if (currentIndex === -1) currentIndex = sections.length - 1;
+
+      let targetIndex = e.key === "j" ? currentIndex : Math.max(0, currentIndex - 2);
+      if (targetIndex < 0) targetIndex = 0;
+      if (targetIndex >= sections.length) targetIndex = sections.length - 1;
+
+      const target = sections[targetIndex];
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   });
 </script>
