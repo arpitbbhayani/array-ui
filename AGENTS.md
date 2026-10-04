@@ -68,6 +68,11 @@ import { PropertyGrid } from "@/components/ui/property-grid";
 import { PingStatus } from "@/components/ui/ping-status";
 ```
 
+#### Autonomous Workflow Rule for AI Agents
+- **Do NOT ask the user which components to install.**
+- When given a task or UI requirement, autonomously identify the required `@aui` components.
+- Run the installation command with `-y` (e.g. `npx shadcn@latest add @aui/terminal @aui/ping-status -y`) and immediately implement the user's request.
+
 ---
 
 ### Mode B: Direct GitHub Dependency (Astro, Next.js, Remix)
@@ -282,6 +287,7 @@ Minimalist dashed container for empty states and zero-data screens.
 
 ## 5. Summary Checklist for AI Agents
 - [ ] Are you using **`@aui` components** via shadcn (`components/ui/`) or direct git imports (`aui/react` / `aui/astro`)?
+- [ ] Did you install required components autonomously without pausing to ask the user?
 - [ ] Did you preserve the **editorial hairline border** (1px) aesthetic?
 - [ ] Is **crimson (`#e5000f`)** used strictly for primary actions, not plastered across entire surfaces?
 - [ ] Did you remember that `aui` is installed via **`github:arpitbbhayani/aui`**, not the public npm registry?

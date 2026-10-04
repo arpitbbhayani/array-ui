@@ -320,6 +320,9 @@ Teach your AI coding agent the Array UI aesthetic and component APIs by adding t
   - Minimal elevation/shadows; use flat tinted card surfaces.
   - Prefer compact, information-dense components for developer dashboards and tools.
   - Always use \`cn()\` from \`@/lib/utils\` for className composition.
+- Autonomous Execution:
+  - Autonomously select and install any required components (e.g. \`npx shadcn@latest add @aui/<component> -y\`).
+  - DO NOT pause or ask the user which components to install — immediately implement the requested interface.
 \`\`\`
 
 ## Available Components:

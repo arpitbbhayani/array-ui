@@ -364,13 +364,18 @@ const takeaways = [
 # Installation Modes
 1. If project uses shadcn/ui:
    - Add "@aui": "https://ui.arpitbhayani.me/r/{name}.json" under "registries" in components.json.
-   - Run: npx shadcn@latest add @aui/aui (base theme tokens)
-   - Run: npx shadcn@latest add @aui/[component] (e.g. terminal, diff-block, property-grid, ping-status)
-   - Import from "@/components/ui/[component]".
+   - Run: npx shadcn@latest add @aui/aui -y (base theme tokens)
+   - Run: npx shadcn@latest add @aui/<component> -y (e.g. terminal, diff-block, property-grid, ping-status)
+   - Import from "@/components/ui/<component>".
 2. If project uses direct package (Astro, Next.js, Remix):
    - Run: npm install github:arpitbbhayani/aui (or pnpm add / bun add)
    - Add \`import "aui/styles.css";\` to root layout.
    - Import from "aui/react" (React) or "aui/astro/[Component].astro" (Astro).
+
+# Autonomous Workflow (IMPORTANT):
+- When given a task or UI requirement, autonomously select all needed @aui components.
+- DO NOT pause or ask the user which components to install.
+- Automatically execute the installation command (e.g. \`npx shadcn@latest add @aui/<component> -y\`) and immediately proceed to building the requested interface.
 
 # Aesthetic Rules:
 - Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#0a0a0c).
