@@ -1,0 +1,560 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../../../src/astro/Hero.astro";
+import Button from "../../../src/astro/Button.astro";
+import Card from "../../../src/astro/Card.astro";
+import SocialPill from "../../../src/astro/SocialPill.astro";
+import Maxim from "../../../src/astro/Maxim.astro";
+import TakeawaysBox from "../../../src/astro/TakeawaysBox.astro";
+import NoticeBox from "../../../src/astro/NoticeBox.astro";
+import Badge from "../../../src/astro/Badge.astro";
+import Breadcrumbs from "../../../src/astro/Breadcrumbs.astro";
+import CourseCard from "../../../src/astro/CourseCard.astro";
+import Newsletter from "../../../src/astro/Newsletter.astro";
+
+import Alert from "../../../src/astro/Alert.astro";
+import StatCard from "../../../src/astro/StatCard.astro";
+import Timeline from "../../../src/astro/Timeline.astro";
+import Accordion from "../../../src/astro/Accordion.astro";
+import Tabs from "../../../src/astro/Tabs.astro";
+
+// Also import React components to verify dual-engine support!
+import {
+  PricingCard as ReactPricingCard,
+  ThemeToggle as ReactThemeToggle,
+  CodeBlock as ReactCodeBlock,
+  Tabs as ReactTabs,
+  Input as ReactInput,
+  Switch as ReactSwitch,
+  Checkbox as ReactCheckbox,
+} from "../../../dist/react.js";
+
+const breadcrumbItems = [
+  { label: "Home", href: "/" },
+  { label: "Design System", href: "#" },
+  { label: "Components", active: true },
+];
+
+const takeaways = [
+  "Zero-dependency core: Works with pure CSS tokens, React, or native Astro.",
+  "Theme-first: Native light and dark modes matching arpitbhayani.me with anti-FOUC support.",
+  "Signature aesthetic: 40px grid background, Assistant + Lora typography, crimson red accents.",
+  "Cross-framework ready: Drop into Next.js App/Pages router, Astro static sites, Remix, or Vite.",
+];
+---
+
+<Layout title="aui — Design System Showcase">
+  <!-- Hero Section -->
+  <section id="overview">
+    <Hero
+      title="aui design system"
+      subtitle="engineering, databases, and systems. always building."
+      avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
+      avatarAlt="Arpit Bhayani"
+    >
+      <p>
+        A clean, typography-led design system extracted and refined from
+        <a href="https://arpitbhayani.me" target="_blank" rel="noopener noreferrer">arpitbhayani.me</a>.
+        Built with first-class light and dark themes, pure CSS custom properties, responsive layout primitives,
+        and dual component targets: <strong>React (for Next.js / Remix / Vite)</strong> and
+        <strong>Astro (for zero-JS static sites)</strong>.
+      </p>
+
+      <div slot="actions" style="display: flex; gap: 0.75rem; margin-top: 1.25rem;">
+        <Button href="#components" variant="primary">Explore Components ↓</Button>
+        <Button href="#nextjs" variant="secondary">Next.js Setup</Button>
+        <Button href="#astro" variant="outline">Astro Setup</Button>
+      </div>
+
+      <div slot="socials" style="margin-top: 1.5rem;">
+        <div class="aui-social-pill-group">
+          <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
+          <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
+          <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
+          <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+          <SocialPill platform="rss" href="/rss.xml" />
+        </div>
+      </div>
+    </Hero>
+  </section>
+
+  <hr class="aui-pricing-divider" style="margin: 3rem 0;" />
+
+  <!-- Breadcrumbs Preview -->
+  <section style="margin-bottom: 2.5rem;">
+    <h3 style="font-family: var(--aui-font-mono); font-size: 0.85rem; text-transform: uppercase; color: var(--aui-text-muted);">
+      Breadcrumbs Navigation
+    </h3>
+    <Breadcrumbs items={breadcrumbItems} />
+  </section>
+
+  <!-- Design Tokens & Theme -->
+  <section id="tokens" style="margin-bottom: 3.5rem;">
+    <h2 style="font-family: var(--aui-font-serif); font-style: italic; font-size: 2rem; margin-bottom: 0.5rem;">
+      Theme & Design Tokens
+    </h2>
+    <p style="color: var(--aui-text-muted); margin-bottom: 1.5rem;">
+      CSS variables configured for both Light and Dark themes, accessible via <code>data-theme="dark"</code> or the <code>.dark</code> class.
+    </p>
+
+    <div class="aui-grid aui-grid-cols-4" style="margin-bottom: 2rem;">
+      <Card>
+        <div style="width: 100%; height: 48px; background: var(--aui-primary); border-radius: 6px; margin-bottom: 0.75rem;"></div>
+        <strong style="display: block;">Primary</strong>
+        <code class="aui-code">#fa0000</code>
+      </Card>
+      <Card>
+        <div style="width: 100%; height: 48px; background: var(--aui-bg-primary); border: 1px solid var(--aui-border-color); border-radius: 6px; margin-bottom: 0.75rem;"></div>
+        <strong style="display: block;">Background Primary</strong>
+        <code class="aui-code">var(--aui-bg-primary)</code>
+      </Card>
+      <Card>
+        <div style="width: 100%; height: 48px; background: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: 6px; margin-bottom: 0.75rem;"></div>
+        <strong style="display: block;">Background Card</strong>
+        <code class="aui-code">var(--aui-bg-secondary)</code>
+      </Card>
+      <Card>
+        <div style="width: 100%; height: 48px; background: var(--aui-accent-yellow); border-radius: 6px; margin-bottom: 0.75rem;"></div>
+        <strong style="display: block;">Maxim Amber</strong>
+        <code class="aui-code">#cc9900</code>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Components -->
+  <section id="components" style="margin-bottom: 3.5rem;">
+    <h2 style="font-family: var(--aui-font-serif); font-style: italic; font-size: 2rem; margin-bottom: 0.5rem;">
+      Components
+    </h2>
+    <p style="color: var(--aui-text-muted); margin-bottom: 2rem;">
+      Modular, accessible, and responsive components matching arpitbhayani.me.
+    </p>
+
+    <!-- Buttons -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Buttons</h3>
+      <div class="aui-card" style="padding: 1.5rem;">
+        <div style="margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; color: var(--aui-text-muted);">Variants:</div>
+        <div class="aui-btn-group" style="margin-bottom: 1.5rem;">
+          <Button variant="primary">Primary Button</Button>
+          <Button variant="secondary">Secondary Button</Button>
+          <Button variant="light">Light Button</Button>
+          <Button variant="outline">Outline Button</Button>
+          <Button variant="ghost">Ghost Button</Button>
+          <Button variant="primary" disabled>Disabled</Button>
+        </div>
+
+        <div style="margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; color: var(--aui-text-muted);">Sizes:</div>
+        <div class="aui-btn-group">
+          <Button size="sm" variant="primary">Small</Button>
+          <Button size="md" variant="primary">Medium (Default)</Button>
+          <Button size="lg" variant="primary">Large</Button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callouts & Maxim -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Editorial Callouts</h3>
+      <Maxim author="Arpit Bhayani" source="Asli Engineering" sourceUrl="https://arpitbhayani.me">
+        "Simplicity is prerequisite for reliability. Complex systems always fail in complex ways."
+      </Maxim>
+
+      <TakeawaysBox title="Key Takeaways" items={takeaways} />
+    </div>
+
+    <!-- Notice Box -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Notice Box</h3>
+      <NoticeBox
+        title="Access presentation decks and notes in"
+        driveUrl="https://drive.google.com"
+        driveLabel="this Google Drive folder"
+      >
+        <p slot="footer" class="aui-notice-footer">
+          Like this tool? Give <a href="https://github.com/arpitbbhayani/deckrun" target="_blank" rel="noopener noreferrer">deckrun on GitHub</a> a star.
+        </p>
+      </NoticeBox>
+    </div>
+
+    <!-- Badges -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Badges & Tags</h3>
+      <div class="aui-card" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+        <Badge variant="default">System Design</Badge>
+        <Badge variant="primary">Featured</Badge>
+        <Badge variant="dark">Database Internals</Badge>
+        <Badge variant="light">Valkey / Redis</Badge>
+        <Badge href="/blogs" interactive>Clickable Tag →</Badge>
+      </div>
+    </div>
+
+    <!-- Cards & Grid -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Course & Project Cards</h3>
+      <div class="aui-grid aui-grid-cols-2">
+        <CourseCard
+          title="System Design Masterclass"
+          description="A comprehensive, deep-dive masterclass covering distributed consensus, storage engines, sharding, caching strategies, and large-scale architectural trade-offs."
+          href="https://arpitbhayani.me/courses"
+          badge="Live Cohort"
+          tags={["Distributed Systems", "Architecture", "Scaling"]}
+          ctaText="Explore Masterclass →"
+        />
+        <CourseCard
+          title="DiceDB"
+          description="An open-source, in-memory, real-time database with multi-threading, multi-tiering, and query subscriptions, built from scratch in Go."
+          href="https://github.com/DiceDB/Dice"
+          badge="Open Source"
+          tags={["Database", "Golang", "In-Memory"]}
+          ctaText="View on GitHub →"
+        />
+      </div>
+    </div>
+
+    <!-- Pricing Card (Rendered via React component to verify integration) -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Pricing Card (React Island)</h3>
+      <div style="max-width: 580px; margin: 0 auto;">
+        <ReactPricingCard
+          title="System Design Fellowship"
+          duration="8 Weeks"
+          cohortDate="Starts Next Month"
+          cohortTimings="Saturdays & Sundays, 7:00 PM IST"
+          benefits={[
+            "Live interactive weekend classes with real-time Q&A",
+            "Exclusive access to lifetime recordings and presentation decks",
+            "Real-world architecture design teardowns and mock interviews",
+            "Private Discord community access with 1-on-1 mentorship",
+          ]}
+          valueProposition={[
+            "Certificate of completion verified on LinkedIn",
+            "Hands-on architectural capstone project reviewed by staff engineers",
+            "Direct referral opportunities to top product companies",
+          ]}
+          priceInr="₹29,999"
+          priceUsd="$420"
+          ctaText="Enroll in Fellowship →"
+          ctaHref="https://arpitbhayani.me"
+          note="Discounted early-bird pricing. Corporate sponsorships and reimbursements accepted."
+          client:load
+        />
+      </div>
+    </div>
+
+    <!-- Stat Cards / Metrics -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Metrics & Stats</h3>
+      <div class="aui-grid aui-grid-cols-4">
+        <StatCard value="250+" label="YouTube Videos" description="Deep-dive systems engineering" />
+        <StatCard value="100+" label="Essays & Blogs" description="Production architecture teardowns" />
+        <StatCard value="40k+" label="Subscribers" description="Curious engineers reading weekly" />
+        <StatCard value="< 1ms" label="px0.ai Boot" description="Sub-millisecond code inspection" />
+      </div>
+    </div>
+
+    <!-- Form Inputs & Controls -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Form Controls & Inputs</h3>
+      <div class="aui-card">
+        <div class="aui-grid aui-grid-cols-2">
+          <div>
+            <ReactInput
+              label="Search Query"
+              placeholder="Search databases, notes, algorithms..."
+              shortcut="⌘K"
+              helperText="Press ⌘K anytime to open search"
+              client:load
+            />
+            <ReactInput
+              label="Your Email"
+              type="email"
+              placeholder="arpit@example.com"
+              client:load
+            />
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem; justify-content: center;">
+            <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+              <ReactSwitch label="Dark Mode Sync" defaultChecked client:load />
+              <ReactSwitch label="Auto-scroll TOC" client:load />
+            </div>
+            <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+              <ReactCheckbox label="System Design" defaultChecked client:load />
+              <ReactCheckbox label="Database Internals" defaultChecked client:load />
+              <ReactCheckbox label="Distributed Consensus" client:load />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CodeBlock with Copy Button -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Code Block (with 1-Click Copy)</h3>
+      <ReactCodeBlock
+        language="bash"
+        code="npx deckrun system-design-consensus.md"
+        client:load
+      />
+      <ReactCodeBlock
+        language="typescript"
+        filename="distributed-lock.ts"
+        code={`import { Redis } from 'ioredis';
+
+async function acquireLock(key: string, ttlMs: number): Promise<boolean> {
+  const result = await redis.set(key, 'locked', 'PX', ttlMs, 'NX');
+  return result === 'OK';
+}`}
+        client:load
+      />
+    </div>
+
+    <!-- Tabs -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Tabs</h3>
+      <div class="aui-card">
+        <Tabs
+          tabs={[
+            {
+              id: "nextjs",
+              label: "Next.js",
+              content: "<p>In Next.js App Router, import from <code>aui/react</code> directly:</p><pre class=\"aui-pre\"><code>import { Button, Card } from 'aui/react';</code></pre>",
+            },
+            {
+              id: "astro",
+              label: "Astro",
+              content: "<p>In Astro, use 0kb JS native components from <code>aui/astro</code>:</p><pre class=\"aui-pre\"><code>import Button from 'aui/astro/Button.astro';</code></pre>",
+            },
+            {
+              id: "css",
+              label: "Plain HTML / CSS",
+              content: "<p>Include <code>aui/styles.css</code> and use class names:</p><pre class=\"aui-pre\"><code>&lt;button class=\"aui-btn aui-btn-primary\"&gt;Action&lt;/button&gt;</code></pre>",
+            },
+          ]}
+        />
+      </div>
+    </div>
+
+    <!-- Accordion -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Accordion (Syllabus & FAQs)</h3>
+      <Accordion
+        items={[
+          {
+            id: "q1",
+            title: "What prerequisites are needed for the masterclass?",
+            content: "A solid working knowledge of any backend programming language and basic data structures. We build distributed primitives from first principles.",
+          },
+          {
+            id: "q2",
+            title: "Will I receive access to presentation decks and session recordings?",
+            content: "Yes, all cohort members get lifetime access to GoodNotes files, PDFs, Markdown decks compatible with deckrun, and video recordings.",
+          },
+          {
+            id: "q3",
+            title: "Can I get my enrollment reimbursed by my employer?",
+            content: "Yes, many attendees have their tuition reimbursed under their company learning and development stipend. Invoices with GST are provided.",
+          },
+        ]}
+      />
+    </div>
+
+    <!-- Alerts / Notifications -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Alerts & Contextual Notices</h3>
+      <Alert variant="info" title="System Design Cohort">
+        Applications for the upcoming weekend cohort close in 3 days. Seats are filled on a rolling basis.
+      </Alert>
+      <Alert variant="success" title="Payment Verified">
+        Your registration has been confirmed. Check your email for Discord community invite.
+      </Alert>
+      <Alert variant="warning" title="Prerequisite Checklist">
+        Ensure Docker and Go 1.22+ are installed before module 2 on storage engines.
+      </Alert>
+      <Alert variant="error" title="Capacity Limit Reached">
+        This batch is currently sold out. Join the waitlist for the next cohort.
+      </Alert>
+    </div>
+
+    <!-- Responsive Table -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Comparison Table</h3>
+      <div class="aui-table-wrapper">
+        <table class="aui-table">
+          <thead>
+            <tr>
+              <th>Feature / Component</th>
+              <th>aui React</th>
+              <th>aui Astro</th>
+              <th>aui CSS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Target Environment</strong></td>
+              <td>Next.js, Remix, Vite</td>
+              <td>Astro Pages</td>
+              <td>Any Framework / HTML</td>
+            </tr>
+            <tr>
+              <td><strong>Client JS Payload</strong></td>
+              <td>Tree-shakeable</td>
+              <td>0 KB JS (Static)</td>
+              <td>0 KB JS</td>
+            </tr>
+            <tr>
+              <td><strong>Light & Dark Themes</strong></td>
+              <td>Full Context API</td>
+              <td>data-theme / script</td>
+              <td>CSS Custom Properties</td>
+            </tr>
+            <tr>
+              <td><strong>TypeScript Support</strong></td>
+              <td>First-class .d.ts</td>
+              <td>Type checked</td>
+              <td>N/A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Career Timeline -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-size: 1.35rem; margin-bottom: 1rem;">Timeline</h3>
+      <Timeline
+        events={[
+          {
+            date: "2024 — Present",
+            title: "Principal Engineer II at Razorpay",
+            body: "Leading Agent Studio at the intersection of Data & Applied AI, Customer Data Platform, and Merchant Developer Experience.",
+          },
+          {
+            date: "2024",
+            title: "Co-founded Profile.fyi (Acquired by Mercor)",
+            body: "Built developer profile platform later acquired by Mercor.",
+          },
+          {
+            date: "2021 — 2024",
+            title: "Staff Engineer at Google",
+            body: "Worked on GCP Memorystore and GCP Dataproc infrastructure.",
+          },
+          {
+            date: "2018 — 2021",
+            title: "Director of Engineering at Unacademy",
+            body: "Built and scaled Search, Site Reliability Engineering (SRE), and Data Engineering teams from 0 to 1.",
+          },
+        ]}
+      />
+    </div>
+
+    <!-- Newsletter -->
+    <div style="margin-bottom: 3rem;">
+      <Card>
+        <Newsletter
+          avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
+          title="Asli Engineering Newsletter"
+          subtitle="Deep dives into systems and database internals"
+          statsText="Read by 40,000+ curious engineers"
+          description="Every Sunday morning, get practical, production-tested essays on backend architecture, caching pitfalls, consensus protocols, and real-world system trade-offs."
+        />
+      </Card>
+    </div>
+  </section>
+
+  <!-- Usage Guides -->
+  <section id="nextjs" style="margin-bottom: 3.5rem;">
+    <h2 style="font-family: var(--aui-font-serif); font-style: italic; font-size: 2rem; margin-bottom: 0.75rem;">
+      How to use in Next.js
+    </h2>
+    <p style="color: var(--aui-text-muted); margin-bottom: 1.25rem;">
+      Works with Next.js App Router (Next.js 13/14/15) and Pages Router out of the box.
+    </p>
+
+    <div class="aui-card">
+      <h4 style="font-weight: 700; margin-bottom: 0.5rem;">1. Install from GitHub</h4>
+      <pre class="aui-pre"><code>npm install github:arpitbbhayani/aui</code></pre>
+
+      <h4 style="font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Import Styles in <code>app/layout.tsx</code></h4>
+      <pre class="aui-pre"><code>// app/layout.tsx
+import 'aui/styles.css';
+import &#123; ThemeProvider, ThemeScript, Navbar, Footer &#125; from 'aui/react';
+
+export default function RootLayout(&#123; children &#125;: &#123; children: React.ReactNode &#125;) &#123;
+  return (
+    &lt;html lang="en" suppressHydrationWarning&gt;
+      &lt;head&gt;
+        &lt;ThemeScript /&gt;
+      &lt;/head&gt;
+      &lt;body className="aui-body"&gt;
+        &lt;ThemeProvider defaultTheme="light"&gt;
+          &lt;Navbar brand=&#123;&#123; name: "My App", href: "/" &#125;&#125; /&gt;
+          &lt;main className="aui-container"&gt;&#123;children&#125;&lt;/main&gt;
+          &lt;Footer /&gt;
+        &lt;/ThemeProvider&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+&#125;</code></pre>
+
+      <h4 style="font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Use Components in Any Page</h4>
+      <pre class="aui-pre"><code>// app/page.tsx
+import &#123; Hero, Button, Card, Maxim, TakeawaysBox, SocialPill &#125; from 'aui/react';
+
+export default function Home() &#123;
+  return (
+    &lt;&gt;
+      &lt;Hero title="Welcome to my Project" subtitle="Powered by aui" /&gt;
+      &lt;Maxim author="Arpit"&gt;"Always building."&lt;/Maxim&gt;
+      &lt;Button variant="primary" href="/explore"&gt;Get Started →&lt;/Button&gt;
+    &lt;/&gt;
+  );
+&#125;</code></pre>
+    </div>
+  </section>
+
+  <section id="astro" style="margin-bottom: 3.5rem;">
+    <h2 style="font-family: var(--aui-font-serif); font-style: italic; font-size: 2rem; margin-bottom: 0.75rem;">
+      How to use in Astro
+    </h2>
+    <p style="color: var(--aui-text-muted); margin-bottom: 1.25rem;">
+      Use native <code>.astro</code> components for zero JavaScript client payload, or use React components.
+    </p>
+
+    <div class="aui-card">
+      <h4 style="font-weight: 700; margin-bottom: 0.5rem;">Using Native Astro Components</h4>
+      <pre class="aui-pre"><code>---
+// src/layouts/Layout.astro
+import 'aui/styles.css';
+import ThemeScript from 'aui/astro/ThemeScript.astro';
+import Navbar from 'aui/astro/Navbar.astro';
+import Footer from 'aui/astro/Footer.astro';
+---
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;ThemeScript /&gt;
+  &lt;/head&gt;
+  &lt;body class="aui-body"&gt;
+    &lt;Navbar brandName="Arpit Bhayani" /&gt;
+    &lt;slot /&gt;
+    &lt;Footer /&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <h4 style="font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem;">In your pages</h4>
+      <pre class="aui-pre"><code>---
+import Layout from '../layouts/Layout.astro';
+import Hero from 'aui/astro/Hero.astro';
+import Button from 'aui/astro/Button.astro';
+import Maxim from 'aui/astro/Maxim.astro';
+import SocialPill from 'aui/astro/SocialPill.astro';
+---
+&lt;Layout&gt;
+  &lt;Hero title="Hey, I am Arpit" avatarUrl="/avatar.jpg"&gt;
+    &lt;p&gt;engineering, databases, and systems.&lt;/p&gt;
+  &lt;/Hero&gt;
+  &lt;Button variant="primary" href="/blogs"&gt;Read Blogs&lt;/Button&gt;
+&lt;/Layout&gt;</code></pre>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,27 @@
+---
+export interface TimelineEvent {
+  date: string;
+  title: string;
+  body?: string;
+}
+
+interface Props {
+  events: TimelineEvent[];
+  className?: string;
+}
+
+const { events = [], className = "" } = Astro.props;
+---
+
+<div class={`aui-timeline ${className}`}>
+  {
+    events.map((ev) => (
+      <div class="aui-timeline-item">
+        <div class="aui-timeline-point" />
+        <div class="aui-timeline-date">{ev.date}</div>
+        <h4 class="aui-timeline-title">{ev.title}</h4>
+        {ev.body && <div class="aui-timeline-body">{ev.body}</div>}
+      </div>
+    ))
+  }
+</div>

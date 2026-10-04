@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
+:root {
+  /* Fonts */
+  --aui-font-sans: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --aui-font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
+  --aui-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Brand Colors */
+  --aui-primary: #fa0000;
+  --aui-primary-hover: #d00000;
+  --aui-primary-active: #b30000;
+  --aui-primary-text: #ffffff;
+  --aui-primary-accent: #ff6b6b;
+
+  /* Accents */
+  --aui-accent-yellow: #cc9900;
+  --aui-accent-orange: #ff8c00;
+  --aui-accent-blue: #2222ff;
+  --aui-accent-blue-hover: #1111dd;
+
+  /* Theme: Light Mode (Default) */
+  --aui-bg-primary: #faf9f6;
+  --aui-bg-secondary: #ffffff;
+  --aui-bg-tertiary: #f4f3ef;
+  --aui-text-primary: #333333;
+  --aui-text-secondary: #000000;
+  --aui-text-muted: #666666;
+  --aui-border-color: #aeaeae;
+  --aui-border-light: #cecece;
+  --aui-box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.08);
+  --aui-box-shadow-hover: 0 4px 14px 0 rgba(0, 0, 0, 0.14);
+  --aui-clickable-hover: #f5f4ef;
+  --aui-clickable-active: #efefef;
+  --aui-maxim-bg: #fffdf0;
+  --aui-maxim-border: #cc9900;
+  --aui-takeaways-bg: rgba(0, 0, 0, 0.03);
+  --aui-takeaways-border: #fa0000;
+  --aui-grid-color: rgba(0, 0, 0, 0.025);
+  --aui-link: #2222ff;
+  --aui-link-hover: #fa0000;
+  --aui-tag-bg: #ffffff;
+  --aui-tag-text: #333333;
+  --aui-tag-border: #aeaeae;
+  --aui-code-bg: #f0f0ed;
+  --aui-code-text: #222222;
+  --aui-pre-bg: #2d2d2d;
+  --aui-pre-text: #f8f8f2;
+
+  /* Radii */
+  --aui-radius-sm: 4px;
+  --aui-radius-md: 8px;
+  --aui-radius-lg: 12px;
+  --aui-radius-xl: 16px;
+  --aui-radius-pill: 9999px;
+  --aui-radius-avatar: 2em;
+
+  /* Transitions */
+  --aui-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Explicit Light Theme (if forced) */
+[data-theme="light"] {
+  --aui-bg-primary: #faf9f6;
+  --aui-bg-secondary: #ffffff;
+  --aui-bg-tertiary: #f4f3ef;
+  --aui-text-primary: #333333;
+  --aui-text-secondary: #000000;
+  --aui-text-muted: #666666;
+  --aui-border-color: #aeaeae;
+  --aui-border-light: #cecece;
+  --aui-box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.08);
+  --aui-box-shadow-hover: 0 4px 14px 0 rgba(0, 0, 0, 0.14);
+  --aui-clickable-hover: #f5f4ef;
+  --aui-clickable-active: #efefef;
+  --aui-maxim-bg: #fffdf0;
+  --aui-maxim-border: #cc9900;
+  --aui-takeaways-bg: rgba(0, 0, 0, 0.03);
+  --aui-takeaways-border: #fa0000;
+  --aui-grid-color: rgba(0, 0, 0, 0.025);
+  --aui-link: #2222ff;
+  --aui-link-hover: #fa0000;
+  --aui-tag-bg: #ffffff;
+  --aui-tag-text: #333333;
+  --aui-tag-border: #aeaeae;
+  --aui-code-bg: #f0f0ed;
+  --aui-code-text: #222222;
+  --aui-pre-bg: #2d2d2d;
+  --aui-pre-text: #f8f8f2;
+}
+
+/* Dark Theme (matches arpitbhayani.me data-theme="dark" and Tailwind .dark) */
+[data-theme="dark"],
+.dark {
+  --aui-bg-primary: #1a1a1a;
+  --aui-bg-secondary: #2d2d2d;
+  --aui-bg-tertiary: #222222;
+  --aui-text-primary: #e0e0e0;
+  --aui-text-secondary: #ffffff;
+  --aui-text-muted: #999999;
+  --aui-border-color: #444444;
+  --aui-border-light: #555555;
+  --aui-box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.6);
+  --aui-box-shadow-hover: 0 4px 16px 0 rgba(0, 0, 0, 0.8);
+  --aui-clickable-hover: #333333;
+  --aui-clickable-active: #3a3a3a;
+  --aui-maxim-bg: #2a2a1a;
+  --aui-maxim-border: #cc9900;
+  --aui-takeaways-bg: rgba(255, 255, 255, 0.05);
+  --aui-takeaways-border: #fa0000;
+  --aui-grid-color: rgba(255, 255, 255, 0.02);
+  --aui-link: #6ba3ff;
+  --aui-link-hover: #ff6b6b;
+  --aui-tag-bg: #2d2d2d;
+  --aui-tag-text: #e0e0e0;
+  --aui-tag-border: #444444;
+  --aui-code-bg: #2d2d2d;
+  --aui-code-text: #e0e0e0;
+  --aui-pre-bg: #1e1e1e;
+  --aui-pre-text: #e0e0e0;
+}

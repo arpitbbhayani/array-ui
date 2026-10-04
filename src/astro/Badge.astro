@@ -1,0 +1,37 @@
+---
+interface Props {
+  variant?: "default" | "primary" | "dark" | "light";
+  href?: string;
+  interactive?: boolean;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = "default",
+  href,
+  interactive = false,
+  className = "",
+  ...rest
+} = Astro.props;
+
+const isInteractive = interactive || Boolean(href);
+const classNames = [
+  "aui-badge",
+  variant !== "default" && `aui-badge-${variant}`,
+  isInteractive && "aui-badge-interactive",
+  className,
+].filter(Boolean).join(" ");
+---
+
+{
+  href ? (
+    <a href={href} class={classNames} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <span class={classNames} {...rest}>
+      <slot />
+    </span>
+  )
+}

@@ -1,0 +1,88 @@
+---
+export interface TabItem {
+  id: string;
+  label: string;
+  content: string;
+}
+
+interface Props {
+  tabs: TabItem[];
+  defaultTabId?: string;
+  className?: string;
+}
+
+const { tabs = [], defaultTabId, className = "" } = Astro.props;
+const activeId = defaultTabId || (tabs[0] ? tabs[0].id : "");
+---
+
+<div class={`aui-tabs ${className}`} data-aui-tabs>
+  <ul class="aui-tabs-list" role="tablist">
+    {
+      tabs.map((tab) => {
+        const isActive = tab.id === activeId;
+        return (
+          <li>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              class={`aui-tab-trigger ${isActive ? "is-active" : ""}`}
+              data-tab-target={tab.id}
+            >
+              {tab.label}
+            </button>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  {
+    tabs.map((tab) => {
+      const isActive = tab.id === activeId;
+      return (
+        <div
+          id={`tab-panel-${tab.id}`}
+          role="tabpanel"
+          class={`aui-tab-panel ${isActive ? "is-active" : ""}`}
+        >
+          <div set:html={tab.content} />
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  function setupTabs() {
+    document.querySelectorAll("[data-aui-tabs]").forEach((tabRoot) => {
+      const triggers = tabRoot.querySelectorAll(".aui-tab-trigger");
+      triggers.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.getAttribute("data-tab-target");
+          if (!targetId) return;
+
+          triggers.forEach((t) => {
+            t.classList.remove("is-active");
+            t.setAttribute("aria-selected", "false");
+          });
+          btn.classList.add("is-active");
+          btn.setAttribute("aria-selected", "true");
+
+          tabRoot.querySelectorAll(".aui-tab-panel").forEach((panel) => {
+            panel.classList.remove("is-active");
+          });
+          const activePanel = tabRoot.querySelector(`#tab-panel-${targetId}`);
+          if (activePanel) activePanel.classList.add("is-active");
+        });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupTabs);
+  } else {
+    setupTabs();
+  }
+  document.addEventListener("astro:page-load", setupTabs);
+</script>

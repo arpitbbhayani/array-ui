@@ -1,0 +1,48 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  avatarUrl?: string;
+  avatarAlt?: string;
+  className?: string;
+}
+
+const {
+  title = "Hey, I am Arpit",
+  subtitle = "engineering, databases, and systems. always building.",
+  avatarUrl,
+  avatarAlt = "Portrait",
+  className = "",
+} = Astro.props;
+---
+
+<section class={`aui-hero ${className}`}>
+  <div class="aui-hero-grid">
+    <div class="aui-hero-content">
+      {title && <h1 class="aui-hero-title">{title}</h1>}
+      {subtitle && <h2 class="aui-hero-subtitle">{subtitle}</h2>}
+      <div class="aui-hero-body">
+        <slot />
+      </div>
+      <div class="aui-hero-actions">
+        <slot name="actions" />
+      </div>
+      <div class="aui-hero-socials">
+        <slot name="socials" />
+      </div>
+    </div>
+
+    {
+      avatarUrl && (
+        <div class="aui-hero-avatar-wrapper">
+          <img
+            src={avatarUrl}
+            alt={avatarAlt}
+            class="aui-hero-avatar"
+            loading="eager"
+          />
+        </div>
+      )
+    }
+  </div>
+</section>

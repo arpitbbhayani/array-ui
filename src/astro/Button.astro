@@ -1,0 +1,49 @@
+---
+interface Props {
+  variant?: "primary" | "secondary" | "light" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  target?: string;
+  rel?: string;
+  fullWidth?: boolean;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  target,
+  rel,
+  fullWidth = false,
+  className = "",
+  ...rest
+} = Astro.props;
+
+const classNames = [
+  "aui-btn",
+  `aui-btn-${variant}`,
+  `aui-btn-${size}`,
+  fullWidth ? "aui-btn-full" : "",
+  className,
+].filter(Boolean).join(" ");
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      target={target}
+      rel={target === "_blank" && !rel ? "noopener noreferrer" : rel}
+      class={classNames}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class={classNames} {...rest}>
+      <slot />
+    </button>
+  )
+}

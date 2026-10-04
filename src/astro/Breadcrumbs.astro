@@ -1,0 +1,41 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  active?: boolean;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  separator?: string;
+  className?: string;
+}
+
+const { items = [], separator = "/", className = "" } = Astro.props;
+---
+
+<nav aria-label="Breadcrumbs">
+  <ul class={`aui-breadcrumbs ${className}`}>
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        const isActive = item.active || isLast;
+
+        return (
+          <li>
+            {isActive || !item.href ? (
+              <span aria-current={isActive ? "page" : undefined}>
+                {item.label}
+              </span>
+            ) : (
+              <a href={item.href}>{item.label}</a>
+            )}
+            {!isLast && (
+              <span class="aui-breadcrumbs-separator">{separator}</span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

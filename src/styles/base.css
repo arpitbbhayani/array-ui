@@ -1,0 +1,105 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  color-scheme: light dark;
+}
+
+body.aui-body,
+.aui-theme-root {
+  margin: 0;
+  padding: 0;
+  font-family: var(--aui-font-sans);
+  background-color: var(--aui-bg-primary);
+  color: var(--aui-text-primary);
+  line-height: 1.6;
+  background-image:
+    linear-gradient(var(--aui-grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--aui-grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible focus outline */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.aui-btn:focus-visible {
+  outline: 2px solid var(--aui-primary) !important;
+  outline-offset: 3px;
+  border-radius: var(--aui-radius-sm);
+}
+
+/* Typography Helpers */
+.aui-font-serif {
+  font-family: var(--aui-font-serif);
+}
+
+.aui-font-sans {
+  font-family: var(--aui-font-sans);
+}
+
+.aui-font-mono {
+  font-family: var(--aui-font-mono);
+}
+
+.aui-italic {
+  font-style: italic;
+}
+
+.aui-text-primary-color {
+  color: var(--aui-primary) !important;
+}
+
+[data-theme="dark"] .aui-text-primary-color,
+.dark .aui-text-primary-color {
+  color: var(--aui-primary-accent) !important;
+}
+
+.aui-text-secondary {
+  color: var(--aui-text-secondary);
+}
+
+.aui-text-muted {
+  color: var(--aui-text-muted);
+}
+
+/* Links */
+.aui-link {
+  color: var(--aui-link);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.aui-link:hover {
+  text-decoration: underline;
+  color: var(--aui-link-hover);
+}
+
+/* Code & Pre */
+pre.aui-pre {
+  background-color: var(--aui-pre-bg) !important;
+  color: var(--aui-pre-text) !important;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem !important;
+  font-family: var(--aui-font-mono);
+  font-size: 0.9rem !important;
+  overflow-x: auto;
+  border: 1px solid var(--aui-border-color);
+}
+
+code.aui-code {
+  background-color: var(--aui-code-bg);
+  color: var(--aui-code-text);
+  font-family: var(--aui-font-mono);
+  font-size: 0.88em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}

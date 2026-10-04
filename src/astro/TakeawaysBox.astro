@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  items?: string[];
+  className?: string;
+}
+
+const {
+  title = "Key Takeaways",
+  items = [],
+  className = "",
+} = Astro.props;
+---
+
+<div class={`aui-takeaways ${className}`}>
+  {title && <div class="aui-takeaways-title">{title}</div>}
+  {
+    items && items.length > 0 ? (
+      <ul>
+        {items.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <slot />
+    )
+  }
+</div>

@@ -1,0 +1,22 @@
+---
+interface Props {
+  variant?: "info" | "success" | "warning" | "error";
+  title?: string;
+  className?: string;
+}
+
+const {
+  variant = "info",
+  title,
+  className = "",
+} = Astro.props;
+---
+
+<div class={`aui-alert aui-alert-${variant} ${className}`} role="alert">
+  <div style="flex: 1;">
+    {title && <div class="aui-alert-title">{title}</div>}
+    <div>
+      <slot />
+    </div>
+  </div>
+</div>

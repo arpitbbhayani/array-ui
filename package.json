@@ -1,0 +1,82 @@
+{
+  "name": "aui",
+  "version": "1.0.0",
+  "description": "Design system inspired by arpitbhayani.me - Light/Dark themes, components, and tokens for Astro, Next.js, and any web project.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "require": "./dist/tokens.cjs"
+    },
+    "./tailwind": {
+      "types": "./dist/tailwind.d.ts",
+      "import": "./dist/tailwind.js",
+      "require": "./dist/tailwind.cjs"
+    },
+    "./astro/*": "./dist/astro/*",
+    "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./base.css": "./dist/base.css",
+    "./components.css": "./dist/components.css"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup && tsc --emitDeclarationOnly",
+    "prepare": "npm run build",
+    "dev": "astro dev --root demo",
+    "demo:build": "astro build --root demo",
+    "demo:preview": "astro preview --root demo"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "astro",
+    "nextjs",
+    "dark-mode",
+    "arpitbhayani",
+    "ui-components"
+  ],
+  "author": "Arpit Bhayani",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "astro": "^5.4.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.3"
+  }
+}

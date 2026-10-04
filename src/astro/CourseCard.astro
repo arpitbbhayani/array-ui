@@ -1,0 +1,53 @@
+---
+import Card from "./Card.astro";
+import Button from "./Button.astro";
+import Badge from "./Badge.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  badge?: string;
+  tags?: string[];
+  ctaText?: string;
+  className?: string;
+}
+
+const {
+  title,
+  description,
+  href,
+  badge,
+  tags = [],
+  ctaText = "Details →",
+  className = "",
+} = Astro.props;
+---
+
+<Card hoverable className={`aui-project-card ${className}`}>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+    <h3 class="aui-project-card-title">
+      <a href={href}>{title}</a>
+    </h3>
+    {badge && <Badge variant="primary">{badge}</Badge>}
+  </div>
+
+  <p class="aui-project-card-desc">{description}</p>
+
+  {
+    tags.length > 0 && (
+      <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
+        {tags.map((t) => (
+          <Badge variant="default">{t}</Badge>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="aui-project-card-footer">
+    <span></span>
+    <Button href={href} variant="primary" size="sm">
+      {ctaText}
+    </Button>
+  </div>
+</Card>

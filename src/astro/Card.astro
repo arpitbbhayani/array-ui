@@ -1,0 +1,26 @@
+---
+interface Props {
+  hoverable?: boolean;
+  interactive?: boolean;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  hoverable = true,
+  interactive = false,
+  className = "",
+  ...rest
+} = Astro.props;
+
+const classNames = [
+  "aui-card",
+  hoverable && "aui-card-hover",
+  interactive && "aui-card-interactive",
+  className,
+].filter(Boolean).join(" ");
+---
+
+<div class={classNames} {...rest}>
+  <slot />
+</div>

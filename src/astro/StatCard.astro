@@ -1,0 +1,22 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  description?: string;
+  className?: string;
+}
+
+const {
+  value,
+  label,
+  description,
+  className = "",
+} = Astro.props;
+---
+
+<div class={`aui-stat-card ${className}`}>
+  <div class="aui-stat-value">{value}</div>
+  <div class="aui-stat-label">{label}</div>
+  {description && <div class="aui-stat-desc">{description}</div>}
+  <slot />
+</div>

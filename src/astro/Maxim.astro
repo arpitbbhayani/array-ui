@@ -1,0 +1,40 @@
+---
+interface Props {
+  author?: string;
+  source?: string;
+  sourceUrl?: string;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  author,
+  source,
+  sourceUrl,
+  className = "",
+  ...rest
+} = Astro.props;
+---
+
+<blockquote class={`aui-maxim ${className}`} {...rest}>
+  <slot />
+  {
+    (author || source) && (
+      <cite>
+        {author && <span>— {author}</span>}
+        {source && (
+          <span>
+            {author ? ", " : "— "}
+            {sourceUrl ? (
+              <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                {source}
+              </a>
+            ) : (
+              source
+            )}
+          </span>
+        )}
+      </cite>
+    )
+  }
+</blockquote>
