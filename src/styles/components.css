@@ -397,6 +397,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .aui-nav-title {
@@ -407,6 +409,9 @@
   color: var(--aui-text-secondary) !important;
   text-decoration: none !important;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .aui-nav-menu {
@@ -468,7 +473,7 @@
   .aui-nav-menu {
     display: none;
     position: absolute;
-    top: 4rem;
+    top: 100%;
     left: 0;
     right: 0;
     flex-direction: column;
@@ -478,6 +483,10 @@
     padding: 1rem 1.25rem;
     gap: 0.5rem;
     box-shadow: var(--aui-box-shadow);
+    max-height: calc(100vh - 3.5rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1001;
   }
 
   .aui-nav-menu.is-open {
@@ -1428,6 +1437,18 @@
   list-style: none;
   padding: 0;
   position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-width: 100%;
+}
+
+.aui-tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+.aui-tabs-list > li {
+  flex-shrink: 0;
 }
 
 .aui-tab-trigger {
@@ -1444,6 +1465,8 @@
   border-bottom: 2px solid transparent;
   transition: color 0.15s ease, border-color 0.15s ease, transform 0.08s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .aui-tab-trigger:hover {
@@ -2241,7 +2264,7 @@ h1, h2, h3, h4,
 .aui-nav-item.is-active { color: var(--aui-text-secondary) !important; font-weight: 600; border-bottom-color: var(--aui-text-secondary); }
 
 @media (max-width: 860px) {
-  .aui-nav-menu { top: 3.5rem; }
+  .aui-nav-menu { top: 100%; }
   .aui-nav-item { padding: 0.65rem 0.5rem; }
 }
 
@@ -2708,6 +2731,14 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   border-radius: var(--aui-radius-md);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
   user-select: none;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.aui-segmented::-webkit-scrollbar {
+  display: none;
 }
 
 .aui-segmented-item {
@@ -2723,6 +2754,8 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.08s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
   line-height: 1.25;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .aui-segmented-item:hover {
@@ -3369,6 +3402,14 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.aui-pm-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .aui-pm-tab {
@@ -3382,6 +3423,8 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   border-radius: var(--aui-radius-sm);
   cursor: pointer;
   transition: all 0.12s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .aui-pm-tab:hover {
@@ -3408,7 +3451,10 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 
 .aui-pm-code {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   white-space: nowrap;
+  min-width: 0;
+  flex: 1;
 }
 
 .aui-pm-copy-btn {
@@ -3583,6 +3629,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   align-items: center;
   gap: 0.5rem;
   padding-top: 0.25rem;
+  flex-wrap: wrap;
 }
 
 .aui-deck-code-view {
@@ -4320,4 +4367,572 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.5rem 0;
+}
+
+/* ==========================================================================
+   Comprehensive Mobile & Responsive Utilities
+   Ensures every aui component adapts gracefully across smartphones, tablets,
+   and constrained mobile viewports (320px - 768px).
+   ========================================================================== */
+
+/* Universal touch device scrolling improvements */
+.aui-table-wrapper,
+.aui-codeblock-pre,
+pre.aui-pre,
+.aui-terminal-body,
+.aui-diff-content,
+.aui-filetree,
+.aui-pm-tabs,
+.aui-pm-code,
+.aui-tabs-list,
+.aui-segmented,
+.aui-searchbox-results,
+.aui-command-list {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure containers and surfaces never overflow */
+.aui-card,
+.aui-stat-card,
+.aui-notice-box,
+.aui-accordion,
+.aui-table-wrapper,
+.aui-modal,
+.aui-codeblock,
+.aui-diff,
+.aui-filetree,
+.aui-pm-switcher,
+.aui-hero-deck,
+.aui-cover-card,
+.aui-searchbox,
+.aui-newsletter,
+.aui-terminal {
+  max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoint: <= 960px (Tablets & Medium Screens)
+   -------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .aui-layout-sidebar {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .aui-sticky-sidebar,
+  .aui-toc-sticky {
+    position: static;
+    max-height: none;
+    top: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoint: <= 768px (Standard Tablets & Large Mobile)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* CoverCard / OgCard responsive fallback */
+  .aui-cover-card:not(.aui-cover-card-fixed) {
+    aspect-ratio: auto;
+    min-height: auto;
+  }
+
+  .aui-cover-inner {
+    padding: clamp(1.2rem, 4vw, 1.8rem);
+    gap: 1.25rem;
+  }
+
+  .aui-cover-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .aui-cover-header-right {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .aui-cover-body {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    gap: 0.65rem;
+  }
+
+  .aui-cover-title {
+    font-size: clamp(1.35rem, 5.5vw, 2.2rem);
+  }
+
+  .aui-cover-desc {
+    font-size: clamp(0.88rem, 2.5vw, 1.05rem);
+    line-height: 1.5;
+  }
+
+  .aui-cover-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding-top: 0.85rem;
+  }
+
+  .aui-cover-meta {
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoint: <= 640px (Standard Mobile Devices)
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  /* Container padding */
+  .aui-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Form controls: 16px font-size prevents iOS Safari auto-zoom on focus */
+  .aui-input,
+  .aui-textarea,
+  .aui-select {
+    font-size: 16px !important;
+  }
+
+  .aui-input-shortcut {
+    display: none;
+  }
+
+  .aui-input-has-right-icon .aui-input {
+    padding-right: 0.85rem;
+  }
+
+  /* Modals */
+  .aui-modal-backdrop {
+    padding: 0.75rem;
+    align-items: center;
+  }
+
+  .aui-modal {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--aui-radius-lg);
+  }
+
+  .aui-modal-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .aui-modal-title {
+    font-size: 1.1rem;
+  }
+
+  .aui-modal-body {
+    padding: 1rem;
+    font-size: 0.92rem;
+  }
+
+  .aui-modal-footer {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Command Palette */
+  .aui-command-backdrop {
+    padding: 0.75rem;
+    padding-top: 2rem;
+  }
+
+  .aui-command-dialog {
+    max-width: 100%;
+    max-height: 84vh;
+    border-radius: var(--aui-radius-lg);
+  }
+
+  .aui-command-input-wrapper {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .aui-command-input {
+    font-size: 16px;
+  }
+
+  .aui-command-list {
+    max-height: calc(84vh - 110px);
+  }
+
+  .aui-command-item {
+    padding: 0.45rem 0.55rem;
+    font-size: 0.86rem;
+  }
+
+  .aui-command-footer {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.74rem;
+  }
+
+  .aui-command-footer > div > span:not(:first-child) {
+    display: none;
+  }
+
+  /* CodeBlock */
+  .aui-codeblock {
+    margin: 1rem 0;
+  }
+
+  .aui-codeblock-pre {
+    padding: 0.75rem 0.65rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .aui-codeblock-lineno {
+    padding: 0 0.5rem 0 0.65rem;
+    font-size: 0.74rem;
+  }
+
+  .aui-codeblock-line-text {
+    padding-right: 0.65rem;
+  }
+
+  .aui-codeblock-line-text.aui-codeblock-line-text-pad {
+    padding-left: 0.65rem;
+  }
+
+  /* Table */
+  .aui-table th,
+  .aui-table td {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.82rem;
+  }
+
+  .aui-table th {
+    font-size: 0.7rem;
+  }
+
+  /* DiffBlock */
+  .aui-diff {
+    font-size: 0.78rem;
+  }
+
+  .aui-diff-gutter {
+    min-width: 2rem;
+    padding-right: 0.45rem;
+  }
+
+  .aui-diff-line {
+    padding: 0.06rem 0.5rem;
+  }
+
+  .aui-diff-file {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .aui-diff-file span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Search Box */
+  .aui-searchbox-kbd {
+    display: none;
+  }
+
+  .aui-searchbox-input {
+    font-size: 16px !important;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .aui-searchbox-results {
+    max-height: min(300px, 50vh);
+  }
+
+  /* Tooltip */
+  .aui-tooltip-content {
+    white-space: normal;
+    max-width: 220px;
+    text-align: center;
+  }
+
+  /* Footer */
+  .aui-footer {
+    padding: 2.25rem 0 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  /* Prose */
+  .aui-prose {
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  .aui-prose h1 { font-size: 1.85em; }
+  .aui-prose h2 { font-size: 1.4em; }
+  .aui-prose h3 { font-size: 1.18em; }
+
+  .aui-prose pre {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.84em;
+  }
+
+  /* Joined Grid */
+  .aui-grid-joined {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoint: <= 540px (Small Mobile & Phablets)
+   -------------------------------------------------------------------------- */
+@media (max-width: 540px) {
+  /* PropertyGrid */
+  .aui-property-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .aui-property-val {
+    width: 100%;
+    justify-content: space-between;
+    word-break: break-all;
+  }
+
+  /* HeroDeck */
+  .aui-deck-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .aui-deck-tabs {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .aui-deck-tab {
+    flex: 1;
+    text-align: center;
+  }
+
+  .aui-deck-canvas {
+    padding: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .aui-deck-status-strip {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoint: <= 480px (Compact Mobile / iPhone SE)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  /* Cards */
+  .aui-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .aui-project-card-title {
+    font-size: 1.15rem;
+  }
+
+  .aui-project-card-desc {
+    font-size: 0.9rem;
+  }
+
+  /* StatCard */
+  .aui-stat-card {
+    padding: 0.75rem 0.95rem;
+  }
+
+  .aui-stat-value {
+    font-size: 1.55rem;
+  }
+
+  .aui-stat-label {
+    font-size: 0.76rem;
+  }
+
+  /* Hero Avatar & Heading */
+  .aui-hero-avatar {
+    width: clamp(120px, 36vw, 150px);
+    height: clamp(120px, 36vw, 150px);
+  }
+
+  .aui-hero-title {
+    font-size: clamp(1.75rem, 7vw, 2.2rem);
+  }
+
+  .aui-hero-subtitle {
+    font-size: clamp(1.05rem, 4.5vw, 1.25rem);
+  }
+
+  /* Accordion */
+  .aui-accordion-trigger {
+    padding: 0.75rem 0.95rem;
+    font-size: 0.94rem;
+  }
+
+  .aui-accordion-inner {
+    padding: 0 0.95rem 0 0.95rem;
+  }
+
+  .aui-accordion-item.is-open .aui-accordion-inner {
+    padding: 0 0.95rem 1rem 0.95rem;
+  }
+
+  /* Callouts & Notice */
+  .aui-maxim {
+    font-size: 1.02rem;
+    padding: 0.25rem 0 0.25rem 0.85rem;
+    margin: 1.15rem 0;
+  }
+
+  .aui-takeaways {
+    padding: 0.85rem 1rem;
+    margin: 1.15rem 0;
+  }
+
+  .aui-takeaways-title {
+    font-size: 0.95rem;
+  }
+
+  .aui-notice-box {
+    padding: 0.85rem 1rem;
+  }
+
+  /* Toast & ToastStack */
+  .aui-toast-stack {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    max-width: calc(100% - 1.5rem);
+  }
+
+  .aui-toast {
+    max-width: 100%;
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+  }
+
+  /* Pagination */
+  .aui-pagination {
+    gap: 0.25rem;
+    margin: 0.75rem 0;
+  }
+
+  .aui-pagination-item {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.35rem;
+    font-size: 0.8rem;
+  }
+
+  /* Tabs */
+  .aui-tab-trigger {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.88rem;
+  }
+
+  /* SegmentedControl */
+  .aui-segmented-item {
+    padding: 0.24rem 0.55rem;
+    font-size: 0.78rem;
+  }
+
+  /* Timeline */
+  .aui-timeline {
+    padding-left: 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .aui-timeline::before {
+    left: 4px;
+  }
+
+  .aui-timeline-point {
+    left: -1.5rem;
+    width: 11px;
+    height: 11px;
+    top: 5px;
+  }
+
+  .aui-timeline-title {
+    font-size: 0.98rem;
+  }
+
+  /* FileTree */
+  .aui-filetree-children {
+    margin-left: 0.65rem;
+    padding-left: 0.35rem;
+  }
+
+  /* PackageManager */
+  .aui-pm-body {
+    padding: 0.65rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .aui-pm-copy-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.72rem;
+  }
+
+  /* Breadcrumbs */
+  .aui-breadcrumbs {
+    font-size: 0.82rem;
+    gap: 0.25rem;
+  }
+
+  .aui-breadcrumbs-separator {
+    margin: 0 0.2rem;
+  }
+
+  /* Empty State */
+  .aui-empty {
+    padding: 1.5rem 1rem;
+  }
+
+  /* Terminal */
+  .aui-terminal-body {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  /* TOC */
+  .aui-toc {
+    padding: 0.85rem 0.95rem;
+  }
+
+  .aui-toc-link {
+    font-size: 0.84rem;
+  }
+
+  /* Button Group */
+  .aui-btn-group {
+    gap: 0.4rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breakpoint: <= 440px (Ultra Compact Mobile)
+   -------------------------------------------------------------------------- */
+@media (max-width: 440px) {
+  .aui-deck-controls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .aui-deck-actions .aui-btn {
+    flex: 1 1 auto;
+  }
+
+  .aui-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 }

@@ -39,7 +39,7 @@ const navLinks = [
   <body class="aui-body">
     <CommandPalette client:load />
     <Navbar brandName="Array UI (aui)" links={navLinks}>
-      <div slot="actions" style="display:flex;align-items:center;gap:0.6rem;margin-right:0.25rem;">
+      <div slot="actions" class="aui-nav-custom-actions">
         <button
           type="button"
           class="aui-nav-search-btn"
@@ -130,6 +130,29 @@ const navLinks = [
 </html>
 
 <style is:global>
+  .aui-nav-custom-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-right: 0.25rem;
+  }
+  @media (max-width: 680px) {
+    .aui-nav-custom-actions .aui-badge {
+      display: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .aui-nav-custom-actions a.aui-btn {
+      display: none;
+    }
+  }
+  @media (max-width: 400px) {
+    .aui-nav-custom-actions {
+      gap: 0.35rem;
+      margin-right: 0;
+    }
+  }
+
   .aui-nav-search-btn {
     display: inline-flex;
     align-items: center;
@@ -151,6 +174,8 @@ const navLinks = [
   }
   @media (max-width: 640px) {
     .aui-nav-search-btn span:first-of-type { display: none; }
+    .aui-nav-search-btn .aui-kbd { display: none; }
+    .aui-nav-search-btn { padding: 0.28rem 0.45rem; }
   }
 
   /* Floating HUD / Keyboard Shortcuts Dock */

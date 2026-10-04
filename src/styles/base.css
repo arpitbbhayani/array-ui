@@ -12,6 +12,12 @@ html {
   color-scheme: light dark;
 }
 
+html,
+body.aui-body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body.aui-body,
 .aui-theme-root {
   font-size: 15px;
@@ -24,6 +30,13 @@ body.aui-body,
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 640px) {
+  body.aui-body,
+  .aui-theme-root {
+    font-size: 14.5px;
+  }
 }
 
 /* Accessible focus outline (surgical laser indicator) */

@@ -1044,7 +1044,19 @@ import Navbar from "aui/astro/Navbar.astro";
   .landing-hint { margin: 0; font-size: 0.88rem; color: var(--aui-text-muted); }
   .landing-preview .aui-terminal { margin: 0; }
   @media (max-width: 900px) {
-    .landing { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; padding-top: 1.25rem; }
+    .landing { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; padding-top: 1rem; }
+  }
+  @media (max-width: 640px) {
+    .landing { padding: 1rem 0; gap: 1rem; }
+    .landing-title { font-size: clamp(1.75rem, 6.5vw, 2.25rem); }
+    .landing-sub { font-size: 0.95rem; }
+    .landing-hint { font-size: 0.8rem; }
+    .meta-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .meta-strip > div { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--aui-border-color); }
+    .meta-strip > div:nth-child(2n) { border-right: none; }
+    .meta-strip > div:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: none; }
+    .pattern, .pattern-article { padding: 0.85rem 0.75rem; }
+    .docs-h2 { font-size: 1.15rem; margin: 1.5rem 0 0.75rem; }
   }
 
   .meta-strip {
@@ -1060,10 +1072,6 @@ import Navbar from "aui/astro/Navbar.astro";
   .meta-strip > div:last-child { border-right: none; }
   .meta-strip dt { font-size: 0.74rem; font-weight: 600; color: var(--aui-text-muted); }
   .meta-strip dd { margin: 0.05rem 0 0; font-family: var(--aui-font-heading); font-size: 1.05rem; font-weight: 700; color: var(--aui-text-secondary); }
-  @media (max-width: 760px) {
-    .meta-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .meta-strip > div { border-bottom: 1px solid var(--aui-border-color); }
-  }
 
   .docs-main { padding: 0.75rem 0 1.5rem; min-width: 0; }
   .docs-h2 {
@@ -1130,6 +1138,14 @@ import Navbar from "aui/astro/Navbar.astro";
   @media (max-width: 900px) {
     .mobile-jump-bar { display: flex; }
   }
+  @media (max-width: 500px) {
+    .mobile-jump-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.4rem;
+      padding: 0.5rem 0.65rem;
+    }
+  }
 
   /* Landing Install Pill */
   .landing-install-pill {
@@ -1146,6 +1162,22 @@ import Navbar from "aui/astro/Navbar.astro";
     cursor: pointer;
     transition: all 0.12s ease;
     user-select: none;
+    max-width: 100%;
+  }
+
+  @media (max-width: 500px) {
+    .landing-install-pill {
+      width: 100%;
+      justify-content: space-between;
+      padding: 0.35rem 0.55rem;
+      font-size: 0.78rem;
+    }
+    .landing-install-code {
+      overflow-x: auto;
+      white-space: nowrap;
+      min-width: 0;
+      flex: 1;
+    }
   }
 
   .landing-install-pill:hover {
@@ -1266,8 +1298,13 @@ import Navbar from "aui/astro/Navbar.astro";
   }
 
   @media (max-width: 820px) {
-    .docs-framework-bar { flex-direction: column; align-items: flex-start; }
+    .docs-framework-bar { flex-direction: column; align-items: stretch; }
     .docs-framework-hint { display: none; }
+  }
+  @media (max-width: 480px) {
+    .docs-framework-bar { padding: 0.5rem; gap: 0.5rem; }
+    .docs-framework-pills { width: 100%; display: flex; }
+    .aui-global-fw-btn { flex: 1; justify-content: center; text-align: center; }
   }
 </style>
 
