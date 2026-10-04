@@ -4,37 +4,69 @@ interface Props {
   name: string;
   description?: string;
   usage?: string;
+  reactUsage?: string;
+  astroUsage?: string;
+  htmlUsage?: string;
   span?: 1 | 2;
-  /** "page" renders the preview on the page background with no padding (for full patterns). */
   tone?: "canvas" | "page";
 }
-const { id, name, description, usage, span = 1, tone = "canvas" } = Astro.props;
+const {
+  id,
+  name,
+  description,
+  usage,
+  reactUsage = usage,
+  astroUsage = usage,
+  htmlUsage,
+  span = 1,
+  tone = "canvas",
+} = Astro.props;
+
+// Auto-derive HTML snippet fallback if not explicitly provided
+let derivedHtml = htmlUsage;
+if (!derivedHtml && usage) {
+  derivedHtml = usage
+    .replace(/<Button variant="([^"]+)"(?:\s+size="([^"]+)")?>([\s\S]*?)<\/Button>/g, '<button class="aui-btn aui-btn-$1 aui-btn-$2">$3</button>')
+    .replace(/<Badge variant="([^"]+)">([\s\S]*?)<\/Badge>/g, '<span class="aui-badge aui-badge-$1">$2</span>')
+    .replace(/<PingStatus status="([^"]+)" label="([^"]+)" \/>/g, '<span class="aui-ping aui-ping-$1"><span class="aui-ping-dot"></span><span class="aui-ping-label">$2</span></span>')
+    .replace(/<Kbd>([^<]+)<\/Kbd>/g, '<kbd class="aui-kbd">$1</kbd>')
+    .replace(/<Alert variant="([^"]+)" title="([^"]+)">([\s\S]*?)<\/Alert>/g, '<div class="aui-alert aui-alert-$1"><div class="aui-alert-title">$2</div></div>');
+}
 ---
 
 <section id={id} class:list={["spec", span === 2 && "spec-wide"]}>
   <header class="spec-head">
-    <h3 class="spec-name">{name}</h3>
+    <div class="spec-head-row">
+      <h3 class="spec-name">{name}</h3>
+      <a href={`#${id}`} class="spec-anchor-link" title="Direct link">#</a>
+    </div>
     {description && <p class="spec-desc">{description}</p>}
   </header>
+
   <div class:list={["spec-preview", tone === "page" && "spec-preview-page"]}><slot /></div>
+
   {usage && (
-    <div class="spec-usage-bar">
-      <pre class="spec-usage"><code>{usage}</code></pre>
+    <div
+      class="spec-usage-bar"
+      data-react={reactUsage}
+      data-astro={astroUsage}
+      data-html={derivedHtml || usage}
+    >
+      <pre class="spec-usage"><code class="spec-code-text">{reactUsage}</code></pre>
       <button
         type="button"
         class="spec-copy-btn"
         title="Copy snippet"
-        data-usage={usage}
-        onclick="navigator.clipboard.writeText(this.dataset.usage); this.classList.add('is-copied'); const txt = this.querySelector('.spec-copy-text'); if(txt) txt.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(txt) txt.textContent='Copy'; }, 1600);"
+        data-usage={reactUsage}
+        onclick="navigator.clipboard.writeText(this.dataset.usage); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 1600);"
       >
-        <svg class="spec-copy-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="spec-copy-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
         </svg>
-        <svg class="spec-check-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="spec-check-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12" />
         </svg>
-        <span class="spec-copy-text">Copy</span>
       </button>
     </div>
   )}
@@ -43,75 +75,101 @@ const { id, name, description, usage, span = 1, tone = "canvas" } = Astro.props;
 <style is:global>
   .spec { min-width: 0; }
   .spec-head { margin-bottom: 0.35rem; }
+  .spec-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
   .spec-name {
     margin: 0;
     font-family: var(--aui-font-heading);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     letter-spacing: -0.015em;
     color: var(--aui-text-secondary);
   }
-  .spec-desc { margin: 0.1rem 0 0; font-size: 0.88rem; color: var(--aui-text-muted); }
+  .spec-anchor-link {
+    font-family: var(--aui-font-mono);
+    font-size: 0.8rem;
+    color: var(--aui-text-muted);
+    opacity: 0.3;
+    text-decoration: none;
+    transition: opacity 0.12s ease;
+  }
+  .spec:hover .spec-anchor-link {
+    opacity: 0.8;
+  }
+  .spec-desc { margin: 0.1rem 0 0; font-size: 0.85rem; color: var(--aui-text-muted); }
+  
   .spec-preview {
-    padding: 0.85rem 1rem;
-    background-color: var(--aui-bg-tertiary);
+    padding: 1rem 1.15rem;
+    background-color: var(--aui-bg-secondary);
     border: 1px solid var(--aui-border-color);
     border-radius: var(--aui-radius-lg);
-    box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow);
   }
   .spec-preview-page { padding: 0; background-color: var(--aui-bg-primary); overflow: hidden; }
   .spec-preview:has(+ .spec-usage-bar) { border-radius: var(--aui-radius-lg) var(--aui-radius-lg) 0 0; }
   .spec-preview > :first-child { margin-top: 0 !important; }
   .spec-preview > :last-child { margin-bottom: 0 !important; }
+
   .spec-usage-bar {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--aui-bg-secondary);
+    background-color: var(--aui-pre-bg);
     border: 1px solid var(--aui-border-color);
     border-top: none;
     border-radius: 0 0 var(--aui-radius-lg) var(--aui-radius-lg);
+    padding: 0.35rem 0.65rem 0.35rem 0.85rem;
+    gap: 0.5rem;
   }
   .spec-usage {
     margin: 0;
-    padding: 0.4rem 0.8rem;
+    padding: 0;
     overflow-x: auto;
     font-family: var(--aui-font-mono);
-    font-size: 0.8rem;
-    color: var(--aui-text-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #888894;
     flex-grow: 1;
+    white-space: nowrap;
   }
   .spec-usage code { font-family: inherit; }
+
   .spec-copy-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    margin-right: 0.4rem;
-    padding: 0.2rem 0.45rem;
-    font-family: var(--aui-font-sans);
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: var(--aui-text-muted);
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    color: #888894;
     background: transparent;
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-sm);
+    border: 1px solid transparent;
+    border-radius: var(--aui-radius-md);
     cursor: pointer;
     transition: all 0.12s ease;
     flex-shrink: 0;
   }
   .spec-copy-btn:hover {
-    color: var(--aui-text-secondary);
-    background-color: var(--aui-clickable-hover);
-    border-color: var(--aui-border-strong);
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .spec-copy-btn:active {
+    transform: scale(0.92);
   }
   .spec-check-icon { display: none; }
   .spec-copy-btn.is-copied {
-    color: var(--aui-success);
-    border-color: var(--aui-success);
+    color: #34d399;
   }
   .spec-copy-btn.is-copied .spec-copy-icon { display: none; }
-  .spec-copy-btn.is-copied .spec-check-icon { display: inline-block; }
+  .spec-copy-btn.is-copied .spec-check-icon {
+    display: inline-block;
+    animation: aui-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   .spec-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
   .spec-col { display: flex; flex-direction: column; gap: 0.5rem; }
   .spec-grid {
@@ -123,9 +181,9 @@ const { id, name, description, usage, span = 1, tone = "canvas" } = Astro.props;
   .spec-grid .spec-wide { grid-column: 1 / -1; }
   .spec-label {
     margin: 0 0 0.3rem;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--aui-text-muted);
   }

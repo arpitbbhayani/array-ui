@@ -4,7 +4,7 @@ import Navbar from "../../../src/astro/Navbar.astro";
 import Footer from "../../../src/astro/Footer.astro";
 import Kbd from "../../../src/astro/Kbd.astro";
 import { CommandPalette } from "../../../dist/react.js";
-import "../../../dist/styles.css";
+import "../../../src/styles/index.css";
 
 interface Props {
   title?: string;
@@ -12,8 +12,8 @@ interface Props {
 }
 
 const {
-  title = "aui — dense, developer-first design system",
-  description = "Compact light and dark UI components for React, Astro and plain CSS.",
+  title = "Array UI (aui) - dense, developer-first design system",
+  description = "Array UI (aui): Compact light and dark UI components for React, Astro and plain CSS.",
 } = Astro.props;
 
 const navLinks = [
@@ -37,7 +37,7 @@ const navLinks = [
   </head>
   <body class="aui-body">
     <CommandPalette client:load />
-    <Navbar brandName="aui" links={navLinks}>
+    <Navbar brandName="Array UI (aui)" links={navLinks}>
       <div slot="actions" style="display:flex;align-items:center;gap:0.6rem;margin-right:0.25rem;">
         <button
           type="button"
@@ -53,15 +53,78 @@ const navLinks = [
           <span>Search...</span>
           <span class="aui-kbd" style="font-size:0.7rem;padding:0.05rem 0.3rem;">⌘K</span>
         </button>
-        <span class="aui-badge aui-badge-light">v1.0.0</span>
+        <span class="aui-badge aui-badge-light">v0.1.0</span>
         <a class="aui-btn aui-btn-secondary aui-btn-sm" href="https://github.com/arpitbbhayani/aui" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </Navbar>
     <slot />
     <Footer
-      copyright="aui — MIT licensed."
-      disclaimer="aui is an open design system inspired by arpitbhayani.me. Drop-in CSS tokens, React components and native Astro components."
+      copyright="Array UI - MIT licensed."
+      disclaimer="Array UI (aui) is an open design system inspired by arpitbhayani.me. Drop-in CSS tokens, React components and native Astro components."
     />
+
+    <!-- Global Floating HUD / Keyboard Shortcuts Bar -->
+    <div class="aui-floating-hud">
+      <div class="aui-hud-inner">
+        <button type="button" class="aui-hud-btn" onclick="window.dispatchEvent(new KeyboardEvent('keydown', {key:'k', metaKey:true}))">
+          <span class="aui-hud-key">⌘K</span>
+          <span>Search</span>
+        </button>
+        <span class="aui-hud-sep">·</span>
+        <button type="button" class="aui-hud-btn" onclick="window.dispatchEvent(new KeyboardEvent('keydown', {key:'d', metaKey:true}))">
+          <span class="aui-hud-key">⌘D</span>
+          <span>Theme</span>
+        </button>
+        <span class="aui-hud-sep">·</span>
+        <span class="aui-hud-item">
+          <span class="aui-hud-key">J</span>/<span class="aui-hud-key">K</span>
+          <span>Jump</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Mouse Tracking Dynamic Spotlight & Framework Switcher Scripts -->
+    <script is:inline>
+      // 1. Framework Switcher
+      window.currentDocsFramework = localStorage.getItem("aui-framework") || "react";
+      window.setDocsFramework = function(fw) {
+        window.currentDocsFramework = fw;
+        localStorage.setItem("aui-framework", fw);
+        document.documentElement.dataset.framework = fw;
+
+        // Update all specimen bars
+        document.querySelectorAll(".spec-usage-bar").forEach(function(bar) {
+          var codeEl = bar.querySelector(".spec-code-text");
+          var copyBtn = bar.querySelector(".spec-copy-btn");
+          var pills = bar.querySelectorAll(".spec-fw-pill");
+
+          pills.forEach(function(p) {
+            if (p.dataset.fw === fw) p.classList.add("is-active");
+            else p.classList.remove("is-active");
+          });
+
+          var snippet = bar.dataset[fw] || bar.dataset.react || "";
+          if (codeEl) codeEl.textContent = snippet;
+          if (copyBtn) copyBtn.dataset.usage = snippet;
+        });
+
+        // Update top global framework buttons
+        document.querySelectorAll(".aui-global-fw-btn").forEach(function(btn) {
+          if (btn.dataset.fw === fw) btn.classList.add("is-active");
+          else btn.classList.remove("is-active");
+        });
+      };
+
+
+      // Run on DOM ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function() {
+          window.setDocsFramework(window.currentDocsFramework);
+        });
+      } else {
+        window.setDocsFramework(window.currentDocsFramework);
+      }
+    </script>
   </body>
 </html>
 
@@ -87,5 +150,77 @@ const navLinks = [
   }
   @media (max-width: 640px) {
     .aui-nav-search-btn span:first-of-type { display: none; }
+  }
+
+  /* Floating HUD / Keyboard Shortcuts Dock */
+  .aui-floating-hud {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .aui-hud-inner {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.85rem;
+    background-color: var(--aui-bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--aui-border-strong);
+    border-radius: var(--aui-radius-full);
+    box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow-lg);
+    font-family: var(--aui-font-sans);
+    font-size: 0.8rem;
+    color: var(--aui-text-muted);
+  }
+
+  .aui-hud-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: none;
+    color: var(--aui-text-muted);
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.12s ease;
+  }
+
+  .aui-hud-btn:hover {
+    color: var(--aui-text-secondary);
+  }
+
+  .aui-hud-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .aui-hud-key {
+    display: inline-block;
+    padding: 0.08rem 0.35rem;
+    font-family: var(--aui-font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--aui-text-secondary);
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+  }
+
+  .aui-hud-sep {
+    color: var(--aui-border-strong);
+  }
+
+  @media (max-width: 600px) {
+    .aui-floating-hud { display: none; }
   }
 </style>

@@ -1,6 +1,35 @@
 ---
 interface Props {
-  variant?: "primary" | "secondary" | "light" | "outline" | "ghost";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "light"
+    | "outline"
+    | "ghost"
+    | "danger"
+    | "solid"
+    | "red"
+    | "green"
+    | "blue"
+    | "amber"
+    | "violet"
+    | "pink"
+    | "cyan"
+    | "success"
+    | "warning"
+    | "info";
+  color?:
+    | "red"
+    | "green"
+    | "blue"
+    | "amber"
+    | "violet"
+    | "pink"
+    | "cyan"
+    | "success"
+    | "warning"
+    | "info"
+    | "danger";
   size?: "sm" | "md" | "lg";
   href?: string;
   target?: string;
@@ -12,6 +41,7 @@ interface Props {
 
 const {
   variant = "primary",
+  color,
   size = "md",
   href,
   target,
@@ -21,9 +51,26 @@ const {
   ...rest
 } = Astro.props;
 
+const isColorVariant = [
+  "red",
+  "green",
+  "blue",
+  "amber",
+  "violet",
+  "pink",
+  "cyan",
+  "success",
+  "warning",
+  "info",
+].includes(variant);
+
+const effectiveColor = color || (isColorVariant ? variant : undefined);
+const effectiveVariant = isColorVariant ? "solid" : variant;
+
 const classNames = [
   "aui-btn",
-  `aui-btn-${variant}`,
+  effectiveVariant ? `aui-btn-${effectiveVariant}` : "",
+  effectiveColor ? `aui-btn-color-${effectiveColor}` : "",
   `aui-btn-${size}`,
   fullWidth ? "aui-btn-full" : "",
   className,

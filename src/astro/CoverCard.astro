@@ -1,0 +1,126 @@
+---
+export interface Author {
+  name?: string;
+  handle?: string;
+  avatar?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  siteName?: string;
+  category?: string;
+  path?: string;
+  badge?: string;
+  author?: Author;
+  tags?: string[];
+  readingTime?: string;
+  date?: string;
+  theme?: "dark" | "light" | "brand";
+  pattern?: "dots" | "grid" | "none";
+  fixedSize?: boolean;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  title,
+  description,
+  siteName = "Array UI",
+  category,
+  path,
+  badge,
+  author,
+  tags = [],
+  readingTime,
+  date,
+  theme = "dark",
+  pattern = "dots",
+  fixedSize = false,
+  className = "",
+  ...rest
+} = Astro.props;
+
+const themeClass = `aui-cover-${theme}`;
+const patternClass = `aui-cover-pattern-${pattern}`;
+const fixedClass = fixedSize ? "aui-cover-card-fixed" : "";
+
+const initials = author?.name
+  ? author.name
+      .split(" ")
+      .map((p) => p[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase()
+  : "AB";
+---
+
+<div
+  class={`aui-cover-card ${themeClass} ${patternClass} ${fixedClass} ${className}`.trim()}
+  {...rest}
+>
+  <!-- Precision CAD crosshairs -->
+  <div class="aui-cover-corner aui-cover-corner-tl" aria-hidden="true"></div>
+  <div class="aui-cover-corner aui-cover-corner-tr" aria-hidden="true"></div>
+  <div class="aui-cover-corner aui-cover-corner-bl" aria-hidden="true"></div>
+  <div class="aui-cover-corner aui-cover-corner-br" aria-hidden="true"></div>
+
+  <div class="aui-cover-inner">
+    <!-- Header -->
+    <div class="aui-cover-header">
+      <div class="aui-cover-brand">
+        <span class="aui-cover-brand-dot" aria-hidden="true"></span>
+        <span class="aui-cover-sitename">{siteName}</span>
+        {category && <span class="aui-cover-category">{category}</span>}
+      </div>
+
+      <div class="aui-cover-header-right">
+        {path && <span class="aui-cover-path">{path}</span>}
+        {badge && <span class="aui-cover-badge">{badge}</span>}
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="aui-cover-body">
+      <h1 class="aui-cover-title">{title}</h1>
+      {description && <p class="aui-cover-desc">{description}</p>}
+      <slot />
+    </div>
+
+    <!-- Footer -->
+    <div class="aui-cover-footer">
+      {
+        author ? (
+          <div class="aui-cover-author">
+            <div class="aui-cover-avatar">
+              {author.avatar ? (
+                <img src={author.avatar} alt={author.name || "Author"} />
+              ) : (
+                <span>{initials}</span>
+              )}
+            </div>
+            <div class="aui-cover-author-info">
+              {author.name && <div class="aui-cover-author-name">{author.name}</div>}
+              {author.handle && <div class="aui-cover-author-meta">{author.handle}</div>}
+            </div>
+          </div>
+        ) : (
+          <div class="aui-cover-author">
+            <div class="aui-cover-brand-dot"></div>
+            <span class="aui-cover-sitename">{siteName}</span>
+          </div>
+        )
+      }
+
+      <div class="aui-cover-meta">
+        {readingTime && <span class="aui-cover-chip aui-cover-chip-muted">{readingTime}</span>}
+        {date && <span class="aui-cover-chip aui-cover-chip-muted">{date}</span>}
+        {
+          tags.map((tag: string) => (
+            <span class="aui-cover-chip">#{tag}</span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>

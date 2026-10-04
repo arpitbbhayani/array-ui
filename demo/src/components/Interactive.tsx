@@ -114,20 +114,47 @@ export function FormDemo() {
 }
 
 export function TableDemo({ rows }: { rows: { service: string; region: string; p99: string; status: string }[] }) {
+  const [dense, setDense] = useState(false);
+
   return (
-    <Table
-      data={rows}
-      columns={[
-        { header: "Service", render: (r) => <code className="aui-code">{r.service}</code> },
-        { header: "Region", accessor: "region" },
-        { header: "p99", accessor: "p99" },
-        {
-          header: "Status",
-          render: (r) => (
-            <span className={`aui-badge aui-badge-${r.status === "Down" ? "red" : r.status === "Degraded" ? "amber" : "green"}`}>{r.status}</span>
-          ),
-        },
-      ]}
-    />
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "0.5rem" }}>
+        <button
+          type="button"
+          className={`aui-btn aui-btn-sm ${dense ? "aui-btn-primary" : "aui-btn-secondary"}`}
+          onClick={() => setDense(!dense)}
+        >
+          {dense ? "Normal rows" : "Dense mode"}
+        </button>
+      </div>
+      <Table
+        dense={dense}
+        data={rows}
+        columns={[
+          {
+            header: "Service",
+            accessor: "service",
+            sortable: true,
+            render: (r) => <code className="aui-code">{r.service}</code>,
+          },
+          { header: "Region", accessor: "region", sortable: true },
+          { header: "p99", accessor: "p99", sortable: true },
+          {
+            header: "Status",
+            accessor: "status",
+            sortable: true,
+            render: (r) => (
+              <span
+                className={`aui-badge aui-badge-${
+                  r.status === "Down" ? "red" : r.status === "Degraded" ? "amber" : "green"
+                }`}
+              >
+                {r.status}
+              </span>
+            ),
+          },
+        ]}
+      />
+    </div>
   );
 }

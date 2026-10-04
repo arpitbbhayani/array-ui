@@ -39,7 +39,9 @@ const { items = [], className = "" } = Astro.props;
           </span>
         </button>
         <div class="aui-accordion-content">
-          <p>{item.content}</p>
+          <div class="aui-accordion-inner">
+            <p>{item.content}</p>
+          </div>
         </div>
       </div>
     ))

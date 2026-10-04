@@ -21,10 +21,10 @@ export const Maxim: React.FC<MaximProps> = ({
       {quote || children}
       {(author || source) && (
         <cite>
-          {author && <span>— {author}</span>}
+          {author && <span>- {author}</span>}
           {source && (
             <span>
-              {author ? ", " : "— "}
+              {author ? ", " : "- "}
               {sourceUrl ? (
                 <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                   {source}

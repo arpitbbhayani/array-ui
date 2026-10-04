@@ -8,6 +8,10 @@ export interface CodeBlockProps {
   filename?: string;
   /** Syntax-colour the snippet (default true). */
   highlight?: boolean;
+  /** Show line numbers gutter in code block. */
+  showLineNumbers?: boolean;
+  /** 1-based line numbers to highlight with subtle rail highlight. */
+  highlightLines?: number[];
   className?: string;
 }
 
@@ -16,6 +20,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   language = "bash",
   filename,
   highlight: shouldHighlight = true,
+  showLineNumbers = false,
+  highlightLines = [],
   className = "",
 }) => {
   const [copied, setCopied] = useState(false);
@@ -29,6 +35,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       // Fallback
     }
   };
+
+  const lines = code.replace(/\r\n/g, "\n").trimEnd().split("\n");
 
   return (
     <div className={`aui-codeblock ${className}`}>
@@ -54,7 +62,29 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         </button>
       </div>
       <pre className="aui-codeblock-pre aui-pre">
-        <code>{shouldHighlight ? highlight(code) : code}</code>
+        <code className="aui-codeblock-code">
+          {lines.map((line, idx) => {
+            const lineNum = idx + 1;
+            const isHighlighted = highlightLines.includes(lineNum);
+            return (
+              <div
+                key={idx}
+                className={`aui-codeblock-line ${isHighlighted ? "is-highlighted" : ""}`}
+              >
+                {showLineNumbers ? (
+                  <span className="aui-codeblock-lineno">{lineNum}</span>
+                ) : null}
+                <span
+                  className={`aui-codeblock-line-text ${
+                    !showLineNumbers ? "aui-codeblock-line-text-pad" : ""
+                  }`}
+                >
+                  {shouldHighlight ? highlight(line || " ") : line || " "}
+                </span>
+              </div>
+            );
+          })}
+        </code>
       </pre>
     </div>
   );

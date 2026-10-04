@@ -17,7 +17,7 @@
   --aui-primary-accent: #ff5a64;
   --aui-primary-soft: rgba(229, 0, 15, 0.08);
 
-  /* Accent palette (for tags, charts, status — not used for chrome) */
+  /* Accent palette (for tags, charts, status - not used for chrome) */
   --aui-c-red: #dc2626;
   --aui-c-blue: #2563eb;
   --aui-c-violet: #7c3aed;
@@ -46,8 +46,10 @@
   --aui-radius-avatar: 8px;
 
   /* Motion */
-  --aui-ease: cubic-bezier(0.2, 0, 0, 1);
+  --aui-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --aui-transition: all 0.15s var(--aui-ease);
+  --aui-transition-fast: all 0.08s var(--aui-ease);
+  --aui-transition-smooth: all 0.22s var(--aui-ease);
 }
 
 /* Light (default) */

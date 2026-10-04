@@ -1,7 +1,7 @@
 {
   "name": "aui",
-  "version": "1.0.0",
-  "description": "Design system inspired by arpitbhayani.me - Light/Dark themes, components, and tokens for Astro, Next.js, and any web project.",
+  "version": "0.1.0",
+  "description": "Array UI (aui) - Typography-led, minimal design system inspired by arpitbhayani.me. Light/Dark themes, components, and tokens for Astro, Next.js, and any web project.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

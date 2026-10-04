@@ -33,9 +33,29 @@ select:focus-visible,
   border-radius: var(--aui-radius-sm);
 }
 
+/* Accessible Selection */
 ::selection {
   background: color-mix(in srgb, var(--aui-link) 24%, transparent);
-  color: var(--aui-text-secondary);
+}
+
+/* Ensure selected text is crystal clear on dark containers across both light and dark themes */
+pre ::selection,
+pre *::selection,
+.aui-codeblock ::selection,
+.aui-codeblock *::selection,
+.aui-terminal ::selection,
+.aui-terminal *::selection,
+.aui-diff ::selection,
+.aui-diff *::selection,
+.aui-pre ::selection,
+.aui-pre *::selection,
+.landing-install-pill ::selection,
+.landing-install-pill *::selection,
+[data-theme="dark"] ::selection,
+.dark ::selection {
+  background: rgba(59, 130, 246, 0.45) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

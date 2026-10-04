@@ -41,3 +41,4 @@ export * from "./PropertyGrid/PropertyGrid";
 export * from "./FileTree/FileTree";
 export * from "./PackageManager/PackageManager";
 export * from "./CommandPalette/CommandPalette";
+export * from "./CoverCard/CoverCard";

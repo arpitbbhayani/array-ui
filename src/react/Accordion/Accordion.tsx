@@ -62,7 +62,9 @@ export const Accordion: React.FC<AccordionProps> = ({
                 </svg>
               </span>
             </button>
-            <div className="aui-accordion-content">{item.content}</div>
+            <div className="aui-accordion-content">
+              <div className="aui-accordion-inner">{item.content}</div>
+            </div>
           </div>
         );
       })}

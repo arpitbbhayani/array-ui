@@ -1,6 +1,6 @@
-# aui
+# Array UI (aui)
 
-> A typography-led, minimal, and responsive design system extracted and refined from [arpitbhayani.me](https://arpitbhayani.me).
+> **Array UI** (`aui`) is a typography-led, minimal, and responsive design system extracted and refined from [arpitbhayani.me](https://arpitbhayani.me).
 > Includes light & dark themes, CSS custom properties, and dual component targets: **React (for Next.js, Remix, Vite)** and **Astro (for zero-JS static sites)**.
 
 ---
@@ -46,7 +46,7 @@ You can also pin to a specific branch, release tag, or commit hash:
 npm install github:arpitbbhayani/aui#main
 
 # Pin to a specific tag
-npm install github:arpitbbhayani/aui#v1.0.0
+npm install github:arpitbbhayani/aui#v0.1.0
 ```
 
 Alternatively, add it directly to your `package.json`:
@@ -177,15 +177,28 @@ import Button from 'aui/astro/Button.astro';
 ---
 
 ### 2. Buttons
-Variants: `primary`, `secondary`, `light`, `outline`, `ghost`.
+Variants: `primary`, `secondary`, `light`, `outline`, `ghost`, `danger`.
+Colors: `red`, `green`, `blue`, `amber`, `violet`, `pink`, `cyan`, `success`, `warning`, `info`.
 Sizes: `sm`, `md`, `lg`.
 
 ```tsx
 import { Button } from 'aui/react';
 
+// Core variants
 <Button variant="primary">Primary Button</Button>
 <Button variant="secondary" href="/projects">As Link</Button>
 <Button variant="outline" size="sm">Small Outline</Button>
+
+// Color palette (solid)
+<Button color="green">Deploy</Button>
+<Button color="blue">Sync</Button>
+<Button color="violet">Upgrade</Button>
+<Button color="red">Delete</Button>
+
+// Soft tinted colors
+<Button color="green" variant="light">Success</Button>
+<Button color="blue" variant="light">Info</Button>
+<Button color="amber" variant="light">Warning</Button>
 ```
 
 ---
@@ -352,9 +365,37 @@ import { StatCard, Timeline } from 'aui/react';
 
 <Timeline
   events={[
-    { date: "2024 — Present", title: "Principal Engineer II at Razorpay" },
-    { date: "2021 — 2024", title: "Staff Engineer at Google" },
+    { date: "2024 - Present", title: "Principal Engineer II at Razorpay" },
+    { date: "2021 - 2024", title: "Staff Engineer at Google" },
   ]}
+/>
+```
+
+---
+
+### 16. CoverCard / OgCard (OpenGraph Cover Photo)
+Precision social cover card for `og:image` generation and article headers. Built at standard 1200x630 aspect ratio with CAD corner crosshairs and technical dot patterns:
+
+```tsx
+import { CoverCard, OgCard } from 'aui/react';
+// Or in Astro: import CoverCard from 'aui/astro/CoverCard.astro';
+
+<CoverCard
+  title="Designing a Distributed Key-Value Store"
+  description="Consensus, replication logs, and crash recovery in production storage systems."
+  siteName="Array UI"
+  category="SYSTEM DESIGN"
+  path="posts/distributed-kv.md"
+  badge="DEEP DIVE"
+  author={{
+    name: "Arpit Bhayani",
+    handle: "@arpit - Principal Engineer",
+  }}
+  tags={["raft", "consensus", "go"]}
+  readingTime="12 min read"
+  date="Oct 2026"
+  theme="dark"
+  pattern="dots"
 />
 ```
 
@@ -362,7 +403,7 @@ import { StatCard, Timeline } from 'aui/react';
 
 ## Tailwind CSS Integration
 
-If you use Tailwind CSS in Next.js or Astro, add the `aui` preset to your `tailwind.config.mjs` (or `tailwind.config.js`):
+If you use Tailwind CSS in Next.js or Astro, add the Array UI (`aui`) preset to your `tailwind.config.mjs` (or `tailwind.config.js`):
 
 ```js
 import auiTailwindPreset from 'aui/tailwind';
@@ -388,7 +429,7 @@ This makes tokens like `bg-aui-bg-primary`, `text-aui-primary`, `font-serif`, et
 Run the built-in Astro showcase to preview all components with live light and dark mode toggling:
 
 ```bash
-# In the aui directory:
+# In the Array UI repository:
 npm run dev
 ```
 
@@ -418,10 +459,11 @@ Compact, dense building blocks for dashboards and dev tools. Each exists in `aui
 | Spinner | `<Spinner size="lg" />` | `Spinner.astro` | `.aui-spinner` |
 | Divider | `<Divider label="or" />` | `Divider.astro` | `.aui-divider` |
 | EmptyState | `<EmptyState title="…" />` | `EmptyState.astro` | `.aui-empty` |
-| SegmentedControl | `<SegmentedControl options={…} />` | – | `.aui-segmented` |
+| SegmentedControl | `<SegmentedControl options={…} />` | - | `.aui-segmented` |
 | Toast | `<Toast variant="success" title="…" />` | `Toast.astro` | `.aui-toast` |
 | Terminal | `<Terminal lines={[…]} />` | `Terminal.astro` | `.aui-terminal` |
 | Sidebar | `<Sidebar groups={…} />` | `Sidebar.astro` | `.aui-sidebar` |
+| CoverCard | `<CoverCard title="…" />` | `CoverCard.astro` | `.aui-cover-card` |
 
 The base font size is 15px, so every `rem`-based size is compact by default.
 

@@ -1,0 +1,9 @@
+---
+import CoverCard from "./CoverCard.astro";
+
+const props = Astro.props;
+---
+
+<CoverCard {...props}>
+  <slot />
+</CoverCard>
