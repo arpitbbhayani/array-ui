@@ -42,7 +42,8 @@
     "prepare": "npm run build",
     "dev": "astro dev --root demo --port 6145",
     "demo:build": "astro build --root demo",
-    "demo:preview": "astro preview --root demo"
+    "demo:preview": "astro preview --root demo",
+    "vercel-build": "npm run build && npm run demo:build"
   },
   "keywords": [
     "design-system",
