@@ -16,11 +16,7 @@ body.aui-body,
   background-color: var(--aui-bg-primary);
   color: var(--aui-text-primary);
   line-height: 1.6;
-  background-image:
-    linear-gradient(var(--aui-grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--aui-grid-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-attachment: fixed;
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -35,6 +31,20 @@ select:focus-visible,
   outline: 2px solid var(--aui-primary) !important;
   outline-offset: 3px;
   border-radius: var(--aui-radius-sm);
+}
+
+::selection {
+  background: var(--aui-primary-ring);
+  color: var(--aui-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Typography Helpers */
@@ -87,7 +97,9 @@ select:focus-visible,
 pre.aui-pre {
   background-color: var(--aui-pre-bg) !important;
   color: var(--aui-pre-text) !important;
-  border-radius: 12px;
+  border-radius: var(--aui-radius-lg);
+  box-shadow: var(--aui-box-shadow);
+  line-height: 1.65;
   padding: 1.25rem 1.5rem !important;
   font-family: var(--aui-font-mono);
   font-size: 0.9rem !important;
@@ -101,5 +113,19 @@ code.aui-code {
   font-family: var(--aui-font-mono);
   font-size: 0.88em;
   padding: 0.15em 0.4em;
-  border-radius: 4px;
+  border-radius: 5px;
+  border: 1px solid var(--aui-border-light);
+}
+
+/* Unclassed links inherit theme link colours */
+body.aui-body a:not([class]),
+.aui-theme-root a:not([class]) {
+  color: var(--aui-link);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+body.aui-body a:not([class]):hover,
+.aui-theme-root a:not([class]):hover {
+  color: var(--aui-link-hover);
 }
