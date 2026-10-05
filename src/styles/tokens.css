@@ -1,11 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Assistant:wght@400;500;600;700;800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
   /* Fonts */
   --aui-font-sans: "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --aui-font-heading: "Plus Jakarta Sans", "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --aui-font-heading: "Space Grotesk", "Plus Jakarta Sans", "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --aui-font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
   --aui-font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
