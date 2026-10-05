@@ -66,24 +66,24 @@
           "ring": "356 100% 45%"
         },
         "dark": {
-          "background": "240 10% 3.9%",
-          "foreground": "240 5% 83%",
-          "card": "240 6% 7%",
-          "card-foreground": "240 5% 83%",
-          "popover": "240 6% 7%",
-          "popover-foreground": "240 5% 83%",
-          "primary": "356 100% 45%",
+          "background": "240 8% 8%",
+          "foreground": "240 10% 88%",
+          "card": "240 11% 11.5%",
+          "card-foreground": "240 10% 88%",
+          "popover": "240 11% 11.5%",
+          "popover-foreground": "240 10% 88%",
+          "primary": "355 100% 60%",
           "primary-foreground": "0 0% 100%",
-          "secondary": "240 6% 10%",
+          "secondary": "240 11% 15%",
           "secondary-foreground": "240 14% 98%",
-          "muted": "240 6% 10%",
-          "muted-foreground": "240 5% 58%",
-          "accent": "240 6% 10%",
+          "muted": "240 11% 15%",
+          "muted-foreground": "236 9% 65%",
+          "accent": "240 11% 15%",
           "accent-foreground": "240 14% 98%",
           "destructive": "0 63% 31%",
-          "border": "240 6% 16%",
-          "input": "240 6% 16%",
-          "ring": "356 100% 45%"
+          "border": "240 12% 20%",
+          "input": "240 12% 20%",
+          "ring": "355 100% 60%"
         }
       }
     },

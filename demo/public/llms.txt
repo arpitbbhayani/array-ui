@@ -51,7 +51,7 @@ Teach your AI coding agent the Array UI aesthetic and component APIs by adding t
 - Style: Editorial engineering aesthetic inspired by arpitbhayani.me.
 - Colors:
   - Light mode: paper background (#f9f8f5), warm hairline borders (#dfded9), dark carbon text (#2b2a30).
-  - Dark mode: obsidian background (#0a0a0c), crisp dark borders (#24242c), soft white text (#d4d4db).
+  - Dark mode: obsidian carbon background (#121215), crisp hairline borders (#2c2c38), soft readable white text (#dcdce5).
   - Accents: Signature crimson (#e5000f) for primary actions; amber (#cc9900) for engineering maxims; emerald (#10b981) for online/ok.
 - Typography:
   - Headings: Plus Jakarta Sans / Space Grotesk (bold, tight tracking).

@@ -138,6 +138,11 @@ pre *::selection,
   text-transform: uppercase;
 }
 
+[data-theme="dark"] .aui-index-tag,
+.dark .aui-index-tag {
+  color: var(--aui-primary-accent);
+}
+
 .aui-text-primary-color {
   color: var(--aui-primary) !important;
 }

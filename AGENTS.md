@@ -12,9 +12,9 @@
 ### Core Visual Principles
 1. **Editorial Palette**:
    - **Light mode**: Paper canvas (`#f9f8f5`), warm hairline borders (`#dfded9` / `rgb(223, 222, 217)`), dark carbon text (`#2b2a30`).
-   - **Dark mode**: Obsidian carbon (`#0a0a0c`), crisp border (`#24242c` / `rgb(36, 36, 44)`), soft readable white (`#d4d4db`).
+   - **Dark mode**: Obsidian carbon (`#121215`), crisp border (`#2c2c38` / `rgb(44, 44, 56)`), soft readable white (`#dcdce5`).
    - **Accents**:
-     - **Signature Crimson (`#e5000f`)**: Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
+     - **Signature Crimson (`#e5000f` in light, `#ff3344` in dark)**: Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
      - **Amber (`#cc9900`)**: Used exclusively for engineering maxim quotes and warning callouts.
      - **Emerald (`#10b981`)**: Used for operational health, ping dots, and git diff additions.
      - **Rose (`#f43f5e`)**: Used for errors, outages, and git diff deletions.

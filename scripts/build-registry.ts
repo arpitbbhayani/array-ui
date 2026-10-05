@@ -86,24 +86,24 @@ const themeItem: RegistryItem = {
       ring: "356 100% 45%",
     },
     dark: {
-      background: "240 10% 3.9%",        /* #09090b */
-      foreground: "240 5% 83%",          /* #cfcfd6 */
-      card: "240 6% 7%",                 /* #111114 */
-      "card-foreground": "240 5% 83%",
-      popover: "240 6% 7%",
-      "popover-foreground": "240 5% 83%",
-      primary: "356 100% 45%",           /* #e5000f */
+      background: "240 8% 8%",           /* #121215 */
+      foreground: "240 10% 88%",         /* #dcdce5 */
+      card: "240 11% 11.5%",             /* #1a1a20 */
+      "card-foreground": "240 10% 88%",
+      popover: "240 11% 11.5%",
+      "popover-foreground": "240 10% 88%",
+      primary: "355 100% 60%",           /* #ff3344 */
       "primary-foreground": "0 0% 100%",
-      secondary: "240 6% 10%",           /* #17171c */
+      secondary: "240 11% 15%",          /* #22222a */
       "secondary-foreground": "240 14% 98%",
-      muted: "240 6% 10%",
-      "muted-foreground": "240 5% 58%",  /* #8b8b99 */
-      accent: "240 6% 10%",
+      muted: "240 11% 15%",
+      "muted-foreground": "236 9% 65%",  /* #9d9eae */
+      accent: "240 11% 15%",
       "accent-foreground": "240 14% 98%",
       destructive: "0 63% 31%",          /* #7f1d1d */
-      border: "240 6% 16%",              /* #24242c */
-      input: "240 6% 16%",
-      ring: "356 100% 45%",
+      border: "240 12% 20%",             /* #2c2c38 */
+      input: "240 12% 20%",
+      ring: "355 100% 60%",
     },
   },
 };
@@ -336,7 +336,7 @@ Teach your AI coding agent the Array UI aesthetic and component APIs by adding t
 - Style: Editorial engineering aesthetic inspired by arpitbhayani.me.
 - Colors:
   - Light mode: paper background (#f9f8f5), warm hairline borders (#dfded9), dark carbon text (#2b2a30).
-  - Dark mode: obsidian background (#0a0a0c), crisp dark borders (#24242c), soft white text (#d4d4db).
+  - Dark mode: obsidian carbon background (#121215), crisp hairline borders (#2c2c38), soft readable white text (#dcdce5).
   - Accents: Signature crimson (#e5000f) for primary actions; amber (#cc9900) for engineering maxims; emerald (#10b981) for online/ok.
 - Typography:
   - Headings: Plus Jakarta Sans / Space Grotesk (bold, tight tracking).
