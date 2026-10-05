@@ -1,5 +1,8 @@
 ---
 interface Props {
+  as?: string;
+  title?: string;
+  description?: string;
   hoverable?: boolean;
   interactive?: boolean;
   className?: string;
@@ -7,6 +10,9 @@ interface Props {
 }
 
 const {
+  as: Tag = "div",
+  title,
+  description,
   hoverable = true,
   interactive = false,
   className = "",
@@ -19,8 +25,34 @@ const classNames = [
   interactive && "aui-card-interactive",
   className,
 ].filter(Boolean).join(" ");
+
+const hasHeader = Boolean(title || description || Astro.slots.has("header"));
+const hasFooter = Astro.slots.has("footer");
 ---
 
-<div class={classNames} {...rest}>
-  <slot />
-</div>
+<Tag class={classNames} {...rest}>
+  {hasHeader && (
+    <div class="aui-card-header">
+      {Astro.slots.has("header") ? (
+        <slot name="header" />
+      ) : (
+        <>
+          {title && <h3 class="aui-card-title">{title}</h3>}
+          {description && <p class="aui-card-description">{description}</p>}
+        </>
+      )}
+    </div>
+  )}
+  {Astro.slots.has("content") ? (
+    <div class="aui-card-content">
+      <slot name="content" />
+    </div>
+  ) : (
+    <slot />
+  )}
+  {hasFooter && (
+    <div class="aui-card-footer">
+      <slot name="footer" />
+    </div>
+  )}
+</Tag>

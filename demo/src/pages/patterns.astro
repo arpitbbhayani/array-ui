@@ -1,16 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import Breadcrumbs from "../../../src/astro/Breadcrumbs.astro";
-import { Avatar } from "../../../dist/react.js";
-import Badge from "../../../src/astro/Badge.astro";
 import Button from "../../../src/astro/Button.astro";
-import TableOfContents from "../../../src/astro/TableOfContents.astro";
+import Badge from "../../../src/astro/Badge.astro";
+import Breadcrumbs from "../../../src/astro/Breadcrumbs.astro";
 import StatCard from "../../../src/astro/StatCard.astro";
 import Alert from "../../../src/astro/Alert.astro";
 import Maxim from "../../../src/astro/Maxim.astro";
 import TakeawaysBox from "../../../src/astro/TakeawaysBox.astro";
-import Terminal from "../../../src/astro/Terminal.astro";
+import TableOfContents from "../../../src/astro/TableOfContents.astro";
+import Card from "../../../src/astro/Card.astro";
+import Table from "../../../src/astro/Table.astro";
+import { Avatar } from "../../../dist/react.js";
 
 const takeaways = [
   "A write-ahead log ensures crash recovery is sequential and deterministic.",
@@ -23,15 +24,15 @@ const takeaways = [
   title="Real-World Architectural Patterns — Array UI (aui)"
   description="Composable layouts, systems telemetry dashboards, and editorial article reading patterns built with Array UI."
 >
-  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
     <!-- Page Header -->
     <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 1.5rem;">
-      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+      <div class="aui-row aui-row-xs" style="margin-bottom: 0.5rem;">
         <span class="aui-index-tag">[01 PATTERNS]</span>
         <Badge variant="outline">Composed Layouts</Badge>
       </div>
-      <h1 class="landing-title" style="margin-bottom: 0.5rem;">Real-World Patterns</h1>
-      <p class="landing-sub" style="max-width: 72ch; margin-bottom: 1rem;">
+      <h1 class="aui-h1">Real-World Patterns</h1>
+      <p class="aui-sub" style="max-width: 72ch; margin-bottom: 1rem;">
         Complete, composited layouts demonstrating how Array UI primitives combine into high-density telemetry dashboards, readable engineering essays, and system consoles.
       </p>
     </div>
@@ -40,13 +41,13 @@ const takeaways = [
     <div class="spec-grid" style="margin-bottom: 2rem;">
       <!-- Pattern 1: SaaS Telemetry Dashboard -->
       <Specimen id="saas-dashboard" name="SaaS Telemetry & Observability Dashboard" description="Dense, scannable product UI: toolbar, key metric stat cards, status table, and inline alert." span={2} tone="page">
-        <div class="pattern pattern-app">
-          <div class="app-toolbar">
+        <Card hoverable={false} className="aui-stack aui-stack-sm" style="padding: 1.25rem;">
+          <div class="aui-row-between aui-flex-wrap" style="gap: 0.75rem;">
             <div>
-              <h2 class="app-title">Cluster Fleet Health</h2>
-              <p class="app-sub">Production clusters · rolling 24 hours</p>
+              <h3 class="aui-card-title">Cluster Fleet Health</h3>
+              <p class="aui-card-description">Production clusters · rolling 24 hours</p>
             </div>
-            <div class="spec-row">
+            <div class="aui-row aui-row-xs aui-flex-wrap">
               <div class="aui-segmented">
                 <button class="aui-segmented-item is-active" type="button">24h</button>
                 <button class="aui-segmented-item" type="button">7d</button>
@@ -57,7 +58,7 @@ const takeaways = [
             </div>
           </div>
 
-          <div class="aui-grid aui-grid-cols-4" style="gap:0.75rem;margin-bottom:1rem;">
+          <div class="aui-grid aui-grid-cols-4" style="gap: 0.75rem; margin: 0.5rem 0;">
             <StatCard value="99.98%" label="Uptime" description="rolling 30 days" />
             <StatCard value="42 ms" label="p99 latency" description="eu-west-1" />
             <StatCard value="1.2M" label="Requests / min" description="peak today" />
@@ -68,60 +69,58 @@ const takeaways = [
             Cluster node <code>us-east-1b</code> is 240 ms behind the primary consensus log. Client writes remain unaffected.
           </Alert>
 
-          <div class="aui-table-wrapper" style="margin-top: 1rem;">
-            <table class="aui-table">
-              <thead>
-                <tr>
-                  <th>Service</th>
-                  <th>Region</th>
-                  <th>p99 Latency</th>
-                  <th>Consensus</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>edge-gateway</strong></td>
-                  <td>eu-west-1</td>
-                  <td>14 ms</td>
-                  <td>Raft Leader</td>
-                  <td><span class="aui-badge aui-badge-green">Healthy</span></td>
-                  <td style="text-align:right"><Button variant="ghost" size="sm">Inspect</Button></td>
-                </tr>
-                <tr>
-                  <td><strong>ledger-db</strong></td>
-                  <td>us-east-1</td>
-                  <td>118 ms</td>
-                  <td>Follower</td>
-                  <td><span class="aui-badge aui-badge-amber">Degraded</span></td>
-                  <td style="text-align:right"><Button variant="ghost" size="sm">Inspect</Button></td>
-                </tr>
-                <tr>
-                  <td><strong>search-index</strong></td>
-                  <td>ap-south-1</td>
-                  <td>67 ms</td>
-                  <td>Raft Leader</td>
-                  <td><span class="aui-badge aui-badge-green">Healthy</span></td>
-                  <td style="text-align:right"><Button variant="ghost" size="sm">Inspect</Button></td>
-                </tr>
-                <tr>
-                  <td><strong>payments-queue</strong></td>
-                  <td>eu-west-1</td>
-                  <td>—</td>
-                  <td>Candidate</td>
-                  <td><span class="aui-badge aui-badge-red">Outage</span></td>
-                  <td style="text-align:right"><Button variant="ghost" size="sm">Inspect</Button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <Table dense style="margin-top: 0.75rem;">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Region</th>
+                <th>p99 Latency</th>
+                <th>Consensus</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>edge-gateway</strong></td>
+                <td>eu-west-1</td>
+                <td>14 ms</td>
+                <td>Raft Leader</td>
+                <td><Badge variant="green">Healthy</Badge></td>
+                <td style="text-align: right;"><Button variant="ghost" size="sm">Inspect</Button></td>
+              </tr>
+              <tr>
+                <td><strong>ledger-db</strong></td>
+                <td>us-east-1</td>
+                <td>118 ms</td>
+                <td>Follower</td>
+                <td><Badge variant="amber">Degraded</Badge></td>
+                <td style="text-align: right;"><Button variant="ghost" size="sm">Inspect</Button></td>
+              </tr>
+              <tr>
+                <td><strong>search-index</strong></td>
+                <td>ap-south-1</td>
+                <td>67 ms</td>
+                <td>Raft Leader</td>
+                <td><Badge variant="green">Healthy</Badge></td>
+                <td style="text-align: right;"><Button variant="ghost" size="sm">Inspect</Button></td>
+              </tr>
+              <tr>
+                <td><strong>payments-queue</strong></td>
+                <td>eu-west-1</td>
+                <td>—</td>
+                <td>Candidate</td>
+                <td><Badge variant="red">Outage</Badge></td>
+                <td style="text-align: right;"><Button variant="ghost" size="sm">Inspect</Button></td>
+              </tr>
+            </tbody>
+          </Table>
+        </Card>
       </Specimen>
 
       <!-- Pattern 2: Deep-Dive Technical Essay -->
       <Specimen id="blog-article" name="Editorial Technical Article" description="Long-form engineering essay: 15px/17px prose, 70ch measure, inline code, engineering maxim quote, and sticky outline." span={2} tone="page">
-        <div class="pattern pattern-article">
+        <Card hoverable={false} style="padding: 1.5rem;">
           <Breadcrumbs items={[{ label: "Essays", href: "#" }, { label: "Storage Engines", href: "#" }, { label: "Write-Ahead Logging", active: true }]} />
           <div class="aui-layout-sidebar" style="margin-top: 1.25rem;">
             <article class="aui-prose" style="max-width: 100%;">
@@ -167,7 +166,7 @@ const takeaways = [
               />
             </aside>
           </div>
-        </div>
+        </Card>
       </Specimen>
     </div>
   </div>

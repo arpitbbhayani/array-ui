@@ -5,6 +5,9 @@ import HeroDeck from "../components/HeroDeck.astro";
 import Button from "../../../src/astro/Button.astro";
 import Badge from "../../../src/astro/Badge.astro";
 import PingStatus from "../../../src/astro/PingStatus.astro";
+import Card from "../../../src/astro/Card.astro";
+import Table from "../../../src/astro/Table.astro";
+import Alert from "../../../src/astro/Alert.astro";
 import { CodeBlock as ReactCodeBlock, PackageManager } from "../../../dist/react.js";
 
 const categories = [
@@ -52,31 +55,10 @@ const categories = [
   },
   {
     tag: "[09]",
-    title: "Editorial & Content",
-    desc: "Signature amber maxim callouts, crimson takeaway boxes, profile portrait heroes, OpenGraph cover cards, and course cards.",
-    href: "/components#hero",
-    pills: ["Maxim", "TakeawaysBox", "Hero", "CourseCard", "CoverCard", "VideoEmbed", "SocialPill"],
-  },
-  {
-    tag: "[02]",
-    title: "Design Foundations",
-    desc: "Semantic zero-runtime CSS tokens: Paper light canvas (#f9f8f5), Obsidian dark (#121215), and hairline geometry.",
-    href: "/foundations",
-    pills: ["Colors", "Typography", "Hairline Borders", "Elevation", "CSS Bridge"],
-  },
-  {
-    tag: "[01]",
-    title: "Architectural Patterns",
-    desc: "Real-world composited layouts: high-density SaaS observability telemetry dashboard and deep-dive technical essays.",
-    href: "/patterns",
-    pills: ["Telemetry Dashboard", "Technical Essay", "System Console"],
-  },
-  {
-    tag: "[AI]",
-    title: "AI Agent & LLM Hub",
-    desc: "First-class machine-readable endpoints (llms.txt, llms-full.txt), fine-tuned prompts for Cursor/Claude/Windsurf, and autonomous rules.",
-    href: "/agents",
-    pills: ["llms.txt", "llms-full.txt", "registry.json", "AGENTS.md", "Autonomous Rules"],
+    title: "Editorial & Media",
+    desc: "Engineering maxim quotes, takeaways callouts, profile hero sections, interactive social pills, and course cards.",
+    href: "/components#callouts",
+    pills: ["Maxim", "TakeawaysBox", "Hero", "CourseCard", "SocialPill", "VideoEmbed"],
   },
 ];
 
@@ -116,25 +98,25 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
   title="Array UI (aui) — Editorial Design System for Engineers & AI Agents"
   description="Array UI (aui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me."
 >
-  <div class="aui-container">
+  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
     <!-- Hero Section -->
-    <section class="landing" id="overview">
-      <div class="landing-text">
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: center; flex-wrap: wrap;">
+    <section class="aui-grid aui-grid-cols-2" id="overview" style="align-items: center; margin-bottom: 2.5rem;">
+      <div class="aui-stack aui-stack-sm">
+        <div class="aui-row aui-row-xs aui-flex-wrap">
           <PingStatus status="operational" label="CLI Registry Online" size="sm" />
           <Badge variant="outline">github:arpitbbhayani/aui</Badge>
           <Badge variant="primary">v0.1.0</Badge>
         </div>
 
-        <h1 class="landing-title">
+        <h1 class="aui-h1">
           The design system for engineers & AI agents.
         </h1>
 
-        <p class="landing-sub">
+        <p class="aui-sub" style="max-width: 60ch;">
           Inspired by <strong>arpitbhayani.me</strong>. Precision typography, 1px warm hairline borders, and zero-runtime CSS tokens for web engineering.
         </p>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0 1rem; align-items: center;">
+        <div class="aui-row aui-row-sm" style="margin: 0.75rem 0 0.5rem;">
           <a href="/components">
             <Button variant="primary" size="md">Explore Components →</Button>
           </a>
@@ -143,218 +125,144 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
           </a>
         </div>
 
-        <!-- Hero Quick Install Box -->
-        <div class="hero-quick-box">
-          <div class="hero-quick-header">
-            <div class="hero-quick-tabs">
-              <button type="button" class="hero-tab is-active" data-mode="github" onclick="switchHeroInstall('github')">GitHub Package</button>
-              <button type="button" class="hero-tab" data-mode="shadcn" onclick="switchHeroInstall('shadcn')">shadcn CLI</button>
-              <button type="button" class="hero-tab" data-mode="agent" onclick="switchHeroInstall('agent')">🤖 Agent Prompt</button>
+        <!-- Hero Quick Install Card -->
+        <Card hoverable={false} className="aui-stack aui-stack-xs" style="margin-top: 0.75rem; background-color: var(--aui-bg-secondary);">
+          <div slot="header" class="aui-row-between aui-flex-wrap" style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.5rem; margin-bottom: 0.25rem;">
+            <div class="aui-row aui-row-xs">
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab is-active" data-mode="github" onclick="switchHeroInstall('github')">GitHub Package</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab" data-mode="shadcn" onclick="switchHeroInstall('shadcn')">shadcn CLI</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab" data-mode="agent" onclick="switchHeroInstall('agent')">Agent Prompt</button>
             </div>
-            <span class="hero-npm-badge">Not on npm</span>
+            <Badge variant="outline" size="sm">Not on npm</Badge>
           </div>
 
           <!-- Mode 1: GitHub -->
-          <div id="hero-pane-github" class="hero-pane is-active">
-            <div
-              class="landing-install-pill"
-              style="width: 100%; justify-content: space-between;"
-              onclick="navigator.clipboard.writeText('pnpm add github:arpitbbhayani/aui'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 2000);"
-              title="Click to copy install command"
-            >
-              <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
-                <span class="landing-install-prompt">$</span>
-                <span class="landing-install-code" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">pnpm add github:arpitbbhayani/aui</span>
-              </div>
-              <span class="landing-install-copy">
-                <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Copy</span>
-              </span>
-            </div>
-            <div class="hero-pane-hint">Direct package for Next.js & Astro. Works with <code>pnpm</code>, <code>npm</code>, <code>bun</code>.</div>
+          <div id="hero-pane-github" class="aui-stack aui-stack-xs">
+            <PackageManager client:load pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
+            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Direct package for Next.js & Astro. Works with <code>pnpm</code>, <code>npm</code>, <code>bun</code>.</p>
           </div>
 
           <!-- Mode 2: shadcn CLI -->
-          <div id="hero-pane-shadcn" class="hero-pane" style="display: none;">
-            <div
-              class="landing-install-pill"
-              style="width: 100%; justify-content: space-between;"
-              onclick="navigator.clipboard.writeText('npx shadcn@latest add @aui/aui -y'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 2000);"
-              title="Click to copy install command"
-            >
-              <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
-                <span class="landing-install-prompt">$</span>
-                <span class="landing-install-code" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">npx shadcn@latest add @aui/aui -y</span>
-              </div>
-              <span class="landing-install-copy">
-                <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Copy</span>
-              </span>
-            </div>
-            <div class="hero-pane-hint">Copies design tokens & primitives into your project via <code>ui.arpitbhayani.me</code> registry.</div>
+          <div id="hero-pane-shadcn" class="aui-stack aui-stack-xs" style="display: none;">
+            <ReactCodeBlock
+              language="bash"
+              code="npx shadcn@latest add @aui/aui -y"
+              client:load
+            />
+            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Copies design tokens & primitives into your project via <code>ui.arpitbhayani.me</code> registry.</p>
           </div>
 
           <!-- Mode 3: Agent Prompt -->
-          <div id="hero-pane-agent" class="hero-pane" style="display: none;">
-            <button
-              type="button"
-              id="heroAgentBtn"
-              class="hero-agent-pill-btn"
-              onclick="copyHeroAgentPrompt(this)"
-            >
-              <span style="display: flex; align-items: center; gap: 0.45rem;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
-                <span>Quick Setup Prompt for AI Agent</span>
-              </span>
-              <span class="landing-install-copy">
-                <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span class="copy-lbl">Copy Prompt</span>
-              </span>
-            </button>
-            <div class="hero-pane-hint">Ready-to-paste prompt for Cursor, Claude Code, Windsurf, Codex, or Antigravity.</div>
+          <div id="hero-pane-agent" class="aui-stack aui-stack-xs" style="display: none;">
+            <ReactCodeBlock
+              language="markdown"
+              filename="Agent Prompt (llms.txt)"
+              code={agentQuickstartPrompt}
+              client:load
+            />
+            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Ready-to-paste prompt for Cursor, Claude Code, Windsurf, Codex, or Antigravity.</p>
           </div>
-        </div>
+        </Card>
       </div>
 
-      <div class="landing-preview">
+      <div>
         <HeroDeck />
       </div>
     </section>
 
     <!-- Context & Framework Bar -->
-    <div class="docs-framework-bar" style="margin: 0.5rem 0 1.5rem;">
-      <div class="docs-framework-meta">
-        <span class="meta-chip">48+ Primitives</span>
-        <span class="meta-sep">/</span>
-        <span>Astro · Next.js · React · Plain CSS</span>
-        <span class="meta-sep">/</span>
-        <code>shadcn CLI</code>
-        <span class="meta-sep">/</span>
-        <a href="/llms.txt" class="meta-llm-link">llms.txt</a>
+    <Card hoverable={false} style="margin-bottom: 2rem; padding: 0.65rem 1rem; background-color: var(--aui-bg-secondary);">
+      <div class="aui-row-between aui-flex-wrap" style="gap: 0.75rem;">
+        <div class="aui-row aui-row-xs" style="font-size: 0.85rem; color: var(--aui-text-muted);">
+          <Badge variant="outline">48+ Primitives</Badge>
+          <span>/</span>
+          <span>Astro · Next.js · React · Plain CSS</span>
+          <span>/</span>
+          <code class="aui-code">shadcn CLI</code>
+          <span>/</span>
+          <a href="/llms.txt" style="color: var(--aui-primary); font-family: var(--aui-font-mono); font-size: 0.82rem; font-weight: 600; text-decoration: none;">llms.txt</a>
+        </div>
+        <div class="aui-row aui-row-xs">
+          <span style="font-size: 0.8rem; font-weight: 600; color: var(--aui-text-muted);">Registry:</span>
+          <a href="/components"><Button variant="secondary" size="sm">Catalog</Button></a>
+          <a href="/foundations"><Button variant="secondary" size="sm">Foundations</Button></a>
+          <a href="/patterns"><Button variant="secondary" size="sm">Patterns</Button></a>
+          <a href="/agents"><Button variant="primary" size="sm">AI Hub</Button></a>
+        </div>
       </div>
-      <div class="docs-framework-pills">
-        <span class="docs-framework-pill-label">Registry:</span>
-        <a href="/components" class="aui-global-fw-btn is-active">Catalog</a>
-        <a href="/foundations" class="aui-global-fw-btn">Foundations</a>
-        <a href="/patterns" class="aui-global-fw-btn">Patterns</a>
-        <a href="/agents" class="aui-global-fw-btn">AI Hub</a>
-      </div>
-    </div>
+    </Card>
 
     <!-- Package Notice Callout -->
-    <div class="aui-notice-callout">
-      <div style="font-size: 1.25rem; line-height: 1;">⚠️</div>
-      <div>
-        <strong>Notice: Array UI is not yet published on the public npm registry.</strong>
-        <div style="margin-top: 0.25rem; color: var(--aui-text-muted);">
-          To install, use the direct GitHub dependency (<code>pnpm add github:arpitbbhayani/aui</code> or <code>npm install github:arpitbbhayani/aui</code>) for Next.js and Astro, or copy components directly into your codebase using the official shadcn CLI registry (<code>@aui</code>).
-        </div>
-      </div>
-    </div>
-
-    <!-- AI Agent Quickstart Prompt Box -->
-    <div class="aui-agent-prompt-card" id="agent-quickstart">
-      <div class="aui-agent-prompt-header">
-        <div class="aui-agent-prompt-title">
-          <span style="display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; background: var(--aui-primary-soft); color: var(--aui-primary); border-radius: var(--aui-radius-sm); font-size: 0.85rem;">🤖</span>
-          <span>Quick Start Prompt for AI Agents (Cursor / Claude Code / Windsurf / Codex / Antigravity)</span>
-        </div>
-        <button
-          type="button"
-          class="aui-agent-copy-btn"
-          id="copyAgentPromptBtn"
-          onclick="copyAgentQuickPrompt(this)"
-        >
-          <svg class="icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          <svg class="icon-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          <span class="btn-text">Copy Prompt for Agent</span>
-        </button>
-      </div>
-      <div class="aui-agent-prompt-body">
-        <p class="aui-agent-prompt-desc">
-          Paste this instruction into your AI coding assistant. It automatically guides the agent to read <code>llms.txt</code>, configure the GitHub dependency or shadcn registry, and follow the design system rules autonomously:
-        </p>
-        <pre class="aui-agent-pre" id="agentPromptPre" style="max-height: 220px;">{agentQuickstartPrompt}</pre>
-      </div>
+    <div style="margin-bottom: 2rem;">
+      <Alert variant="warning" title="Notice: Array UI is not yet published on the public npm registry.">
+        To install, use the direct GitHub dependency (<code>pnpm add github:arpitbbhayani/aui</code> or <code>npm install github:arpitbbhayani/aui</code>) for Next.js and Astro, or copy components directly into your codebase using the official shadcn CLI registry (<code>@aui</code>).
+      </Alert>
     </div>
 
     <!-- Quickstart Guide -->
-    <div class="spec-grid" style="margin-bottom: 2rem;">
+    <div class="spec-grid" style="margin-bottom: 2.5rem;">
       <Specimen id="quickstart-github" name="Option 1: Direct GitHub Package (Next.js & Astro)" description="Install Array UI directly from GitHub for full 48+ native components and zero-FOUC theme scripts." span={2}>
-        <div class="aui-quickstart-steps">
-          <div class="aui-step">
-            <span class="aui-step-num">01</span>
-            <div class="aui-step-body">
-              <div class="aui-step-title">Install from GitHub</div>
-              <p class="aui-step-desc">Since <code>aui</code> is not on npm, install via your favorite package manager pointing to GitHub:</p>
-              <PackageManager client:load pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
+        <div class="aui-grid aui-grid-cols-2" style="gap: 1.25rem;">
+          <div class="aui-stack aui-stack-xs">
+            <div class="aui-row aui-row-xs">
+              <Badge variant="primary">01</Badge>
+              <h4 class="aui-h3" style="font-size: 0.95rem;">Install from GitHub</h4>
             </div>
+            <p class="aui-sub" style="font-size: 0.85rem;">Since <code>aui</code> is not on npm, install via your package manager pointing to GitHub:</p>
+            <PackageManager client:load pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
           </div>
 
-          <div class="aui-step">
-            <span class="aui-step-num">02</span>
-            <div class="aui-step-body">
-              <div class="aui-step-title">Import Styles & Components</div>
-              <p class="aui-step-desc">Import global stylesheet into your root layout, then import components from <code>aui/nextjs</code> or <code>aui/astro/*</code>:</p>
-              <ReactCodeBlock
-                language="tsx"
-                filename="app/layout.tsx or src/layouts/Layout.astro"
-                code={`// 1. Root Layout: Import global stylesheet
-import "aui/styles.css";
-
-// 2. Next.js: Import React components
-import { Button, Terminal, PingStatus, Card } from "aui/nextjs";
-
-// 3. Astro: Import zero-overhead Astro components
-import Terminal from "aui/astro/Terminal.astro";
-import PingStatus from "aui/astro/PingStatus.astro";`}
-                client:load
-              />
+          <div class="aui-stack aui-stack-xs">
+            <div class="aui-row aui-row-xs">
+              <Badge variant="primary">02</Badge>
+              <h4 class="aui-h3" style="font-size: 0.95rem;">Import Styles & Components</h4>
             </div>
+            <p class="aui-sub" style="font-size: 0.85rem;">Import global stylesheet in root layout, then import components from <code>aui/nextjs</code> or <code>aui/astro/*</code>:</p>
+            <ReactCodeBlock
+              language="tsx"
+              filename="app/layout.tsx"
+              code={`import "aui/styles.css";
+import { Button, Terminal, PingStatus, Card } from "aui/nextjs";`}
+              client:load
+            />
           </div>
         </div>
       </Specimen>
 
       <Specimen id="quickstart-shadcn" name="Option 2: shadcn CLI Registry (Copy-Paste Primitives)" description="Copy pure TypeScript and Tailwind primitives directly into your project without npm dependencies." span={2}>
-        <div class="aui-quickstart-steps">
-          <div class="aui-step">
-            <span class="aui-step-num">01</span>
-            <div class="aui-step-body">
-              <div class="aui-step-title">Configure shadcn CLI Registry</div>
-              <p class="aui-step-desc">Add Array UI registry endpoint to your <code>components.json</code> registries:</p>
-              <ReactCodeBlock
-                language="json"
-                filename="components.json"
-                code={`{
+        <div class="aui-grid aui-grid-cols-2" style="gap: 1.25rem;">
+          <div class="aui-stack aui-stack-xs">
+            <div class="aui-row aui-row-xs">
+              <Badge variant="primary">01</Badge>
+              <h4 class="aui-h3" style="font-size: 0.95rem;">Configure shadcn CLI Registry</h4>
+            </div>
+            <p class="aui-sub" style="font-size: 0.85rem;">Add Array UI registry endpoint to your <code>components.json</code> registries:</p>
+            <ReactCodeBlock
+              language="json"
+              filename="components.json"
+              code={`{
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "default",
   "registries": {
     "@aui": "https://ui.arpitbhayani.me/r/{name}.json"
   }
 }`}
-                client:load
-              />
-            </div>
+              client:load
+            />
           </div>
 
-          <div class="aui-step">
-            <span class="aui-step-num">02</span>
-            <div class="aui-step-body">
-              <div class="aui-step-title">Install Design Tokens & Components</div>
-              <p class="aui-step-desc">Install base theme tokens and copy-paste any components directly into <code>@/components/ui/</code>:</p>
-              <ReactCodeBlock
-                language="bash"
-                code={`# 1. Install design tokens (Paper light & Obsidian dark)
-npx shadcn@latest add @aui/aui -y
-
-# 2. Install core UI and engineering primitives
-npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-block @aui/ping-status -y`}
-                client:load
-              />
+          <div class="aui-stack aui-stack-xs">
+            <div class="aui-row aui-row-xs">
+              <Badge variant="primary">02</Badge>
+              <h4 class="aui-h3" style="font-size: 0.95rem;">Install Design Tokens & Components</h4>
             </div>
+            <p class="aui-sub" style="font-size: 0.85rem;">Install base theme tokens and copy-paste components into <code>@/components/ui/</code>:</p>
+            <ReactCodeBlock
+              language="bash"
+              code={`npx shadcn@latest add @aui/aui -y
+npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y`}
+              client:load
+            />
           </div>
         </div>
       </Specimen>
@@ -362,31 +270,31 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-b
 
     <!-- Browse By Category Directory -->
     <div style="margin-bottom: 2.5rem;">
-      <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+      <div class="aui-row-between" style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.5rem; margin-bottom: 1.25rem;">
         <div>
-          <h2 class="docs-h2" style="border-bottom: none; margin: 0; padding: 0;">Browse Library by Category</h2>
-          <p style="margin: 0.25rem 0 0; font-size: 0.88rem; color: var(--aui-text-muted);">
+          <h2 class="aui-h2" style="border-bottom: none; margin: 0; padding: 0;">Browse Library by Category</h2>
+          <p class="aui-sub" style="font-size: 0.88rem;">
             Explore all 48+ native components, design tokens, architectural patterns, and AI endpoints.
           </p>
         </div>
         <a href="/components" style="font-size: 0.85rem; font-weight: 600; color: var(--aui-primary); text-decoration: none;">View All 48+ Components →</a>
       </div>
 
-      <div class="docs-category-grid">
+      <div class="aui-grid aui-grid-cols-3" style="gap: 1rem;">
         {categories.map((cat) => (
-          <a href={cat.href} class="docs-category-card">
-            <div class="docs-category-head">
-              <span class="docs-category-tag">{cat.tag}</span>
-              <span style="font-family: var(--aui-font-mono); font-size: 0.78rem; color: var(--aui-text-muted);">Explore →</span>
+          <Card as="a" href={cat.href} hoverable interactive className="aui-stack aui-stack-xs" style="text-decoration: none; color: inherit;">
+            <div slot="header" class="aui-row-between">
+              <span class="aui-index-tag">{cat.tag}</span>
+              <span class="aui-font-mono" style="font-size: 0.78rem; color: var(--aui-text-muted);">Explore →</span>
             </div>
-            <div class="docs-category-title">{cat.title}</div>
-            <div class="docs-category-desc">{cat.desc}</div>
-            <div class="docs-category-pills">
+            <h3 class="aui-card-title" style="font-size: 1.05rem;">{cat.title}</h3>
+            <p class="aui-card-description" style="font-size: 0.84rem;">{cat.desc}</p>
+            <div slot="footer" class="aui-row aui-row-xs aui-flex-wrap" style="margin-top: 0.5rem;">
               {cat.pills.map((pill) => (
-                <span class="docs-category-pill">{pill}</span>
+                <Badge variant="outline" size="sm">{pill}</Badge>
               ))}
             </div>
-          </a>
+          </Card>
         ))}
       </div>
     </div>
@@ -394,43 +302,44 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-b
     <!-- Featured Registry Components Table -->
     <div class="spec-grid" style="margin-bottom: 2.5rem;">
       <Specimen id="featured-registry" name="Registry Quick Reference" description="Top shadcn-compatible components available for instant CLI installation." span={2}>
-        <div class="aui-agent-catalog-wrap">
-          <div class="aui-agent-table-container">
-            <table class="aui-agent-table">
-              <thead>
+        <div class="aui-stack aui-stack-xs">
+          <Table dense>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>CLI Command</th>
+              </tr>
+            </thead>
+            <tbody>
+              {registryHighlights.map((c) => (
                 <tr>
-                  <th>Component</th>
-                  <th>Category</th>
-                  <th>Description</th>
-                  <th>CLI Command</th>
+                  <td>
+                    <a href={`/components#${c.name}`} style="font-weight: 600; color: var(--aui-text-secondary); text-decoration: none;">
+                      {c.title}
+                    </a>
+                  </td>
+                  <td>
+                    <Badge variant="light">{c.category}</Badge>
+                  </td>
+                  <td style="color: var(--aui-text-muted); font-size: 0.85rem;">{c.desc}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono"
+                      style="font-size: 0.75rem; padding: 0.15rem 0.5rem; height: auto;"
+                      onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${c.name} -y'); this.classList.add('is-copied'); const t=this.querySelector('.cmd-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='add @aui/${c.name}'; }, 1500);`}
+                      title="Click to copy install command"
+                    >
+                      <code class="cmd-text" style="font-family: inherit; border: none; background: transparent; padding: 0;">add @aui/{c.name}</code>
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {registryHighlights.map((c) => (
-                  <tr>
-                    <td class="aui-agent-td-name">
-                      <a href={`/components#${c.name}`} class="aui-agent-comp-link">{c.title}</a>
-                    </td>
-                    <td class="aui-agent-td-mono">
-                      <span class="aui-badge aui-badge-light">{c.category}</span>
-                    </td>
-                    <td class="aui-agent-td-desc">{c.desc}</td>
-                    <td class="aui-agent-td-cmd">
-                      <button
-                        type="button"
-                        class="aui-agent-mini-copy"
-                        onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${c.name} -y'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 1500);`}
-                        title="Click to copy install command"
-                      >
-                        <code>npx shadcn add @aui/{c.name}</code>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div style="margin-top: 0.75rem; text-align: right;">
+              ))}
+            </tbody>
+          </Table>
+          <div style="text-align: right; margin-top: 0.5rem;">
             <a href="/agents#component-matrix" style="font-size: 0.84rem; font-weight: 600; color: var(--aui-primary); text-decoration: none;">
               View all 26 registry components in Agent Hub →
             </a>
@@ -440,7 +349,7 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-b
     </div>
 
     <!-- Framework Integration -->
-    <h2 class="docs-h2"><span class="aui-index-tag">[10]</span> Usage & Frameworks</h2>
+    <h2 class="aui-h2"><span class="aui-index-tag">[10]</span> Usage & Frameworks</h2>
     <div class="spec-grid" style="margin-bottom: 3rem;">
       <Specimen id="shadcn" name="shadcn CLI Registry" description="Copy signature aui primitives directly into your project via shadcn CLI.">
         <ReactCodeBlock
@@ -512,8 +421,12 @@ import PingStatus from "aui/astro/PingStatus.astro";
       document.querySelectorAll(".hero-tab").forEach(function(btn) {
         if (btn.dataset.mode === mode) {
           btn.classList.add("is-active");
+          btn.classList.remove("aui-btn-secondary");
+          btn.classList.add("aui-btn-primary");
         } else {
           btn.classList.remove("is-active");
+          btn.classList.add("aui-btn-secondary");
+          btn.classList.remove("aui-btn-primary");
         }
       });
       var panes = ["github", "shadcn", "agent"];
@@ -521,34 +434,6 @@ import PingStatus from "aui/astro/PingStatus.astro";
         var el = document.getElementById("hero-pane-" + p);
         if (el) el.style.display = (p === mode) ? "block" : "none";
       });
-    };
-
-    window.copyHeroAgentPrompt = function(btn) {
-      navigator.clipboard.writeText(window.agentQuickPromptText);
-      btn.classList.add("is-copied");
-      var lbl = btn.querySelector(".copy-lbl");
-      if (lbl) lbl.textContent = "Copied!";
-      setTimeout(function() {
-        btn.classList.remove("is-copied");
-        if (lbl) lbl.textContent = "Copy Prompt";
-      }, 2000);
-    };
-
-    window.copyAgentQuickPrompt = function(btn) {
-      navigator.clipboard.writeText(window.agentQuickPromptText);
-      btn.classList.add("is-copied");
-      var textSpan = btn.querySelector(".btn-text");
-      var iconCopy = btn.querySelector(".icon-copy");
-      var iconCheck = btn.querySelector(".icon-check");
-      if (textSpan) textSpan.textContent = "Copied to Clipboard!";
-      if (iconCopy) iconCopy.style.display = "none";
-      if (iconCheck) iconCheck.style.display = "block";
-      setTimeout(function() {
-        btn.classList.remove("is-copied");
-        if (textSpan) textSpan.textContent = "Copy Prompt for Agent";
-        if (iconCopy) iconCopy.style.display = "block";
-        if (iconCheck) iconCheck.style.display = "none";
-      }, 2000);
     };
   </script>
 </Layout>

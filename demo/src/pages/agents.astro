@@ -1,14 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
+import PingStatus from "../../../src/astro/PingStatus.astro";
 import Badge from "../../../src/astro/Badge.astro";
 import Button from "../../../src/astro/Button.astro";
-import Kbd from "../../../src/astro/Kbd.astro";
-import PingStatus from "../../../src/astro/PingStatus.astro";
+import Card from "../../../src/astro/Card.astro";
+import Table from "../../../src/astro/Table.astro";
 
 const registryComponents = [
-  // Core UI & Actions
-  { name: "button", title: "Button", desc: "Signature tactile action button with crimson primary, secondary, outline, ghost, and danger variants." },
+  // Actions & UI
+  { name: "button", title: "Button", desc: "Tactile action buttons with signature crimson primary, secondary, outline, ghost, and danger variants." },
   { name: "badge", title: "Badge", desc: "Status pills and tag badges (crimson, emerald green, amber, rose red, sky blue, outline)." },
   { name: "card", title: "Card", desc: "Flat card surface with 1px hairline border, header, title, description, content, and footer." },
   { name: "input", title: "Input", desc: "Machined text input with subtle focus ring and optional keyboard shortcut badge." },
@@ -38,6 +39,45 @@ const registryComponents = [
   { name: "footer", title: "Footer", desc: "Editorial 4-column directory footer with category hints and disclaimer." },
   { name: "modal", title: "Modal", desc: "Accessible dialog modal with backdrop blur and escape key dismissal." },
   { name: "video-embed", title: "VideoEmbed", desc: "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling." },
+];
+
+const endpoints = [
+  {
+    name: "llms.txt",
+    badge: "Standard Context",
+    badgeVariant: "primary" as const,
+    href: "/llms.txt",
+    title: "Standard Agent Context",
+    desc: "Curated index following the llmstxt.org specification with rules, setup, and component registry.",
+    url: "https://ui.arpitbhayani.me/llms.txt",
+  },
+  {
+    name: "llms-full.txt",
+    badge: "Full Reference",
+    badgeVariant: "outline" as const,
+    href: "/llms-full.txt",
+    title: "Complete LLM Reference",
+    desc: "Single-file reference containing every component API, TypeScript prop definition, and TSX snippet.",
+    url: "https://ui.arpitbhayani.me/llms-full.txt",
+  },
+  {
+    name: "registry.json",
+    badge: "shadcn Index",
+    badgeVariant: "outline" as const,
+    href: "/r/registry.json",
+    title: "shadcn Registry Manifest",
+    desc: "Machine-readable index of all 26 public components, styles, and dependency trees.",
+    url: "https://ui.arpitbhayani.me/r/registry.json",
+  },
+  {
+    name: "AGENTS.md",
+    badge: "Repository Guide",
+    badgeVariant: "outline" as const,
+    href: "https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md",
+    title: "Repository Agent Guide",
+    desc: "The official agent guide file maintained directly inside the root of the GitHub repository.",
+    url: "https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md",
+  },
 ];
 
 const universalAgentPrompt = `You are an expert engineer building UI with Array UI (@aui), an editorial engineering design system inspired by arpitbhayani.me.
@@ -81,198 +121,164 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
   title="AI Agent & LLM Hub — Array UI (aui)"
   description="First-class system prompts, autonomous coding rules, and machine-readable registry endpoints (llms.txt, llms-full.txt) for AI assistants."
 >
-  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
     <!-- Page Header -->
     <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 1.5rem;">
-      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+      <div class="aui-row aui-row-xs" style="margin-bottom: 0.5rem;">
         <span class="aui-index-tag">[AI HUB]</span>
         <PingStatus status="operational" label="Machine Endpoints Active" size="sm" />
       </div>
-      <h1 class="landing-title" style="margin-bottom: 0.5rem;">AI Agent & LLM Hub</h1>
-      <p class="landing-sub" style="max-width: 72ch; margin-bottom: 1rem;">
+      <h1 class="aui-h1">AI Agent & LLM Hub</h1>
+      <p class="aui-sub" style="max-width: 72ch; margin-bottom: 1rem;">
         Array UI is architected for autonomous AI coding assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity) who need machine-readable specifications, copy-paste prompts, and instant component installations.
       </p>
 
-      <div class="docs-framework-bar" style="margin-top: 1rem;">
-        <div class="docs-framework-meta">
-          <span class="meta-chip">Agent Protocol</span>
-          <span class="meta-sep">/</span>
+      <Card hoverable={false} style="margin-top: 1rem; padding: 0.5rem 0.85rem; background-color: var(--aui-bg-secondary);">
+        <div class="aui-row aui-row-xs aui-flex-wrap" style="font-size: 0.82rem; color: var(--aui-text-muted);">
+          <Badge variant="outline">Agent Protocol</Badge>
+          <span>/</span>
           <span>llmstxt.org standard</span>
-          <span class="meta-sep">/</span>
-          <a href="/llms.txt" class="meta-llm-link">llms.txt</a>
-          <span class="meta-sep">/</span>
-          <a href="/llms-full.txt" class="meta-llm-link">llms-full.txt</a>
+          <span>/</span>
+          <a href="/llms.txt" style="color: var(--aui-primary); font-family: var(--aui-font-mono); font-weight: 600; text-decoration: none;">llms.txt</a>
+          <span>/</span>
+          <a href="/llms-full.txt" style="color: var(--aui-primary); font-family: var(--aui-font-mono); font-weight: 600; text-decoration: none;">llms-full.txt</a>
         </div>
-      </div>
+      </Card>
     </div>
 
     <!-- Agent System Prompts Box -->
     <div class="spec-grid" style="margin-bottom: 2rem;">
       <Specimen id="agent-prompts" name="Agent System Prompts & Presets" description="Select your AI assistant to preview and copy the fine-tuned instructions." span={2}>
-        <div class="aui-agent-box">
-          <div class="aui-agent-header">
-            <div class="aui-agent-tabs">
-              <button type="button" class="aui-agent-tab-btn is-active" data-preset="universal" onclick="switchAgentPreset('universal')">Universal Prompt</button>
-              <button type="button" class="aui-agent-tab-btn" data-preset="cursor" onclick="switchAgentPreset('cursor')">Cursor (.cursorrules)</button>
-              <button type="button" class="aui-agent-tab-btn" data-preset="claude" onclick="switchAgentPreset('claude')">Claude Code</button>
-              <button type="button" class="aui-agent-tab-btn" data-preset="windsurf" onclick="switchAgentPreset('windsurf')">Windsurf Cascade</button>
-              <button type="button" class="aui-agent-tab-btn" data-preset="cli" onclick="switchAgentPreset('cli')">CLI Snippet</button>
+        <Card hoverable={false} className="aui-stack aui-stack-xs" style="background-color: var(--aui-bg-primary);">
+          <div slot="header" class="aui-row-between aui-flex-wrap" style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.6rem; gap: 0.6rem;">
+            <div class="aui-row aui-row-xs aui-flex-wrap">
+              <button type="button" class="aui-btn aui-btn-primary aui-btn-sm aui-agent-tab-btn is-active" data-preset="universal" onclick="switchAgentPreset('universal')">Universal Prompt</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm aui-agent-tab-btn" data-preset="cursor" onclick="switchAgentPreset('cursor')">Cursor (.cursorrules)</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm aui-agent-tab-btn" data-preset="claude" onclick="switchAgentPreset('claude')">Claude Code</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm aui-agent-tab-btn" data-preset="windsurf" onclick="switchAgentPreset('windsurf')">Windsurf Cascade</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm aui-agent-tab-btn" data-preset="cli" onclick="switchAgentPreset('cli')">CLI Snippet</button>
             </div>
-            <div class="aui-agent-header-actions">
-              <a href="/llms.txt" target="_blank" class="aui-agent-endpoint-badge" title="View official llms.txt">
-                <span class="aui-agent-dot"></span>
-                <span>/llms.txt ↗</span>
-              </a>
-              <a href="/llms-full.txt" target="_blank" class="aui-agent-endpoint-badge" title="View complete llms-full.txt">
-                <span>/llms-full.txt ↗</span>
+            <div class="aui-row aui-row-xs">
+              <a href="/llms.txt" target="_blank" class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono" style="font-size: 0.72rem; padding: 0.2rem 0.45rem;">
+                /llms.txt ↗
               </a>
               <button
                 type="button"
-                class="aui-agent-copy-btn"
-                onclick="navigator.clipboard.writeText(document.getElementById('aui-agent-prompt-text').textContent); this.classList.add('is-copied'); const t=this.querySelector('.aui-agent-btn-text'); if(t) t.textContent='Copied Prompt!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='Copy Active Prompt'; }, 2000);"
+                class="aui-btn aui-btn-primary aui-btn-sm"
+                onclick="navigator.clipboard.writeText(document.getElementById('aui-agent-prompt-text').textContent); const t=this.querySelector('.btn-text'); if(t) t.textContent='Copied!'; setTimeout(() => { if(t) t.textContent='Copy Active Prompt'; }, 2000);"
               >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span class="aui-agent-btn-text">Copy Active Prompt</span>
+                <span class="btn-text">Copy Active Prompt</span>
               </button>
             </div>
           </div>
 
-          <pre class="aui-agent-pre"><code id="aui-agent-prompt-text">{universalAgentPrompt}</code></pre>
-        </div>
+          <pre class="aui-pre" style="margin: 0; max-height: 380px; overflow-y: auto;"><code id="aui-agent-prompt-text">{universalAgentPrompt}</code></pre>
+        </Card>
       </Specimen>
 
       <!-- Machine-Readable Endpoints Grid -->
       <Specimen id="endpoints" name="Machine-Readable Endpoints (llmstxt.org)" description="Programmatic feeds optimized for ingestion by autonomous coding tools." span={2}>
-        <div class="aui-agent-endpoints-grid">
-          <div class="aui-agent-ep-card">
-            <div class="aui-agent-ep-top">
-              <span class="aui-agent-ep-badge">llms.txt</span>
-              <a href="/llms.txt" target="_blank" class="aui-agent-ep-link">View Raw ↗</a>
-            </div>
-            <div class="aui-agent-ep-title">Standard Agent Context</div>
-            <div class="aui-agent-ep-desc">Curated index following the llmstxt.org specification with rules, setup, and component registry.</div>
-            <div class="aui-agent-ep-action">
-              <code>https://ui.arpitbhayani.me/llms.txt</code>
-              <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://ui.arpitbhayani.me/llms.txt'); this.textContent='✓'; setTimeout(() => this.textContent='Copy', 1500);">Copy</button>
-            </div>
-          </div>
-
-          <div class="aui-agent-ep-card">
-            <div class="aui-agent-ep-top">
-              <span class="aui-agent-ep-badge">llms-full.txt</span>
-              <a href="/llms-full.txt" target="_blank" class="aui-agent-ep-link">View Raw ↗</a>
-            </div>
-            <div class="aui-agent-ep-title">Complete LLM Reference</div>
-            <div class="aui-agent-ep-desc">Single-file reference containing every component API, TypeScript prop definition, and TSX snippet.</div>
-            <div class="aui-agent-ep-action">
-              <code>https://ui.arpitbhayani.me/llms-full.txt</code>
-              <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://ui.arpitbhayani.me/llms-full.txt'); this.textContent='✓'; setTimeout(() => this.textContent='Copy', 1500);">Copy</button>
-            </div>
-          </div>
-
-          <div class="aui-agent-ep-card">
-            <div class="aui-agent-ep-top">
-              <span class="aui-agent-ep-badge">registry.json</span>
-              <a href="/r/registry.json" target="_blank" class="aui-agent-ep-link">View Raw ↗</a>
-            </div>
-            <div class="aui-agent-ep-title">shadcn Registry Manifest</div>
-            <div class="aui-agent-ep-desc">Machine-readable index of all 26 public components, styles, and dependency trees.</div>
-            <div class="aui-agent-ep-action">
-              <code>https://ui.arpitbhayani.me/r/registry.json</code>
-              <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://ui.arpitbhayani.me/r/registry.json'); this.textContent='✓'; setTimeout(() => this.textContent='Copy', 1500);">Copy</button>
-            </div>
-          </div>
-
-          <div class="aui-agent-ep-card">
-            <div class="aui-agent-ep-top">
-              <span class="aui-agent-ep-badge">AGENTS.md</span>
-              <a href="https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md" target="_blank" class="aui-agent-ep-link">GitHub ↗</a>
-            </div>
-            <div class="aui-agent-ep-title">Repository Agent Guide</div>
-            <div class="aui-agent-ep-desc">The official agent guide file maintained directly inside the root of the GitHub repository.</div>
-            <div class="aui-agent-ep-action">
-              <code>raw.githubusercontent.../AGENTS.md</code>
-              <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md'); this.textContent='✓'; setTimeout(() => this.textContent='Copy', 1500);">Copy</button>
-            </div>
-          </div>
+        <div class="aui-grid aui-grid-cols-2" style="gap: 1rem;">
+          {endpoints.map((ep) => (
+            <Card hoverable className="aui-stack aui-stack-xs" style="background-color: var(--aui-bg-primary);">
+              <div slot="header" class="aui-row-between">
+                <code class="aui-code" style="font-size: 0.85rem; font-weight: 700;">{ep.name}</code>
+                <a href={ep.href} target="_blank" style="text-decoration: none;">
+                  <Badge variant={ep.badgeVariant}>{ep.badge} ↗</Badge>
+                </a>
+              </div>
+              <h4 class="aui-h3" style="font-size: 0.95rem;">{ep.title}</h4>
+              <p class="aui-sub" style="font-size: 0.84rem; flex-grow: 1;">{ep.desc}</p>
+              <div slot="footer" class="aui-row-between" style="margin-top: 0.5rem; width: 100%;">
+                <code class="aui-code" style="font-size: 0.74rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 260px;">{ep.url}</code>
+                <button
+                  type="button"
+                  class="aui-btn aui-btn-secondary aui-btn-sm"
+                  style="font-size: 0.72rem; padding: 0.15rem 0.5rem; height: auto;"
+                  onclick={`navigator.clipboard.writeText('${ep.url}'); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 1500);`}
+                >
+                  Copy
+                </button>
+              </div>
+            </Card>
+          ))}
         </div>
       </Specimen>
 
       <!-- Autonomous Agent Rules Box -->
       <Specimen id="agent-rules" name="Autonomous AI Agent Guidelines" description="Core invariants AI models must follow when generating code with Array UI." span={2}>
-        <div class="aui-agent-rules-box">
-          <div class="aui-agent-rules-head">
-            <span class="aui-agent-rules-dot"></span>
-            <span class="aui-agent-rules-title">Engineering Rules for AI Assistants</span>
+        <Card hoverable={false} className="aui-stack aui-stack-sm" style="background-color: var(--aui-bg-primary);">
+          <div slot="header" class="aui-row aui-row-xs" style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.5rem;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background-color: var(--aui-amber); display: inline-block;"></span>
+            <h3 class="aui-h3">Engineering Rules for AI Assistants</h3>
           </div>
-          <div class="aui-agent-rules-grid">
-            <div class="aui-agent-rule-item">
-              <span class="aui-agent-rule-num">01</span>
-              <div class="aui-agent-rule-content">
-                <strong>Autonomous Workflow</strong>: Never pause to ask the user which components to install. Autonomously execute <code>npx shadcn@latest add @aui/&lt;name&gt; -y</code> and proceed immediately.
+          <div class="aui-grid aui-grid-cols-2" style="gap: 1.25rem;">
+            <div class="aui-row aui-row-sm" style="align-items: flex-start;">
+              <Badge variant="primary">01</Badge>
+              <div style="font-size: 0.88rem; line-height: 1.45;">
+                <strong style="color: var(--aui-text-secondary);">Autonomous Workflow</strong>: Never pause to ask the user which components to install. Autonomously execute <code>npx shadcn@latest add @aui/&lt;name&gt; -y</code> and proceed immediately.
               </div>
             </div>
-            <div class="aui-agent-rule-item">
-              <span class="aui-agent-rule-num">02</span>
-              <div class="aui-agent-rule-content">
-                <strong>1px Hairline Restraint</strong>: Always preserve 1px hairline borders (<code>#dfded9</code> light, <code>#2c2c38</code> dark). Avoid rounded bouncy containers or heavy box-shadows.
+            <div class="aui-row aui-row-sm" style="align-items: flex-start;">
+              <Badge variant="primary">02</Badge>
+              <div style="font-size: 0.88rem; line-height: 1.45;">
+                <strong style="color: var(--aui-text-secondary);">1px Hairline Restraint</strong>: Always preserve 1px hairline borders (<code>#dfded9</code> light, <code>#2c2c38</code> dark). Avoid rounded bouncy containers or heavy box-shadows.
               </div>
             </div>
-            <div class="aui-agent-rule-item">
-              <span class="aui-agent-rule-num">03</span>
-              <div class="aui-agent-rule-content">
-                <strong>Strict Crimson Discipline</strong>: Reserve signature crimson (<code>#e5000f</code> / <code>#ff3344</code>) exclusively for primary action buttons, active navigation indicators, and key focus rings.
+            <div class="aui-row aui-row-sm" style="align-items: flex-start;">
+              <Badge variant="primary">03</Badge>
+              <div style="font-size: 0.88rem; line-height: 1.45;">
+                <strong style="color: var(--aui-text-secondary);">Strict Crimson Discipline</strong>: Reserve signature crimson (<code>#e5000f</code> / <code>#ff3344</code>) exclusively for primary action buttons, active navigation indicators, and key focus rings.
               </div>
             </div>
-            <div class="aui-agent-rule-item">
-              <span class="aui-agent-rule-num">04</span>
-              <div class="aui-agent-rule-content">
-                <strong>High Information Density</strong>: Design layouts with tight margins, tabular monospace metrics, flat tinted card surfaces (<code>bg-muted/30</code>), and editorial typography.
+            <div class="aui-row aui-row-sm" style="align-items: flex-start;">
+              <Badge variant="primary">04</Badge>
+              <div style="font-size: 0.88rem; line-height: 1.45;">
+                <strong style="color: var(--aui-text-secondary);">High Information Density</strong>: Design layouts with tight margins, tabular monospace metrics, flat tinted card surfaces (<code>bg-muted/30</code>), and editorial typography.
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </Specimen>
 
       <!-- Complete Component CLI Registry Table -->
       <Specimen id="component-matrix" name="Complete Registry Component Directory" description="All 26 components available via the shadcn CLI registry with copyable commands." span={2}>
-        <div class="aui-agent-catalog-wrap">
-          <div class="aui-agent-table-container">
-            <table class="aui-agent-table">
-              <thead>
-                <tr>
-                  <th>Component</th>
-                  <th>Registry Target</th>
-                  <th>Description</th>
-                  <th>CLI Install Command</th>
-                </tr>
-              </thead>
-              <tbody>
-                {registryComponents.map((c) => (
-                  <tr>
-                    <td class="aui-agent-td-name">
-                      <a href={`/components#${c.name}`} class="aui-agent-comp-link">{c.title}</a>
-                    </td>
-                    <td class="aui-agent-td-mono">
-                      <code>@aui/{c.name}</code>
-                    </td>
-                    <td class="aui-agent-td-desc">{c.desc}</td>
-                    <td class="aui-agent-td-cmd">
-                      <button
-                        type="button"
-                        class="aui-agent-mini-copy"
-                        onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${c.name} -y'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 1500);`}
-                        title="Click to copy install command"
-                      >
-                        <code>npx shadcn add @aui/{c.name}</code>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <Table dense>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Registry Target</th>
+              <th>Description</th>
+              <th>CLI Install Command</th>
+            </tr>
+          </thead>
+          <tbody>
+            {registryComponents.map((c) => (
+              <tr>
+                <td>
+                  <a href={`/components#${c.name}`} style="font-weight: 600; color: var(--aui-text-secondary); text-decoration: none;">
+                    {c.title}
+                  </a>
+                </td>
+                <td>
+                  <code class="aui-code">@aui/{c.name}</code>
+                </td>
+                <td style="color: var(--aui-text-muted); font-size: 0.85rem;">{c.desc}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono"
+                    style="font-size: 0.75rem; padding: 0.15rem 0.5rem; height: auto;"
+                    onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${c.name} -y'); this.classList.add('is-copied'); const t=this.querySelector('.cmd-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='add @aui/${c.name}'; }, 1500);`}
+                    title="Click to copy install command"
+                  >
+                    <code class="cmd-text" style="font-family: inherit; border: none; background: transparent; padding: 0;">add @aui/{c.name}</code>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </Specimen>
     </div>
   </div>
@@ -378,8 +384,12 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-b
       const el = btn as HTMLElement;
       if (el.dataset.preset === name) {
         el.classList.add("is-active");
+        el.classList.remove("aui-btn-secondary");
+        el.classList.add("aui-btn-primary");
       } else {
         el.classList.remove("is-active");
+        el.classList.add("aui-btn-secondary");
+        el.classList.remove("aui-btn-primary");
       }
     });
   };

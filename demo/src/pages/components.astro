@@ -155,26 +155,30 @@ const takeaways = [
   description="Explore the complete interactive catalog of 48+ native components and shadcn CLI registry primitives."
 >
   <div class="aui-container">
-    <div class="mobile-jump-bar">
-      <span class="mobile-jump-label">Jump to component:</span>
-      <select class="mobile-jump-select" onchange="if(this.value) window.location.hash = this.value;">
-        <option value="">Select component...</option>
-        {sidebarGroups.map((g) => (
-          <optgroup label={g.title}>
-            {g.links.map((l) => (
-              <option value={l.href}>{l.label}</option>
+    <div class="aui-mobile-only">
+      <Card hoverable={false} style="margin: 1rem 0; padding: 0.5rem 0.85rem; background-color: var(--aui-bg-secondary);">
+        <div class="aui-row-between aui-flex-wrap" style="gap: 0.5rem;">
+          <span class="aui-font-mono" style="font-size: 0.78rem; font-weight: 600; color: var(--aui-text-muted);">Jump to component:</span>
+          <select class="aui-select" style="font-size: 0.82rem; padding: 0.25rem 0.5rem; max-width: 240px;" onchange="if(this.value) window.location.hash = this.value;">
+            <option value="">Select component...</option>
+            {sidebarGroups.map((g) => (
+              <optgroup label={g.title}>
+                {g.links.map((l) => (
+                  <option value={l.href}>{l.label}</option>
+                ))}
+              </optgroup>
             ))}
-          </optgroup>
-        ))}
-      </select>
+          </select>
+        </div>
+      </Card>
     </div>
 
     <div class="aui-docs">
       <Sidebar groups={sidebarGroups} />
 
-      <main class="docs-main">
+      <main style="min-width: 0;">
         <!-- Developer Primitives -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[03]</span> Developer Primitives</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[03]</span> Developer Primitives</h2>
         <div class="spec-grid">
           <Specimen id="ping-status" name="Ping status" description="Live heartbeat indicator with smooth CSS pulse." usage={`<PingStatus variant="success" label="Operational" />`} shadcnName="ping-status">
             <div class="spec-col" style="gap:1rem;">
@@ -263,7 +267,7 @@ const takeaways = [
         </div>
 
         <!-- Actions -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[04]</span> Actions</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[04]</span> Actions</h2>
         <div class="spec-grid">
           <Specimen id="buttons" name="Button" description="High-precision tactile variants, sizes and states." usage={`<Button variant="primary" size="md">Deploy</Button>`} span={2} shadcnName="button">
             <div class="spec-label">Variants</div>
@@ -353,7 +357,7 @@ const takeaways = [
         </div>
 
         <!-- Forms -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[05]</span> Forms</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[05]</span> Forms</h2>
         <div class="spec-grid">
           <Specimen id="input" name="Input" description="Label, shortcut hint, helper and error text." usage={`<Input label="Search" shortcut="⌘K" />`} shadcnName="input">
             <FormDemo client:load />
@@ -389,7 +393,7 @@ const takeaways = [
         </div>
 
         <!-- Feedback -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[06]</span> Feedback</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[06]</span> Feedback</h2>
         <div class="spec-grid">
           <Specimen id="alert" name="Alert" description="Inline, status-tinted." usage={`<Alert variant="warning" title="…">…</Alert>`} span={2} shadcnName="alert">
             <div class="spec-grid" style="margin:0;gap:0.5rem 1rem;">
@@ -445,7 +449,7 @@ const takeaways = [
         </div>
 
         <!-- Data display -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[07]</span> Data display</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[07]</span> Data display</h2>
         <div class="spec-grid">
           <Specimen id="badge" name="Badge" description="Tags, statuses and counts." usage={`<Badge variant="green">Healthy</Badge>`} shadcnName="badge">
             <div class="spec-row">
@@ -534,7 +538,7 @@ const takeaways = [
         </div>
 
         <!-- Navigation -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[08]</span> Navigation</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[08]</span> Navigation</h2>
         <div class="spec-grid">
           <Specimen id="breadcrumbs" name="Breadcrumbs" usage={`<Breadcrumbs items={[{ label, href }]} />`}>
             <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Docs", href: "#" }, { label: "Components", href: "#" }, { label: "Breadcrumbs", active: true }]} />
@@ -586,7 +590,7 @@ const takeaways = [
         </div>
 
         <!-- Content -->
-        <h2 class="docs-h2"><span class="aui-index-tag">[09]</span> Content</h2>
+        <h2 class="aui-h2"><span class="aui-index-tag">[09]</span> Content</h2>
         <div class="spec-grid">
           <Specimen id="hero" name="Hero" usage={`<Hero title subtitle avatarUrl>…</Hero>`} span={2} shadcnName="hero">
             <Hero

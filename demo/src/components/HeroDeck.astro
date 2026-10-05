@@ -1,267 +1,86 @@
 ---
+import Card from "../../../src/astro/Card.astro";
 import Badge from "../../../src/astro/Badge.astro";
 import PingStatus from "../../../src/astro/PingStatus.astro";
+import Button from "../../../src/astro/Button.astro";
+import Terminal from "../../../src/astro/Terminal.astro";
+import Toast from "../../../src/astro/Toast.astro";
 ---
 
-<div class="aui-hero-deck" id="aui-hero-deck">
-  {/* Minimal Machined Telemetry Header */}
-  <div class="aui-deck-header">
-    <div class="aui-deck-title-wrap">
-      <span class="aui-deck-dot"></span>
-      <span class="aui-deck-path">~/production/telemetry</span>
+<Card className="aui-stack aui-stack-sm" hoverable={false}>
+  <div slot="header" class="aui-row-between" style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.6rem;">
+    <div class="aui-row aui-row-sm">
+      <span style="width: 7px; height: 7px; border-radius: 50%; background-color: var(--aui-primary); display: inline-block;"></span>
+      <span class="aui-font-mono" style="font-size: 0.78rem; font-weight: 600; color: var(--aui-text-secondary);">~/production/telemetry</span>
     </div>
     <PingStatus status="operational" size="sm" label="16/16 Live" />
   </div>
 
-  {/* Compact Systems Metric Strip */}
-  <div class="aui-deck-body">
-    <div class="aui-deck-metric-row">
-      <div class="aui-deck-metric">
-        <span class="metric-label">Service</span>
-        <span class="metric-val">edge-gateway</span>
-      </div>
-      <div class="aui-deck-metric">
-        <span class="metric-label">Region</span>
-        <span class="metric-val">us-east-1</span>
-      </div>
-      <div class="aui-deck-metric">
-        <span class="metric-label">Latency</span>
-        <span class="metric-val"><strong>14ms</strong> p99</span>
-      </div>
-      <div class="aui-deck-metric">
-        <span class="metric-label">Status</span>
-        <Badge variant="green">Healthy</Badge>
-      </div>
+  <div class="aui-grid aui-grid-cols-4" style="gap: 0.5rem; background-color: var(--aui-bg-secondary); padding: 0.55rem 0.75rem; border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-sm);">
+    <div class="aui-stack" style="gap: 0.15rem;">
+      <span class="aui-font-mono" style="font-size: 0.68rem; text-transform: uppercase; color: var(--aui-text-muted);">Service</span>
+      <span style="font-size: 0.82rem; font-weight: 600; color: var(--aui-text-secondary);">edge-gateway</span>
     </div>
-
-    {/* Terminal Telemetry Block */}
-    <div class="aui-deck-terminal">
-      <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">kubectl get pods -n prod</span></div>
-      <div class="term-line term-ok">pod/api-gateway-7f9    1/1 Running   42ms p99</div>
-      <div class="term-line term-ok">pod/ledger-engine-01   1/1 Running   14ms p99</div>
-      <div class="term-line term-muted">mesh: 16 edge nodes active · 0 errors</div>
+    <div class="aui-stack" style="gap: 0.15rem;">
+      <span class="aui-font-mono" style="font-size: 0.68rem; text-transform: uppercase; color: var(--aui-text-muted);">Region</span>
+      <span style="font-size: 0.82rem; font-weight: 600; color: var(--aui-text-secondary);">us-east-1</span>
     </div>
-
-    {/* Minimal Actions */}
-    <div class="aui-deck-actions">
-      <button type="button" class="aui-btn aui-btn-primary aui-btn-sm" id="hero-btn-deploy">
-        Deploy canary
-      </button>
-      <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm" id="hero-btn-rollback">
-        Rollback
-      </button>
+    <div class="aui-stack" style="gap: 0.15rem;">
+      <span class="aui-font-mono" style="font-size: 0.68rem; text-transform: uppercase; color: var(--aui-text-muted);">Latency</span>
+      <span style="font-size: 0.82rem; font-weight: 600; color: var(--aui-text-secondary);"><strong style="color: var(--aui-text-primary);">14ms</strong> p99</span>
+    </div>
+    <div class="aui-stack" style="gap: 0.15rem;">
+      <span class="aui-font-mono" style="font-size: 0.68rem; text-transform: uppercase; color: var(--aui-text-muted);">Status</span>
+      <div><Badge variant="green">Healthy</Badge></div>
     </div>
   </div>
 
-  {/* Toast */}
-  <div class="aui-hero-toast" id="hero-toast" style="display: none;">
-    <span class="aui-toast-icon" id="hero-toast-icon">✓</span>
-    <div class="aui-toast-body">
-      <p class="aui-toast-title" id="hero-toast-title">Canary Deployed</p>
-      <p class="aui-toast-desc" id="hero-toast-desc">All 16 nodes report healthy telemetry</p>
-    </div>
+  <Terminal
+    title="bash"
+    lines={[
+      "kubectl get pods -n prod",
+      { text: "pod/api-gateway-7f9    1/1 Running   42ms p99", kind: "ok" },
+      { text: "pod/ledger-engine-01   1/1 Running   14ms p99", kind: "ok" },
+      { text: "mesh: 16 edge nodes active · 0 errors", kind: "out" }
+    ]}
+  />
+
+  <div class="aui-row" style="margin-top: 0.25rem;">
+    <Button variant="primary" size="sm" id="hero-btn-deploy">Deploy canary</Button>
+    <Button variant="secondary" size="sm" id="hero-btn-rollback">Rollback</Button>
   </div>
-</div>
+
+  <div id="hero-toast-wrap" style="display: none; margin-top: 0.5rem;">
+    <Toast id="hero-toast" variant="success" title="Canary Deployed" description="All 16 nodes report healthy telemetry" />
+  </div>
+</Card>
 
 <script>
   let toastTimer: number | null = null;
 
-  function showToast(title: string, desc: string, icon = "✓") {
+  function showToast(title: string, desc: string, variant: "success" | "info" = "success") {
+    const wrap = document.getElementById("hero-toast-wrap");
     const toast = document.getElementById("hero-toast");
-    const tTitle = document.getElementById("hero-toast-title");
-    const tDesc = document.getElementById("hero-toast-desc");
-    const tIcon = document.getElementById("hero-toast-icon");
-    if (!toast || !tTitle || !tDesc || !tIcon) return;
+    if (!wrap || !toast) return;
 
-    tTitle.textContent = title;
-    tDesc.textContent = desc;
-    tIcon.textContent = icon;
-    toast.style.display = "flex";
-    toast.classList.add("is-visible");
+    const tTitle = toast.querySelector(".aui-toast-title");
+    const tDesc = toast.querySelector(".aui-toast-desc");
+    if (tTitle) tTitle.textContent = title;
+    if (tDesc) tDesc.textContent = desc;
+
+    wrap.style.display = "block";
 
     if (toastTimer) clearTimeout(toastTimer);
     toastTimer = window.setTimeout(() => {
-      toast.classList.remove("is-visible");
-      setTimeout(() => {
-        toast.style.display = "none";
-      }, 200);
+      wrap.style.display = "none";
     }, 2400);
   }
 
   document.getElementById("hero-btn-deploy")?.addEventListener("click", () => {
-    showToast("Canary Deployed", "16 nodes updated with zero packet drop", "✓");
+    showToast("Canary Deployed", "16 nodes updated with zero packet drop", "success");
   });
 
   document.getElementById("hero-btn-rollback")?.addEventListener("click", () => {
-    showToast("Rollback requested", "Routing traffic back to previous release snapshot", "↺");
+    showToast("Rollback requested", "Routing traffic back to previous release snapshot", "info");
   });
 </script>
-
-<style>
-  .aui-hero-deck {
-    position: relative;
-    background-color: var(--aui-bg-primary);
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-md);
-    overflow: hidden;
-    box-shadow: var(--aui-box-shadow);
-  }
-
-  .aui-deck-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.45rem 0.85rem;
-    background-color: var(--aui-bg-secondary);
-    border-bottom: 1px solid var(--aui-border-color);
-  }
-
-  .aui-deck-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .aui-deck-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: var(--aui-primary);
-  }
-
-  .aui-deck-path {
-    font-family: var(--aui-font-mono);
-    font-size: 0.76rem;
-    font-weight: 600;
-    color: var(--aui-text-secondary);
-  }
-
-  .aui-deck-body {
-    padding: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .aui-deck-metric-row {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.45rem;
-    padding: 0.45rem 0.65rem;
-    background-color: var(--aui-bg-secondary);
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-sm);
-  }
-
-  .aui-deck-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .metric-label {
-    font-family: var(--aui-font-mono);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--aui-text-muted);
-  }
-
-  .metric-val {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--aui-text-secondary);
-  }
-
-  .metric-val strong {
-    color: var(--aui-text-primary);
-  }
-
-  .aui-deck-terminal {
-    background-color: var(--aui-pre-bg);
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-sm);
-    padding: 0.65rem 0.85rem;
-    font-family: var(--aui-font-mono);
-    font-size: 0.76rem;
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .term-line {
-    white-space: nowrap;
-    overflow-x: auto;
-  }
-
-  .term-prompt {
-    color: var(--aui-primary);
-    font-weight: 700;
-  }
-
-  .term-cmd {
-    color: #e4e4ed;
-  }
-
-  .term-ok {
-    color: #10b981;
-  }
-
-  .term-muted {
-    color: #71717a;
-    font-size: 0.72rem;
-    margin-top: 0.15rem;
-  }
-
-  .aui-deck-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-  }
-
-  .aui-hero-toast {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    padding: 0.55rem 0.8rem;
-    font-size: 0.82rem;
-    background-color: var(--aui-bg-secondary);
-    border: 1px solid var(--aui-border-strong);
-    border-radius: var(--aui-radius-md);
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-  }
-
-  .aui-toast-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: var(--aui-success);
-    color: #fff;
-    font-size: 0.68rem;
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .aui-toast-title {
-    margin: 0;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--aui-text-secondary);
-  }
-
-  .aui-toast-desc {
-    margin: 0.1rem 0 0;
-    font-size: 0.76rem;
-    color: var(--aui-text-muted);
-  }
-</style>

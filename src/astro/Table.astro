@@ -1,0 +1,63 @@
+---
+export interface Column<T = any> {
+  header: string;
+  accessor?: string;
+  align?: "left" | "center" | "right";
+  sortable?: boolean;
+}
+
+interface Props {
+  columns?: Column[];
+  data?: any[];
+  dense?: boolean;
+  striped?: boolean;
+  className?: string;
+  [key: string]: any;
+}
+
+const {
+  columns,
+  data,
+  dense = false,
+  striped = false,
+  className = "",
+  ...rest
+} = Astro.props;
+
+const wrapperClasses = ["aui-table-wrapper", className].filter(Boolean).join(" ");
+const tableClasses = [
+  "aui-table",
+  dense && "aui-table-dense",
+  striped && "aui-table-striped",
+].filter(Boolean).join(" ");
+---
+
+<div class={wrapperClasses}>
+  <table class={tableClasses} {...rest}>
+    {columns && (
+      <thead>
+        <tr>
+          {columns.map((col) => (
+            <th style={col.align ? `text-align: ${col.align}` : undefined}>
+              {col.header}
+            </th>
+          ))}
+        </tr>
+      </thead>
+    )}
+    {data && (
+      <tbody>
+        {data.map((row) => (
+          <tr>
+            {columns?.map((col) => (
+              <td style={col.align ? `text-align: ${col.align}` : undefined}>
+                {col.accessor ? row[col.accessor] : null}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    )}
+    <slot />
+  </table>
+</div>

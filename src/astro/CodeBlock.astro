@@ -1,0 +1,25 @@
+---
+interface Props {
+  code: string;
+  language?: string;
+  filename?: string;
+  className?: string;
+}
+
+const { code, language = "bash", filename, className = "" } = Astro.props;
+---
+
+<div class={`aui-codeblock ${className}`}>
+  <div class="aui-codeblock-header">
+    <span class="aui-codeblock-lang">{filename || language}</span>
+    <button
+      type="button"
+      class="aui-codeblock-copy"
+      aria-label="Copy code to clipboard"
+      onclick={`navigator.clipboard.writeText(${JSON.stringify(code)}); this.classList.add('is-copied'); const orig = this.innerHTML; this.innerHTML='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); this.innerHTML=orig; }, 2000);`}
+    >
+      Copy
+    </button>
+  </div>
+  <pre class="aui-codeblock-pre aui-pre"><code class="aui-codeblock-code">{code}</code></pre>
+</div>

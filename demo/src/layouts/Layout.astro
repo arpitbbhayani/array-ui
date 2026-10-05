@@ -6,7 +6,6 @@ import SocialPill from "../../../src/astro/SocialPill.astro";
 import Kbd from "../../../src/astro/Kbd.astro";
 import { CommandPalette } from "../../../dist/react.js";
 import "../../../src/styles/index.css";
-import "../styles/docs.css";
 
 interface Props {
   title?: string;
@@ -153,17 +152,18 @@ const commandItems = [
   <body class="aui-body">
     <CommandPalette client:load items={commandItems} />
     <Navbar brandName="Array UI (aui)" links={navLinks}>
-      <div slot="actions" class="aui-nav-custom-actions">
-        <a class="aui-nav-llm-btn" href="/llms.txt" target="_blank" title="Machine-readable LLM documentation (llms.txt)">
+      <div slot="actions" class="aui-row aui-row-sm">
+        <a class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono" href="/llms.txt" target="_blank" title="Machine-readable LLM documentation (llms.txt)" style="gap: 0.35rem; font-size: 0.78rem;">
           <span class="aui-ping-dot" style="width: 7px; height: 7px; background-color: var(--aui-success); border-radius: 50%; display: inline-block;"></span>
           <span>llms.txt</span>
         </a>
         <button
           type="button"
-          class="aui-nav-search-btn"
+          class="aui-btn aui-btn-secondary aui-btn-sm"
           id="aui-search-trigger"
           title="Search docs (⌘K)"
           onclick="window.dispatchEvent(new KeyboardEvent('keydown', {key:'k', metaKey:true}))"
+          style="gap: 0.45rem; font-size: 0.82rem; color: var(--aui-text-muted);"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8" />
@@ -191,20 +191,20 @@ const commandItems = [
     </Footer>
 
     <!-- Global Floating HUD / Keyboard Shortcuts Bar -->
-    <div class="aui-floating-hud">
+    <div class="aui-hud">
       <div class="aui-hud-inner">
         <button type="button" class="aui-hud-btn" onclick="window.dispatchEvent(new KeyboardEvent('keydown', {key:'k', metaKey:true}))">
-          <span class="aui-hud-key">⌘K</span>
+          <span class="aui-kbd" style="font-size: 0.72rem; padding: 0.08rem 0.35rem;">⌘K</span>
           <span>Search</span>
         </button>
-        <span class="aui-hud-sep">·</span>
+        <span style="color: var(--aui-border-strong);">·</span>
         <button type="button" class="aui-hud-btn" onclick="window.dispatchEvent(new KeyboardEvent('keydown', {key:'d', metaKey:true}))">
-          <span class="aui-hud-key">⌘D</span>
+          <span class="aui-kbd" style="font-size: 0.72rem; padding: 0.08rem 0.35rem;">⌘D</span>
           <span>Theme</span>
         </button>
-        <span class="aui-hud-sep">·</span>
-        <span class="aui-hud-item">
-          <span class="aui-hud-key">J</span>/<span class="aui-hud-key">K</span>
+        <span style="color: var(--aui-border-strong);">·</span>
+        <span class="aui-row aui-row-xs" style="color: var(--aui-text-muted);">
+          <span class="aui-kbd" style="font-size: 0.72rem; padding: 0.08rem 0.35rem;">J</span>/<span class="aui-kbd" style="font-size: 0.72rem; padding: 0.08rem 0.35rem;">K</span>
           <span>Jump</span>
         </span>
       </div>
@@ -254,151 +254,3 @@ const commandItems = [
     </script>
   </body>
 </html>
-
-<style is:global>
-  .aui-nav-custom-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-right: 0.25rem;
-  }
-  @media (max-width: 680px) {
-    .aui-nav-custom-actions .aui-badge {
-      display: none;
-    }
-  }
-  @media (max-width: 520px) {
-    .aui-nav-custom-actions a.aui-btn {
-      display: none;
-    }
-  }
-  @media (max-width: 400px) {
-    .aui-nav-custom-actions {
-      gap: 0.35rem;
-      margin-right: 0;
-    }
-  }
-
-  .aui-nav-llm-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.28rem 0.6rem;
-    background-color: var(--aui-bg-tertiary);
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-md);
-    font-family: var(--aui-font-mono);
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--aui-text-secondary);
-    text-decoration: none;
-    transition: all 0.15s ease;
-  }
-  .aui-nav-llm-btn:hover {
-    background-color: var(--aui-clickable-hover);
-    border-color: var(--aui-border-strong);
-    color: var(--aui-primary);
-  }
-  @media (max-width: 480px) {
-    .aui-nav-llm-btn {
-      padding: 0.28rem 0.45rem;
-    }
-  }
-
-  .aui-nav-search-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.28rem 0.65rem;
-    background-color: var(--aui-bg-tertiary);
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-md);
-    font-family: var(--aui-font-sans);
-    font-size: 0.82rem;
-    color: var(--aui-text-muted);
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .aui-nav-search-btn:hover {
-    background-color: var(--aui-clickable-hover);
-    color: var(--aui-text-secondary);
-    border-color: var(--aui-border-strong);
-  }
-  @media (max-width: 640px) {
-    .aui-nav-search-btn span:first-of-type { display: none; }
-    .aui-nav-search-btn .aui-kbd { display: none; }
-    .aui-nav-search-btn { padding: 0.28rem 0.45rem; }
-  }
-
-  /* Floating HUD / Keyboard Shortcuts Dock */
-  .aui-floating-hud {
-    position: fixed;
-    bottom: 1.25rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    pointer-events: none;
-  }
-
-  .aui-hud-inner {
-    pointer-events: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.35rem 0.85rem;
-    background-color: var(--aui-bg-glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--aui-border-strong);
-    border-radius: var(--aui-radius-full);
-    box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow-lg);
-    font-family: var(--aui-font-sans);
-    font-size: 0.8rem;
-    color: var(--aui-text-muted);
-  }
-
-  .aui-hud-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    background: transparent;
-    border: none;
-    color: var(--aui-text-muted);
-    font-size: inherit;
-    font-family: inherit;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.12s ease;
-  }
-
-  .aui-hud-btn:hover {
-    color: var(--aui-text-secondary);
-  }
-
-  .aui-hud-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .aui-hud-key {
-    display: inline-block;
-    padding: 0.08rem 0.35rem;
-    font-family: var(--aui-font-mono);
-    font-size: 0.72rem;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--aui-text-secondary);
-    background-color: var(--aui-bg-tertiary);
-    border: 1px solid var(--aui-border-color);
-    border-radius: var(--aui-radius-sm);
-  }
-
-  .aui-hud-sep {
-    color: var(--aui-border-strong);
-  }
-
-  @media (max-width: 600px) {
-    .aui-floating-hud { display: none; }
-  }
-</style>
