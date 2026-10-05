@@ -92,6 +92,24 @@ const registryHighlights = [
   { name: "takeaways-box", title: "TakeawaysBox", category: "Editorial", desc: "Crimson bulleted key takeaways callout." },
   { name: "stat-card", title: "StatCard", category: "Telemetry", desc: "Metric display card for dashboards and telemetry." },
 ];
+
+const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this project:
+
+1. Design System Context: Read https://ui.arpitbhayani.me/llms.txt for full component reference and architecture rules.
+2. Installation (Note: aui is NOT published on the public npm registry):
+   - Option A (shadcn CLI Registry - Recommended):
+     Configure "registries": { "@aui": "https://ui.arpitbhayani.me/r/{name}.json" } in components.json.
+     Run: npx shadcn@latest add @aui/aui -y (installs design tokens)
+     Autonomously install any required components via: npx shadcn@latest add @aui/<component> -y (e.g. button, badge, card, terminal, ping-status) without asking for confirmation.
+   - Option B (Direct GitHub Dependency):
+     Run: pnpm add github:arpitbbhayani/aui (or npm install github:arpitbbhayani/aui / bun add github:arpitbbhayani/aui).
+     Import "aui/styles.css" in root layout.
+     Import components from "aui/nextjs" (Next.js) or "aui/astro/*" (Astro).
+3. Aesthetic Invariants:
+   - 1px hairline warm borders everywhere (#dfded9 in light, #2c2c38 in dark).
+   - Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
+   - Reserve Signature Crimson (#e5000f light, #ff3344 dark) strictly for primary actions, active tabs, and focus rings.
+   - High information density, flat surfaces (bg-muted/30), and monospace telemetry.`;
 ---
 
 <Layout
@@ -102,8 +120,9 @@ const registryHighlights = [
     <!-- Hero Section -->
     <section class="landing" id="overview">
       <div class="landing-text">
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: center;">
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: center; flex-wrap: wrap;">
           <PingStatus status="operational" label="CLI Registry Online" size="sm" />
+          <Badge variant="outline">github:arpitbbhayani/aui</Badge>
           <Badge variant="primary">v0.1.0</Badge>
         </div>
 
@@ -124,18 +143,79 @@ const registryHighlights = [
           </a>
         </div>
 
-        <div
-          class="landing-install-pill"
-          onclick="navigator.clipboard.writeText('npx shadcn@latest add @aui/aui -y'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 2000);"
-          title="Click to copy install command"
-        >
-          <span class="landing-install-prompt">$</span>
-          <span class="landing-install-code">npx shadcn@latest add @aui/aui -y</span>
-          <span class="landing-install-copy">
-            <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            <span>Copy</span>
-          </span>
+        <!-- Hero Quick Install Box -->
+        <div class="hero-quick-box">
+          <div class="hero-quick-header">
+            <div class="hero-quick-tabs">
+              <button type="button" class="hero-tab is-active" data-mode="github" onclick="switchHeroInstall('github')">GitHub Package</button>
+              <button type="button" class="hero-tab" data-mode="shadcn" onclick="switchHeroInstall('shadcn')">shadcn CLI</button>
+              <button type="button" class="hero-tab" data-mode="agent" onclick="switchHeroInstall('agent')">🤖 Agent Prompt</button>
+            </div>
+            <span class="hero-npm-badge">Not on npm</span>
+          </div>
+
+          <!-- Mode 1: GitHub -->
+          <div id="hero-pane-github" class="hero-pane is-active">
+            <div
+              class="landing-install-pill"
+              style="width: 100%; justify-content: space-between;"
+              onclick="navigator.clipboard.writeText('pnpm add github:arpitbbhayani/aui'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 2000);"
+              title="Click to copy install command"
+            >
+              <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
+                <span class="landing-install-prompt">$</span>
+                <span class="landing-install-code" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">pnpm add github:arpitbbhayani/aui</span>
+              </div>
+              <span class="landing-install-copy">
+                <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Copy</span>
+              </span>
+            </div>
+            <div class="hero-pane-hint">Direct package for Next.js & Astro. Works with <code>pnpm</code>, <code>npm</code>, <code>bun</code>.</div>
+          </div>
+
+          <!-- Mode 2: shadcn CLI -->
+          <div id="hero-pane-shadcn" class="hero-pane" style="display: none;">
+            <div
+              class="landing-install-pill"
+              style="width: 100%; justify-content: space-between;"
+              onclick="navigator.clipboard.writeText('npx shadcn@latest add @aui/aui -y'); this.classList.add('is-copied'); setTimeout(() => this.classList.remove('is-copied'), 2000);"
+              title="Click to copy install command"
+            >
+              <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
+                <span class="landing-install-prompt">$</span>
+                <span class="landing-install-code" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">npx shadcn@latest add @aui/aui -y</span>
+              </div>
+              <span class="landing-install-copy">
+                <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Copy</span>
+              </span>
+            </div>
+            <div class="hero-pane-hint">Copies design tokens & primitives into your project via <code>ui.arpitbhayani.me</code> registry.</div>
+          </div>
+
+          <!-- Mode 3: Agent Prompt -->
+          <div id="hero-pane-agent" class="hero-pane" style="display: none;">
+            <button
+              type="button"
+              id="heroAgentBtn"
+              class="hero-agent-pill-btn"
+              onclick="copyHeroAgentPrompt(this)"
+            >
+              <span style="display: flex; align-items: center; gap: 0.45rem;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
+                <span>Quick Setup Prompt for AI Agent</span>
+              </span>
+              <span class="landing-install-copy">
+                <svg class="icon-copy" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="icon-check" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span class="copy-lbl">Copy Prompt</span>
+              </span>
+            </button>
+            <div class="hero-pane-hint">Ready-to-paste prompt for Cursor, Claude Code, Windsurf, Codex, or Antigravity.</div>
+          </div>
         </div>
       </div>
 
@@ -145,7 +225,7 @@ const registryHighlights = [
     </section>
 
     <!-- Context & Framework Bar -->
-    <div class="docs-framework-bar" style="margin: 0.5rem 0 2rem;">
+    <div class="docs-framework-bar" style="margin: 0.5rem 0 1.5rem;">
       <div class="docs-framework-meta">
         <span class="meta-chip">48+ Primitives</span>
         <span class="meta-sep">/</span>
@@ -164,9 +244,81 @@ const registryHighlights = [
       </div>
     </div>
 
+    <!-- Package Notice Callout -->
+    <div class="aui-notice-callout">
+      <div style="font-size: 1.25rem; line-height: 1;">⚠️</div>
+      <div>
+        <strong>Notice: Array UI is not yet published on the public npm registry.</strong>
+        <div style="margin-top: 0.25rem; color: var(--aui-text-muted);">
+          To install, use the direct GitHub dependency (<code>pnpm add github:arpitbbhayani/aui</code> or <code>npm install github:arpitbbhayani/aui</code>) for Next.js and Astro, or copy components directly into your codebase using the official shadcn CLI registry (<code>@aui</code>).
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Agent Quickstart Prompt Box -->
+    <div class="aui-agent-prompt-card" id="agent-quickstart">
+      <div class="aui-agent-prompt-header">
+        <div class="aui-agent-prompt-title">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; background: var(--aui-primary-soft); color: var(--aui-primary); border-radius: var(--aui-radius-sm); font-size: 0.85rem;">🤖</span>
+          <span>Quick Start Prompt for AI Agents (Cursor / Claude Code / Windsurf / Codex / Antigravity)</span>
+        </div>
+        <button
+          type="button"
+          class="aui-agent-copy-btn"
+          id="copyAgentPromptBtn"
+          onclick="copyAgentQuickPrompt(this)"
+        >
+          <svg class="icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <svg class="icon-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span class="btn-text">Copy Prompt for Agent</span>
+        </button>
+      </div>
+      <div class="aui-agent-prompt-body">
+        <p class="aui-agent-prompt-desc">
+          Paste this instruction into your AI coding assistant. It automatically guides the agent to read <code>llms.txt</code>, configure the GitHub dependency or shadcn registry, and follow the design system rules autonomously:
+        </p>
+        <pre class="aui-agent-pre" id="agentPromptPre" style="max-height: 220px;">{agentQuickstartPrompt}</pre>
+      </div>
+    </div>
+
     <!-- Quickstart Guide -->
     <div class="spec-grid" style="margin-bottom: 2rem;">
-      <Specimen id="quickstart" name="Two-Minute Quickstart" description="Deploy Array UI via official shadcn CLI or direct repository dependency." span={2}>
+      <Specimen id="quickstart-github" name="Option 1: Direct GitHub Package (Next.js & Astro)" description="Install Array UI directly from GitHub for full 48+ native components and zero-FOUC theme scripts." span={2}>
+        <div class="aui-quickstart-steps">
+          <div class="aui-step">
+            <span class="aui-step-num">01</span>
+            <div class="aui-step-body">
+              <div class="aui-step-title">Install from GitHub</div>
+              <p class="aui-step-desc">Since <code>aui</code> is not on npm, install via your favorite package manager pointing to GitHub:</p>
+              <PackageManager client:load pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
+            </div>
+          </div>
+
+          <div class="aui-step">
+            <span class="aui-step-num">02</span>
+            <div class="aui-step-body">
+              <div class="aui-step-title">Import Styles & Components</div>
+              <p class="aui-step-desc">Import global stylesheet into your root layout, then import components from <code>aui/nextjs</code> or <code>aui/astro/*</code>:</p>
+              <ReactCodeBlock
+                language="tsx"
+                filename="app/layout.tsx or src/layouts/Layout.astro"
+                code={`// 1. Root Layout: Import global stylesheet
+import "aui/styles.css";
+
+// 2. Next.js: Import React components
+import { Button, Terminal, PingStatus, Card } from "aui/nextjs";
+
+// 3. Astro: Import zero-overhead Astro components
+import Terminal from "aui/astro/Terminal.astro";
+import PingStatus from "aui/astro/PingStatus.astro";`}
+                client:load
+              />
+            </div>
+          </div>
+        </div>
+      </Specimen>
+
+      <Specimen id="quickstart-shadcn" name="Option 2: shadcn CLI Registry (Copy-Paste Primitives)" description="Copy pure TypeScript and Tailwind primitives directly into your project without npm dependencies." span={2}>
         <div class="aui-quickstart-steps">
           <div class="aui-step">
             <span class="aui-step-num">01</span>
@@ -192,13 +344,13 @@ const registryHighlights = [
             <span class="aui-step-num">02</span>
             <div class="aui-step-body">
               <div class="aui-step-title">Install Design Tokens & Components</div>
-              <p class="aui-step-desc">Install the base theme and copy-paste any components directly into your codebase:</p>
+              <p class="aui-step-desc">Install base theme tokens and copy-paste any components directly into <code>@/components/ui/</code>:</p>
               <ReactCodeBlock
                 language="bash"
-                code={`# Install design tokens (Paper light & Obsidian dark)
+                code={`# 1. Install design tokens (Paper light & Obsidian dark)
 npx shadcn@latest add @aui/aui -y
 
-# Install core UI and engineering primitives
+# 2. Install core UI and engineering primitives
 npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-block @aui/ping-status -y`}
                 client:load
               />
@@ -352,4 +504,51 @@ import PingStatus from "aui/astro/PingStatus.astro";
       </Specimen>
     </div>
   </div>
+
+  <script is:inline define:vars={{ agentQuickstartPrompt }}>
+    window.agentQuickPromptText = agentQuickstartPrompt;
+
+    window.switchHeroInstall = function(mode) {
+      document.querySelectorAll(".hero-tab").forEach(function(btn) {
+        if (btn.dataset.mode === mode) {
+          btn.classList.add("is-active");
+        } else {
+          btn.classList.remove("is-active");
+        }
+      });
+      var panes = ["github", "shadcn", "agent"];
+      panes.forEach(function(p) {
+        var el = document.getElementById("hero-pane-" + p);
+        if (el) el.style.display = (p === mode) ? "block" : "none";
+      });
+    };
+
+    window.copyHeroAgentPrompt = function(btn) {
+      navigator.clipboard.writeText(window.agentQuickPromptText);
+      btn.classList.add("is-copied");
+      var lbl = btn.querySelector(".copy-lbl");
+      if (lbl) lbl.textContent = "Copied!";
+      setTimeout(function() {
+        btn.classList.remove("is-copied");
+        if (lbl) lbl.textContent = "Copy Prompt";
+      }, 2000);
+    };
+
+    window.copyAgentQuickPrompt = function(btn) {
+      navigator.clipboard.writeText(window.agentQuickPromptText);
+      btn.classList.add("is-copied");
+      var textSpan = btn.querySelector(".btn-text");
+      var iconCopy = btn.querySelector(".icon-copy");
+      var iconCheck = btn.querySelector(".icon-check");
+      if (textSpan) textSpan.textContent = "Copied to Clipboard!";
+      if (iconCopy) iconCopy.style.display = "none";
+      if (iconCheck) iconCheck.style.display = "block";
+      setTimeout(function() {
+        btn.classList.remove("is-copied");
+        if (textSpan) textSpan.textContent = "Copy Prompt for Agent";
+        if (iconCopy) iconCopy.style.display = "block";
+        if (iconCheck) iconCheck.style.display = "none";
+      }, 2000);
+    };
+  </script>
 </Layout>
