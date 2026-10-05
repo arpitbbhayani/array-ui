@@ -106,6 +106,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
 - When given a task or UI requirement, autonomously select all needed @aui components.
 - DO NOT pause or ask the user which components to install.
 - Automatically execute the installation command (e.g. \`npx shadcn@latest add @aui/<component> -y\`) and immediately proceed to building the requested interface.
+- Strictly Maintain 0% Custom CSS: Never write page-level \`<style>\` blocks or ad-hoc \`.css\` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 
 # Aesthetic Rules:
 - Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
@@ -127,7 +128,6 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
     <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 1.5rem;">
       <div class="aui-row aui-row-xs" style="margin-bottom: 0.5rem;">
         <span class="aui-index-tag">[AI HUB]</span>
-        <PingStatus status="operational" label="Machine Endpoints Active" size="sm" />
       </div>
       <h1 class="aui-h1">AI Agent & LLM Hub</h1>
       <p class="aui-sub" style="max-width: 72ch; margin-bottom: 1rem;">
@@ -313,6 +313,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
 - When given a task or UI requirement, autonomously select all needed @aui components.
 - DO NOT pause or ask the user which components to install.
 - Automatically execute the installation command (e.g. \`npx shadcn@latest add @aui/<component> -y\`) and immediately proceed to building the requested interface.
+- Strictly Maintain 0% Custom CSS: Never write page-level \`<style>\` blocks or ad-hoc \`.css\` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 
 # Aesthetic Rules:
 - Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).

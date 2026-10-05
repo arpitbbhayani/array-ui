@@ -92,6 +92,7 @@ import PingStatus from "array-ui/astro/PingStatus.astro";
 ### Autonomous Agent Workflow Rules:
 - Autonomously select and install required components (`npx shadcn@latest add @aui/<component> -y`).
 - DO NOT pause or ask the user which components to install — immediately implement the requested interface.
+- Strictly Maintain 0% Custom CSS: Never write page-level `<style>` blocks or ad-hoc `.css` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 - Always use `cn()` from `@/lib/utils` for className composition.
 
 ---

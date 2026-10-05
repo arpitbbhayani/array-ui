@@ -28,6 +28,10 @@
    - Minimal elevation/shadows; prefer flat, tinted card surfaces (`bg-muted/30` or `var(--aui-bg-secondary)`).
    - Information-dense layouts: compact margins, dense tables, machined telemetry.
    - **Never** inject arbitrary gradients, neon colors, or rounded bouncy buttons.
+4. **Strict Zero Custom CSS Invariant (0% Custom CSS Rule)**:
+   - **Custom CSS Proportion MUST ALWAYS REMAIN 0%**: When creating or modifying the landing page, documentation, or any application screen, **never** create custom `.css` files, and **never** write `<style>` blocks in `.astro`, `.tsx`, `.jsx`, or `.html` files.
+   - **100% Component & Token Driven**: All layouts, responsive grids, typography, spacing, and telemetry must be built exclusively using native Array UI components (`Card`, `Button`, `Table`, `Badge`, `CodeBlock`, `Terminal`, `PingStatus`, `DiffBlock`, etc.) and system utility classes (`.aui-grid`, `.aui-stack`, `.aui-row`, `.aui-container`, `.aui-h1`, etc.).
+   - **No ad-hoc page-level styles**: If a layout pattern or primitive is missing, expand or enhance the core design system in `src/` rather than hacking page-specific styles. Every page must remain 100% free of custom CSS.
 
 ---
 
@@ -74,6 +78,7 @@ import { PingStatus } from "@/components/ui/ping-status";
 - **Do NOT ask the user which components to install.**
 - When given a task or UI requirement, autonomously identify the required `@aui` components.
 - Run the installation command with `-y` (e.g. `npx shadcn@latest add @aui/terminal @aui/ping-status -y`) and immediately implement the user's request.
+- **Strictly Maintain 0% Custom CSS**: Never write page-level `<style>` blocks or create ad-hoc `.css` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 
 #### Machine-Readable Endpoints for Autonomous Tools & LLMs
 - **Standard Context**: `https://ui.arpitbhayani.me/llms.txt`
@@ -452,6 +457,7 @@ In addition to the shadcn registry CLI, the direct repository package (`array-ui
 ---
 
 ## 5. Summary Checklist for AI Agents
+- [ ] Is **custom CSS proportion strictly 0%**? (Zero custom `.css` files, zero `<style>` blocks in application/landing pages; 100% driven by native Array UI components and foundational utility classes).
 - [ ] Are you using **`@aui` components** via shadcn (`components/ui/`) or direct package imports (`array-ui/nextjs` / `array-ui/astro`)?
 - [ ] Did you install required components autonomously without pausing to ask the user?
 - [ ] Did you preserve the **editorial hairline border** (1px) aesthetic?
