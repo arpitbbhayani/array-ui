@@ -299,17 +299,17 @@ const takeaways = [
         <span>View Code Snippets As:</span>
       </div>
       <div class="docs-framework-pills">
-        <button type="button" class="aui-global-fw-btn is-active" data-fw="react" onclick="window.setDocsFramework('react')">
-          React
+        <button type="button" class="aui-global-fw-btn is-active" data-fw="nextjs" onclick="window.setDocsFramework('nextjs')">
+          Next.js
         </button>
         <button type="button" class="aui-global-fw-btn" data-fw="astro" onclick="window.setDocsFramework('astro')">
           Astro
         </button>
-        <button type="button" class="aui-global-fw-btn" data-fw="html" onclick="window.setDocsFramework('html')">
-          HTML / CSS
-        </button>
         <button type="button" class="aui-global-fw-btn" data-fw="shadcn" onclick="window.setDocsFramework('shadcn')">
           shadcn CLI
+        </button>
+        <button type="button" class="aui-global-fw-btn" data-fw="html" onclick="window.setDocsFramework('html')">
+          HTML / CSS
         </button>
       </div>
       <div class="docs-framework-hint">
@@ -374,10 +374,10 @@ const takeaways = [
    - Run: npx shadcn@latest add @aui/aui -y (base theme tokens)
    - Run: npx shadcn@latest add @aui/<component> -y (e.g. terminal, diff-block, property-grid, ping-status)
    - Import from "@/components/ui/<component>".
-2. If project uses direct package (Astro, Next.js, Remix):
+2. If project uses direct package (Next.js, Astro):
    - Run: npm install github:arpitbbhayani/aui (or pnpm add / bun add)
    - Add \`import "aui/styles.css";\` to root layout.
-   - Import from "aui/react" (React) or "aui/astro/[Component].astro" (Astro).
+   - Import from "aui/nextjs" (Next.js) or "aui/astro/[Component].astro" (Astro).
 
 # Autonomous Workflow (IMPORTANT):
 - When given a task or UI requirement, autonomously select all needed @aui components.
@@ -508,87 +508,87 @@ const takeaways = [
                   <tr>
                     <th>Component</th>
                     <th>shadcn CLI Command</th>
-                    <th>GitHub Package (React)</th>
-                    <th>GitHub Package (Astro)</th>
+                    <th>Next.js Package (aui/nextjs)</th>
+                    <th>Astro Package (aui/astro)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><strong>Terminal</strong></td>
                     <td><code>npx shadcn@latest add @aui/terminal</code></td>
-                    <td><code>import &#123; Terminal &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; Terminal &#125; from "aui/nextjs"</code></td>
                     <td><code>import Terminal from "aui/astro/Terminal.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>DiffBlock</strong></td>
                     <td><code>npx shadcn@latest add @aui/diff-block</code></td>
-                    <td><code>import &#123; DiffBlock &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; DiffBlock &#125; from "aui/nextjs"</code></td>
                     <td><code>import DiffBlock from "aui/astro/DiffBlock.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>PingStatus</strong></td>
                     <td><code>npx shadcn@latest add @aui/ping-status</code></td>
-                    <td><code>import &#123; PingStatus &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; PingStatus &#125; from "aui/nextjs"</code></td>
                     <td><code>import PingStatus from "aui/astro/PingStatus.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>PropertyGrid</strong></td>
                     <td><code>npx shadcn@latest add @aui/property-grid</code></td>
-                    <td><code>import &#123; PropertyGrid &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; PropertyGrid &#125; from "aui/nextjs"</code></td>
                     <td><code>import PropertyGrid from "aui/astro/PropertyGrid.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>FileTree</strong></td>
                     <td><code>npx shadcn@latest add @aui/file-tree</code></td>
-                    <td><code>import &#123; FileTree &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; FileTree &#125; from "aui/nextjs"</code></td>
                     <td><code>import FileTree from "aui/astro/FileTree.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>PackageManager</strong></td>
                     <td><code>npx shadcn@latest add @aui/package-manager</code></td>
-                    <td><code>import &#123; PackageManager &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; PackageManager &#125; from "aui/nextjs"</code></td>
                     <td><code>import PackageManager from "aui/astro/PackageManager.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>Maxim</strong></td>
                     <td><code>npx shadcn@latest add @aui/maxim</code></td>
-                    <td><code>import &#123; Maxim &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; Maxim &#125; from "aui/nextjs"</code></td>
                     <td><code>import Maxim from "aui/astro/Maxim.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>TakeawaysBox</strong></td>
                     <td><code>npx shadcn@latest add @aui/takeaways-box</code></td>
-                    <td><code>import &#123; TakeawaysBox &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; TakeawaysBox &#125; from "aui/nextjs"</code></td>
                     <td><code>import TakeawaysBox from "aui/astro/TakeawaysBox.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>Hero</strong></td>
                     <td><code>npx shadcn@latest add @aui/hero</code></td>
-                    <td><code>import &#123; Hero &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; Hero &#125; from "aui/nextjs"</code></td>
                     <td><code>import Hero from "aui/astro/Hero.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>SocialPill</strong></td>
                     <td><code>npx shadcn@latest add @aui/social-pill</code></td>
-                    <td><code>import &#123; SocialPill &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; SocialPill &#125; from "aui/nextjs"</code></td>
                     <td><code>import SocialPill from "aui/astro/SocialPill.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>CourseCard</strong></td>
                     <td><code>npx shadcn@latest add @aui/course-card</code></td>
-                    <td><code>import &#123; CourseCard &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; CourseCard &#125; from "aui/nextjs"</code></td>
                     <td><code>import CourseCard from "aui/astro/CourseCard.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>StatCard</strong></td>
                     <td><code>npx shadcn@latest add @aui/stat-card</code></td>
-                    <td><code>import &#123; StatCard &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; StatCard &#125; from "aui/nextjs"</code></td>
                     <td><code>import StatCard from "aui/astro/StatCard.astro"</code></td>
                   </tr>
                   <tr>
                     <td><strong>EmptyState</strong></td>
                     <td><code>npx shadcn@latest add @aui/empty-state</code></td>
-                    <td><code>import &#123; EmptyState &#125; from "aui/react"</code></td>
+                    <td><code>import &#123; EmptyState &#125; from "aui/nextjs"</code></td>
                     <td><code>import EmptyState from "aui/astro/EmptyState.astro"</code></td>
                   </tr>
                 </tbody>

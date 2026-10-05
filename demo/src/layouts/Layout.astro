@@ -96,7 +96,7 @@ const navLinks = [
     <!-- Mouse Tracking Dynamic Spotlight & Framework Switcher Scripts -->
     <script is:inline>
       // 1. Framework Switcher
-      window.currentDocsFramework = localStorage.getItem("aui-framework") || "react";
+      window.currentDocsFramework = localStorage.getItem("aui-framework") || "nextjs";
       window.setDocsFramework = function(fw) {
         window.currentDocsFramework = fw;
         localStorage.setItem("aui-framework", fw);
@@ -113,7 +113,7 @@ const navLinks = [
             else p.classList.remove("is-active");
           });
 
-          var snippet = bar.dataset[fw] || bar.dataset.react || "";
+          var snippet = bar.dataset[fw] || (fw === "nextjs" ? bar.dataset.react : "") || bar.dataset.react || "";
           if (codeEl) codeEl.textContent = snippet;
           if (copyBtn) copyBtn.dataset.usage = snippet;
         });

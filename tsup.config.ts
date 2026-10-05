@@ -6,6 +6,7 @@ export default defineConfig({
   entry: {
     index: "src/index.ts",
     react: "src/react/index.ts",
+    nextjs: "src/react/index.ts",
     tokens: "src/tokens/index.ts",
     tailwind: "src/tailwind/index.ts",
     shadcn: "src/shadcn/index.ts",
@@ -56,6 +57,8 @@ export default defineConfig({
 
     // Provide root d.ts shims for maximum bundler / TypeScript resolution compatibility
     fs.writeFileSync("dist/react.d.ts", 'export * from "./react/index";\n');
+    fs.writeFileSync("dist/nextjs.d.ts", 'export * from "./react/index";\n');
+    fs.writeFileSync("dist/next.d.ts", 'export * from "./react/index";\n');
     fs.writeFileSync("dist/tokens.d.ts", 'export * from "./tokens/index";\n');
     fs.writeFileSync("dist/tailwind.d.ts", 'export * from "./tailwind/index";\n');
     fs.writeFileSync("dist/shadcn.d.ts", 'export * from "./shadcn/index";\n');

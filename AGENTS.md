@@ -75,7 +75,7 @@ import { PingStatus } from "@/components/ui/ping-status";
 
 ---
 
-### Mode B: Direct GitHub Dependency (Astro, Next.js, Remix)
+### Mode B: Direct GitHub Dependency (Next.js, Astro)
 > **Note:** `aui` is **not published on the npm registry**. Install directly from GitHub:
 
 ```bash
@@ -92,13 +92,13 @@ bun add github:arpitbbhayani/aui
 Setup styles in root layout:
 ```tsx
 import "aui/styles.css";
-// Optional: import { ThemeProvider, ThemeScript } from "aui/react";
+// Optional: import { ThemeProvider, ThemeScript } from "aui/nextjs";
 ```
 
 Import components:
 ```tsx
-// React
-import { Button, Terminal, DiffBlock, PingStatus, Card } from "aui/react";
+// Next.js (App Router or Pages Router)
+import { Button, Terminal, DiffBlock, PingStatus, Card } from "aui/nextjs";
 
 // Astro (zero-JS client overhead)
 import Terminal from "aui/astro/Terminal.astro";
@@ -276,7 +276,7 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
 #### 15. `Modal`
 Accessible dialog modal with backdrop blur, focus trapping, and escape-key dismissal.
 ```tsx
-// React
+// Next.js
 <Modal isOpen={open} onClose={() => setOpen(false)} title="Confirmation" footer={<Button size="sm">Confirm</Button>}>
   Content goes here
 </Modal>
@@ -303,7 +303,7 @@ Responsive 16:9 media player container with hairline border and fallback loading
 #### 17. `Dropdown`
 Accessible action menu with click-outside dismissal and keyboard escape support.
 ```tsx
-// React
+// Next.js
 <Dropdown trigger={<Button variant="secondary" size="sm">Actions ▼</Button>}>
   <div className="aui-dropdown-header">Options</div>
   <button type="button" className="aui-dropdown-item">Edit</button>
@@ -360,7 +360,7 @@ Accessible action menu with click-outside dismissal and keyboard escape support.
 ---
 
 ## 5. Summary Checklist for AI Agents
-- [ ] Are you using **`@aui` components** via shadcn (`components/ui/`) or direct git imports (`aui/react` / `aui/astro`)?
+- [ ] Are you using **`@aui` components** via shadcn (`components/ui/`) or direct git imports (`aui/nextjs` / `aui/astro`)?
 - [ ] Did you install required components autonomously without pausing to ask the user?
 - [ ] Did you preserve the **editorial hairline border** (1px) aesthetic?
 - [ ] Is **crimson (`#e5000f`)** used strictly for primary actions, not plastered across entire surfaces?

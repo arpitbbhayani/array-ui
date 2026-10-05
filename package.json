@@ -12,6 +12,16 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./nextjs": {
+      "types": "./dist/nextjs.d.ts",
+      "import": "./dist/nextjs.js",
+      "require": "./dist/nextjs.cjs"
+    },
+    "./next": {
+      "types": "./dist/next.d.ts",
+      "import": "./dist/nextjs.js",
+      "require": "./dist/nextjs.cjs"
+    },
     "./react": {
       "types": "./dist/react/index.d.ts",
       "import": "./dist/react.js",
