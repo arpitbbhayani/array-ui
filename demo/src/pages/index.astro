@@ -75,18 +75,18 @@ const registryHighlights = [
   { name: "stat-card", title: "StatCard", category: "Telemetry", desc: "Metric display card for dashboards and telemetry." },
 ];
 
-const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this project:
+const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this project:
 
 1. Design System Context: Read https://ui.arpitbhayani.me/llms.txt for full component reference and architecture rules.
-2. Installation (Note: aui is NOT published on the public npm registry):
-   - Option A (shadcn CLI Registry - Recommended):
+2. Installation:
+   - Option A (Agent & shadcn CLI Registry - Recommended):
      Configure "registries": { "@aui": "https://ui.arpitbhayani.me/r/{name}.json" } in components.json.
      Run: npx shadcn@latest add @aui/aui -y (installs design tokens)
      Autonomously install any required components via: npx shadcn@latest add @aui/<component> -y (e.g. button, badge, card, terminal, ping-status) without asking for confirmation.
-   - Option B (Direct GitHub Dependency):
-     Run: pnpm add github:arpitbbhayani/aui (or npm install github:arpitbbhayani/aui / bun add github:arpitbbhayani/aui).
-     Import "aui/styles.css" in root layout.
-     Import components from "aui/nextjs" (Next.js) or "aui/astro/*" (Astro).
+   - Option B (Full Package Installation via npm / pnpm / bun):
+     Run: pnpm add array-ui (or npm install array-ui / bun add array-ui).
+     Import "array-ui/styles.css" in root layout.
+     Import components from "array-ui/nextjs" (Next.js) or "array-ui/astro/*" (Astro).
 3. Aesthetic Invariants:
    - 1px hairline warm borders everywhere (#dfded9 in light, #2c2c38 in dark).
    - Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
@@ -95,25 +95,25 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
 ---
 
 <Layout
-  title="Array UI (aui) — Editorial Design System for Engineers & AI Agents"
-  description="Array UI (aui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me."
+  title="Array UI (array-ui) — Editorial Design System for Engineers & AI Agents"
+  description="Array UI (array-ui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me."
 >
   <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
     <!-- Hero Section -->
     <section class="aui-grid aui-grid-cols-2" id="overview" style="align-items: center; margin-bottom: 2.5rem;">
       <div class="aui-stack aui-stack-sm">
         <div class="aui-row aui-row-xs aui-flex-wrap">
-          <PingStatus status="operational" label="CLI Registry Online" size="sm" />
-          <Badge variant="outline">github:arpitbbhayani/aui</Badge>
+          <PingStatus status="operational" label="Registry Online" size="sm" />
+          <Badge variant="outline">array-ui</Badge>
           <Badge variant="primary">v0.1.0</Badge>
         </div>
 
         <h1 class="aui-h1">
-          The design system for engineers & AI agents.
+          Array UI. <span style="font-weight: 500; color: var(--aui-text-muted);">Systems engineering, in code and interface.</span>
         </h1>
 
         <p class="aui-sub" style="max-width: 60ch;">
-          Inspired by <strong>arpitbhayani.me</strong>. Precision typography, 1px warm hairline borders, and zero-runtime CSS tokens for web engineering.
+          Inspired by <strong>arpitbhayani.me</strong>. Contiguous layouts, 1px warm hairline borders, and zero-runtime CSS tokens for web systems and autonomous coding agents.
         </p>
 
         <div class="aui-row aui-row-sm" style="margin: 0.75rem 0 0.5rem;">
@@ -129,20 +129,31 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
         <Card hoverable={false} className="aui-stack aui-stack-xs" style="margin-top: 0.75rem; background-color: var(--aui-bg-secondary);">
           <div slot="header" class="aui-row-between aui-flex-wrap" style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.5rem; margin-bottom: 0.25rem;">
             <div class="aui-row aui-row-xs">
-              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab is-active" data-mode="github" onclick="switchHeroInstall('github')">GitHub Package</button>
+              <button type="button" class="aui-btn aui-btn-primary aui-btn-sm hero-tab is-active" data-mode="agent" onclick="switchHeroInstall('agent')">Agent Prompt</button>
+              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab" data-mode="npm" onclick="switchHeroInstall('npm')">npm Package</button>
               <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab" data-mode="shadcn" onclick="switchHeroInstall('shadcn')">shadcn CLI</button>
-              <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm hero-tab" data-mode="agent" onclick="switchHeroInstall('agent')">Agent Prompt</button>
             </div>
-            <Badge variant="outline" size="sm">Not on npm</Badge>
+            <Badge variant="outline" size="sm">npm: array-ui</Badge>
           </div>
 
-          <!-- Mode 1: GitHub -->
-          <div id="hero-pane-github" class="aui-stack aui-stack-xs">
-            <PackageManager client:load pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
-            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Direct package for Next.js & Astro. Works with <code>pnpm</code>, <code>npm</code>, <code>bun</code>.</p>
+          <!-- Mode 1: Agent Prompt (Default Open) -->
+          <div id="hero-pane-agent" class="aui-stack aui-stack-xs">
+            <ReactCodeBlock
+              language="markdown"
+              filename="Agent Prompt (llms.txt)"
+              code={agentQuickstartPrompt}
+              client:load
+            />
+            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Ready-to-paste instructions for Cursor, Claude Code, Windsurf, Codex, or Antigravity.</p>
           </div>
 
-          <!-- Mode 2: shadcn CLI -->
+          <!-- Mode 2: npm Package -->
+          <div id="hero-pane-npm" class="aui-stack aui-stack-xs" style="display: none;">
+            <PackageManager client:load pkg="array-ui" defaultManager="pnpm" />
+            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Official npm package for Next.js & Astro. Works with <code>pnpm</code>, <code>npm</code>, <code>bun</code>.</p>
+          </div>
+
+          <!-- Mode 3: shadcn CLI -->
           <div id="hero-pane-shadcn" class="aui-stack aui-stack-xs" style="display: none;">
             <ReactCodeBlock
               language="bash"
@@ -150,17 +161,6 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
               client:load
             />
             <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Copies design tokens & primitives into your project via <code>ui.arpitbhayani.me</code> registry.</p>
-          </div>
-
-          <!-- Mode 3: Agent Prompt -->
-          <div id="hero-pane-agent" class="aui-stack aui-stack-xs" style="display: none;">
-            <ReactCodeBlock
-              language="markdown"
-              filename="Agent Prompt (llms.txt)"
-              code={agentQuickstartPrompt}
-              client:load
-            />
-            <p class="aui-editorial-sub" style="font-size: 0.8rem; margin: 0.2rem 0 0;">Ready-to-paste prompt for Cursor, Claude Code, Windsurf, Codex, or Antigravity.</p>
           </div>
         </Card>
       </div>
@@ -192,24 +192,24 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
       </div>
     </Card>
 
-    <!-- Package Notice Callout -->
+    <!-- Package Distribution Callout -->
     <div style="margin-bottom: 2rem;">
-      <Alert variant="warning" title="Notice: Array UI is not yet published on the public npm registry.">
-        To install, use the direct GitHub dependency (<code>pnpm add github:arpitbbhayani/aui</code> or <code>npm install github:arpitbbhayani/aui</code>) for Next.js and Astro, or copy components directly into your codebase using the official shadcn CLI registry (<code>@aui</code>).
+      <Alert variant="info" title="Dual Distribution: npm Package & shadcn CLI Registry">
+        Install <code>array-ui</code> directly via your package manager (<code>pnpm add array-ui</code> or <code>npm i array-ui</code>) for full Next.js/Astro components and tokens, or copy isolated primitives into your codebase using the official shadcn CLI registry (<code>@aui</code>).
       </Alert>
     </div>
 
     <!-- Quickstart Guide -->
     <div class="spec-grid" style="margin-bottom: 2.5rem;">
-      <Specimen id="quickstart-github" name="Option 1: Direct GitHub Package (Next.js & Astro)" description="Install Array UI directly from GitHub for full 48+ native components and zero-FOUC theme scripts." span={2}>
+      <Specimen id="quickstart-npm" name="Option 1: Official npm Package (Next.js, Astro & React)" description="Install the complete array-ui package from npm for 48+ native components, tokens, and zero-FOUC theme scripts." span={2}>
         <div class="aui-grid aui-grid-cols-2" style="gap: 1.25rem;">
           <div class="aui-stack aui-stack-xs">
             <div class="aui-row aui-row-xs">
               <Badge variant="primary">01</Badge>
-              <h4 class="aui-h3" style="font-size: 0.95rem;">Install from GitHub</h4>
+              <h4 class="aui-h3" style="font-size: 0.95rem;">Install via Package Manager</h4>
             </div>
-            <p class="aui-sub" style="font-size: 0.85rem;">Since <code>aui</code> is not on npm, install via your package manager pointing to GitHub:</p>
-            <PackageManager client:load pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
+            <p class="aui-sub" style="font-size: 0.85rem;">Install <code>array-ui</code> with your package manager of choice:</p>
+            <PackageManager client:load pkg="array-ui" defaultManager="pnpm" />
           </div>
 
           <div class="aui-stack aui-stack-xs">
@@ -217,12 +217,12 @@ const agentQuickstartPrompt = `Set up and build with Array UI (aui) in this proj
               <Badge variant="primary">02</Badge>
               <h4 class="aui-h3" style="font-size: 0.95rem;">Import Styles & Components</h4>
             </div>
-            <p class="aui-sub" style="font-size: 0.85rem;">Import global stylesheet in root layout, then import components from <code>aui/nextjs</code> or <code>aui/astro/*</code>:</p>
+            <p class="aui-sub" style="font-size: 0.85rem;">Import global stylesheet in root layout, then import components from <code>array-ui/nextjs</code> or <code>array-ui/astro/*</code>:</p>
             <ReactCodeBlock
               language="tsx"
               filename="app/layout.tsx"
-              code={`import "aui/styles.css";
-import { Button, Terminal, PingStatus, Card } from "aui/nextjs";`}
+              code={`import "array-ui/styles.css";
+import { Button, Terminal, PingStatus, Card } from "array-ui/nextjs";`}
               client:load
             />
           </div>
@@ -388,10 +388,10 @@ export default function Page() {
           language="astro"
           filename="src/pages/index.astro"
           code={`---
-import "aui/styles.css";
-import Terminal from "aui/astro/Terminal.astro";
-import DiffBlock from "aui/astro/DiffBlock.astro";
-import PingStatus from "aui/astro/PingStatus.astro";
+import "array-ui/styles.css";
+import Terminal from "array-ui/astro/Terminal.astro";
+import DiffBlock from "array-ui/astro/DiffBlock.astro";
+import PingStatus from "array-ui/astro/PingStatus.astro";
 ---
 <PingStatus status="operational" label="Healthy" />
 <Terminal title="bash" lines={["echo hello"]} />`}
@@ -403,7 +403,7 @@ import PingStatus from "aui/astro/PingStatus.astro";
         <ReactCodeBlock
           language="html"
           filename="index.html"
-          code={`<link rel="stylesheet" href="node_modules/aui/dist/styles.css" />
+          code={`<link rel="stylesheet" href="node_modules/array-ui/dist/styles.css" />
 <body class="aui-body">
   <button class="aui-btn aui-btn-primary aui-btn-md">Deploy</button>
   <span class="aui-badge aui-badge-green">Operational</span>
@@ -429,7 +429,7 @@ import PingStatus from "aui/astro/PingStatus.astro";
           btn.classList.remove("aui-btn-primary");
         }
       });
-      var panes = ["github", "shadcn", "agent"];
+      var panes = ["agent", "npm", "shadcn"];
       panes.forEach(function(p) {
         var el = document.getElementById("hero-pane-" + p);
         if (el) el.style.display = (p === mode) ? "block" : "none";

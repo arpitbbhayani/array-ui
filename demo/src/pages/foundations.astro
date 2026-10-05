@@ -82,7 +82,7 @@ const shadcnBridgeCode = `:root {
     <!-- Foundations Specimens -->
     <div class="spec-grid" style="margin-bottom: 2rem;">
       <!-- Color Palette -->
-      <Specimen id="colors" name="Color Tokens" description="Semantic tokens that automatically swap between Paper light and Obsidian dark." span={2}>
+      <Specimen id="colors" name="Color Tokens" description="Semantic tokens that automatically swap between Paper light and Obsidian dark. Click any card to copy its CSS variable." span={2}>
         <div class="aui-grid aui-grid-cols-4" style="gap: 0.75rem;">
           {colorTokens.map((t) => (
             <Card
@@ -90,7 +90,6 @@ const shadcnBridgeCode = `:root {
               interactive
               style="cursor: pointer; padding: 0.6rem 0.75rem; background-color: var(--aui-bg-primary);"
               onclick={`navigator.clipboard.writeText('var(${t.v})'); this.style.borderColor = 'var(--aui-success)'; setTimeout(() => this.style.borderColor = '', 1000);`}
-              title="Click to copy CSS variable"
             >
               <div class="aui-row aui-row-xs">
                 <span style={`width: 22px; height: 22px; border-radius: var(--aui-radius-sm); border: 1px solid var(--aui-border-color); flex-shrink: 0; background: var(${t.v});`}></span>

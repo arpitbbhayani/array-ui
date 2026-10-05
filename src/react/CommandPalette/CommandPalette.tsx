@@ -28,7 +28,7 @@ const defaultCommandItems: CommandItem[] = [
     if (btn) btn.click();
   }},
   { id: "copy-install", label: "Copy Install Command", category: "Actions", action: () => {
-    navigator.clipboard.writeText("npm install github:arpitbbhayani/aui");
+    navigator.clipboard.writeText("npm install array-ui");
   }},
   { id: "github", label: "Open GitHub Repository", category: "Actions", href: "https://github.com/arpitbbhayani/aui" },
 

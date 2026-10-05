@@ -1,7 +1,7 @@
 {
-  "name": "aui",
+  "name": "array-ui",
   "version": "0.1.0",
-  "description": "Array UI (aui) - Typography-led, minimal design system inspired by arpitbhayani.me. Light/Dark themes, components, and tokens for Astro, Next.js, and any web project.",
+  "description": "Array UI (array-ui) - Typography-led, minimal design system inspired by arpitbhayani.me. Light/Dark themes, components, and tokens for Astro, Next.js, and any web project.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -66,6 +66,7 @@
   "scripts": {
     "build:registry": "tsx scripts/build-registry.ts",
     "build": "tsup && tsc --emitDeclarationOnly && npm run build:registry",
+    "prepublishOnly": "npm run build",
     "prepare": "npm run build",
     "dev": "npm run build:registry && astro dev --root demo --port 6145",
     "demo:build": "npm run build:registry && astro build --root demo",

@@ -39,6 +39,31 @@ body.aui-body,
   }
 }
 
+/* Typography Baseline & Legibility: Calibrated for Assistant & Plus Jakarta Sans */
+strong,
+b {
+  font-weight: 600;
+  color: var(--aui-text-secondary);
+  letter-spacing: 0.01em;
+}
+
+/* Microcopy & Small Text Legibility: Prevent smudged counters at small sizes */
+small,
+.aui-sub,
+.aui-editorial-sub,
+.aui-card-description,
+.aui-table th,
+.aui-table td,
+.aui-badge,
+.aui-kbd {
+  letter-spacing: 0.012em;
+}
+
+:where(small, .aui-sub, .aui-editorial-sub, .aui-card-description, .aui-table td, .aui-table th) :is(strong, b, [style*="font-weight: 700"], [style*="font-weight: 800"], [style*="font-weight: bold"]) {
+  font-weight: 600 !important;
+  letter-spacing: 0.018em;
+}
+
 /* Accessible focus outline (surgical laser indicator) */
 .aui-body a:focus-visible,
 .aui-body button:focus-visible,
@@ -132,7 +157,7 @@ pre *::selection,
 .aui-index-tag {
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--aui-primary);
   text-transform: uppercase;

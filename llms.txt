@@ -37,10 +37,10 @@ npx shadcn@latest add @aui/aui -y
 npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y
 ```
 
-### Mode B: Direct GitHub Dependency (Next.js, Astro)
+### Mode B: Direct Package Dependency (npm, pnpm, bun)
 ```bash
-npm install github:arpitbbhayani/aui
-# Note: Not published on npm registry; install via GitHub or shadcn registry.
+npm install array-ui
+# or: pnpm add array-ui / bun add array-ui
 ```
 
 ## Machine-Readable Endpoints
@@ -86,7 +86,7 @@ npm install github:arpitbbhayani/aui
 
 ## Full Library Native Components (React & Astro)
 
-In addition to shadcn copy-paste components, the direct package dependency (`github:arpitbbhayani/aui`) includes 48+ native components for React (`aui/nextjs`, `aui/react`) and Astro (`aui/astro/*`):
+In addition to shadcn copy-paste components, the official package dependency (`array-ui`) includes 48+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
 - **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
 - **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip

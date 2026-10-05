@@ -473,10 +473,10 @@ npx shadcn@latest add @aui/aui -y
 npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y
 \`\`\`
 
-### Mode B: Direct GitHub Dependency (Next.js, Astro)
+### Mode B: Direct Package Dependency (npm, pnpm, bun)
 \`\`\`bash
-npm install github:arpitbbhayani/aui
-# Note: Not published on npm registry; install via GitHub or shadcn registry.
+npm install array-ui
+# or: pnpm add array-ui / bun add array-ui
 \`\`\`
 
 ## Machine-Readable Endpoints
@@ -499,7 +499,7 @@ ${renderComponentList(editorialComps)}
 
 ## Full Library Native Components (React & Astro)
 
-In addition to shadcn copy-paste components, the direct package dependency (\`github:arpitbbhayani/aui\`) includes 48+ native components for React (\`aui/nextjs\`, \`aui/react\`) and Astro (\`aui/astro/*\`):
+In addition to shadcn copy-paste components, the official package dependency (\`array-ui\`) includes 48+ native components for React (\`array-ui/nextjs\`, \`array-ui/react\`) and Astro (\`array-ui/astro/*\`):
 - **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
 - **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
@@ -580,28 +580,28 @@ import { PropertyGrid } from "@/components/ui/property-grid";
 import { PingStatus } from "@/components/ui/ping-status";
 \`\`\`
 
-### Mode B: Direct GitHub Dependency (Next.js, Astro)
-aui is NOT published on the npm registry. Install directly from GitHub:
+### Mode B: Direct Package Dependency (npm, pnpm, bun)
+Install the official package from npm:
 \`\`\`bash
-npm install github:arpitbbhayani/aui
-# or: pnpm add github:arpitbbhayani/aui / bun add github:arpitbbhayani/aui
+npm install array-ui
+# or: pnpm add array-ui / bun add array-ui
 \`\`\`
 
 Setup styles in root layout:
 \`\`\`tsx
-import "aui/styles.css";
+import "array-ui/styles.css";
 \`\`\`
 
 Import components:
 \`\`\`tsx
 // Next.js (App Router or Pages Router)
-import { Button, Badge, Card, Terminal, DiffBlock, PingStatus } from "aui/nextjs";
+import { Button, Badge, Card, Terminal, DiffBlock, PingStatus } from "array-ui/nextjs";
 
 // Astro
-import Button from "aui/astro/Button.astro";
-import Terminal from "aui/astro/Terminal.astro";
-import DiffBlock from "aui/astro/DiffBlock.astro";
-import PingStatus from "aui/astro/PingStatus.astro";
+import Button from "array-ui/astro/Button.astro";
+import Terminal from "array-ui/astro/Terminal.astro";
+import DiffBlock from "array-ui/astro/DiffBlock.astro";
+import PingStatus from "array-ui/astro/PingStatus.astro";
 \`\`\`
 
 ### Autonomous Agent Workflow Rules:
@@ -845,7 +845,7 @@ Multi-manager install command switcher with instant click-to-copy.
   - \`pkg: string\`
   - \`defaultManager?: "pnpm" | "npm" | "bun" | "yarn"\`
 \`\`\`tsx
-<PackageManager pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
+<PackageManager pkg="array-ui" defaultManager="pnpm" />
 \`\`\`
 
 ---

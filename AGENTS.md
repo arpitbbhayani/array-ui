@@ -83,35 +83,35 @@ import { PingStatus } from "@/components/ui/ping-status";
 
 ---
 
-### Mode B: Direct GitHub Dependency (Next.js, Astro)
-> **Note:** `aui` is **not published on the npm registry**. Install directly from GitHub:
+### Mode B: Direct Package Dependency (Next.js, Astro)
+Install `array-ui` from npm:
 
 ```bash
 # npm
-npm install github:arpitbbhayani/aui
+npm install array-ui
 
 # pnpm
-pnpm add github:arpitbbhayani/aui
+pnpm add array-ui
 
 # bun
-bun add github:arpitbbhayani/aui
+bun add array-ui
 ```
 
 Setup styles in root layout:
 ```tsx
-import "aui/styles.css";
-// Optional: import { ThemeProvider, ThemeScript } from "aui/nextjs";
+import "array-ui/styles.css";
+// Optional: import { ThemeProvider, ThemeScript } from "array-ui/nextjs";
 ```
 
 Import components:
 ```tsx
 // Next.js (App Router or Pages Router)
-import { Button, Terminal, DiffBlock, PingStatus, Card } from "aui/nextjs";
+import { Button, Terminal, DiffBlock, PingStatus, Card } from "array-ui/nextjs";
 
 // Astro (zero-JS client overhead)
-import Terminal from "aui/astro/Terminal.astro";
-import DiffBlock from "aui/astro/DiffBlock.astro";
-import PingStatus from "aui/astro/PingStatus.astro";
+import Terminal from "array-ui/astro/Terminal.astro";
+import DiffBlock from "array-ui/astro/DiffBlock.astro";
+import PingStatus from "array-ui/astro/PingStatus.astro";
 ```
 
 ---
@@ -290,7 +290,7 @@ Collapsible directory and file hierarchy tree.
 #### 6. `PackageManager`
 Multi-manager install command switcher with instant click-to-copy.
 ```tsx
-<PackageManager pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
+<PackageManager pkg="array-ui" defaultManager="pnpm" />
 ```
 
 ---
@@ -442,7 +442,7 @@ Accessible action menu with click-outside dismissal and keyboard escape support.
 
 ## 4. Complete Native Component Library (48+ Components)
 
-In addition to the shadcn registry CLI, the direct repository package (`github:arpitbbhayani/aui`) exports 48+ native components for React (`aui/nextjs`, `aui/react`) and Astro (`aui/astro/*`):
+In addition to the shadcn registry CLI, the direct repository package (`array-ui`) exports 48+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
 - **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`
 - **Navigation**: `Breadcrumbs`, `Tabs`, `Pagination`, `Accordion`, `TableOfContents`, `Sidebar`, `Navbar`
 - **Feedback & Loading**: `Alert`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Tooltip`
@@ -452,8 +452,8 @@ In addition to the shadcn registry CLI, the direct repository package (`github:a
 ---
 
 ## 5. Summary Checklist for AI Agents
-- [ ] Are you using **`@aui` components** via shadcn (`components/ui/`) or direct git imports (`aui/nextjs` / `aui/astro`)?
+- [ ] Are you using **`@aui` components** via shadcn (`components/ui/`) or direct package imports (`array-ui/nextjs` / `array-ui/astro`)?
 - [ ] Did you install required components autonomously without pausing to ask the user?
 - [ ] Did you preserve the **editorial hairline border** (1px) aesthetic?
 - [ ] Is **crimson (`#e5000f`)** used strictly for primary actions, not plastered across entire surfaces?
-- [ ] Did you remember that `aui` is installed via **`github:arpitbbhayani/aui`**, not the public npm registry?
+- [ ] Did you remember that the package name is **`array-ui`**?

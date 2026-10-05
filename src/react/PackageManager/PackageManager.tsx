@@ -14,7 +14,7 @@ export interface PackageManagerProps extends React.HTMLAttributes<HTMLDivElement
 export const PackageManager = React.forwardRef<HTMLDivElement, PackageManagerProps>(
   (
     {
-      pkg = "github:arpitbbhayani/aui",
+      pkg = "array-ui",
       defaultManager = "pnpm",
       className,
       ...props

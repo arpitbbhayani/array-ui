@@ -1,6 +1,6 @@
-# Array UI (aui)
+# Array UI (array-ui)
 
-> **Array UI** (`aui`) is a typography-led, minimal, and responsive design system extracted and refined from [arpitbhayani.me](https://arpitbhayani.me).
+> **Array UI** (`array-ui`) is a typography-led, minimal, and responsive design system extracted and refined from [arpitbhayani.me](https://arpitbhayani.me).
 > Includes light & dark themes, CSS custom properties, and dual component targets: **React (for Next.js, Remix, Vite)** and **Astro (for zero-JS static sites)**.
 
 ---
@@ -9,57 +9,53 @@
 
 - **Themes**: First-class Light and Dark themes with zero-flash anti-FOUC script, `localStorage` persistence, and system preference detection. Compatible with `data-theme="dark"` and Tailwind's `.dark` class.
 - **Multi-Framework**:
-  - **React Components** (`aui/react`): Ready for Next.js App Router (Next.js 13/14/15), Pages Router, Vite, and Remix.
-  - **Astro Components** (`aui/astro`): Native `.astro` components for zero-JS client bundle overhead.
-  - **Standalone CSS** (`aui/styles.css`): Pure CSS tokens and class utilities for any project (HTML, Svelte, Vue).
-  - **Tailwind Preset** (`aui/tailwind`): Effortlessly map all tokens into Tailwind CSS.
+  - **React Components** (`array-ui/react`): Ready for Next.js App Router (Next.js 13/14/15), Pages Router, Vite, and Remix.
+  - **Astro Components** (`array-ui/astro`): Native `.astro` components for zero-JS client bundle overhead.
+  - **Standalone CSS** (`array-ui/styles.css`): Pure CSS tokens and class utilities for any project (HTML, Svelte, Vue).
+  - **Tailwind Preset** (`array-ui/tailwind`): Effortlessly map all tokens into Tailwind CSS.
 - **Signature Aesthetic**:
   - 40px grid background pattern with subtle gradients.
   - Editorial typography: `Assistant` (sans) for headings and UI, paired with `Lora` (italic serif) for editorial flair.
-  - Signature crimson accent (`#fa0000`), amber maxim callouts (`#cc9900`), and dark card elevation.
+  - Signature crimson accent (`#e5000f`), amber maxim callouts (`#cc9900`), and dark card elevation.
 - **Complete Component Suite**: Navbar, Footer, Hero, Buttons, Cards, Social Pills, Maxim Quote, Takeaways Box, Decks Notice Box, Badges, Breadcrumbs, Course Cards, Developer Primitives (PingStatus, DiffBlock, PropertyGrid, FileTree, CommandPalette, PackageManager), and Theme Toggles.
 
 ---
 
 ## Installation
 
-> [!IMPORTANT]
-> `aui` is **not published on the public npm registry**. Install directly from GitHub (`github:arpitbbhayani/aui`) using your package manager of choice, or copy components via the shadcn CLI.
-
-Install directly from the GitHub repository into any project:
+Install the official package from npm:
 
 ```bash
 # npm
-npm install github:arpitbbhayani/aui
+npm install array-ui
 
 # pnpm
-pnpm add github:arpitbbhayani/aui
+pnpm add array-ui
 
 # bun
-bun add github:arpitbbhayani/aui
+bun add array-ui
 
 # yarn
-yarn add github:arpitbbhayani/aui
+yarn add array-ui
 ```
 
-You can also pin to a specific branch, release tag, or commit hash:
+### Alternatively, install via shadcn CLI Registry
 
-```bash
-# Pin to a specific branch
-npm install github:arpitbbhayani/aui#main
-
-# Pin to a specific tag
-npm install github:arpitbbhayani/aui#v0.1.0
-```
-
-Alternatively, add it directly to your `package.json`:
-
+Configure `components.json`:
 ```json
 {
-  "dependencies": {
-    "aui": "github:arpitbbhayani/aui#main"
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "registries": {
+    "@aui": "https://ui.arpitbhayani.me/r/{name}.json"
   }
 }
+```
+
+Install design tokens and any component:
+```bash
+npx shadcn@latest add @aui/aui -y
+npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y
 ```
 
 ---
@@ -68,10 +64,10 @@ Alternatively, add it directly to your `package.json`:
 
 ### 1. Import Global Styles
 
-Import `aui/styles.css` into your root layout or global stylesheet:
+Import `array-ui/styles.css` into your root layout or global stylesheet:
 
 ```ts
-import 'aui/styles.css';
+import 'array-ui/styles.css';
 ```
 
 ### 2. Prevent Flash of Wrong Theme (FOUC)
@@ -80,8 +76,8 @@ Drop the anti-FOUC script into your document `<head>`:
 
 #### In Next.js App Router (`app/layout.tsx`):
 ```tsx
-import 'aui/styles.css';
-import { ThemeProvider, ThemeScript, Navbar, Footer } from 'aui/react';
+import 'array-ui/styles.css';
+import { ThemeProvider, ThemeScript, Navbar, Footer } from 'array-ui/react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -104,10 +100,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 #### In Astro (`src/layouts/Layout.astro`):
 ```astro
 ---
-import 'aui/styles.css';
-import ThemeScript from 'aui/astro/ThemeScript.astro';
-import Navbar from 'aui/astro/Navbar.astro';
-import Footer from 'aui/astro/Footer.astro';
+import 'array-ui/styles.css';
+import ThemeScript from 'array-ui/astro/ThemeScript.astro';
+import Navbar from 'array-ui/astro/Navbar.astro';
+import Footer from 'array-ui/astro/Footer.astro';
 
 const { title = "My Project" } = Astro.props;
 ---
@@ -406,16 +402,16 @@ import { CoverCard, OgCard } from 'aui/react';
 
 ## Tailwind CSS Integration
 
-If you use Tailwind CSS in Next.js or Astro, add the Array UI (`aui`) preset to your `tailwind.config.mjs` (or `tailwind.config.js`):
+If you use Tailwind CSS in Next.js or Astro, add the Array UI (`array-ui`) preset to your `tailwind.config.mjs` (or `tailwind.config.js`):
 
 ```js
-import auiTailwindPreset from 'aui/tailwind';
+import auiTailwindPreset from 'array-ui/tailwind';
 
 export default {
   presets: [auiTailwindPreset],
   content: [
     './src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}',
-    './node_modules/aui/**/*.{js,ts,jsx,tsx,astro}',
+    './node_modules/array-ui/**/*.{js,ts,jsx,tsx,astro}',
   ],
   theme: {
     extend: {},
@@ -430,14 +426,14 @@ This makes tokens like `bg-aui-bg-primary`, `text-aui-primary`, `font-serif`, et
 ## Using with shadcn/ui
 
 Array UI supports two first-class ways to integrate with **shadcn/ui**:
-1. **Official shadcn Registry (Copy-Paste CLI)**: Add signature `aui` primitives directly into your codebase using `npx shadcn add`. Zero runtime package dependency. Pure Tailwind CSS + Lucide icons.
-2. **GitHub Package Dependency + Preset**: Install `aui` directly from GitHub (`npm install github:arpitbbhayani/aui`) with compound subcomponents, `@layer` CSS isolation, and automatic token synchronization.
+1. **Official shadcn Registry (Copy-Paste CLI)**: Add signature `@aui` primitives directly into your codebase using `npx shadcn add`. Zero runtime package dependency. Pure Tailwind CSS + Lucide icons.
+2. **npm Package Dependency + Preset**: Install `array-ui` directly from npm (`npm install array-ui`) with compound subcomponents, `@layer` CSS isolation, and automatic token synchronization.
 
 ---
 
 ### Option A: The shadcn CLI Registry (Recommended)
 
-Just like `ui.chaicode.com` or `21st.dev`, you can pull `aui` components directly into your shadcn project using the official CLI.
+Just like `ui.chaicode.com` or `21st.dev`, you can pull `@aui` components directly into your shadcn project using the official CLI.
 
 #### 1. Configure the Registry
 Add the `@aui` registry namespace in your `components.json`:
@@ -480,17 +476,17 @@ All components are installed directly into your `@/components/ui/` directory wit
 
 ---
 
-### Option B: GitHub Package Dependency + Preset
+### Option B: npm Package Dependency + Preset
 
-If you prefer installing the full package directly from GitHub (`npm install github:arpitbbhayani/aui`):
+If you prefer installing the full package directly from npm (`npm install array-ui`):
 
-1. **`cn()` Utility**: Exported directly from `aui`, `aui/react`, `aui/utils`, and `aui/lib/utils` for slotting into shadcn's `@/lib/utils`.
+1. **`cn()` Utility**: Exported directly from `array-ui`, `array-ui/react`, `array-ui/utils`, and `array-ui/lib/utils` for slotting into shadcn's `@/lib/utils`.
 2. **`React.forwardRef` on All Components**: Standardized on interactive and content components, enabling seamless integration with Radix UI primitives and shadcn triggers.
 3. **`asChild` and Radix Slot Support**: Pass `asChild` on `<Button>` or use directly with Radix primitives (e.g. `<DialogTrigger asChild><Button>Open</Button></DialogTrigger>`).
-4. **CSS Cascade Layers (`@layer`)**: `aui/styles.css` organizes styles into `@layer aui-tokens, aui-base, components`. This guarantees Tailwind utility classes passed via `className` (e.g., `className="p-6 bg-primary text-sm shadow-md"`) cleanly override defaults without `!important`.
+4. **CSS Cascade Layers (`@layer`)**: `array-ui/styles.css` organizes styles into `@layer aui-tokens, aui-base, components`. This guarantees Tailwind utility classes passed via `className` (e.g., `className="p-6 bg-primary text-sm shadow-md"`) cleanly override defaults without `!important`.
 5. **Drop-in Preset & CSS Theme Bridge**:
-   - `auiShadcnPreset` from `aui/tailwind` (or `aui/shadcn`) automatically sets up shadcn color tokens, radii, fonts, and animations.
-   - `aui/shadcn.css` provides bidirectional variable mapping between Array UI's editorial aesthetic and shadcn's tokens.
+   - `auiShadcnPreset` from `array-ui/tailwind` (or `array-ui/shadcn`) automatically sets up shadcn color tokens, radii, fonts, and animations.
+   - `array-ui/shadcn.css` provides bidirectional variable mapping between Array UI's editorial aesthetic and shadcn's tokens.
 6. **Compound Component API**: Supports both concise prop-driven configurations and shadcn-style compound subcomponents:
    - `<Card><CardHeader><CardTitle>...</CardTitle><CardDescription>...</CardDescription></CardHeader><CardContent>...</CardContent></Card>`
    - `<Tabs defaultValue="tab1"><TabsList><TabsTrigger value="tab1">Tab 1</TabsTrigger></TabsList><TabsContent value="tab1">...</TabsContent></Tabs>`
@@ -502,22 +498,22 @@ If you prefer installing the full package directly from GitHub (`npm install git
 
 #### 1. In `tailwind.config.js` (or `.mjs`):
 ```js
-import { auiShadcnPreset } from 'aui/tailwind';
+import { auiShadcnPreset } from 'array-ui/tailwind';
 
 export default {
   presets: [auiShadcnPreset],
   content: [
     './app/**/*.{ts,tsx,js,jsx}',
     './components/**/*.{ts,tsx,js,jsx}',
-    './node_modules/aui/**/*.{js,ts,jsx,tsx}',
+    './node_modules/array-ui/**/*.{js,ts,jsx,tsx}',
   ],
 };
 ```
 
 #### 2. In your global CSS (`app/globals.css`):
 ```css
-@import "aui/styles.css";
-@import "aui/shadcn.css";
+@import "array-ui/styles.css";
+@import "array-ui/shadcn.css";
 
 @tailwind base;
 @tailwind components;
@@ -526,7 +522,7 @@ export default {
 
 #### 3. In `lib/utils.ts`:
 ```ts
-export { cn } from "aui/lib/utils";
+export { cn } from "array-ui/lib/utils";
 ```
 
 ---
@@ -550,13 +546,52 @@ npm run demo:build
 
 ---
 
+## Publishing to npm
+
+To publish `array-ui` to the public npm registry:
+
+### 1. Build Package & Registry Manifests
+Ensure all TypeScript definitions, bundles, CSS outputs, and shadcn registry schemas build cleanly:
+```bash
+npm run build
+```
+
+This compiles:
+- CommonJS & ESM bundles via `tsup` into `dist/`
+- TypeScript declarations (`.d.ts`) into `dist/`
+- Copies styles (`styles.css`, `base.css`, `tokens.css`, `components.css`, `shadcn.css`) into `dist/`
+- Generates shadcn registry JSON schemas and `llms.txt` / `llms-full.txt`
+
+### 2. Verify Package Contents
+Run a dry run to verify the published tarball contains only intended production assets (`dist`, `src`, `package.json`, `README.md`):
+```bash
+npm pack --dry-run
+```
+
+### 3. Version Bump & Publish
+Authenticate with npm and release:
+```bash
+# Login (first time only)
+npm login
+
+# Bump version (patch, minor, or major)
+npm version patch
+
+# Publish to npm registry
+npm publish --access public
+```
+
+> **Note:** The `prepublishOnly` lifecycle hook automatically runs `npm run build` prior to packing, ensuring published artifacts are always fresh.
+
+---
+
 ## License
 
 MIT © [Arpit Bhayani](https://arpitbhayani.me)
 
 ## Developer components (new)
 
-Compact, dense building blocks for dashboards and dev tools. Each exists in `aui/react`; the static ones also ship as `aui/astro/*.astro`.
+Compact, dense building blocks for dashboards and dev tools. Each exists in `array-ui/react`; the static ones also ship as `array-ui/astro/*.astro`.
 
 | Component | React | Astro | CSS class |
 | --- | --- | --- | --- |
