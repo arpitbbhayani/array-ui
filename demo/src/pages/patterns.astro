@@ -12,12 +12,41 @@ import TableOfContents from "../../../src/astro/TableOfContents.astro";
 import Card from "../../../src/astro/Card.astro";
 import Table from "../../../src/astro/Table.astro";
 import Gutter from "../../../src/astro/Gutter.astro";
+import VideoEmbed from "../../../src/astro/VideoEmbed.astro";
+import Tabs from "../../../src/astro/Tabs.astro";
 import { Avatar } from "../../../dist/react.js";
 
 const takeaways = [
   "A write-ahead log ensures crash recovery is sequential and deterministic.",
   "Durability is an invariant of synchronization order, not just disk technology.",
   "Log compaction discards prefix entries safely after checkpoints.",
+];
+
+const courseLessons = [
+  { id: "01", title: "Storage Engine Architecture", duration: "24:18", status: "completed" },
+  { id: "02", title: "B-Trees vs. LSM Trees Under Write Pressure", duration: "38:40", status: "completed" },
+  { id: "03", title: "Page Cache & OS Dirty Flush Semantics", duration: "31:05", status: "completed" },
+  { id: "04", title: "Write-Ahead Log Internals & Crash Recovery", duration: "44:12", status: "current" },
+  { id: "05", title: "Group Commits & fsync Batching", duration: "29:50", status: "upcoming" },
+  { id: "06", title: "Deterministic Replay & Checkpointing", duration: "36:22", status: "upcoming" },
+];
+
+const lessonTabs = [
+  {
+    id: "overview",
+    label: "Lecture Overview",
+    content: "Deep dive into write-ahead logging (WAL) guarantees. We explore how write amplification trades against recovery time, the exact contract of fsync and fdatasync, and how Raft and Paxos state machines build on deterministic sequential replay.",
+  },
+  {
+    id: "notes",
+    label: "Architecture Notes",
+    content: "Key Rule: Invariant order of flush requires WAL log sync before memory page eviction. Under unclean shutdown (SIGKILL), recovery scanning determines highest committed sequence number without scanning data pages.",
+  },
+  {
+    id: "resources",
+    label: "Specs & Benchmarks",
+    content: "Reference: SQLite Rollback Journal vs WAL Mode (Dr. Richard Hipp), PostgreSQL ARIES recovery algorithm papers, and Linux io_uring direct I/O benchmarks.",
+  },
 ];
 ---
 
@@ -166,6 +195,65 @@ const takeaways = [
                   { depth: 3, slug: "what-to-measure", text: "What to measure" },
                 ]}
               />
+            </aside>
+          </div>
+        </Card>
+      </Specimen>
+
+      <!-- Pattern 3: Course Video Player & Theatre View -->
+      <Specimen id="theatre-view" name="Course Video Player & Theatre View" description="Responsive 2-column player layout (.aui-theatre-grid) with normalized stack spacing, breadcrumbs, video embed, tabs, and sticky curriculum playlist." span={2} tone="page">
+        <Card hoverable={false} style="padding: 1.5rem;">
+          <div class="aui-theatre-grid">
+            <main class="aui-theatre-main aui-stack">
+              <Breadcrumbs items={[
+                { label: "Courses", href: "#" },
+                { label: "System Design Masterclass", href: "#" },
+                { label: "Storage Engines", href: "#" },
+                { label: "Write-Ahead Logging", active: true }
+              ]} />
+              <h1 class="aui-h1">Lesson 04 · Write-Ahead Log Internals & Crash Recovery</h1>
+              <VideoEmbed
+                src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+                title="Write-Ahead Log Internals"
+              />
+              <Tabs tabs={lessonTabs} defaultTabId="overview" />
+            </main>
+
+            <aside class="aui-theatre-sidebar" style="position: static; max-height: none;">
+              <Card hoverable={false} style="padding: 1rem; background-color: var(--aui-bg-primary);">
+                <div class="aui-stack aui-stack-xs" style="gap: 0.65rem;">
+                  <div class="aui-row aui-row-between">
+                    <span class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Module 02 Syllabus</span>
+                    <Badge variant="outline">3 / 6 Done</Badge>
+                  </div>
+                  <div style="font-size: 0.95rem; font-weight: 700; color: var(--aui-text-secondary); margin-bottom: 0.25rem;">
+                    Storage Engines & Consensus
+                  </div>
+
+                  <div class="aui-stack" style="gap: 0.4rem;">
+                    {courseLessons.map((l) => (
+                      <div
+                        class="aui-row aui-row-between"
+                        style={`padding: 0.45rem 0.6rem; border-radius: var(--aui-radius-sm); border: 1px solid ${l.status === "current" ? "var(--aui-primary)" : "var(--aui-border-color)"}; background-color: ${l.status === "current" ? "var(--aui-primary-soft)" : "var(--aui-bg-secondary)"}; font-size: 0.8rem;`}
+                      >
+                        <div class="aui-row aui-row-xs" style="min-width: 0; flex: 1;">
+                          <span class="aui-font-mono" style={`font-size: 0.72rem; font-weight: 700; color: ${l.status === "current" ? "var(--aui-primary)" : "var(--aui-text-muted)"};`}>{l.id}</span>
+                          <span style={`overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: ${l.status === "current" ? "600" : "400"}; color: var(--aui-text-secondary);`}>{l.title}</span>
+                        </div>
+                        <div class="aui-row aui-row-xs" style="flex-shrink: 0; margin-left: 0.5rem;">
+                          <span class="aui-font-mono" style="font-size: 0.7rem; color: var(--aui-text-muted);">{l.duration}</span>
+                          {l.status === "completed" && <Badge variant="green" style="font-size: 0.65rem; padding: 0.05rem 0.35rem;">✓</Badge>}
+                          {l.status === "current" && <Badge variant="primary" style="font-size: 0.65rem; padding: 0.05rem 0.35rem;">Playing</Badge>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button variant="secondary" size="sm" style="width: 100%; margin-top: 0.5rem;">
+                    Download Module Slides (.pdf)
+                  </Button>
+                </div>
+              </Card>
             </aside>
           </div>
         </Card>

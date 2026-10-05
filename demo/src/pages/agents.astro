@@ -39,6 +39,7 @@ const registryComponents = [
   { name: "footer", title: "Footer", desc: "Editorial 4-column directory footer with category hints and disclaimer." },
   { name: "modal", title: "Modal", desc: "Accessible dialog modal with backdrop blur and escape key dismissal." },
   { name: "video-embed", title: "VideoEmbed", desc: "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling." },
+  { name: "gutter", title: "Gutter", desc: "Whitespace blank spacing primitive between UI elements with named presets (2xs to 4xl) and horizontal/vertical axes." },
 ];
 
 const endpoints = [
@@ -115,7 +116,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
   - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
   - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Plus Jakarta Sans / Space Grotesk bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
+- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
 - Always use cn() from @/lib/utils for custom classes.`;
 ---
 
@@ -322,7 +323,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
   - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
   - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Plus Jakarta Sans / Space Grotesk bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
+- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
 - Always use cn() from @/lib/utils for custom classes.`,
     cursor: `# Array UI (.cursorrules / .cursor/rules/aui.mdc)
 You are an expert engineer building interfaces with Array UI (@aui).
@@ -335,12 +336,13 @@ You are an expert engineer building interfaces with Array UI (@aui).
 - When building or editing UI, autonomously select required @aui components and execute:
   npx shadcn@latest add @aui/<component> -y
 - DO NOT pause or prompt the user for permission to install components.
+- Strictly Maintain 0% Custom CSS: Never write page-level <style> blocks or ad-hoc .css files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 
 ## Design Constraints
 - 1px hairline borders everywhere (#dfded9 in light, #2c2c38 in dark).
 - Paper canvas light mode (#f9f8f5), obsidian carbon dark mode (#121215).
 - Signature crimson (#e5000f light, #ff3344 dark) strictly for primary action buttons and active indicators.
-- Headings: Plus Jakarta Sans / Space Grotesk (tight tracking).
+- Headings: Space Grotesk / Plus Jakarta Sans (relaxed tracking -0.015em).
 - Body: Assistant (15px dense). Quotes: Lora italic serif. Monospace: Geist Mono.
 - Flat tinted surfaces, dense tables, machined telemetry. Never inject arbitrary gradients or heavy shadows.`,
     claude: `# Claude Code Guidelines: Array UI (@aui)
@@ -356,8 +358,10 @@ npx shadcn@latest add @aui/<component> -y
 (e.g., button, badge, card, terminal, diff-block, property-grid, ping-status, maxim)
 
 ## Styling & Typography
+- Strictly Maintain 0% Custom CSS: No page-level <style> blocks or ad-hoc .css files; 100% component and token driven.
 - 1px hairline borders (#dfded9 light, #2c2c38 dark).
 - Paper light canvas (#f9f8f5), obsidian carbon dark canvas (#121215).
+- Headings: Space Grotesk (bold, relaxed tracking -0.015em). Body: Assistant (15px).
 - Signature crimson (#e5000f light, #ff3344 dark) reserved for primary actions.
 - Amber (#cc9900) exclusively for engineering maxims.
 - Always import cn() from "@/lib/utils" for className composition.`,
@@ -366,7 +370,8 @@ npx shadcn@latest add @aui/<component> -y
 - Components Registry: https://ui.arpitbhayani.me/r/{name}.json
 - Manifest: https://ui.arpitbhayani.me/llms.txt
 - Execution Rule: Autonomously install @aui components via CLI (npx shadcn@latest add @aui/<name> -y). Do not halt for confirmation.
-- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#121215), crimson accent for primary actions only, Assistant/Lora/Geist Mono typography.`,
+- 0% Custom CSS Rule: Never write page-level <style> blocks. Build exclusively using Array UI components and system utility classes.
+- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#121215), crimson accent for primary actions only, Space Grotesk/Assistant/Lora/Geist Mono typography.`,
     cli: `# 1. Configure components.json:
 # Under "registries", add:
 # "@aui": "https://ui.arpitbhayani.me/r/{name}.json"

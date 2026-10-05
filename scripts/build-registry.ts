@@ -28,7 +28,7 @@ const themeItem: RegistryItem = {
   type: "registry:style",
   title: "Array UI Theme",
   description:
-    "The arpitbhayani.me look: paper light & obsidian carbon themes, Plus Jakarta Sans & Lora typography, signature crimson accent (#e5000f), and systems engineering aesthetics.",
+    "The arpitbhayani.me look: paper light & obsidian carbon themes, Space Grotesk & Lora typography, signature crimson accent (#e5000f), and systems engineering aesthetics.",
   dependencies: [
     "clsx",
     "tailwind-merge",
@@ -38,7 +38,7 @@ const themeItem: RegistryItem = {
   cssVars: {
     theme: {
       "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      "font-heading": "'Plus Jakarta Sans', 'Assistant', sans-serif",
+      "font-heading": "'Space Grotesk', 'Plus Jakarta Sans', 'Assistant', sans-serif",
       "font-serif": "'Lora', Georgia, Cambria, serif",
       "font-mono": "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
       "radius-sm": "calc(var(--radius) - 4px)",
@@ -458,7 +458,7 @@ Array UI is built for engineers and AI coding assistants (Cursor, Claude Code, W
   - Amber (#cc9900): Exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981): Operational status, ping dots, and diff additions.
   - Rose (#f43f5e): Errors, outages, and diff deletions.
-- **Typography**: Plus Jakarta Sans / Space Grotesk bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, Geist Mono code.
+- **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, Geist Mono code.
 - **Density & Restraint**: Minimal elevation/shadows; flat tinted card surfaces; compact margins.
 - **Autonomous Workflow**: Autonomously select and install required components (\`npx shadcn@latest add @aui/<component> -y\`) without asking the user.
 
@@ -542,7 +542,7 @@ Array UI is an editorial, systems-engineering design system inspired by arpitbha
      - Emerald (\`#10b981\`): Used for operational health, ping dots, and git diff additions.
      - Rose (\`#f43f5e\`): Used for errors, outages, and git diff deletions.
 2. **Typography**:
-   - Headings: Plus Jakarta Sans or Space Grotesk (bold, tight tracking -0.03em).
+   - Headings: Space Grotesk or Plus Jakarta Sans (bold, relaxed tracking -0.015em).
    - Body: Assistant (dense, 15px base size).
    - Pull Quotes / Maxims: Lora (italic serif).
    - Code & Telemetry: Geist Mono / system monospace.
@@ -646,7 +646,7 @@ Machined status pill with monospace typography and color variants.
 <Badge variant="green">Healthy</Badge>
 <Badge variant="amber">Degraded</Badge>
 <Badge variant="red">Outage</Badge>
-<Badge variant="outline">v0.1.0</Badge>
+<Badge variant="outline">v0.1.1</Badge>
 \`\`\`
 
 ### 3. Card (\`@aui/card\`)
@@ -865,7 +865,7 @@ Collapsible directory and file hierarchy tree.
         { name: "Button.tsx", type: "file", badge: "React" },
       ],
     },
-    { name: "package.json", type: "file", badge: "0.1.0" },
+    { name: "package.json", type: "file", badge: "0.1.1" },
   ]}
 />
 \`\`\`

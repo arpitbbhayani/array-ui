@@ -58,7 +58,7 @@ const categories = [
     title: "Editorial & Media",
     desc: "Engineering maxim quotes, takeaways callouts, profile hero sections, interactive social pills, and course cards.",
     href: "/components#callouts",
-    pills: ["Maxim", "TakeawaysBox", "Hero", "CourseCard", "SocialPill", "VideoEmbed"],
+    pills: ["Maxim", "TakeawaysBox", "Hero", "CourseCard", "SocialPill", "VideoEmbed", "Gutter", "Divider"],
   },
 ];
 
@@ -70,6 +70,7 @@ const registryHighlights = [
   { name: "diff-block", title: "DiffBlock", category: "Developer", desc: "Unified git patch viewer with line gutters, additions, and deletions." },
   { name: "ping-status", title: "PingStatus", category: "Developer", desc: "Live pulsing heartbeat indicator with status and latency." },
   { name: "property-grid", title: "PropertyGrid", category: "Developer", desc: "Key-value metadata inspector with one-click copy functionality." },
+  { name: "gutter", title: "Gutter", category: "Layout", desc: "Whitespace blank spacing primitive with named scale presets (2xs to 4xl) and horizontal/vertical axes." },
   { name: "maxim", title: "Maxim", category: "Editorial", desc: "Amber quotation callout box for engineering principles." },
   { name: "takeaways-box", title: "TakeawaysBox", category: "Editorial", desc: "Crimson bulleted key takeaways callout." },
   { name: "stat-card", title: "StatCard", category: "Telemetry", desc: "Metric display card for dashboards and telemetry." },
@@ -88,9 +89,11 @@ const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this
      Import "array-ui/styles.css" in root layout.
      Import components from "array-ui/nextjs" (Next.js) or "array-ui/astro/*" (Astro).
 3. Aesthetic Invariants:
+   - Strictly Maintain 0% Custom CSS: Never write page-level <style> blocks or ad-hoc .css files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
    - 1px hairline warm borders everywhere (#dfded9 in light, #2c2c38 in dark).
    - Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
    - Reserve Signature Crimson (#e5000f light, #ff3344 dark) strictly for primary actions, active tabs, and focus rings.
+   - Typography: Space Grotesk bold headings (-0.015em tracking), Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
    - High information density, flat surfaces (bg-muted/30), and monospace telemetry.`;
 ---
 

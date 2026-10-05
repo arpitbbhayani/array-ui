@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
 import Badge from "../../../src/astro/Badge.astro";
 import Card from "../../../src/astro/Card.astro";
+import Gutter from "../../../src/astro/Gutter.astro";
 import { CodeBlock as ReactCodeBlock } from "../../../dist/react.js";
 
 const colorTokens = [
@@ -48,6 +49,53 @@ const shadcnBridgeCode = `:root {
   --primary: 355 100% 60%;    /* #ff3344 Crimson Dark */
   --border: 240 12% 20%;      /* #2c2c38 Hairline */
 }`;
+
+const spacingScale = [
+  { name: "none", rem: "0", px: "0px", class: "aui-gutter-none" },
+  { name: "2xs", rem: "0.25rem", px: "4px", class: "aui-gutter-2xs" },
+  { name: "xs", rem: "0.5rem", px: "8px", class: "aui-gutter-xs" },
+  { name: "sm", rem: "0.75rem", px: "12px", class: "aui-gutter-sm" },
+  { name: "md", rem: "1.5rem", px: "24px", class: "aui-gutter-md", isDefault: true },
+  { name: "lg", rem: "2.25rem", px: "36px", class: "aui-gutter-lg" },
+  { name: "xl", rem: "3rem", px: "48px", class: "aui-gutter-xl" },
+  { name: "2xl", rem: "4.5rem", px: "72px", class: "aui-gutter-2xl" },
+  { name: "3xl", rem: "6rem", px: "96px", class: "aui-gutter-3xl" },
+  { name: "4xl", rem: "8rem", px: "128px", class: "aui-gutter-4xl" },
+];
+
+const layoutFlows = [
+  { primitive: ".aui-stack", desc: "Vertical flex column flow", defaultGap: "1rem (16px)", variants: ".aui-stack-xs (0.25rem), .aui-stack-sm (0.5rem), .aui-stack-lg (1.5rem)" },
+  { primitive: ".aui-row", desc: "Horizontal flex row with vertical centering", defaultGap: "0.75rem (12px)", variants: ".aui-row-xs (0.25rem), .aui-row-sm (0.5rem), .aui-row-lg (1.25rem)" },
+  { primitive: ".aui-gutter", desc: "Whitespace blank spacer primitive", defaultGap: "1.5rem (24px default)", variants: "<Gutter size=\"lg\" /> or <Gutter orientation=\"horizontal\" />" },
+  { primitive: ".aui-theatre-grid", desc: "Responsive 2-column player layout with sticky sidebar", defaultGap: "1.5rem", variants: "minmax(0, 1fr) 340px, collapses on mobile (< 900px)" },
+];
+
+const baseInvariants = [
+  {
+    name: "Enforced [hidden] Dismissal",
+    code: "[hidden] { display: none !important; }",
+    desc: "Forces display: none with !important on any element with the hidden attribute, ensuring zero DOM footprint regardless of framework or specificity.",
+    badge: "base.css",
+  },
+  {
+    name: "Universal Box-Sizing",
+    code: "*, *::before, *::after { box-sizing: border-box; }",
+    desc: "Predictable mathematical geometry across cards, inputs, and hairline borders without padding overflow.",
+    badge: "base.css",
+  },
+  {
+    name: "Viewport Scroll Clearance",
+    code: "html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }",
+    desc: "Smooth anchor navigation with automatic offset clearance for fixed headers.",
+    badge: "base.css",
+  },
+  {
+    name: "Strict Zero Custom CSS Invariant",
+    code: "0% Custom CSS Invariant",
+    desc: "Application pages must remain 100% free of ad-hoc .css files and <style> tags, driven entirely by native components and tokens.",
+    badge: "AGENTS.md",
+  },
+];
 ---
 
 <Layout
@@ -70,9 +118,13 @@ const shadcnBridgeCode = `:root {
         <div class="aui-row aui-row-xs aui-flex-wrap" style="font-size: 0.82rem; color: var(--aui-text-muted);">
           <Badge variant="outline">Zero-Runtime Tokens</Badge>
           <span>/</span>
+          <Badge variant="outline">0% Custom CSS</Badge>
+          <span>/</span>
           <span>Light (#f9f8f5) & Dark (#121215)</span>
           <span>/</span>
           <code class="aui-code">tokens.css</code>
+          <span>/</span>
+          <code class="aui-code">base.css</code>
           <span>/</span>
           <code class="aui-code">shadcn.css</code>
         </div>
@@ -182,6 +234,78 @@ const shadcnBridgeCode = `:root {
             code={shadcnBridgeCode}
             client:load
           />
+        </div>
+      </Specimen>
+
+      <!-- Spacing Scale & Gutter Primitives -->
+      <Specimen id="spacing" name="Mathematical Spacing & Layout Rhythm" description="Predictable proportional spacing scale from 2xs (4px) to 4xl (128px) for Gutter spacers, Stack gaps, and Row flow." span={2}>
+        <div class="aui-stack" style="gap: 1.25rem;">
+          <div class="aui-stack aui-stack-xs">
+            <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Spacing Scale (Gutter & Gaps)</div>
+            <div class="aui-grid aui-grid-cols-2" style="gap: 0.75rem;">
+              {spacingScale.filter(s => s.name !== "none").map((s) => (
+                <Card
+                  hoverable
+                  interactive
+                  style="padding: 0.5rem 0.75rem; background-color: var(--aui-bg-primary); cursor: pointer;"
+                  onclick={`navigator.clipboard.writeText('<Gutter size="${s.name}" />'); this.style.borderColor = 'var(--aui-success)'; setTimeout(() => this.style.borderColor = '', 1000);`}
+                >
+                  <div class="aui-row aui-row-between" style="width: 100%;">
+                    <div class="aui-row aui-row-xs">
+                      <code class="aui-code" style="font-size: 0.78rem; font-weight: 600; min-width: 2.5rem; text-align: center;">{s.name}</code>
+                      <span style="font-size: 0.8rem; color: var(--aui-text-muted); font-family: var(--aui-font-mono);">{s.rem} · {s.px}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1; justify-content: flex-end; max-width: 50%;">
+                      <div style={`height: 12px; width: ${s.rem}; max-width: 100%; background-color: var(--aui-primary); border-radius: var(--aui-radius-sm); opacity: 0.85;`}></div>
+                      <span class="aui-font-mono" style="font-size: 0.68rem; color: var(--aui-text-muted);">{s.class}</span>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div class="aui-stack aui-stack-xs">
+            <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Layout Flow Primitives & Rules</div>
+            <div class="aui-grid aui-grid-cols-2" style="gap: 0.75rem;">
+              {layoutFlows.map((f) => (
+                <Card hoverable={false} style="padding: 0.75rem 1rem; background-color: var(--aui-bg-primary);">
+                  <div class="aui-stack aui-stack-xs">
+                    <div class="aui-row aui-row-between">
+                      <code class="aui-code" style="font-size: 0.82rem; font-weight: 600; color: var(--aui-primary);">{f.primitive}</code>
+                      <Badge variant="outline">Gap: {f.defaultGap}</Badge>
+                    </div>
+                    <p style="font-size: 0.82rem; color: var(--aui-text-primary); margin: 0;">{f.desc}</p>
+                    <div style="font-size: 0.72rem; color: var(--aui-text-muted); font-family: var(--aui-font-mono);">{f.variants}</div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <Card hoverable={false} style="padding: 0.65rem 0.85rem; background-color: var(--aui-bg-secondary); border-left: 3px solid var(--aui-primary);">
+            <div style="font-size: 0.82rem; color: var(--aui-text-primary);">
+              <strong>Stack Normalization Invariant:</strong> Inside <code>.aui-stack</code> and <code>.aui-theatre-main</code>, margins on nested headings, breadcrumbs (<code>.aui-breadcrumbs</code>), and tabs (<code>.aui-tabs</code>) are normalized to zero to prevent margin collapsing and preserve mathematically pure layout rhythm.
+            </div>
+          </Card>
+        </div>
+      </Specimen>
+
+      <!-- Base Resets & Architecture Invariants -->
+      <Specimen id="invariants" name="Base Reset & Architectural Invariants" description="Global browser resets and core invariants enforced by base.css and Array UI design rules." span={2}>
+        <div class="aui-grid aui-grid-cols-2" style="gap: 0.75rem;">
+          {baseInvariants.map((b) => (
+            <Card hoverable={false} style="padding: 0.85rem 1rem; background-color: var(--aui-bg-primary);">
+              <div class="aui-stack aui-stack-xs">
+                <div class="aui-row aui-row-between">
+                  <span style="font-size: 0.85rem; font-weight: 600; color: var(--aui-text-secondary);">{b.name}</span>
+                  <Badge variant="outline">{b.badge}</Badge>
+                </div>
+                <code class="aui-code" style="font-size: 0.75rem; color: var(--aui-primary);">{b.code}</code>
+                <p style="font-size: 0.8rem; color: var(--aui-text-muted); margin: 0.25rem 0 0;">{b.desc}</p>
+              </div>
+            </Card>
+          ))}
         </div>
       </Specimen>
     </div>

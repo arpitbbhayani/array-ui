@@ -19,7 +19,7 @@
      - **Emerald (`#10b981`)**: Used for operational health, ping dots, and git diff additions.
      - **Rose (`#f43f5e`)**: Used for errors, outages, and git diff deletions.
 2. **Typography**:
-   - Headings: `Plus Jakarta Sans` or `Space Grotesk` (bold, tight tracking `-0.03em`).
+   - Headings: `Space Grotesk` or `Plus Jakarta Sans` (bold, relaxed tracking `-0.015em`).
    - Body: `Assistant` (dense, 15px base size).
    - Pull Quotes / Maxims: `Lora` (italic serif).
    - Code & Telemetry: `Geist Mono` / system monospace.
@@ -144,7 +144,7 @@ Machined status pill with monospace typography and color variants.
 <Badge variant="amber">Degraded</Badge>
 <Badge variant="red">Outage</Badge>
 <Badge variant="primary">Active</Badge>
-<Badge variant="outline">v0.1.0</Badge>
+<Badge variant="outline">v0.1.1</Badge>
 ```
 
 #### 3. `Card` (`@aui/card`)
@@ -303,7 +303,7 @@ Collapsible directory and file hierarchy tree.
         { name: "Button.tsx", type: "file", badge: "React" },
       ],
     },
-    { name: "package.json", type: "file", badge: "0.1.0" },
+    { name: "package.json", type: "file", badge: "0.1.1" },
   ]}
 />
 ```

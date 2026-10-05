@@ -15,9 +15,9 @@
   - **Tailwind Preset** (`array-ui/tailwind`): Effortlessly map all tokens into Tailwind CSS.
 - **Signature Aesthetic**:
   - 40px grid background pattern with subtle gradients.
-  - Editorial typography: `Assistant` (sans) for headings and UI, paired with `Lora` (italic serif) for editorial flair.
+  - Editorial typography: `Space Grotesk` for headings, `Assistant` for dense UI and body, paired with `Lora` (italic serif) for editorial flair and `Geist Mono` for telemetry.
   - Signature crimson accent (`#e5000f`), amber maxim callouts (`#cc9900`), and dark card elevation.
-- **Complete Component Suite**: Navbar, Footer, Hero, Buttons, Cards, Social Pills, Maxim Quote, Takeaways Box, Decks Notice Box, Badges, Breadcrumbs, Course Cards, Developer Primitives (PingStatus, DiffBlock, PropertyGrid, FileTree, CommandPalette, PackageManager), and Theme Toggles.
+- **Complete Component Suite**: Navbar, Footer, Hero, Buttons, Cards, Social Pills, Maxim Quote, Takeaways Box, Decks Notice Box, Badges, Breadcrumbs, Course Cards, Gutter (Spacer), Developer Primitives (PingStatus, DiffBlock, PropertyGrid, FileTree, CommandPalette, PackageManager), and Theme Toggles.
 
 ---
 
