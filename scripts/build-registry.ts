@@ -203,6 +203,15 @@ const componentsConfig: ComponentDef[] = [
     target: "ui/dropdown.tsx",
     category: "Core Primitives",
   },
+  {
+    name: "gutter",
+    title: "Gutter",
+    description: "Component-driven whitespace blank spacing primitive between UI elements (e.g. navbar and content).",
+    file: "src/registry/aui/ui/gutter.tsx",
+    target: "ui/gutter.tsx",
+    dependencies: ["class-variance-authority"],
+    category: "Core Primitives",
+  },
 
   // --- Developer & Telemetry ---
   {
@@ -503,7 +512,7 @@ In addition to shadcn copy-paste components, the official package dependency (\`
 - **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
 - **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
-- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider
+- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter
 - **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
 
 ## Optional Links
@@ -753,11 +762,33 @@ Accessible action menu with click-outside dismissal and keyboard escape support.
 </Dropdown>
 \`\`\`
 
+### 11. Gutter (\`@aui/gutter\`)
+Component-driven whitespace blank spacing primitive between UI elements (e.g. space between navbar and content). Eliminates ad-hoc external CSS margins and paddings.
+- Endpoint: \`${BASE_URL}/r/gutter.json\`
+- Props:
+  - \`size?: "none" | "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | number | string\` (default: "md")
+  - \`orientation?: "vertical" | "horizontal"\` (default: "vertical")
+  - \`axis?: "x" | "y"\` (shorthand: "y" for vertical, "x" for horizontal)
+- Alias: \`Spacer\`
+\`\`\`tsx
+// Vertical blank space between navbar and first component
+<Navbar brandName="Console" links={links} />
+<Gutter size="lg" />
+<main>...</main>
+
+// Horizontal whitespace in a flex row
+<div className="aui-row">
+  <Button>Primary</Button>
+  <Gutter orientation="horizontal" size="sm" />
+  <Button variant="secondary">Secondary</Button>
+</div>
+\`\`\`
+
 ---
 
 ## 4. Developer & Systems Primitives
 
-### 11. Terminal (\`@aui/terminal\`)
+### 12. Terminal (\`@aui/terminal\`)
 Machined telemetry terminal with bash command dots and styled outputs.
 - Endpoint: \`${BASE_URL}/r/terminal.json\`
 - Props:
@@ -775,7 +806,7 @@ Machined telemetry terminal with bash command dots and styled outputs.
 />
 \`\`\`
 
-### 12. DiffBlock (\`@aui/diff-block\`)
+### 13. DiffBlock (\`@aui/diff-block\`)
 Unified git patch inspector with line gutters, additions, and deletions.
 - Endpoint: \`${BASE_URL}/r/diff-block.json\`
 - Props:
@@ -790,7 +821,7 @@ Unified git patch inspector with line gutters, additions, and deletions.
 />
 \`\`\`
 
-### 13. PingStatus (\`@aui/ping-status\`)
+### 14. PingStatus (\`@aui/ping-status\`)
 Pulsing heartbeat indicator with status and latency.
 - Endpoint: \`${BASE_URL}/r/ping-status.json\`
 - Props:
@@ -801,7 +832,7 @@ Pulsing heartbeat indicator with status and latency.
 <PingStatus status="operational" label="Operational · 42ms" size="md" />
 \`\`\`
 
-### 14. PropertyGrid (\`@aui/property-grid\`)
+### 15. PropertyGrid (\`@aui/property-grid\`)
 Dense key-value metadata inspector for entities and systems, with one-click copy.
 - Endpoint: \`${BASE_URL}/r/property-grid.json\`
 - Props:
@@ -816,7 +847,7 @@ Dense key-value metadata inspector for entities and systems, with one-click copy
 />
 \`\`\`
 
-### 15. FileTree (\`@aui/file-tree\`)
+### 16. FileTree (\`@aui/file-tree\`)
 Collapsible directory and file hierarchy tree.
 - Endpoint: \`${BASE_URL}/r/file-tree.json\`
 - Props:
@@ -839,7 +870,7 @@ Collapsible directory and file hierarchy tree.
 />
 \`\`\`
 
-### 16. PackageManager (\`@aui/package-manager\`)
+### 17. PackageManager (\`@aui/package-manager\`)
 Multi-manager install command switcher with instant click-to-copy.
 - Endpoint: \`${BASE_URL}/r/package-manager.json\`
 - Props:
@@ -853,7 +884,7 @@ Multi-manager install command switcher with instant click-to-copy.
 
 ## 5. Editorial & Content Primitives
 
-### 17. Maxim (\`@aui/maxim\`)
+### 18. Maxim (\`@aui/maxim\`)
 Amber quotation callout box for engineering principles.
 - Endpoint: \`${BASE_URL}/r/maxim.json\`
 - Props:
@@ -867,7 +898,7 @@ Amber quotation callout box for engineering principles.
 </Maxim>
 \`\`\`
 
-### 18. TakeawaysBox (\`@aui/takeaways-box\`)
+### 19. TakeawaysBox (\`@aui/takeaways-box\`)
 Crimson bulleted key takeaways callout.
 - Endpoint: \`${BASE_URL}/r/takeaways-box.json\`
 - Props:
@@ -883,7 +914,7 @@ Crimson bulleted key takeaways callout.
 />
 \`\`\`
 
-### 19. Hero (\`@aui/hero\`)
+### 20. Hero (\`@aui/hero\`)
 Signature editorial portrait hero with bio and social pills.
 - Endpoint: \`${BASE_URL}/r/hero.json\`
 - Props:
@@ -903,7 +934,7 @@ Signature editorial portrait hero with bio and social pills.
 </Hero>
 \`\`\`
 
-### 20. SocialPill (\`@aui/social-pill\`)
+### 21. SocialPill (\`@aui/social-pill\`)
 Interactive platform pills for YouTube, X/Twitter, GitHub, LinkedIn.
 - Endpoint: \`${BASE_URL}/r/social-pill.json\`
 - Props:
@@ -916,7 +947,7 @@ Interactive platform pills for YouTube, X/Twitter, GitHub, LinkedIn.
 <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
 \`\`\`
 
-### 21. CourseCard (\`@aui/course-card\`)
+### 22. CourseCard (\`@aui/course-card\`)
 Card for cohorts, courses, and open source projects.
 - Endpoint: \`${BASE_URL}/r/course-card.json\`
 - Props:
@@ -937,7 +968,7 @@ Card for cohorts, courses, and open source projects.
 />
 \`\`\`
 
-### 22. StatCard (\`@aui/stat-card\`)
+### 23. StatCard (\`@aui/stat-card\`)
 Metric display card for dashboards and telemetry.
 - Endpoint: \`${BASE_URL}/r/stat-card.json\`
 - Props:
@@ -949,7 +980,7 @@ Metric display card for dashboards and telemetry.
 <StatCard value="99.98%" label="Uptime" description="rolling 30 days" />
 \`\`\`
 
-### 23. EmptyState (\`@aui/empty-state\`)
+### 24. EmptyState (\`@aui/empty-state\`)
 Minimalist dashed container for empty states and zero-data screens.
 - Endpoint: \`${BASE_URL}/r/empty-state.json\`
 - Props:
@@ -962,7 +993,7 @@ Minimalist dashed container for empty states and zero-data screens.
 </EmptyState>
 \`\`\`
 
-### 24. Footer (\`@aui/footer\`)
+### 25. Footer (\`@aui/footer\`)
 Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.
 - Endpoint: \`${BASE_URL}/r/footer.json\`
 - Props:
@@ -983,7 +1014,7 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
 />
 \`\`\`
 
-### 25. Modal (\`@aui/modal\`)
+### 26. Modal (\`@aui/modal\`)
 Accessible dialog modal with backdrop blur, focus trapping, and escape-key dismissal.
 - Endpoint: \`${BASE_URL}/r/modal.json\`
 - Props:
@@ -1000,7 +1031,7 @@ Accessible dialog modal with backdrop blur, focus trapping, and escape-key dismi
 </Modal>
 \`\`\`
 
-### 26. VideoEmbed (\`@aui/video-embed\`)
+### 27. VideoEmbed (\`@aui/video-embed\`)
 Responsive 16:9 media player container with hairline border and fallback loading slot.
 - Endpoint: \`${BASE_URL}/r/video-embed.json\`
 - Props:

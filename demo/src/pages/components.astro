@@ -25,6 +25,7 @@ import Tooltip from "../../../src/astro/Tooltip.astro";
 import Progress from "../../../src/astro/Progress.astro";
 import Spinner from "../../../src/astro/Spinner.astro";
 import Divider from "../../../src/astro/Divider.astro";
+import Gutter from "../../../src/astro/Gutter.astro";
 import EmptyState from "../../../src/astro/EmptyState.astro";
 import Terminal from "../../../src/astro/Terminal.astro";
 import Toast from "../../../src/astro/Toast.astro";
@@ -129,6 +130,7 @@ const sidebarGroups = [
       { label: "Video embed", href: "#video-embed" },
       { label: "Social pill", href: "#social" },
       { label: "Divider", href: "#divider" },
+      { label: "Gutter", href: "#gutter" },
       { label: "Course card", href: "#course" },
       { label: "Cover card", href: "#cover-card" },
     ],
@@ -662,6 +664,24 @@ const takeaways = [
               <Divider />
               <Divider label="OR CONTINUE WITH" />
               <Divider label="SECTION BREAK" />
+            </div>
+          </Specimen>
+
+          <Specimen id="gutter" name="Gutter" description="Whitespace blank spacing primitive between components. Eliminates ad-hoc external CSS margins." usage={`<Gutter size="lg" />`} shadcnName="gutter">
+            <div class="spec-col" style="width: 100%;">
+              <div class="aui-badge aui-badge-outline aui-font-mono" style="font-size:0.75rem; text-align:center; display:block;">&lt;Navbar /&gt;</div>
+              <Gutter size="sm" />
+              <div style="background-color: var(--aui-bg-tertiary); border: 1px dashed var(--aui-border-color); border-radius: var(--aui-radius-sm); text-align: center; font-size: 0.72rem; color: var(--aui-text-muted); padding: 0.15rem 0.5rem; font-family: var(--aui-font-mono);">
+                &uarr; &lt;Gutter size="sm" /&gt; (0.75rem blank) &darr;
+              </div>
+              <Gutter size="sm" />
+              <div class="aui-badge aui-badge-outline aui-font-mono" style="font-size:0.75rem; text-align:center; display:block;">&lt;Main Content /&gt;</div>
+              <Gutter size="lg" />
+              <div style="background-color: var(--aui-bg-tertiary); border: 1px dashed var(--aui-border-color); border-radius: var(--aui-radius-sm); text-align: center; font-size: 0.72rem; color: var(--aui-text-muted); padding: 0.15rem 0.5rem; font-family: var(--aui-font-mono);">
+                &uarr; &lt;Gutter size="lg" /&gt; (2.25rem blank) &darr;
+              </div>
+              <Gutter size="lg" />
+              <div class="aui-badge aui-badge-outline aui-font-mono" style="font-size:0.75rem; text-align:center; display:block;">&lt;Footer /&gt;</div>
             </div>
           </Specimen>
 

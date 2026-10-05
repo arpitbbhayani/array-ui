@@ -11,6 +11,7 @@ import TakeawaysBox from "../../../src/astro/TakeawaysBox.astro";
 import TableOfContents from "../../../src/astro/TableOfContents.astro";
 import Card from "../../../src/astro/Card.astro";
 import Table from "../../../src/astro/Table.astro";
+import Gutter from "../../../src/astro/Gutter.astro";
 import { Avatar } from "../../../dist/react.js";
 
 const takeaways = [
@@ -24,7 +25,8 @@ const takeaways = [
   title="Real-World Architectural Patterns — Array UI (aui)"
   description="Composable layouts, systems telemetry dashboards, and editorial article reading patterns built with Array UI."
 >
-  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
+  <div class="aui-container">
+    <Gutter size="lg" />
     <!-- Page Header -->
     <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 1.5rem;">
       <div class="aui-row aui-row-xs" style="margin-bottom: 0.5rem;">
@@ -169,5 +171,6 @@ const takeaways = [
         </Card>
       </Specimen>
     </div>
+    <Gutter size="2xl" />
   </div>
 </Layout>

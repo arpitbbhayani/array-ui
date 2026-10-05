@@ -1,0 +1,85 @@
+---
+interface Props {
+  size?:
+    | "none"
+    | "2xs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | number
+    | string;
+  orientation?: "vertical" | "horizontal";
+  axis?: "x" | "y";
+  className?: string;
+  class?: string;
+  style?: string | Record<string, any>;
+  [key: string]: any;
+}
+
+const {
+  size = "md",
+  orientation = "vertical",
+  axis,
+  className = "",
+  class: classProp = "",
+  style = "",
+  ...props
+} = Astro.props;
+
+const effectiveOrientation =
+  axis === "x" ? "horizontal" : axis === "y" ? "vertical" : orientation;
+const isHorizontal = effectiveOrientation === "horizontal";
+
+const NAMED_SIZES = [
+  "none",
+  "2xs",
+  "xs",
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "4xl",
+];
+
+const isNamed = typeof size === "string" && NAMED_SIZES.includes(size);
+const customDim =
+  typeof size === "number"
+    ? `${size}px`
+    : !isNamed && size
+    ? String(size)
+    : undefined;
+
+const baseClass = isHorizontal ? "aui-gutter-horizontal" : "aui-gutter";
+const sizeClass = isNamed ? `aui-gutter-${size}` : "";
+const combinedClass = [baseClass, sizeClass, className, classProp]
+  .filter(Boolean)
+  .join(" ");
+
+let finalStyle: string | Record<string, any> = style;
+if (customDim) {
+  const dimRule = isHorizontal ? `width: ${customDim};` : `height: ${customDim};`;
+  if (typeof style === "string") {
+    finalStyle = `${dimRule} ${style}`.trim();
+  } else if (typeof style === "object" && style !== null) {
+    finalStyle = {
+      ...(isHorizontal ? { width: customDim } : { height: customDim }),
+      ...style,
+    };
+  }
+}
+---
+
+<div
+  role="presentation"
+  aria-hidden="true"
+  class={combinedClass}
+  style={finalStyle}
+  {...props}
+/>

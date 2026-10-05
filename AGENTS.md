@@ -223,9 +223,25 @@ Collapsible hairline accordion sections.
 </Accordion>
 ```
 
+#### 10. `Gutter` (`@aui/gutter`)
+Whitespace blank spacing component between UI elements (e.g. space between navbar and first component). Eliminates ad-hoc external CSS margins and paddings.
+```tsx
+// Vertical blank space (e.g. between navbar and first section)
+<Navbar brandName="Console" links={links} />
+<Gutter size="lg" />
+<main>...</main>
+
+// Custom pixel/rem dimension or horizontal spacing in a row
+<Gutter size={32} />
+<Gutter orientation="horizontal" size="sm" />
+```
+*Sizes*: `none`, `2xs` (4px), `xs` (8px), `sm` (12px), `md` (24px, default), `lg` (36px), `xl` (48px), `2xl` (72px), `3xl` (96px), `4xl` (128px), or custom `number`/`string`.
+*Orientations*: `vertical` (default), `horizontal` (or `axis="x" | "y"`).
+*Alias*: `Spacer`
+
 ### Developer Primitives
 
-#### 10. `Terminal`
+#### 1. `Terminal`
 Machined telemetry terminal with bash command dots and styled outputs.
 ```tsx
 <Terminal
@@ -451,7 +467,7 @@ In addition to the shadcn registry CLI, the direct repository package (`array-ui
 - **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`
 - **Navigation**: `Breadcrumbs`, `Tabs`, `Pagination`, `Accordion`, `TableOfContents`, `Sidebar`, `Navbar`
 - **Feedback & Loading**: `Alert`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Tooltip`
-- **Data Display**: `Table`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`
+- **Data Display**: `Table`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`, `Gutter`
 - **Editorial & Media**: `Hero`, `Maxim`, `TakeawaysBox`, `NoticeBox`, `Newsletter`, `Card`, `CoverCard`, `CourseCard`, `SocialPill`, `Footer`, `VideoEmbed`
 
 ---

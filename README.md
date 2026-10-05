@@ -600,6 +600,7 @@ Compact, dense building blocks for dashboards and dev tools. Each exists in `arr
 | Progress | `<Progress value={72} showValue />` | `Progress.astro` | `.aui-progress` |
 | Spinner | `<Spinner size="lg" />` | `Spinner.astro` | `.aui-spinner` |
 | Divider | `<Divider label="or" />` | `Divider.astro` | `.aui-divider` |
+| Gutter | `<Gutter size="lg" />` | `Gutter.astro` | `.aui-gutter` |
 | EmptyState | `<EmptyState title="…" />` | `EmptyState.astro` | `.aui-empty` |
 | SegmentedControl | `<SegmentedControl options={…} />` | - | `.aui-segmented` |
 | Toast | `<Toast variant="success" title="…" />` | `Toast.astro` | `.aui-toast` |

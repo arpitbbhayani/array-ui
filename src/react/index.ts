@@ -33,6 +33,7 @@ export * from "./Tooltip/Tooltip";
 export * from "./Progress/Progress";
 export * from "./Spinner/Spinner";
 export * from "./Divider/Divider";
+export * from "./Gutter/Gutter";
 export * from "./EmptyState/EmptyState";
 export * from "./SegmentedControl/SegmentedControl";
 export * from "./Toast/Toast";

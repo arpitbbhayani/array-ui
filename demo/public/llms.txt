@@ -63,6 +63,7 @@ npm install array-ui
 - [Tabs](https://ui.arpitbhayani.me/r/tabs.json): Underline tab navigation with keyboard accessibility. `npx shadcn@latest add @aui/tabs -y`
 - [Accordion](https://ui.arpitbhayani.me/r/accordion.json): Collapsible hairline accordion sections for FAQs and structured content. `npx shadcn@latest add @aui/accordion -y`
 - [Dropdown](https://ui.arpitbhayani.me/r/dropdown.json): Minimal click-trigger dropdown menu with click outside dismissal and actions. `npx shadcn@latest add @aui/dropdown -y`
+- [Gutter](https://ui.arpitbhayani.me/r/gutter.json): Component-driven whitespace blank spacing primitive between UI elements (e.g. navbar and content). `npx shadcn@latest add @aui/gutter -y`
 
 ### Developer & Telemetry Primitives
 - [Terminal](https://ui.arpitbhayani.me/r/terminal.json): Machined telemetry terminal with bash command dots and styled outputs. `npx shadcn@latest add @aui/terminal -y`
@@ -90,7 +91,7 @@ In addition to shadcn copy-paste components, the official package dependency (`a
 - **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
 - **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
-- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider
+- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter
 - **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
 
 ## Optional Links
