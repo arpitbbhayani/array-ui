@@ -1,6 +1,6 @@
 {
   "name": "array-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Array UI (array-ui) - Typography-led, minimal design system inspired by arpitbhayani.me. Light/Dark themes, components, and tokens for Astro, Next.js, and any web project.",
   "type": "module",
   "main": "./dist/index.cjs",
