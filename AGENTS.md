@@ -144,7 +144,7 @@ Machined status pill with monospace typography and color variants.
 <Badge variant="amber">Degraded</Badge>
 <Badge variant="red">Outage</Badge>
 <Badge variant="primary">Active</Badge>
-<Badge variant="outline">v0.1.2</Badge>
+<Badge variant="outline">v0.1.3</Badge>
 ```
 
 #### 3. `Card` (`@aui/card`)
@@ -303,7 +303,7 @@ Collapsible directory and file hierarchy tree.
         { name: "Button.tsx", type: "file", badge: "React" },
       ],
     },
-    { name: "package.json", type: "file", badge: "0.1.2" },
+    { name: "package.json", type: "file", badge: "0.1.3" },
   ]}
 />
 ```
