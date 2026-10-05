@@ -45,7 +45,7 @@ export const auiTailwindPreset = {
         sans: ["var(--aui-font-sans)", "Assistant", "-apple-system", "sans-serif"],
         heading: ["var(--aui-font-heading)", "Plus Jakarta Sans", "Assistant", "sans-serif"],
         serif: ["var(--aui-font-serif)", "Lora", "Georgia", "serif"],
-        mono: ["var(--aui-font-mono)", "Geist Mono", "monospace"],
+        mono: ["var(--aui-font-mono)", "IBM Plex Mono", "Geist Mono", "monospace"],
       },
       boxShadow: {
         aui: "var(--aui-box-shadow)",
@@ -117,7 +117,7 @@ export const auiShadcnPreset = {
         sans: ["var(--aui-font-sans)", "Assistant", "-apple-system", "sans-serif"],
         heading: ["var(--aui-font-heading)", "Plus Jakarta Sans", "Assistant", "sans-serif"],
         serif: ["var(--aui-font-serif)", "Lora", "Georgia", "serif"],
-        mono: ["var(--aui-font-mono)", "Geist Mono", "monospace"],
+        mono: ["var(--aui-font-mono)", "IBM Plex Mono", "Geist Mono", "monospace"],
       },
       keyframes: {
         "accordion-down": {

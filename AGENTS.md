@@ -22,7 +22,7 @@
    - Headings: `Space Grotesk` or `Plus Jakarta Sans` (bold, relaxed tracking `-0.015em`).
    - Body: `Assistant` (dense, 15px base size).
    - Pull Quotes / Maxims: `Lora` (italic serif).
-   - Code & Telemetry: `Geist Mono` / system monospace.
+   - Code & Telemetry: `IBM Plex Mono` / system monospace.
 3. **Density & Restraint**:
    - 1px hairline borders everywhere.
    - Minimal elevation/shadows; prefer flat, tinted card surfaces (`bg-muted/30` or `var(--aui-bg-secondary)`).

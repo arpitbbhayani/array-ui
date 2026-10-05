@@ -20,7 +20,7 @@
           "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           "font-heading": "'Space Grotesk', 'Plus Jakarta Sans', 'Assistant', sans-serif",
           "font-serif": "'Lora', Georgia, Cambria, serif",
-          "font-mono": "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
+          "font-mono": "'IBM Plex Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
           "radius-sm": "calc(var(--radius) - 4px)",
           "radius-md": "calc(var(--radius) - 2px)",
           "radius-lg": "var(--radius)",

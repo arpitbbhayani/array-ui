@@ -40,7 +40,7 @@ const themeItem: RegistryItem = {
       "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       "font-heading": "'Space Grotesk', 'Plus Jakarta Sans', 'Assistant', sans-serif",
       "font-serif": "'Lora', Georgia, Cambria, serif",
-      "font-mono": "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
+      "font-mono": "'IBM Plex Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
       "radius-sm": "calc(var(--radius) - 4px)",
       "radius-md": "calc(var(--radius) - 2px)",
       "radius-lg": "var(--radius)",
@@ -458,7 +458,7 @@ Array UI is built for engineers and AI coding assistants (Cursor, Claude Code, W
   - Amber (#cc9900): Exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981): Operational status, ping dots, and diff additions.
   - Rose (#f43f5e): Errors, outages, and diff deletions.
-- **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, Geist Mono code.
+- **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
 - **Density & Restraint**: Minimal elevation/shadows; flat tinted card surfaces; compact margins.
 - **Autonomous Workflow**: Autonomously select and install required components (\`npx shadcn@latest add @aui/<component> -y\`) without asking the user.
 
@@ -545,7 +545,7 @@ Array UI is an editorial, systems-engineering design system inspired by arpitbha
    - Headings: Space Grotesk or Plus Jakarta Sans (bold, relaxed tracking -0.015em).
    - Body: Assistant (dense, 15px base size).
    - Pull Quotes / Maxims: Lora (italic serif).
-   - Code & Telemetry: Geist Mono / system monospace.
+   - Code & Telemetry: IBM Plex Mono / system monospace.
 3. **Density & Restraint**:
    - 1px hairline borders everywhere.
    - Minimal elevation/shadows; prefer flat, tinted card surfaces.

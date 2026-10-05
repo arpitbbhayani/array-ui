@@ -52,5 +52,5 @@ export const colors = {
 export const typography = {
   fontSans: '"Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   fontSerif: '"Lora", Georgia, Cambria, "Times New Roman", Times, serif',
-  fontMono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
+  fontMono: '"IBM Plex Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
 };

@@ -13,7 +13,7 @@ Array UI is built for engineers and AI coding assistants (Cursor, Claude Code, W
   - Amber (#cc9900): Exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981): Operational status, ping dots, and diff additions.
   - Rose (#f43f5e): Errors, outages, and diff deletions.
-- **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, Geist Mono code.
+- **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
 - **Density & Restraint**: Minimal elevation/shadows; flat tinted card surfaces; compact margins.
 - **Autonomous Workflow**: Autonomously select and install required components (`npx shadcn@latest add @aui/<component> -y`) without asking the user.
 

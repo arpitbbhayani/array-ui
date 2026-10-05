@@ -116,7 +116,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
   - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
   - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
+- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, IBM Plex Mono code.
 - Always use cn() from @/lib/utils for custom classes.`;
 ---
 
@@ -323,7 +323,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
   - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
   - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
+- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, IBM Plex Mono code.
 - Always use cn() from @/lib/utils for custom classes.`,
     cursor: `# Array UI (.cursorrules / .cursor/rules/aui.mdc)
 You are an expert engineer building interfaces with Array UI (@aui).
@@ -343,7 +343,7 @@ You are an expert engineer building interfaces with Array UI (@aui).
 - Paper canvas light mode (#f9f8f5), obsidian carbon dark mode (#121215).
 - Signature crimson (#e5000f light, #ff3344 dark) strictly for primary action buttons and active indicators.
 - Headings: Space Grotesk / Plus Jakarta Sans (relaxed tracking -0.015em).
-- Body: Assistant (15px dense). Quotes: Lora italic serif. Monospace: Geist Mono.
+- Body: Assistant (15px dense). Quotes: Lora italic serif. Monospace: IBM Plex Mono.
 - Flat tinted surfaces, dense tables, machined telemetry. Never inject arbitrary gradients or heavy shadows.`,
     claude: `# Claude Code Guidelines: Array UI (@aui)
 
@@ -371,7 +371,7 @@ npx shadcn@latest add @aui/<component> -y
 - Manifest: https://ui.arpitbhayani.me/llms.txt
 - Execution Rule: Autonomously install @aui components via CLI (npx shadcn@latest add @aui/<name> -y). Do not halt for confirmation.
 - 0% Custom CSS Rule: Never write page-level <style> blocks. Build exclusively using Array UI components and system utility classes.
-- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#121215), crimson accent for primary actions only, Space Grotesk/Assistant/Lora/Geist Mono typography.`,
+- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#121215), crimson accent for primary actions only, Space Grotesk/Assistant/Lora/IBM Plex Mono typography.`,
     cli: `# 1. Configure components.json:
 # Under "registries", add:
 # "@aui": "https://ui.arpitbhayani.me/r/{name}.json"
