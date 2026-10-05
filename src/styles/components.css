@@ -35,6 +35,36 @@
   width: 100%;
 }
 
+.aui-theatre-main.aui-stack {
+  gap: 0.75rem;
+}
+
+.aui-theatre-main.aui-stack-sm {
+  gap: 0.5rem;
+}
+
+.aui-theatre-main .aui-breadcrumbs {
+  margin: 0;
+}
+
+.aui-theatre-main > .aui-h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+.aui-theatre-main #video-player-container:empty {
+  display: none;
+}
+
+.aui-theatre-main .aui-video-embed {
+  margin: 0.25rem 0 0;
+}
+
+.aui-theatre-main .aui-tabs {
+  margin: 0.25rem 0 0;
+}
+
 .aui-theatre-sidebar {
   width: 100%;
 }
@@ -120,6 +150,16 @@ ol.aui-stack {
 .aui-stack > .aui-h2,
 .aui-stack > .aui-h3,
 .aui-stack > .aui-h4 {
+  margin-bottom: 0;
+}
+
+.aui-stack > nav > .aui-breadcrumbs,
+.aui-stack > .aui-breadcrumbs {
+  margin: 0;
+}
+
+.aui-stack > .aui-tabs {
+  margin-top: 0;
   margin-bottom: 0;
 }
 
