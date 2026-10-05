@@ -13,17 +13,60 @@ interface Props {
 }
 
 const {
-  title = "Array UI (aui) - dense, developer-first design system",
-  description = "Array UI (aui): Compact light and dark UI components for React, Astro and plain CSS.",
+  title = "Array UI (aui) — Editorial Design System for Engineers & AI Agents",
+  description = "Array UI (aui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me.",
 } = Astro.props;
 
 const navLinks = [
-  { label: "[00] Overview", href: "#overview" },
-  { label: "[01] Patterns", href: "#blog-article" },
-  { label: "[02] Foundations", href: "#colors" },
+  { label: "[00] Agent Hub", href: "#ai-agents" },
+  { label: "[01] Overview", href: "#overview" },
+  { label: "[02] Registry", href: "#quickstart" },
   { label: "[03] Developer", href: "#ping-status" },
   { label: "[04] Components", href: "#buttons" },
   { label: "[05] Usage", href: "#install" },
+];
+
+const footerColumns = [
+  {
+    heading: "Design System",
+    links: [
+      { label: "Overview", href: "#overview" },
+      { label: "shadcn Quickstart", href: "#quickstart" },
+      { label: "Component Matrix", href: "#component-matrix" },
+      { label: "GitHub Installation", href: "#install" },
+      { label: "Color Foundations", href: "#colors" },
+      { label: "Typography Scale", href: "#typography" },
+    ],
+  },
+  {
+    heading: "For AI Agents & LLMs",
+    links: [
+      { label: "AI Agent Instructions", href: "#ai-agents", isHighlight: true },
+      { label: "llms.txt (Standard)", href: "/llms.txt", hint: "Manifest", external: true },
+      { label: "llms-full.txt", href: "/llms-full.txt", hint: "Full APIs", external: true },
+      { label: "shadcn Registry JSON", href: "/r/registry.json", hint: "Schema", external: true },
+      { label: "AGENTS.md", href: "https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md", external: true },
+      { label: "robots.txt", href: "/robots.txt", external: true },
+    ],
+  },
+  {
+    heading: "Ecosystem & Code",
+    links: [
+      { label: "GitHub Repository", href: "https://github.com/arpitbbhayani/aui", external: true, hint: "Source" },
+      { label: "DiceDB", href: "https://github.com/DiceDB/Dice", external: true, hint: "In-memory DB" },
+      { label: "arpitbhayani.me", href: "https://arpitbhayani.me", external: true, hint: "Essays" },
+      { label: "System Design Cohort", href: "https://arpitbhayani.me/courses", external: true },
+    ],
+  },
+  {
+    heading: "Connect",
+    links: [
+      { label: "Twitter / X", href: "https://twitter.com/arpit_bhayani", external: true },
+      { label: "LinkedIn", href: "https://linkedin.com/in/arpitbhayani", external: true },
+      { label: "YouTube", href: "https://youtube.com/c/ArpitBhayani", external: true },
+      { label: "GitHub Profile", href: "https://github.com/arpitbbhayani", external: true },
+    ],
+  },
 ];
 ---
 
@@ -34,13 +77,46 @@ const navLinks = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href="https://ui.arpitbhayani.me" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e5000f'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='800' text-anchor='middle' fill='white'>a</text></svg>" />
+    
+    <!-- AI Agent & LLM Discoverability (llmstxt.org) -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context (llms.txt)" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Complete LLM Documentation (llms-full.txt)" />
+    <link rel="alternate" type="application/json" href="/r/registry.json" title="Array UI Registry Manifest" />
+    <meta name="ai:llms-txt" content="https://ui.arpitbhayani.me/llms.txt" />
+    <meta name="ai:llms-full" content="https://ui.arpitbhayani.me/llms-full.txt" />
+    <meta name="ai:registry" content="https://ui.arpitbhayani.me/r/registry.json" />
+    <meta name="ai:agent-instructions" content="https://ui.arpitbhayani.me/#ai-agents" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Array UI (aui)",
+        "description": "Editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution.",
+        "url": "https://ui.arpitbhayani.me",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
     <ThemeScript />
   </head>
   <body class="aui-body">
     <CommandPalette client:load />
     <Navbar brandName="Array UI (aui)" links={navLinks}>
       <div slot="actions" class="aui-nav-custom-actions">
+        <a class="aui-nav-llm-btn" href="/llms.txt" target="_blank" title="Machine-readable LLM documentation (llms.txt)">
+          <span class="aui-ping-dot" style="width: 7px; height: 7px; background-color: var(--aui-success); border-radius: 50%; display: inline-block;"></span>
+          <span>llms.txt</span>
+        </a>
         <button
           type="button"
           class="aui-nav-search-btn"
@@ -61,8 +137,9 @@ const navLinks = [
     </Navbar>
     <slot />
     <Footer
-      copyright="Array UI — Built for curious systems engineers. MIT Licensed."
-      disclaimer="Array UI (aui) is an editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, and native Astro primitives."
+      columns={footerColumns}
+      copyright="Array UI — Built for curious systems engineers & AI agents. MIT Licensed."
+      disclaimer="Array UI (aui) is an editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution for ui.arpitbhayani.me."
     >
       <div slot="socials" class="aui-social-pill-group">
         <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
@@ -159,6 +236,32 @@ const navLinks = [
     .aui-nav-custom-actions {
       gap: 0.35rem;
       margin-right: 0;
+    }
+  }
+
+  .aui-nav-llm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.6rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+    font-family: var(--aui-font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--aui-text-secondary);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .aui-nav-llm-btn:hover {
+    background-color: var(--aui-clickable-hover);
+    border-color: var(--aui-border-strong);
+    color: var(--aui-primary);
+  }
+  @media (max-width: 480px) {
+    .aui-nav-llm-btn {
+      padding: 0.28rem 0.45rem;
     }
   }
 

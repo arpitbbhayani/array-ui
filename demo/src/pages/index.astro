@@ -57,12 +57,68 @@ import {
   Newsletter as ReactNewsletter,
 } from "../../../dist/react.js";
 
+const registryComponents = [
+  { name: "terminal", title: "Terminal", desc: "Machined telemetry terminal with bash command dots and styled outputs." },
+  { name: "diff-block", title: "DiffBlock", desc: "Git patch viewer with line gutters, additions, and deletions." },
+  { name: "ping-status", title: "PingStatus", desc: "Live telemetry pulsing dot indicator with status and latency." },
+  { name: "property-grid", title: "PropertyGrid", desc: "Key-value metadata inspector with one-click copy functionality." },
+  { name: "package-manager", title: "PackageManager", desc: "pnpm/npm/bun/yarn command switcher with copy button." },
+  { name: "maxim", title: "Maxim", desc: "Editorial quote callout with amber left rail and citation." },
+  { name: "takeaways-box", title: "TakeawaysBox", desc: "Key takeaways container with bulleted highlights." },
+  { name: "hero", title: "Hero", desc: "Editorial profile hero section with avatar, heading, and bio." },
+  { name: "file-tree", title: "FileTree", desc: "Directory explorer tree with collapsible folders and item selection." },
+  { name: "social-pill", title: "SocialPill", desc: "Clean pill button with platform icon, handle, and follower count." },
+  { name: "course-card", title: "CourseCard", desc: "Editorial course and project card with badges, tags, and CTA." },
+  { name: "stat-card", title: "StatCard", desc: "Large key metric display card with optional trend indicator." },
+  { name: "empty-state", title: "EmptyState", desc: "Dashed container for empty content and call-to-actions." },
+  { name: "footer", title: "Footer", desc: "Editorial 4-column directory footer with category hints and disclaimer." },
+  { name: "modal", title: "Modal", desc: "Accessible dialog modal with backdrop blur and escape key dismissal." },
+  { name: "video-embed", title: "VideoEmbed", desc: "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling." },
+  { name: "dropdown", title: "Dropdown", desc: "Minimal click-trigger dropdown menu with click outside dismissal and actions." },
+];
+
+const universalAgentPrompt = `You are an expert engineer building UI with Array UI (@aui), an editorial engineering design system inspired by arpitbhayani.me.
+
+# Documentation & Registry
+- Official Site & Catalog: https://ui.arpitbhayani.me
+- LLM Context: https://ui.arpitbhayani.me/llms.txt
+- Comprehensive Reference: https://ui.arpitbhayani.me/llms-full.txt
+- shadcn Registry: https://ui.arpitbhayani.me/r/{name}.json
+- Registry Index: https://ui.arpitbhayani.me/r/registry.json
+- GitHub Repo: github:arpitbbhayani/aui (Note: NOT on npm registry; install via GitHub or shadcn registry)
+
+# Installation Modes
+1. If project uses shadcn/ui:
+   - Add "@aui": "https://ui.arpitbhayani.me/r/{name}.json" under "registries" in components.json.
+   - Run: npx shadcn@latest add @aui/aui -y (base theme tokens)
+   - Run: npx shadcn@latest add @aui/<component> -y (e.g. terminal, diff-block, property-grid, ping-status)
+   - Import from "@/components/ui/<component>".
+2. If project uses direct package (Next.js, Astro):
+   - Run: npm install github:arpitbbhayani/aui (or pnpm add / bun add)
+   - Add \`import "aui/styles.css";\` to root layout.
+   - Import from "aui/nextjs" (Next.js) or "aui/astro/[Component].astro" (Astro).
+
+# Autonomous Workflow (IMPORTANT):
+- When given a task or UI requirement, autonomously select all needed @aui components.
+- DO NOT pause or ask the user which components to install.
+- Automatically execute the installation command (e.g. \`npx shadcn@latest add @aui/<component> -y\`) and immediately proceed to building the requested interface.
+
+# Aesthetic Rules:
+- Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
+- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #2c2c38 in dark).
+- Accents:
+  - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
+  - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
+  - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
+- Typography: Plus Jakarta Sans / Space Grotesk bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
+- Always use cn() from @/lib/utils for custom classes.`;
+
 const sidebarGroups = [
   {
     title: "[00] Start",
     links: [
       { label: "Overview", href: "#overview" },
-      { label: "AI Coding Agents", href: "#ai-agents" },
+      { label: "AI Agent & LLM Hub", href: "#ai-agents" },
       { label: "shadcn Quickstart", href: "#quickstart" },
       { label: "Install (GitHub)", href: "#install" },
       { label: "Cheat Sheet", href: "#component-matrix" },
@@ -212,24 +268,43 @@ const takeaways = [
     <section id="overview" class="landing" style="position: relative;">
       <div class="landing-copy">
         <div class="spec-row" style="margin-bottom: 0.85rem;">
-          <PingStatus status="operational" label="Array UI · 48 components · v0.1.0" client:load />
-          <Badge variant="light">[01] React</Badge>
-          <Badge variant="light">[02] Astro</Badge>
-          <Badge variant="light">[03] Plain CSS</Badge>
-          <Badge variant="crimson">[04] shadcn Registry</Badge>
+          <PingStatus status="operational" label="Array UI · 48 components · Registry Live" client:load />
+          <a href="#ai-agents" class="aui-badge aui-badge-green" style="text-decoration:none;">● Agent-Ready</a>
+          <Badge variant="crimson">[01] shadcn Registry</Badge>
+          <Badge variant="light">[02] React / Next.js</Badge>
+          <Badge variant="light">[03] Native Astro</Badge>
         </div>
         <h1 class="landing-title">Don’t use this design system.</h1>
         <p class="landing-sub">
           <span class="aui-font-serif aui-italic" style="font-size: 1.15rem; display: block; margin-bottom: 0.45rem; color: var(--aui-text-secondary); line-height: 1.45;">
             "Unless you are an engineer who genuinely cares about words, typography, and mathematical rigor."
           </span>
-          A dense, systems-first design system with zero-runtime CSS, React, and native Astro primitives.
+          The typography-led, editorial engineering design system for engineers and AI coding agents. Official component catalog, documentation, and shadcn registry hosted at <code class="aui-code" style="font-size: 0.88rem;">ui.arpitbhayani.me</code>.
         </p>
         <div class="spec-row" style="margin-bottom: 1rem;">
-          <Button href="#ping-status" variant="primary" size="lg">Explore dev tools</Button>
-          <Button href="#shadcn" variant="secondary" size="lg">shadcn Registry</Button>
+          <Button href="#ai-agents" variant="primary" size="lg">Agent Hub & Rules ↓</Button>
+          <Button href="#quickstart" variant="secondary" size="lg">shadcn Registry</Button>
+          <Button href="/llms.txt" variant="outline" size="lg" target="_blank">llms.txt ↗</Button>
         </div>
         <div class="spec-row" style="margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div
+            class="landing-install-pill"
+            title="Click to copy shadcn add command"
+            onclick="navigator.clipboard.writeText('npx shadcn@latest add @aui/terminal'); this.classList.add('is-copied'); const t=this.querySelector('.landing-copy-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='shadcn'; }, 1600);"
+          >
+            <span class="landing-install-prompt">$</span>
+            <code class="landing-install-code">npx shadcn add @aui/terminal</code>
+            <span class="landing-install-copy" aria-label="Copy shadcn add command">
+              <svg class="spec-copy-icon icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="spec-copy-icon icon-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span class="landing-copy-text">shadcn</span>
+            </span>
+          </div>
           <div
             class="landing-install-pill"
             title="Click to copy install command from GitHub"
@@ -250,12 +325,12 @@ const takeaways = [
           </div>
           <div
             class="landing-install-pill"
-            title="Click to copy shadcn add command"
-            onclick="navigator.clipboard.writeText('npx shadcn@latest add @aui/terminal'); this.classList.add('is-copied'); const t=this.querySelector('.landing-copy-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='shadcn'; }, 1600);"
+            title="Click to copy curl command for LLM context"
+            onclick="navigator.clipboard.writeText('curl -s https://ui.arpitbhayani.me/llms.txt'); this.classList.add('is-copied'); const t=this.querySelector('.landing-copy-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='llms.txt'; }, 1600);"
           >
             <span class="landing-install-prompt">$</span>
-            <code class="landing-install-code">npx shadcn add @aui/terminal</code>
-            <span class="landing-install-copy" aria-label="Copy shadcn add command">
+            <code class="landing-install-code">curl -s https://ui.arpitbhayani.me/llms.txt</code>
+            <span class="landing-install-copy" aria-label="Copy curl command">
               <svg class="spec-copy-icon icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -263,7 +338,7 @@ const takeaways = [
               <svg class="spec-copy-icon icon-check" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              <span class="landing-copy-text">shadcn</span>
+              <span class="landing-copy-text">llms.txt</span>
             </span>
           </div>
         </div>
@@ -281,10 +356,11 @@ const takeaways = [
   <div class="aui-container" style="margin-top: 0.65rem;">
     <dl class="meta-strip">
       <div><dt>[00] version</dt><dd>0.1.0</dd></div>
-      <div><dt>[01] license</dt><dd>MIT</dd></div>
-      <div><dt>[02] components</dt><dd>48</dd></div>
-      <div><dt>[03] runtime deps</dt><dd>0</dd></div>
-      <div><dt>[04] themes</dt><dd>light · dark</dd></div>
+      <div><dt>[01] registry</dt><dd>@aui (shadcn)</dd></div>
+      <div><dt>[02] components</dt><dd>48 total · 17 CLI</dd></div>
+      <div><dt>[03] agent context</dt><dd>/llms.txt</dd></div>
+      <div><dt>[04] themes</dt><dd>paper · obsidian</dd></div>
+      <div><dt>[05] license</dt><dd>MIT</dd></div>
     </dl>
   </div>
 
@@ -341,58 +417,191 @@ const takeaways = [
         <!-- Install -->
         <h2 class="docs-h2"><span class="aui-index-tag">[00]</span> Getting started</h2>
         <div class="spec-grid">
-          <Specimen id="ai-agents" name="AI Coding Agents (Cursor, Claude Code, Windsurf)" description="One-click system prompt to teach your AI coding assistant the complete Array UI design language." span={2}>
+          <Specimen id="ai-agents" name="AI Agent & LLM Hub (Cursor, Claude Code, Windsurf, Codex, Antigravity)" description="First-class instructions, system prompts, autonomous workflows, and machine-readable endpoints for AI coding agents." span={2}>
             <div class="aui-agent-box">
               <div class="aui-agent-header">
                 <div>
-                  <div class="aui-agent-title">Drop into Cursor Rules, Windsurf, or Claude Code</div>
-                  <div class="aui-agent-sub">Includes aesthetic rules, color constraints, registry endpoints, and component syntax:</div>
+                  <div class="aui-agent-title">Agent System Prompt & Rule Sets</div>
+                  <div class="aui-agent-sub">Direct integration instructions for AI coding assistants. Choose a preset to preview and copy:</div>
                 </div>
-                <button
-                  type="button"
-                  class="aui-agent-copy-btn"
-                  onclick="navigator.clipboard.writeText(document.getElementById('aui-agent-prompt-text').textContent); this.classList.add('is-copied'); const t=this.querySelector('.aui-agent-btn-text'); if(t) t.textContent='Copied Prompt!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='Copy Agent Prompt'; }, 2000);"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                  <span class="aui-agent-btn-text">Copy Agent Prompt</span>
+                <div class="aui-agent-header-actions">
+                  <a href="/llms.txt" target="_blank" class="aui-agent-endpoint-badge" title="View official llms.txt">
+                    <span class="aui-agent-dot"></span>
+                    <span>/llms.txt ↗</span>
+                  </a>
+                  <a href="/llms-full.txt" target="_blank" class="aui-agent-endpoint-badge" title="View complete llms-full.txt">
+                    <span>/llms-full.txt ↗</span>
+                  </a>
+                  <button
+                    type="button"
+                    class="aui-agent-copy-btn"
+                    onclick="navigator.clipboard.writeText(document.getElementById('aui-agent-prompt-text').textContent); this.classList.add('is-copied'); const t=this.querySelector('.aui-agent-btn-text'); if(t) t.textContent='Copied Prompt!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='Copy Active Prompt'; }, 2000);"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <span class="aui-agent-btn-text">Copy Active Prompt</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Preset Switcher Tabs -->
+              <div class="aui-agent-tabs">
+                <button type="button" class="aui-agent-tab-btn is-active" data-preset="universal" onclick="window.switchAgentPreset('universal')">
+                  Universal System Prompt
+                </button>
+                <button type="button" class="aui-agent-tab-btn" data-preset="cursor" onclick="window.switchAgentPreset('cursor')">
+                  Cursor (.cursorrules)
+                </button>
+                <button type="button" class="aui-agent-tab-btn" data-preset="claude" onclick="window.switchAgentPreset('claude')">
+                  Claude Code (CLAUDE.md)
+                </button>
+                <button type="button" class="aui-agent-tab-btn" data-preset="windsurf" onclick="window.switchAgentPreset('windsurf')">
+                  Windsurf (.windsurfrules)
+                </button>
+                <button type="button" class="aui-agent-tab-btn" data-preset="cli" onclick="window.switchAgentPreset('cli')">
+                  Autonomous CLI
                 </button>
               </div>
-              <pre class="aui-agent-pre"><code id="aui-agent-prompt-text">{`You are an expert engineer building UI with Array UI (@aui), an editorial engineering design system inspired by arpitbhayani.me.
 
-# Documentation & Registry
-- AI Agent Guide: https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md
-- LLM Context: https://ui.arpitbhayani.me/llms.txt
-- shadcn Registry: https://ui.arpitbhayani.me/r/{name}.json
-- GitHub Repo: github:arpitbbhayani/aui (Note: NOT on npm registry; install via GitHub or shadcn registry)
+              <pre class="aui-agent-pre"><code id="aui-agent-prompt-text">{universalAgentPrompt}</code></pre>
 
-# Installation Modes
-1. If project uses shadcn/ui:
-   - Add "@aui": "https://ui.arpitbhayani.me/r/{name}.json" under "registries" in components.json.
-   - Run: npx shadcn@latest add @aui/aui -y (base theme tokens)
-   - Run: npx shadcn@latest add @aui/<component> -y (e.g. terminal, diff-block, property-grid, ping-status)
-   - Import from "@/components/ui/<component>".
-2. If project uses direct package (Next.js, Astro):
-   - Run: npm install github:arpitbbhayani/aui (or pnpm add / bun add)
-   - Add \`import "aui/styles.css";\` to root layout.
-   - Import from "aui/nextjs" (Next.js) or "aui/astro/[Component].astro" (Astro).
+              <!-- Machine-Readable Endpoints Grid -->
+              <div class="aui-agent-endpoints-grid">
+                <div class="aui-agent-ep-card">
+                  <div class="aui-agent-ep-top">
+                    <span class="aui-agent-ep-badge">llms.txt</span>
+                    <a href="/llms.txt" target="_blank" class="aui-agent-ep-link">Open ↗</a>
+                  </div>
+                  <div class="aui-agent-ep-title">Standard LLM Manifest</div>
+                  <div class="aui-agent-ep-desc">Concise summary, core rules, installation modes, and component URLs conforming to llmstxt.org.</div>
+                  <div class="aui-agent-ep-action">
+                    <code>https://ui.arpitbhayani.me/llms.txt</code>
+                    <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://ui.arpitbhayani.me/llms.txt'); this.textContent='✓'; setTimeout(()=>this.textContent='copy', 1500);">copy</button>
+                  </div>
+                </div>
 
-# Autonomous Workflow (IMPORTANT):
-- When given a task or UI requirement, autonomously select all needed @aui components.
-- DO NOT pause or ask the user which components to install.
-- Automatically execute the installation command (e.g. \`npx shadcn@latest add @aui/<component> -y\`) and immediately proceed to building the requested interface.
+                <div class="aui-agent-ep-card">
+                  <div class="aui-agent-ep-top">
+                    <span class="aui-agent-ep-badge">llms-full.txt</span>
+                    <a href="/llms-full.txt" target="_blank" class="aui-agent-ep-link">Open ↗</a>
+                  </div>
+                  <div class="aui-agent-ep-title">Complete LLM Documentation</div>
+                  <div class="aui-agent-ep-desc">Single-file exhaustive reference with TypeScript interfaces, props, tokens, and code examples.</div>
+                  <div class="aui-agent-ep-action">
+                    <code>https://ui.arpitbhayani.me/llms-full.txt</code>
+                    <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://ui.arpitbhayani.me/llms-full.txt'); this.textContent='✓'; setTimeout(()=>this.textContent='copy', 1500);">copy</button>
+                  </div>
+                </div>
 
-# Aesthetic Rules:
-- Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#0a0a0c).
-- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #24242c in dark).
-- Accents:
-  - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
-  - Amber (#cc9900) exclusively for engineering maxim quotes.
-  - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Plus Jakarta Sans / Space Grotesk bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
-- Always use cn() from @/lib/utils for custom classes.`}</code></pre>
+                <div class="aui-agent-ep-card">
+                  <div class="aui-agent-ep-top">
+                    <span class="aui-agent-ep-badge">registry.json</span>
+                    <a href="/r/registry.json" target="_blank" class="aui-agent-ep-link">Open ↗</a>
+                  </div>
+                  <div class="aui-agent-ep-title">shadcn Registry Schema</div>
+                  <div class="aui-agent-ep-desc">JSON registry schema with file contents, dependencies, and Tailwind tokens for shadcn CLI.</div>
+                  <div class="aui-agent-ep-action">
+                    <code>https://ui.arpitbhayani.me/r/registry.json</code>
+                    <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('https://ui.arpitbhayani.me/r/registry.json'); this.textContent='✓'; setTimeout(()=>this.textContent='copy', 1500);">copy</button>
+                  </div>
+                </div>
+
+                <div class="aui-agent-ep-card">
+                  <div class="aui-agent-ep-top">
+                    <span class="aui-agent-ep-badge">GitHub Package</span>
+                    <a href="https://github.com/arpitbbhayani/aui" target="_blank" class="aui-agent-ep-link">GitHub ↗</a>
+                  </div>
+                  <div class="aui-agent-ep-title">Full React & Astro Library</div>
+                  <div class="aui-agent-ep-desc">All 48+ components for Next.js and Astro. Note: install via GitHub, not npm registry.</div>
+                  <div class="aui-agent-ep-action">
+                    <code>github:arpitbbhayani/aui</code>
+                    <button type="button" class="aui-agent-ep-copy" onclick="navigator.clipboard.writeText('npm i github:arpitbbhayani/aui'); this.textContent='✓'; setTimeout(()=>this.textContent='copy', 1500);">copy</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Autonomous Agent Operating Protocol -->
+              <div class="aui-agent-rules-box">
+                <div class="aui-agent-rules-head">
+                  <span class="aui-agent-rules-dot"></span>
+                  <span class="aui-agent-rules-title">Autonomous Execution Protocol for Coding Agents</span>
+                </div>
+                <div class="aui-agent-rules-grid">
+                  <div class="aui-agent-rule-item">
+                    <div class="aui-agent-rule-num">01</div>
+                    <div class="aui-agent-rule-content">
+                      <strong>Zero Confirmation Delay:</strong> When given a UI task, autonomously determine the required <code>@aui</code> components and run <code>npx shadcn@latest add @aui/&lt;component&gt; -y</code>. Do not stop to prompt the user.
+                    </div>
+                  </div>
+                  <div class="aui-agent-rule-item">
+                    <div class="aui-agent-rule-num">02</div>
+                    <div class="aui-agent-rule-content">
+                      <strong>Paper & Obsidian Palettes:</strong> Use paper light mode (<code>#f9f8f5</code>) and obsidian carbon dark mode (<code>#121215</code>). Enforce 1px hairline borders (<code>#dfded9</code> / <code>#2c2c38</code>) everywhere.
+                    </div>
+                  </div>
+                  <div class="aui-agent-rule-item">
+                    <div class="aui-agent-rule-num">03</div>
+                    <div class="aui-agent-rule-content">
+                      <strong>Signature Crimson Restraint:</strong> Reserve crimson (<code>#e5000f</code> / <code>#ff3344</code>) strictly for primary action buttons, active navigation, and key focus rings. Never flood surfaces with red.
+                    </div>
+                  </div>
+                  <div class="aui-agent-rule-item">
+                    <div class="aui-agent-rule-num">04</div>
+                    <div class="aui-agent-rule-content">
+                      <strong>Machined Density & Typography:</strong> Assistant body (15px), Plus Jakarta Sans headings, Lora italic serif maxims, and Geist Mono code. Flat tinted card surfaces without bloated shadows.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Machine-Readable Component Directory Matrix -->
+              <div class="aui-agent-catalog-wrap">
+                <div class="aui-agent-catalog-header">
+                  <div class="aui-agent-catalog-title">shadcn Registry Component Directory</div>
+                  <div class="aui-agent-catalog-sub">Quick CLI reference and endpoints for all 17 registry components:</div>
+                </div>
+                <div class="aui-agent-table-container">
+                  <table class="aui-agent-table">
+                    <thead>
+                      <tr>
+                        <th>Component</th>
+                        <th>Registry Name</th>
+                        <th>Description</th>
+                        <th>CLI Install</th>
+                        <th>Endpoint</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {registryComponents.map((c) => (
+                        <tr>
+                          <td class="aui-agent-td-name">
+                            <a href={`#${c.name}`} class="aui-agent-comp-link">{c.title}</a>
+                          </td>
+                          <td class="aui-agent-td-mono">
+                            <code>@aui/{c.name}</code>
+                          </td>
+                          <td class="aui-agent-td-desc">{c.desc}</td>
+                          <td class="aui-agent-td-cmd">
+                            <button
+                              type="button"
+                              class="aui-agent-mini-copy"
+                              title="Copy install command"
+                              onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${c.name} -y'); this.classList.add('is-copied'); setTimeout(()=>this.classList.remove('is-copied'), 1500);`}
+                            >
+                              <code>add @aui/{c.name}</code>
+                            </button>
+                          </td>
+                          <td class="aui-agent-td-ep">
+                            <a href={`/r/${c.name}.json`} target="_blank" class="aui-agent-ep-link">.json ↗</a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </Specimen>
 
@@ -1506,11 +1715,11 @@ import Navbar from "aui/astro/Navbar.astro";
     color: var(--aui-text-muted);
   }
 
-  /* AI Agent Box */
+  /* AI Agent & LLM Hub */
   .aui-agent-box {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
     margin: 0.25rem 0;
   }
   .aui-agent-header {
@@ -1519,6 +1728,39 @@ import Navbar from "aui/astro/Navbar.astro";
     justify-content: space-between;
     gap: 0.75rem;
     flex-wrap: wrap;
+  }
+  .aui-agent-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+  .aui-agent-endpoint-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+    font-family: var(--aui-font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--aui-text-secondary);
+    text-decoration: none;
+    transition: all 0.12s ease;
+  }
+  .aui-agent-endpoint-badge:hover {
+    color: var(--aui-primary);
+    border-color: var(--aui-border-strong);
+    background-color: var(--aui-clickable-hover);
+  }
+  .aui-agent-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--aui-success);
+    display: inline-block;
   }
   .aui-agent-title {
     font-family: var(--aui-font-heading);
@@ -1531,18 +1773,11 @@ import Navbar from "aui/astro/Navbar.astro";
     color: var(--aui-text-muted);
     margin-top: 0.15rem;
   }
-  .aui-agent-sub code {
-    font-family: var(--aui-font-mono);
-    font-size: 0.78rem;
-    background-color: var(--aui-bg-tertiary);
-    padding: 0.1rem 0.35rem;
-    border-radius: var(--aui-radius-sm);
-  }
   .aui-agent-copy-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    padding: 0.4rem 0.85rem;
+    padding: 0.35rem 0.8rem;
     font-family: var(--aui-font-sans);
     font-size: 0.82rem;
     font-weight: 600;
@@ -1562,6 +1797,38 @@ import Navbar from "aui/astro/Navbar.astro";
     border-color: var(--aui-success);
     background-color: var(--aui-bg-primary);
   }
+
+  /* Preset switcher tabs */
+  .aui-agent-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+  .aui-agent-tab-btn {
+    padding: 0.25rem 0.65rem;
+    font-family: var(--aui-font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--aui-text-muted);
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s ease;
+  }
+  .aui-agent-tab-btn:hover {
+    color: var(--aui-text-secondary);
+    border-color: var(--aui-border-strong);
+  }
+  .aui-agent-tab-btn.is-active {
+    color: var(--aui-primary-foreground, #fff);
+    background-color: var(--aui-primary);
+    border-color: var(--aui-primary);
+  }
+
   .aui-agent-pre {
     margin: 0;
     padding: 0.85rem 1rem;
@@ -1573,7 +1840,278 @@ import Navbar from "aui/astro/Navbar.astro";
     line-height: 1.55;
     color: #cfcfd6;
     overflow-x: auto;
-    max-height: 240px;
+    max-height: 260px;
+  }
+
+  /* Endpoints Grid */
+  .aui-agent-endpoints-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+  @media (max-width: 900px) {
+    .aui-agent-endpoints-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 520px) {
+    .aui-agent-endpoints-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .aui-agent-ep-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 0.85rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+  }
+  .aui-agent-ep-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+  }
+  .aui-agent-ep-badge {
+    font-family: var(--aui-font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--aui-text-secondary);
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--aui-radius-sm);
+  }
+  .aui-agent-ep-link {
+    font-family: var(--aui-font-mono);
+    font-size: 0.72rem;
+    color: var(--aui-text-muted);
+    text-decoration: none;
+    transition: color 0.12s ease;
+  }
+  .aui-agent-ep-link:hover {
+    color: var(--aui-primary);
+  }
+  .aui-agent-ep-title {
+    font-family: var(--aui-font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--aui-text-secondary);
+    margin-bottom: 0.2rem;
+  }
+  .aui-agent-ep-desc {
+    font-size: 0.78rem;
+    color: var(--aui-text-muted);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    flex-grow: 1;
+  }
+  .aui-agent-ep-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0.45rem;
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+    gap: 0.35rem;
+  }
+  .aui-agent-ep-action code {
+    font-family: var(--aui-font-mono);
+    font-size: 0.7rem;
+    color: var(--aui-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .aui-agent-ep-copy {
+    font-family: var(--aui-font-mono);
+    font-size: 0.68rem;
+    color: var(--aui-text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.12s ease;
+  }
+  .aui-agent-ep-copy:hover {
+    color: var(--aui-text-secondary);
+  }
+
+  /* Autonomous Rules Box */
+  .aui-agent-rules-box {
+    padding: 0.85rem 1rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+  }
+  .aui-agent-rules-head {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.65rem;
+  }
+  .aui-agent-rules-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--aui-warning, #cc9900);
+  }
+  .aui-agent-rules-title {
+    font-family: var(--aui-font-heading);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--aui-text-secondary);
+  }
+  .aui-agent-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+  @media (max-width: 640px) {
+    .aui-agent-rules-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .aui-agent-rule-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .aui-agent-rule-num {
+    font-family: var(--aui-font-mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--aui-text-muted);
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    padding: 0.05rem 0.3rem;
+    border-radius: var(--aui-radius-sm);
+    flex-shrink: 0;
+  }
+  .aui-agent-rule-content {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--aui-text-secondary);
+  }
+  .aui-agent-rule-content strong {
+    color: var(--aui-text-primary);
+  }
+  .aui-agent-rule-content code {
+    font-family: var(--aui-font-mono);
+    font-size: 0.74rem;
+    background-color: var(--aui-bg-secondary);
+    padding: 0.05rem 0.25rem;
+    border-radius: var(--aui-radius-sm);
+  }
+
+  /* Machine-Readable Component Catalog Table */
+  .aui-agent-catalog-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.25rem;
+  }
+  .aui-agent-catalog-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .aui-agent-catalog-title {
+    font-family: var(--aui-font-heading);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--aui-text-secondary);
+  }
+  .aui-agent-catalog-sub {
+    font-size: 0.8rem;
+    color: var(--aui-text-muted);
+  }
+  .aui-agent-table-container {
+    overflow-x: auto;
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+  }
+  .aui-agent-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    text-align: left;
+    background-color: var(--aui-bg-primary);
+  }
+  .aui-agent-table th {
+    padding: 0.45rem 0.65rem;
+    background-color: var(--aui-bg-tertiary);
+    border-bottom: 1px solid var(--aui-border-color);
+    font-family: var(--aui-font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--aui-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .aui-agent-table td {
+    padding: 0.4rem 0.65rem;
+    border-bottom: 1px solid var(--aui-border-color);
+    vertical-align: middle;
+  }
+  .aui-agent-table tr:last-child td {
+    border-bottom: none;
+  }
+  .aui-agent-td-name {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .aui-agent-comp-link {
+    color: var(--aui-text-primary);
+    text-decoration: none;
+  }
+  .aui-agent-comp-link:hover {
+    color: var(--aui-primary);
+  }
+  .aui-agent-td-mono code {
+    font-family: var(--aui-font-mono);
+    font-size: 0.74rem;
+    color: var(--aui-primary);
+  }
+  .aui-agent-td-desc {
+    color: var(--aui-text-muted);
+    font-size: 0.78rem;
+  }
+  .aui-agent-td-cmd {
+    white-space: nowrap;
+  }
+  .aui-agent-mini-copy {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.45rem;
+    background-color: var(--aui-bg-tertiary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+  .aui-agent-mini-copy code {
+    font-family: var(--aui-font-mono);
+    font-size: 0.72rem;
+    color: var(--aui-text-secondary);
+  }
+  .aui-agent-mini-copy:hover {
+    border-color: var(--aui-border-strong);
+    background-color: var(--aui-clickable-hover);
+  }
+  .aui-agent-mini-copy.is-copied {
+    border-color: var(--aui-success);
+    background-color: var(--aui-bg-primary);
+  }
+  .aui-agent-mini-copy.is-copied code {
+    color: var(--aui-success);
+  }
+  .aui-agent-td-ep {
+    white-space: nowrap;
   }
 
   .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.5rem; }
@@ -1790,6 +2328,112 @@ import Navbar from "aui/astro/Navbar.astro";
 </style>
 
 <script>
+  // Agent prompt preset switcher
+  const agentPresets: Record<string, string> = {
+    universal: `You are an expert engineer building UI with Array UI (@aui), an editorial engineering design system inspired by arpitbhayani.me.
+
+# Documentation & Registry
+- Official Site & Catalog: https://ui.arpitbhayani.me
+- LLM Context: https://ui.arpitbhayani.me/llms.txt
+- Comprehensive Reference: https://ui.arpitbhayani.me/llms-full.txt
+- shadcn Registry: https://ui.arpitbhayani.me/r/{name}.json
+- Registry Index: https://ui.arpitbhayani.me/r/registry.json
+- GitHub Repo: github:arpitbbhayani/aui (Note: NOT on npm registry; install via GitHub or shadcn registry)
+
+# Installation Modes
+1. If project uses shadcn/ui:
+   - Add "@aui": "https://ui.arpitbhayani.me/r/{name}.json" under "registries" in components.json.
+   - Run: npx shadcn@latest add @aui/aui -y (base theme tokens)
+   - Run: npx shadcn@latest add @aui/<component> -y (e.g. terminal, diff-block, property-grid, ping-status)
+   - Import from "@/components/ui/<component>".
+2. If project uses direct package (Next.js, Astro):
+   - Run: npm install github:arpitbbhayani/aui (or pnpm add / bun add)
+   - Add import "aui/styles.css"; to root layout.
+   - Import from "aui/nextjs" (Next.js) or "aui/astro/[Component].astro" (Astro).
+
+# Autonomous Workflow (IMPORTANT):
+- When given a task or UI requirement, autonomously select all needed @aui components.
+- DO NOT pause or ask the user which components to install.
+- Automatically execute the installation command (e.g. \`npx shadcn@latest add @aui/<component> -y\`) and immediately proceed to building the requested interface.
+
+# Aesthetic Rules:
+- Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
+- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #2c2c38 in dark).
+- Accents:
+  - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
+  - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
+  - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
+- Typography: Plus Jakarta Sans / Space Grotesk bold headings, Assistant body (15px base), Lora italic serif quotes, Geist Mono code.
+- Always use cn() from @/lib/utils for custom classes.`,
+    cursor: `# Array UI (.cursorrules / .cursor/rules/aui.mdc)
+You are an expert engineer building interfaces with Array UI (@aui).
+
+- Official Registry: https://ui.arpitbhayani.me/r/{name}.json
+- LLM Context: https://ui.arpitbhayani.me/llms.txt
+- Full Component APIs: https://ui.arpitbhayani.me/llms-full.txt
+
+## Autonomous Execution Rule
+- When building or editing UI, autonomously select required @aui components and execute:
+  npx shadcn@latest add @aui/<component> -y
+- DO NOT pause or prompt the user for permission to install components.
+
+## Design Constraints
+- 1px hairline borders everywhere (#dfded9 in light, #2c2c38 in dark).
+- Paper canvas light mode (#f9f8f5), obsidian carbon dark mode (#121215).
+- Signature crimson (#e5000f light, #ff3344 dark) strictly for primary action buttons and active indicators.
+- Headings: Plus Jakarta Sans / Space Grotesk (tight tracking).
+- Body: Assistant (15px dense). Quotes: Lora italic serif. Monospace: Geist Mono.
+- Flat tinted surfaces, dense tables, machined telemetry. Never inject arbitrary gradients or heavy shadows.`,
+    claude: `# Claude Code Guidelines: Array UI (@aui)
+
+## UI Framework
+- Design system: Array UI (https://ui.arpitbhayani.me)
+- Registry: https://ui.arpitbhayani.me/r/{name}.json
+- Full Context: https://ui.arpitbhayani.me/llms-full.txt
+
+## Component Installation
+When implementing requested UI, autonomously run:
+npx shadcn@latest add @aui/<component> -y
+(e.g., terminal, diff-block, property-grid, ping-status, maxim, file-tree, stat-card, footer, course-card)
+
+## Styling & Typography
+- 1px hairline borders (#dfded9 light, #2c2c38 dark).
+- Paper light canvas (#f9f8f5), obsidian carbon dark canvas (#121215).
+- Signature crimson (#e5000f light, #ff3344 dark) reserved for primary actions.
+- Amber (#cc9900) exclusively for engineering maxims.
+- Always import cn() from "@/lib/utils" for className composition.`,
+    windsurf: `# Windsurf Cascade Rules: Array UI (@aui)
+- Design System: Array UI (https://ui.arpitbhayani.me)
+- Components Registry: https://ui.arpitbhayani.me/r/{name}.json
+- Manifest: https://ui.arpitbhayani.me/llms.txt
+- Execution Rule: Autonomously install @aui components via CLI (npx shadcn@latest add @aui/<name> -y). Do not halt for confirmation.
+- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#121215), crimson accent for primary actions only, Assistant/Lora/Geist Mono typography.`,
+    cli: `# 1. Configure components.json:
+# Under "registries", add:
+# "@aui": "https://ui.arpitbhayani.me/r/{name}.json"
+
+# 2. Install base tokens & design system theme:
+npx shadcn@latest add @aui/aui -y
+
+# 3. Autonomously install developer & editorial primitives:
+npx shadcn@latest add @aui/terminal @aui/diff-block @aui/property-grid @aui/ping-status @aui/file-tree @aui/maxim @aui/stat-card @aui/takeaways-box @aui/course-card @aui/empty-state -y`
+  };
+
+  (window as any).switchAgentPreset = (name: string) => {
+    const codeEl = document.getElementById("aui-agent-prompt-text");
+    if (codeEl && agentPresets[name]) {
+      codeEl.textContent = agentPresets[name];
+    }
+    document.querySelectorAll(".aui-agent-tab-btn").forEach((btn) => {
+      const el = btn as HTMLElement;
+      if (el.dataset.preset === name) {
+        el.classList.add("is-active");
+      } else {
+        el.classList.remove("is-active");
+      }
+    });
+  };
+
   // Scroll-spy for the sidebar
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".aui-sidebar-link"));
   const map = new Map<string, HTMLAnchorElement>();

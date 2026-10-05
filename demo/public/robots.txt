@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# Agent & LLM entry points (llmstxt.org)
+Sitemap: https://ui.arpitbhayani.me/llms.txt
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /

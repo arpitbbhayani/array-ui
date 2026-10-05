@@ -73,6 +73,12 @@ import { PingStatus } from "@/components/ui/ping-status";
 - When given a task or UI requirement, autonomously identify the required `@aui` components.
 - Run the installation command with `-y` (e.g. `npx shadcn@latest add @aui/terminal @aui/ping-status -y`) and immediately implement the user's request.
 
+#### Machine-Readable Endpoints for Autonomous Tools & LLMs
+- **Standard Context**: `https://ui.arpitbhayani.me/llms.txt`
+- **Full API Reference**: `https://ui.arpitbhayani.me/llms-full.txt`
+- **shadcn Registry Index**: `https://ui.arpitbhayani.me/r/registry.json`
+- **Component Schema**: `https://ui.arpitbhayani.me/r/{name}.json` (e.g. `terminal.json`, `diff-block.json`)
+
 ---
 
 ### Mode B: Direct GitHub Dependency (Next.js, Astro)

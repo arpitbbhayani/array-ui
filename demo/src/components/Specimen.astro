@@ -38,7 +38,17 @@ if (!derivedHtml && usage) {
 }
 ---
 
-<section id={id} class:list={["spec", span === 2 && "spec-wide"]}>
+<section
+  id={id}
+  class:list={["spec", span === 2 && "spec-wide"]}
+  data-specimen={id}
+  data-name={name}
+  data-shadcn-name={shadcnName || undefined}
+  data-shadcn-install={shadcnUsage || undefined}
+  data-registry-url={shadcnName ? `https://ui.arpitbhayani.me/r/${shadcnName}.json` : undefined}
+  data-usage-nextjs={reactUsage || undefined}
+  data-usage-astro={astroUsage || undefined}
+>
   <header class="spec-head">
     <div class="spec-head-row">
       <div class="spec-head-title-wrap">
@@ -46,18 +56,28 @@ if (!derivedHtml && usage) {
         <a href={`#${id}`} class="spec-anchor-link" title="Direct link">#</a>
       </div>
       {shadcnName && (
-        <button
-          type="button"
-          class="spec-shadcn-pill"
-          title={`Copy CLI command: npx shadcn@latest add @aui/${shadcnName}`}
-          onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${shadcnName}'); this.classList.add('is-copied'); const t=this.querySelector('.spec-shadcn-btn-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='add @aui/${shadcnName}'; }, 1600);`}
-        >
-          <span class="spec-shadcn-icon">⚡</span>
-          <code class="spec-shadcn-btn-text">add @aui/{shadcnName}</code>
-          <svg class="spec-shadcn-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </button>
+        <div class="spec-head-actions">
+          <a
+            href={`/r/${shadcnName}.json`}
+            target="_blank"
+            class="spec-json-link"
+            title={`View JSON schema: /r/${shadcnName}.json`}
+          >
+            .json ↗
+          </a>
+          <button
+            type="button"
+            class="spec-shadcn-pill"
+            title={`Copy CLI command: npx shadcn@latest add @aui/${shadcnName}`}
+            onclick={`navigator.clipboard.writeText('npx shadcn@latest add @aui/${shadcnName}'); this.classList.add('is-copied'); const t=this.querySelector('.spec-shadcn-btn-text'); if(t) t.textContent='Copied!'; setTimeout(() => { this.classList.remove('is-copied'); if(t) t.textContent='add @aui/${shadcnName}'; }, 1600);`}
+          >
+            <span class="spec-shadcn-icon">⚡</span>
+            <code class="spec-shadcn-btn-text">add @aui/{shadcnName}</code>
+            <svg class="spec-shadcn-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </button>
+        </div>
       )}
     </div>
     {description && <p class="spec-desc">{description}</p>}
@@ -107,6 +127,27 @@ if (!derivedHtml && usage) {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+  .spec-head-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .spec-json-link {
+    font-family: var(--aui-font-mono);
+    font-size: 0.7rem;
+    color: var(--aui-text-muted);
+    text-decoration: none;
+    padding: 0.15rem 0.35rem;
+    border-radius: var(--aui-radius-sm);
+    border: 1px solid var(--aui-border-color);
+    background-color: var(--aui-bg-tertiary);
+    transition: all 0.12s ease;
+  }
+  .spec-json-link:hover {
+    color: var(--aui-text-secondary);
+    border-color: var(--aui-border-strong);
+    background-color: var(--aui-clickable-hover);
   }
   .spec-shadcn-pill {
     display: inline-flex;
