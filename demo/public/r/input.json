@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Machined text input with subtle focus ring and optional keyboard shortcut badge.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/input.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface InputProps\n  extends React.InputHTMLAttributes<HTMLInputElement> {\n  shortcut?: string;\n}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, type, shortcut, ...props }, ref) => {\n    if (shortcut) {\n      return (\n        <div className=\"relative flex items-center w-full\">\n          <input\n            type={type}\n            className={cn(\n              \"flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 pr-12 text-sm shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50\",\n              className\n            )}\n            ref={ref}\n            {...props}\n          />\n          <kbd className=\"absolute right-2 pointer-events-none inline-flex items-center font-mono text-[0.7rem] font-medium px-1.5 py-0.5 rounded border border-border bg-muted text-muted-foreground\">\n            {shortcut}\n          </kbd>\n        </div>\n      );\n    }\n\n    return (\n      <input\n        type={type}\n        className={cn(\n          \"flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50\",\n          className\n        )}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\nInput.displayName = \"Input\";\n\nexport { Input };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

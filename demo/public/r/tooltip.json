@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "Accessible tooltip hint on hover and focus.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/tooltip.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TooltipProps\n  extends Omit<React.HTMLAttributes<HTMLSpanElement>, \"content\"> {\n  content?: React.ReactNode;\n  placement?: \"top\" | \"bottom\";\n  children: React.ReactNode;\n}\n\nexport const Tooltip = React.forwardRef<HTMLSpanElement, TooltipProps>(\n  ({ content, placement = \"top\", children, className, ...props }, ref) => {\n    return (\n      <span\n        ref={ref}\n        className={cn(\n          \"relative inline-flex group cursor-help\",\n          className\n        )}\n        {...props}\n      >\n        {children}\n        {content && (\n          <span\n            role=\"tooltip\"\n            className={cn(\n              \"pointer-events-none absolute z-50 whitespace-nowrap rounded border border-border bg-[#18181c] text-[#ececf1] px-2 py-0.5 text-xs font-mono opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100 shadow-md left-1/2 -translate-x-1/2\",\n              placement === \"bottom\" ? \"top-full mt-1.5\" : \"bottom-full mb-1.5\"\n            )}\n          >\n            {content}\n          </span>\n        )}\n      </span>\n    );\n  }\n);\nTooltip.displayName = \"Tooltip\";\n",
+      "type": "registry:ui"
+    }
+  ]
+}

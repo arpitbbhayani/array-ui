@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Collapsible hairline accordion sections for FAQs and structured content.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/accordion.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\ninterface AccordionContextValue {\n  openItems: string[];\n  toggleItem: (id: string) => void;\n}\n\nconst AccordionContext = React.createContext<AccordionContextValue | undefined>(undefined);\n\nexport interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {\n  type?: \"single\" | \"multiple\";\n  defaultValue?: string | string[];\n}\n\nexport function Accordion({\n  type = \"single\",\n  defaultValue,\n  children,\n  className,\n  ...props\n}: AccordionProps) {\n  const [openItems, setOpenItems] = React.useState<string[]>(() => {\n    if (!defaultValue) return [];\n    return Array.isArray(defaultValue) ? defaultValue : [defaultValue];\n  });\n\n  const toggleItem = (id: string) => {\n    setOpenItems((prev) => {\n      const isOpen = prev.includes(id);\n      if (type === \"single\") {\n        return isOpen ? [] : [id];\n      }\n      return isOpen ? prev.filter((i) => i !== id) : [...prev, id];\n    });\n  };\n\n  return (\n    <AccordionContext.Provider value={{ openItems, toggleItem }}>\n      <div className={cn(\"divide-y divide-border border-y border-border\", className)} {...props}>\n        {children}\n      </div>\n    </AccordionContext.Provider>\n  );\n}\n\nexport interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement> {\n  value: string;\n}\n\nexport function AccordionItem({ value, className, children, ...props }: AccordionItemProps) {\n  return (\n    <div className={cn(\"py-1\", className)} data-value={value} {...props}>\n      {children}\n    </div>\n  );\n}\n\nexport interface AccordionTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  value: string;\n}\n\nexport function AccordionTrigger({ value, className, children, ...props }: AccordionTriggerProps) {\n  const ctx = React.useContext(AccordionContext);\n  const isOpen = ctx?.openItems.includes(value);\n\n  return (\n    <button\n      type=\"button\"\n      onClick={() => ctx?.toggleItem(value)}\n      className={cn(\n        \"flex flex-1 items-center justify-between py-3 text-sm font-semibold text-foreground transition-all hover:text-primary cursor-pointer w-full text-left\",\n        className\n      )}\n      {...props}\n    >\n      <span>{children}</span>\n      <span className={cn(\"text-xs text-muted-foreground transition-transform duration-200\", isOpen && \"rotate-180\")}>\n        ▼\n      </span>\n    </button>\n  );\n}\n\nexport interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {\n  value: string;\n}\n\nexport function AccordionContent({ value, className, children, ...props }: AccordionContentProps) {\n  const ctx = React.useContext(AccordionContext);\n  const isOpen = ctx?.openItems.includes(value);\n\n  if (!isOpen) return null;\n\n  return (\n    <div className={cn(\"pb-3 text-sm text-muted-foreground leading-relaxed\", className)} {...props}>\n      {children}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

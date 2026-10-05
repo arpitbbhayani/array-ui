@@ -1,158 +1,72 @@
 ---
-import Button from "../../../src/astro/Button.astro";
 import Badge from "../../../src/astro/Badge.astro";
 import PingStatus from "../../../src/astro/PingStatus.astro";
-import Kbd from "../../../src/astro/Kbd.astro";
-
-const snippet = `<div class="cluster-card">
-  <div class="header">
-    <PingStatus status="operational" label="Operational" />
-    <Badge variant="light">v0.1.0</Badge>
-  </div>
-  
-  <div class="controls">
-    <Switch label="Auto-scaling" defaultChecked />
-    <Checkbox label="Edge SSR" defaultChecked />
-  </div>
-
-  <Input placeholder="Search tokens..." shortcut="⌘K" />
-
-  <Button variant="primary">Deploy canary</Button>
-</div>`;
 ---
 
 <div class="aui-hero-deck" id="aui-hero-deck">
-  {/* Deck Header */}
+  {/* Minimal Machined Telemetry Header */}
   <div class="aui-deck-header">
-    <div class="aui-deck-dots" style="font-family:var(--aui-font-mono);font-size:0.75rem;font-weight:700;color:var(--aui-primary);letter-spacing:0.06em;display:flex;align-items:center;gap:0.35rem;">
-      <span style="display:inline-block;width:6px;height:6px;background-color:var(--aui-primary);border-radius:1px;"></span>
-      <span>[00]//SYS_CANVAS</span>
+    <div class="aui-deck-title-wrap">
+      <span class="aui-deck-dot"></span>
+      <span class="aui-deck-path">~/production/telemetry</span>
     </div>
-    <div class="aui-deck-tabs">
-      <button type="button" class="aui-deck-tab is-active" id="hero-tab-preview" data-deck-tab="preview">
-        Interactive UI
-      </button>
-      <button type="button" class="aui-deck-tab" id="hero-tab-code" data-deck-tab="code">
-        Generated Code
-      </button>
-    </div>
-    <div class="aui-deck-status">
-      <PingStatus status="operational" size="sm" label="Live" />
-    </div>
+    <PingStatus status="operational" size="sm" label="16/16 Live" />
   </div>
 
-  {/* Mode 1: Interactive Live Canvas */}
-  <div class="aui-deck-canvas" id="hero-view-preview">
-    {/* Top Status & Metrics Strip */}
-    <div class="aui-deck-status-strip">
-      <div class="aui-deck-meta-left">
-        <span class="aui-deck-title">Production Mesh</span>
-        <Badge variant="light">us-east-1</Badge>
+  {/* Compact Systems Metric Strip */}
+  <div class="aui-deck-body">
+    <div class="aui-deck-metric-row">
+      <div class="aui-deck-metric">
+        <span class="metric-label">Service</span>
+        <span class="metric-val">edge-gateway</span>
       </div>
-      <div class="aui-deck-meta-right">
-        <span class="aui-deck-stat">P99: <strong>14ms</strong></span>
-        <span class="aui-deck-stat">Pods: <strong id="hero-pod-count">16/16</strong></span>
+      <div class="aui-deck-metric">
+        <span class="metric-label">Region</span>
+        <span class="metric-val">us-east-1</span>
       </div>
-    </div>
-
-    {/* Interactive Form Controls: 2026 Switches & Checkboxes */}
-    <div class="aui-deck-controls-grid">
-      <div class="aui-deck-control-card">
-        <label class="aui-switch-label">
-          <span class="aui-switch">
-            <input type="checkbox" role="switch" checked id="hero-switch-autoscale" />
-            <span class="aui-switch-track"></span>
-          </span>
-          <span>Auto-scaling</span>
-        </label>
+      <div class="aui-deck-metric">
+        <span class="metric-label">Latency</span>
+        <span class="metric-val"><strong>14ms</strong> p99</span>
       </div>
-      <div class="aui-deck-control-card">
-        <label class="aui-switch-label">
-          <span class="aui-switch">
-            <input type="checkbox" role="switch" checked id="hero-switch-strict" />
-            <span class="aui-switch-track"></span>
-          </span>
-          <span>Strict mode</span>
-        </label>
-      </div>
-      <div class="aui-deck-control-card">
-        <label class="aui-checkbox-label">
-          <input type="checkbox" class="aui-checkbox" checked id="hero-check-ssr" />
-          <span>Edge SSR</span>
-        </label>
-      </div>
-      <div class="aui-deck-control-card">
-        <label class="aui-checkbox-label">
-          <input type="checkbox" class="aui-checkbox" checked id="hero-check-zero" />
-          <span>Zero-runtime</span>
-        </label>
+      <div class="aui-deck-metric">
+        <span class="metric-label">Status</span>
+        <Badge variant="green">Healthy</Badge>
       </div>
     </div>
 
-    {/* Search Box Input */}
-    <div class="aui-deck-input-row">
-      <div class="aui-form-group" style="margin-bottom: 0;">
-        <div class="aui-input-wrapper aui-input-has-right-icon">
-          <input
-            type="text"
-            class="aui-input"
-            id="hero-input-filter"
-            placeholder="Filter nodes or route..."
-          />
-          <span class="aui-input-shortcut">⌘K</span>
-        </div>
-      </div>
+    {/* Terminal Telemetry Block */}
+    <div class="aui-deck-terminal">
+      <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">kubectl get pods -n prod</span></div>
+      <div class="term-line term-ok">pod/api-gateway-7f9    1/1 Running   42ms p99</div>
+      <div class="term-line term-ok">pod/ledger-engine-01   1/1 Running   14ms p99</div>
+      <div class="term-line term-muted">mesh: 16 edge nodes active · 0 errors</div>
     </div>
 
-    {/* Buttons Deck */}
+    {/* Minimal Actions */}
     <div class="aui-deck-actions">
       <button type="button" class="aui-btn aui-btn-primary aui-btn-sm" id="hero-btn-deploy">
-        <span>Deploy canary</span>
+        Deploy canary
       </button>
       <button type="button" class="aui-btn aui-btn-secondary aui-btn-sm" id="hero-btn-rollback">
-        <span>Rollback</span>
-      </button>
-      <button type="button" class="aui-btn aui-btn-ghost aui-btn-sm" id="hero-btn-health">
-        <span>Healthcheck</span>
+        Rollback
       </button>
     </div>
   </div>
 
-  {/* Mode 2: Real-time Generated Code */}
-  <div class="aui-deck-code-view" id="hero-view-code" style="display: none;">
-    <div class="aui-deck-code-bar">
-      <span class="aui-deck-code-file">App.tsx</span>
-      <button
-        type="button"
-        class="aui-deck-copy-btn"
-        id="hero-deck-copy"
-        aria-label="Copy code"
-      >
-        <svg class="spec-copy-icon icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-        <span class="hero-copy-text" style="margin-left: 0.25rem;">Copy</span>
-      </button>
-    </div>
-    <pre class="aui-deck-pre"><code>{snippet}</code></pre>
-  </div>
-
-  {/* Interactive Live Toast Container */}
+  {/* Toast */}
   <div class="aui-hero-toast" id="hero-toast" style="display: none;">
-    <span class="aui-toast-icon" aria-hidden="true" id="hero-toast-icon">✓</span>
+    <span class="aui-toast-icon" id="hero-toast-icon">✓</span>
     <div class="aui-toast-body">
       <p class="aui-toast-title" id="hero-toast-title">Canary Deployed</p>
-      <p class="aui-toast-desc" id="hero-toast-desc">12 edge regions updated · 0 dropped packets</p>
+      <p class="aui-toast-desc" id="hero-toast-desc">All 16 nodes report healthy telemetry</p>
     </div>
   </div>
 </div>
 
 <script>
-  let deployCounter = 14;
   let toastTimer: number | null = null;
 
-  function showHeroToast(title: string, desc: string, icon = "✓") {
+  function showToast(title: string, desc: string, icon = "✓") {
     const toast = document.getElementById("hero-toast");
     const tTitle = document.getElementById("hero-toast-title");
     const tDesc = document.getElementById("hero-toast-desc");
@@ -171,129 +85,183 @@ const snippet = `<div class="cluster-card">
       setTimeout(() => {
         toast.style.display = "none";
       }, 200);
-    }, 2800);
+    }, 2400);
   }
 
-  // Tab switching
-  const tabPreview = document.getElementById("hero-tab-preview");
-  const tabCode = document.getElementById("hero-tab-code");
-  const viewPreview = document.getElementById("hero-view-preview");
-  const viewCode = document.getElementById("hero-view-code");
-
-  tabPreview?.addEventListener("click", () => {
-    tabPreview.classList.add("is-active");
-    tabCode?.classList.remove("is-active");
-    if (viewPreview) viewPreview.style.display = "flex";
-    if (viewCode) viewCode.style.display = "none";
-  });
-
-  tabCode?.addEventListener("click", () => {
-    tabCode.classList.add("is-active");
-    tabPreview?.classList.remove("is-active");
-    if (viewPreview) viewPreview.style.display = "none";
-    if (viewCode) viewCode.style.display = "flex";
-  });
-
-  // Action buttons
   document.getElementById("hero-btn-deploy")?.addEventListener("click", () => {
-    deployCounter++;
-    showHeroToast(`Deployment #00${deployCounter} live`, "12 edge regions updated · 0 dropped packets", "✓");
+    showToast("Canary Deployed", "16 nodes updated with zero packet drop", "✓");
   });
 
   document.getElementById("hero-btn-rollback")?.addEventListener("click", () => {
-    showHeroToast("Rollback requested", "Traffic safely routed to previous stable snapshot", "↺");
-  });
-
-  document.getElementById("hero-btn-health")?.addEventListener("click", () => {
-    showHeroToast("Telemetry healthy", "All 16 nodes report p99 latency under 15ms", "i");
-  });
-
-  // Autoscale switch listener
-  document.getElementById("hero-switch-autoscale")?.addEventListener("change", (e) => {
-    const el = document.getElementById("hero-pod-count");
-    if (el) {
-      el.textContent = (e.target as HTMLInputElement).checked ? "16/16" : "8/8";
-    }
-  });
-
-  // Copy button
-  const copyBtn = document.getElementById("hero-deck-copy");
-  copyBtn?.addEventListener("click", async () => {
-    const pre = document.querySelector(".aui-deck-pre code");
-    if (pre && pre.textContent) {
-      await navigator.clipboard.writeText(pre.textContent);
-      const textSpan = copyBtn.querySelector(".hero-copy-text");
-      if (textSpan) textSpan.textContent = "Copied!";
-      setTimeout(() => {
-        if (textSpan) textSpan.textContent = "Copy";
-      }, 1600);
-    }
+    showToast("Rollback requested", "Routing traffic back to previous release snapshot", "↺");
   });
 </script>
 
 <style>
+  .aui-hero-deck {
+    position: relative;
+    background-color: var(--aui-bg-primary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-md);
+    overflow: hidden;
+    box-shadow: var(--aui-box-shadow);
+  }
+
+  .aui-deck-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.85rem;
+    background-color: var(--aui-bg-secondary);
+    border-bottom: 1px solid var(--aui-border-color);
+  }
+
+  .aui-deck-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .aui-deck-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--aui-primary);
+  }
+
+  .aui-deck-path {
+    font-family: var(--aui-font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--aui-text-secondary);
+  }
+
+  .aui-deck-body {
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .aui-deck-metric-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem;
+    padding: 0.45rem 0.65rem;
+    background-color: var(--aui-bg-secondary);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+  }
+
+  .aui-deck-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .metric-label {
+    font-family: var(--aui-font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--aui-text-muted);
+  }
+
+  .metric-val {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--aui-text-secondary);
+  }
+
+  .metric-val strong {
+    color: var(--aui-text-primary);
+  }
+
+  .aui-deck-terminal {
+    background-color: var(--aui-pre-bg);
+    border: 1px solid var(--aui-border-color);
+    border-radius: var(--aui-radius-sm);
+    padding: 0.65rem 0.85rem;
+    font-family: var(--aui-font-mono);
+    font-size: 0.76rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .term-line {
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+
+  .term-prompt {
+    color: var(--aui-primary);
+    font-weight: 700;
+  }
+
+  .term-cmd {
+    color: #e4e4ed;
+  }
+
+  .term-ok {
+    color: #10b981;
+  }
+
+  .term-muted {
+    color: #71717a;
+    font-size: 0.72rem;
+    margin-top: 0.15rem;
+  }
+
+  .aui-deck-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
   .aui-hero-toast {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
     display: flex;
     align-items: flex-start;
-    gap: 0.65rem;
-    padding: 0.6rem 0.85rem;
-    font-size: 0.85rem;
+    gap: 0.6rem;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.82rem;
     background-color: var(--aui-bg-secondary);
     border: 1px solid var(--aui-border-strong);
     border-radius: var(--aui-radius-md);
     box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
     z-index: 10;
-    transition: all 0.2s ease;
-    animation: aui-toast-slide-up 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  @keyframes aui-toast-slide-up {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .aui-hero-toast .aui-toast-icon {
+  .aui-toast-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background-color: var(--aui-text-secondary);
-    color: var(--aui-bg-primary);
-    font-size: 0.72rem;
+    background-color: var(--aui-success);
+    color: #fff;
+    font-size: 0.68rem;
     font-weight: 700;
     flex-shrink: 0;
     margin-top: 1px;
   }
 
-  .aui-hero-toast .aui-toast-body {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .aui-hero-toast .aui-toast-title {
+  .aui-toast-title {
     margin: 0;
-    font-size: 0.84rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--aui-text-secondary);
-    line-height: 1.3;
   }
 
-  .aui-hero-toast .aui-toast-desc {
+  .aui-toast-desc {
     margin: 0.1rem 0 0;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: var(--aui-text-muted);
-    line-height: 1.3;
   }
 </style>

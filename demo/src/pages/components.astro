@@ -1,0 +1,739 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Specimen from "../components/Specimen.astro";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo } from "../components/Interactive";
+
+import Sidebar from "../../../src/astro/Sidebar.astro";
+import Hero from "../../../src/astro/Hero.astro";
+import Button from "../../../src/astro/Button.astro";
+import Card from "../../../src/astro/Card.astro";
+import SocialPill from "../../../src/astro/SocialPill.astro";
+import Maxim from "../../../src/astro/Maxim.astro";
+import TakeawaysBox from "../../../src/astro/TakeawaysBox.astro";
+import NoticeBox from "../../../src/astro/NoticeBox.astro";
+import Badge from "../../../src/astro/Badge.astro";
+import Breadcrumbs from "../../../src/astro/Breadcrumbs.astro";
+import CourseCard from "../../../src/astro/CourseCard.astro";
+import Alert from "../../../src/astro/Alert.astro";
+import StatCard from "../../../src/astro/StatCard.astro";
+import Timeline from "../../../src/astro/Timeline.astro";
+import Accordion from "../../../src/astro/Accordion.astro";
+import Tabs from "../../../src/astro/Tabs.astro";
+import ThemeToggle from "../../../src/astro/ThemeToggle.astro";
+import Kbd from "../../../src/astro/Kbd.astro";
+import Tooltip from "../../../src/astro/Tooltip.astro";
+import Progress from "../../../src/astro/Progress.astro";
+import Spinner from "../../../src/astro/Spinner.astro";
+import Divider from "../../../src/astro/Divider.astro";
+import EmptyState from "../../../src/astro/EmptyState.astro";
+import Terminal from "../../../src/astro/Terminal.astro";
+import Toast from "../../../src/astro/Toast.astro";
+import CoverCard from "../../../src/astro/CoverCard.astro";
+import TableOfContents from "../../../src/astro/TableOfContents.astro";
+import SearchBox from "../../../src/astro/SearchBox.astro";
+import Newsletter from "../../../src/astro/Newsletter.astro";
+import Dropdown from "../../../src/astro/Dropdown.astro";
+import VideoEmbed from "../../../src/astro/VideoEmbed.astro";
+import Modal from "../../../src/astro/Modal.astro";
+
+import {
+  CodeBlock as ReactCodeBlock,
+  Skeleton,
+  Avatar,
+  AvatarGroup,
+  Switch,
+  Checkbox,
+  Select,
+  Textarea,
+  PingStatus,
+  DiffBlock,
+  PropertyGrid,
+  FileTree,
+  PackageManager,
+} from "../../../dist/react.js";
+
+const sidebarGroups = [
+  {
+    title: "[03] Developer",
+    links: [
+      { label: "Ping status", href: "#ping-status" },
+      { label: "Property grid", href: "#property-grid" },
+      { label: "Diff block", href: "#diff-block" },
+      { label: "File tree", href: "#file-tree" },
+      { label: "Package manager", href: "#package-manager" },
+      { label: "Terminal", href: "#terminal" },
+    ],
+  },
+  {
+    title: "[04] Actions",
+    links: [
+      { label: "Button", href: "#buttons" },
+      { label: "Segmented control", href: "#segmented" },
+      { label: "Kbd", href: "#kbd" },
+      { label: "Tooltip", href: "#tooltip" },
+      { label: "Theme toggle", href: "#theme-toggle" },
+      { label: "Dropdown", href: "#dropdown" },
+    ],
+  },
+  {
+    title: "[05] Forms",
+    links: [
+      { label: "Input", href: "#input" },
+      { label: "Select & textarea", href: "#select" },
+      { label: "Search box", href: "#searchbox" },
+      { label: "Switch & checkbox", href: "#switch" },
+    ],
+  },
+  {
+    title: "[06] Feedback",
+    links: [
+      { label: "Alert", href: "#alert" },
+      { label: "Toast", href: "#toast" },
+      { label: "Progress", href: "#progress" },
+      { label: "Spinner & skeleton", href: "#spinner" },
+      { label: "Modal", href: "#modal" },
+      { label: "Empty state", href: "#empty" },
+    ],
+  },
+  {
+    title: "[07] Data display",
+    links: [
+      { label: "Badge", href: "#badge" },
+      { label: "Avatar", href: "#avatar" },
+      { label: "Stat card", href: "#stat" },
+      { label: "Table", href: "#table" },
+      { label: "Timeline", href: "#timeline" },
+      { label: "Code block", href: "#codeblock" },
+    ],
+  },
+  {
+    title: "[08] Navigation",
+    links: [
+      { label: "Breadcrumbs", href: "#breadcrumbs" },
+      { label: "Pagination", href: "#pagination" },
+      { label: "Tabs", href: "#tabs" },
+      { label: "Accordion", href: "#accordion" },
+      { label: "Table of contents", href: "#toc" },
+      { label: "Sidebar & navbar", href: "#sidebar" },
+    ],
+  },
+  {
+    title: "[09] Content",
+    links: [
+      { label: "Hero", href: "#hero" },
+      { label: "Maxim quote", href: "#maxim" },
+      { label: "Takeaways box", href: "#takeaways" },
+      { label: "Notice box", href: "#notice" },
+      { label: "Newsletter", href: "#newsletter" },
+      { label: "Card", href: "#card" },
+      { label: "Video embed", href: "#video-embed" },
+      { label: "Social pill", href: "#social" },
+      { label: "Divider", href: "#divider" },
+      { label: "Course card", href: "#course" },
+      { label: "Cover card", href: "#cover-card" },
+    ],
+  },
+];
+
+const tableRows = [
+  { service: "api-gateway", region: "eu-west-1", p99: "42 ms", status: "Healthy" },
+  { service: "ledger-db", region: "us-east-1", p99: "118 ms", status: "Degraded" },
+  { service: "search-index", region: "ap-south-1", p99: "67 ms", status: "Healthy" },
+  { service: "payments-queue", region: "eu-west-1", p99: "-", status: "Down" },
+];
+
+const takeaways = [
+  "Zero-dependency core: pure CSS tokens, React, or native Astro.",
+  "Theme-first: light and dark with anti-FOUC script.",
+  "1px hairline borders everywhere, no arbitrary shadows.",
+  "Designed for engineers: high information density and machined typography.",
+];
+---
+
+<Layout
+  title="Component Catalog — Array UI (aui)"
+  description="Explore the complete interactive catalog of 48+ native components and shadcn CLI registry primitives."
+>
+  <div class="aui-container">
+    <div class="mobile-jump-bar">
+      <span class="mobile-jump-label">Jump to component:</span>
+      <select class="mobile-jump-select" onchange="if(this.value) window.location.hash = this.value;">
+        <option value="">Select component...</option>
+        {sidebarGroups.map((g) => (
+          <optgroup label={g.title}>
+            {g.links.map((l) => (
+              <option value={l.href}>{l.label}</option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
+    </div>
+
+    <div class="aui-docs">
+      <Sidebar groups={sidebarGroups} />
+
+      <main class="docs-main">
+        <!-- Developer Primitives -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[03]</span> Developer Primitives</h2>
+        <div class="spec-grid">
+          <Specimen id="ping-status" name="Ping status" description="Live heartbeat indicator with smooth CSS pulse." usage={`<PingStatus variant="success" label="Operational" />`} shadcnName="ping-status">
+            <div class="spec-col" style="gap:1rem;">
+              <div class="spec-row" style="gap:1.5rem;">
+                <PingStatus variant="success" label="Operational" client:load />
+                <PingStatus variant="warning" label="Degraded lag" client:load />
+                <PingStatus variant="danger" label="Cluster outage" client:load />
+                <PingStatus variant="info" label="Deploying" client:load />
+              </div>
+              <div class="spec-row" style="gap:1.5rem;padding-top:0.4rem;border-top:1px solid var(--aui-border-light);">
+                <span style="font-size:0.8rem;color:var(--aui-text-muted);">Sizes:</span>
+                <PingStatus size="sm" variant="success" label="sm · 8px" client:load />
+                <PingStatus size="md" variant="success" label="md · 10px" client:load />
+                <PingStatus size="lg" variant="success" label="lg · 12px" client:load />
+              </div>
+            </div>
+          </Specimen>
+
+          <Specimen id="property-grid" name="Property grid" description="Dense inspector for infrastructure entities with click-to-copy." usage={`<PropertyGrid items={[…]} />`} shadcnName="property-grid">
+            <PropertyGrid
+              client:load
+              items={[
+                { label: "Cluster ID", value: "cls_01HX98Z", copyValue: "cls_01HX98Z" },
+                { label: "Region", value: "eu-west-1 (Ireland)" },
+                { label: "Kubernetes", value: "v1.31.2-eks" },
+                { label: "VPC CIDR", value: "10.140.0.0/16", copyValue: "10.140.0.0/16" },
+                { label: "TLS Version", value: "TLS 1.3 (X25519)" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="diff-block" name="Diff block" description="Unified git patch block with syntax additions and deletions." usage={`<DiffBlock file="migrations/0042.sql" diff={…} />`} span={2} shadcnName="diff-block">
+            <DiffBlock
+              client:load
+              file="migrations/0042_cluster_status.sql"
+              diff={`@@ -12,7 +12,8 @@
+ id: uuid PRIMARY KEY,
+ created_at: timestamp NOT NULL DEFAULT now(),
+-status: varchar(32) DEFAULT 'pending',
++status: cluster_status NOT NULL DEFAULT 'provisioning',
++replicas: integer NOT NULL DEFAULT 3,
+ region: text NOT NULL`}
+            />
+          </Specimen>
+
+          <Specimen id="file-tree" name="File tree" description="Interactive, collapsible directory and file hierarchy." usage={`<FileTree data={[…]} />`} span={2} shadcnName="file-tree">
+            <FileTree
+              client:load
+              data={[
+                {
+                  name: "src",
+                  type: "folder",
+                  defaultOpen: true,
+                  children: [
+                    {
+                      name: "components",
+                      type: "folder",
+                      defaultOpen: true,
+                      children: [
+                        { name: "Button.tsx", type: "file", badge: "React" },
+                        { name: "DiffBlock.tsx", type: "file", badge: "React" },
+                        { name: "PingStatus.astro", type: "file", badge: "Astro" },
+                      ],
+                    },
+                    {
+                      name: "styles",
+                      type: "folder",
+                      defaultOpen: true,
+                      children: [
+                        { name: "tokens.css", type: "file" },
+                        { name: "components.css", type: "file" },
+                      ],
+                    },
+                    { name: "index.ts", type: "file" },
+                  ],
+                },
+                { name: "package.json", type: "file", badge: "0.1.0" },
+                { name: "README.md", type: "file" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="package-manager" name="Package manager" description="Multi-manager installer switcher with click-to-copy." usage={`<PackageManager pkg="github:arpitbbhayani/aui" />`} span={2} shadcnName="package-manager">
+            <PackageManager client:load pkg="github:arpitbbhayani/aui" />
+          </Specimen>
+        </div>
+
+        <!-- Actions -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[04]</span> Actions</h2>
+        <div class="spec-grid">
+          <Specimen id="buttons" name="Button" description="High-precision tactile variants, sizes and states." usage={`<Button variant="primary" size="md">Deploy</Button>`} span={2} shadcnName="button">
+            <div class="spec-label">Variants</div>
+            <div class="aui-btn-group" style="margin-bottom:1rem;">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="danger">Danger</Button>
+              <Button variant="light">Light</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="primary" disabled>Disabled</Button>
+            </div>
+            <div class="spec-label">Sizes</div>
+            <div class="aui-btn-group" style="margin-bottom:1rem;">
+              <Button size="sm" variant="primary">Small</Button>
+              <Button size="md" variant="primary">Medium</Button>
+              <Button size="lg" variant="primary">Large</Button>
+              <Button size="sm" variant="secondary"><Spinner size="sm" /> Loading</Button>
+            </div>
+            <div class="spec-label">Colors (Solid)</div>
+            <div class="aui-btn-group" style="margin-bottom:1rem;">
+              <Button color="red">Red</Button>
+              <Button color="green">Green</Button>
+              <Button color="blue">Blue</Button>
+              <Button color="amber">Amber</Button>
+              <Button color="violet">Violet</Button>
+              <Button color="pink">Pink</Button>
+              <Button color="cyan">Cyan</Button>
+            </div>
+            <div class="spec-label">Colors (Soft Tint)</div>
+            <div class="aui-btn-group">
+              <Button color="red" variant="light">Red</Button>
+              <Button color="green" variant="light">Green</Button>
+              <Button color="blue" variant="light">Blue</Button>
+              <Button color="amber" variant="light">Amber</Button>
+              <Button color="violet" variant="light">Violet</Button>
+              <Button color="pink" variant="light">Pink</Button>
+              <Button color="cyan" variant="light">Cyan</Button>
+            </div>
+          </Specimen>
+
+          <Specimen id="segmented" name="Segmented control" description="Mutually exclusive view switcher." usage={`<SegmentedControl options={[…]} onChange={setView} />`}>
+            <SegmentedDemo client:load />
+          </Specimen>
+
+          <Specimen id="kbd" name="Kbd" description="Keyboard shortcuts." usage={`<Kbd keys={["⌘", "K"]} />`} shadcnName="kbd">
+            <div class="spec-col">
+              <div>Open command menu <Kbd keys={["⌘", "K"]} /></div>
+              <div>Save <Kbd keys={["Ctrl", "S"]} /> · Close <Kbd>Esc</Kbd></div>
+              <div>Navigate <Kbd keys={["↑", "↓"]} /> then <Kbd>Enter</Kbd></div>
+            </div>
+          </Specimen>
+
+          <Specimen id="tooltip" name="Tooltip" description="CSS-only, shows on hover and focus." usage={`<Tooltip content="Copy to clipboard">…</Tooltip>`} shadcnName="tooltip">
+            <div class="spec-row" style="padding-top:1.5rem;">
+              <Tooltip content="Copy to clipboard"><Button variant="secondary" size="sm">Hover me</Button></Tooltip>
+              <Tooltip content="Shown below" placement="bottom"><Button variant="secondary" size="sm">Bottom</Button></Tooltip>
+              <Tooltip content="Keyboard focus works too"><Button variant="ghost" size="sm">Focus me</Button></Tooltip>
+            </div>
+          </Specimen>
+
+          <Specimen id="theme-toggle" name="Theme toggle" description="Persists to localStorage." usage={`<ThemeToggle />`}>
+            <div class="spec-row"><ThemeToggle /><span style="color:var(--aui-text-muted);font-size:0.93rem;">Click to switch light / dark</span></div>
+          </Specimen>
+
+          <Specimen id="dropdown" name="Dropdown" description="Clean action menu with click outside dismissal and keyboard escape." usage={`<Dropdown trigger={<Button>…</Button>}>…</Dropdown>`} shadcnName="dropdown">
+            <div class="spec-row" style="align-items: flex-start; gap: 2rem;">
+              <div>
+                <div class="spec-label" style="margin-bottom:0.5rem;">React Component</div>
+                <DropdownDemo client:load />
+              </div>
+              <div>
+                <div class="spec-label" style="margin-bottom:0.5rem;">Astro Component</div>
+                <Dropdown align="left">
+                  <Button slot="trigger" variant="secondary" size="sm">
+                    Actions ▼
+                  </Button>
+                  <div class="aui-dropdown-header">Operations</div>
+                  <a href="#dropdown" class="aui-dropdown-item">View Cluster Telemetry</a>
+                  <a href="#dropdown" class="aui-dropdown-item">Export Audit Log</a>
+                  <div class="aui-dropdown-divider"></div>
+                  <button type="button" class="aui-dropdown-item is-destructive">Drain Nodes</button>
+                </Dropdown>
+              </div>
+            </div>
+          </Specimen>
+        </div>
+
+        <!-- Forms -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[05]</span> Forms</h2>
+        <div class="spec-grid">
+          <Specimen id="input" name="Input" description="Label, shortcut hint, helper and error text." usage={`<Input label="Search" shortcut="⌘K" />`} shadcnName="input">
+            <FormDemo client:load />
+          </Specimen>
+
+          <Specimen id="select" name="Select & textarea" usage={`<Select label="Region" options={[…]} />`}>
+            <Select
+              label="Region"
+              options={[
+                { label: "eu-west-1 (Ireland)", value: "eu" },
+                { label: "us-east-1 (Virginia)", value: "us" },
+                { label: "ap-south-1 (Mumbai)", value: "ap" },
+              ]}
+            />
+            <Textarea label="Notes" placeholder="Rollout notes…" rows={3} />
+          </Specimen>
+
+          <Specimen id="searchbox" name="Search box" description="Debounced search input with shortcut hint and live results dropdown." usage={`<SearchBox placeholder="Search writings and topics…" shortcut="⌘K" />`} span={2}>
+            <div style="max-width: 520px; width: 100%;">
+              <SearchBoxDemo client:load />
+            </div>
+          </Specimen>
+
+          <Specimen id="switch" name="Switch & checkbox" usage={`<Switch label="Auto-deploy" defaultChecked />`} span={2}>
+            <div class="spec-row" style="gap:1.5rem;">
+              <Switch label="Auto-deploy" defaultChecked />
+              <Switch label="Maintenance mode" />
+              <Checkbox label="Run tests" defaultChecked />
+              <Checkbox label="Lint" defaultChecked />
+              <Checkbox label="Type-check" />
+            </div>
+          </Specimen>
+        </div>
+
+        <!-- Feedback -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[06]</span> Feedback</h2>
+        <div class="spec-grid">
+          <Specimen id="alert" name="Alert" description="Inline, status-tinted." usage={`<Alert variant="warning" title="…">…</Alert>`} span={2} shadcnName="alert">
+            <div class="spec-grid" style="margin:0;gap:0.5rem 1rem;">
+              <Alert variant="info" title="Heads up">Schema migration scheduled for 02:00 UTC.</Alert>
+              <Alert variant="success" title="Deployed">build #4821 is live in all regions.</Alert>
+              <Alert variant="warning" title="Degraded">Replica lag above 200 ms in eu-west-1.</Alert>
+              <Alert variant="error" title="Failed">Health check timed out after 30 s.</Alert>
+            </div>
+          </Specimen>
+
+          <Specimen id="toast" name="Toast" description="Transient, stackable messages." usage={`<Toast variant="success" title="Saved" onClose={…} />`}>
+            <div class="spec-col">
+              <Toast variant="success" title="Deployed to production" description="build #4821 · 38s" />
+              <Toast variant="error" title="Build failed" description="exit code 137 (OOM)" />
+              <ToastDemo client:load />
+            </div>
+          </Specimen>
+
+          <Specimen id="progress" name="Progress" usage={`<Progress value={72} label="Upload" showValue />`}>
+            <div class="spec-col">
+              <Progress value={72} label="Uploading assets" showValue />
+              <Progress value={100} label="Tests passed" showValue variant="success" size="sm" />
+              <Progress value={38} label="Migration" showValue variant="info" />
+              <Progress value={86} label="Disk usage" showValue variant="warning" size="lg" />
+            </div>
+          </Specimen>
+
+          <Specimen id="spinner" name="Spinner & skeleton" description="Loading states." usage={`<Spinner size="lg" />   <Skeleton height={12} />`}>
+            <div class="spec-row" style="margin-bottom:1rem;gap:1rem;">
+              <Spinner size="sm" /><Spinner /><Spinner size="lg" />
+              <span style="color:var(--aui-text-muted);font-size:0.93rem;">Fetching metrics…</span>
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <Skeleton width={40} height={40} circle />
+              <div style="flex:1;display:flex;flex-direction:column;gap:0.45rem;">
+                <Skeleton width="60%" height={12} />
+                <Skeleton height={10} />
+                <Skeleton width="80%" height={10} />
+              </div>
+            </div>
+          </Specimen>
+
+          <Specimen id="modal" name="Modal" description="Esc and backdrop close. Locks scroll." usage={`<Modal isOpen={open} onClose={…} title="…" footer={…} />`} shadcnName="modal">
+            <ModalDemo client:load />
+          </Specimen>
+
+          <Specimen id="empty" name="Empty state" usage={`<EmptyState title="No deployments" description="…" />`} span={2} shadcnName="empty-state">
+            <EmptyState title="No deployments yet" description="Connect a repository to ship your first build.">
+              <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <Button size="sm" variant="primary">Connect repo</Button>
+            </EmptyState>
+          </Specimen>
+        </div>
+
+        <!-- Data display -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[07]</span> Data display</h2>
+        <div class="spec-grid">
+          <Specimen id="badge" name="Badge" description="Tags, statuses and counts." usage={`<Badge variant="green">Healthy</Badge>`} shadcnName="badge">
+            <div class="spec-row">
+              <Badge>Default</Badge>
+              <Badge variant="primary">Primary</Badge>
+              <Badge variant="dark">Dark</Badge>
+              <Badge variant="light">Light</Badge>
+              <Badge href="#badge" interactive>Link →</Badge>
+            </div>
+            <div class="spec-row" style="margin-top:0.6rem;">
+              <Badge variant="red">red</Badge>
+              <Badge variant="blue">blue</Badge>
+              <Badge variant="violet">violet</Badge>
+              <Badge variant="green">green</Badge>
+              <Badge variant="amber">amber</Badge>
+              <Badge variant="pink">pink</Badge>
+              <Badge variant="cyan">cyan</Badge>
+            </div>
+          </Specimen>
+
+          <Specimen id="avatar" name="Avatar" usage={`<Avatar src="…" size="md" />   <AvatarGroup>…</AvatarGroup>`}>
+            <div class="spec-row" style="gap:1.25rem;">
+              <Avatar size="sm" fallback="AB" />
+              <Avatar size="md" src="https://edge.arpitbhayani.me/img/arpit-6.jpg" alt="Arpit" />
+              <Avatar size="lg" fallback="JS" />
+              <AvatarGroup>
+                <Avatar size="sm" fallback="AB" />
+                <Avatar size="sm" fallback="CD" />
+                <Avatar size="sm" fallback="EF" />
+                <Avatar size="sm" fallback="+4" />
+              </AvatarGroup>
+            </div>
+          </Specimen>
+
+          <Specimen id="stat" name="Stat card" usage={`<StatCard value="99.98%" label="Uptime" />`} span={2} shadcnName="stat-card">
+            <div class="aui-grid aui-grid-cols-3" style="gap:0.75rem;">
+              <StatCard value="99.98%" label="Availability" description="last 30 days" />
+              <StatCard value="42 ms" label="p99 Latency" description="eu-west-1" />
+              <StatCard value="1.2M" label="Throughput" description="req/sec peak" />
+            </div>
+          </Specimen>
+
+          <Specimen id="table" name="Table" description="Typed columns, sortable headers, dense toggle, custom renderers." usage={`<Table columns={[{ header: "Service", accessor: "service", sortable: true }, …]} dense data={rows} />`} span={2}>
+            <TableDemo client:load rows={tableRows} />
+          </Specimen>
+
+          <Specimen id="timeline" name="Timeline" usage={`<Timeline events={[{ date, title, body }]} />`}>
+            <Timeline
+              events={[
+                { date: "14:22", title: "Canary deployed", body: "v2.4.0 routed 5% traffic", status: "success" },
+                { date: "14:18", title: "Integration passed", body: "142 tests, 0 failures" },
+                { date: "14:02", title: "Build triggered", body: "commit 8c2f10b by arpit" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="codeblock" name="Code block" description="Language label, line numbers, line highlighting, and one-click copy." usage={`<CodeBlock language="ts" filename="lock.ts" showLineNumbers highlightLines={[2]} code={…} />`}>
+            <ReactCodeBlock
+              language="typescript"
+              filename="mutex.ts"
+              showLineNumbers
+              highlightLines={[3]}
+              code={`export async function acquire(key: string, ttl: number) {
+  const token = crypto.randomUUID();
+  const ok = await redis.set(key, token, "NX", "PX", ttl);
+  return ok ? token : null;
+}`}
+              client:load
+            />
+          </Specimen>
+
+          <Specimen id="terminal" name="Terminal" description="Commands, output, status lines." usage={`<Terminal title="bash" lines={[…]} />`} span={2} shadcnName="terminal">
+            <Terminal
+              title="cluster-deploy"
+              lines={[
+                "git checkout master && git pull",
+                { text: "Fast-forward to 8c2f10b", kind: "out" },
+                "pnpm build && pnpm test",
+                { text: "142 tests passed, 0 failures", kind: "ok" },
+                "kubectl apply -f k8s/prod.yaml",
+                { text: "deployment.apps/api-server configured", kind: "out" },
+                { text: "canary rollout degraded in eu-west-1", kind: "err" },
+              ]}
+            />
+          </Specimen>
+        </div>
+
+        <!-- Navigation -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[08]</span> Navigation</h2>
+        <div class="spec-grid">
+          <Specimen id="breadcrumbs" name="Breadcrumbs" usage={`<Breadcrumbs items={[{ label, href }]} />`}>
+            <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Docs", href: "#" }, { label: "Components", href: "#" }, { label: "Breadcrumbs", active: true }]} />
+          </Specimen>
+
+          <Specimen id="pagination" name="Pagination" usage={`<Pagination currentPage={3} totalPages={7} … />`}>
+            <PaginationDemo client:load />
+          </Specimen>
+
+          <Specimen id="tabs" name="Tabs" description="Underline tabs, keyboard accessible." usage={`<Tabs tabs={[{ id, label, content }]} />`} shadcnName="tabs">
+            <Tabs
+              tabs={[
+                { id: "t-react", label: "React", content: "<p style='margin:0'>Import from <code class='aui-code'>aui/react</code>.</p>" },
+                { id: "t-astro", label: "Astro", content: "<p style='margin:0'>Import from <code class='aui-code'>aui/astro/*.astro</code>.</p>" },
+                { id: "t-css", label: "CSS", content: "<p style='margin:0'>Use <code class='aui-code'>.aui-*</code> classes directly.</p>" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="accordion" name="Accordion" usage={`<Accordion items={[{ id, title, content }]} />`} shadcnName="accordion">
+            <Accordion
+              items={[
+                { id: "a1", title: "Does it need JavaScript?", content: "Astro components and plain CSS ship zero JS. React islands hydrate only where used." },
+                { id: "a2", title: "Can I theme it?", content: "Override any --aui-* custom property, globally or per subtree." },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="toc" name="Table of contents" description="Scroll-spy aware outline with depth indentation and active states." usage={`<TableOfContents headings={[{ depth: 2, slug: "overview", text: "Overview" }, …]} />`} span={2}>
+            <TableOfContents
+              sticky={false}
+              headings={[
+                { depth: 2, slug: "overview", text: "Overview & Features" },
+                { depth: 2, slug: "architecture", text: "Architecture & Storage Engine" },
+                { depth: 3, slug: "storage-engine", text: "LSM Tree & MemTable Compaction" },
+                { depth: 3, slug: "wal-internals", text: "Write-Ahead Log Durability" },
+                { depth: 2, slug: "benchmarks", text: "Performance & Recovery Benchmarks" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="sidebar" name="Sidebar & navbar" description="The sidebar on the left and the navbar above are live examples." usage={`<Sidebar groups={[{ title, links }]} />`} span={2}>
+            <div class="spec-row">
+              <Badge variant="light">aui-nav-*</Badge>
+              <Badge variant="light">aui-sidebar-*</Badge>
+              <span style="font-size:0.93rem;color:var(--aui-text-muted);">Sticky, scroll-spy aware, collapses on narrow screens.</span>
+            </div>
+          </Specimen>
+        </div>
+
+        <!-- Content -->
+        <h2 class="docs-h2"><span class="aui-index-tag">[09]</span> Content</h2>
+        <div class="spec-grid">
+          <Specimen id="hero" name="Hero" usage={`<Hero title subtitle avatarUrl>…</Hero>`} span={2} shadcnName="hero">
+            <Hero
+              title="Hey, I am Arpit"
+              subtitle="engineering, databases, and systems."
+              avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
+              avatarAlt="Arpit Bhayani"
+            >
+              <p>Principal engineer writing about the internals of systems that scale.</p>
+              <div slot="actions" class="aui-btn-group">
+                <Button variant="primary" size="sm">Read essays</Button>
+                <Button variant="secondary" size="sm">Watch videos</Button>
+              </div>
+            </Hero>
+          </Specimen>
+
+          <Specimen id="maxim" name="Maxim quote" description="Signature amber callout with author and source attribution." usage={`<Maxim author="Arpit Bhayani">Simplicity is a prerequisite for reliability.</Maxim>`} shadcnName="maxim">
+            <Maxim author="Arpit Bhayani" source="Asli Engineering" sourceUrl="https://arpitbhayani.me">
+              Simplicity is a prerequisite for reliability. Complex systems always fail in complex ways.
+            </Maxim>
+          </Specimen>
+
+          <Specimen id="takeaways" name="Takeaways box" description="Crimson editorial key takeaway callout box." usage={`<TakeawaysBox title="Key takeaways" items={takeaways} />`} shadcnName="takeaways-box">
+            <TakeawaysBox title="Key takeaways" items={takeaways} />
+          </Specimen>
+
+          <Specimen id="notice" name="Notice box" usage={`<NoticeBox title driveUrl>…</NoticeBox>`}>
+            <NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
+              <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></p>
+            </NoticeBox>
+          </Specimen>
+
+          <Specimen id="newsletter" name="Newsletter" description="Lead-capture callout with email input, CTA, and external platform links." usage={`<Newsletter title="Stay in the loop" linkedinUrl="…" substackUrl="…" />`} span={2}>
+            <Newsletter
+              title="Stay in the loop"
+              description="No-fluff engineering essays, database teardowns, and system design insights delivered straight to your inbox."
+              action="#"
+              buttonText="Subscribe"
+              linkedinUrl="https://linkedin.com/in/arpitbhayani"
+              substackUrl="https://arpitbhayani.substack.com"
+            />
+          </Specimen>
+
+          <Specimen id="card" name="Card" description="Base surface; hover lifts border and shadow." usage={`<Card hoverable>…</Card>`} shadcnName="card">
+            <div class="aui-grid aui-grid-cols-2" style="gap:0.75rem;">
+              <Card><strong>Hoverable</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">Border and shadow respond.</p></Card>
+              <Card hoverable={false}><strong>Static</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">No hover effect.</p></Card>
+            </div>
+          </Specimen>
+
+          <Specimen id="video-embed" name="Video embed" description="Responsive 16:9 media player container with hairline border." usage={`<VideoEmbed src="https://www.youtube.com/embed/..." title="Video" />`} span={2} shadcnName="video-embed">
+            <div style="max-width: 640px; margin: 0 auto; width: 100%;">
+              <VideoEmbed src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Array UI Video Player Demo" />
+            </div>
+          </Specimen>
+
+          <Specimen id="social" name="Social pill" usage={`<SocialPill platform="github" href count="7k" />`} shadcnName="social-pill">
+            <div class="aui-social-pill-group">
+              <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
+              <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
+              <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
+              <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+              <SocialPill platform="substack" href="https://arpitbhayani.substack.com" count="12k" />
+            </div>
+          </Specimen>
+
+          <Specimen id="divider" name="Divider" usage={`<Divider label="or" />`}>
+            <div class="spec-col">
+              <Divider />
+              <Divider label="OR CONTINUE WITH" />
+              <Divider label="SECTION BREAK" />
+            </div>
+          </Specimen>
+
+          <Specimen id="course" name="Course card" usage={`<CourseCard title description badge tags … />`} span={2} shadcnName="course-card">
+            <div class="aui-grid aui-grid-cols-2" style="gap:1rem;">
+              <CourseCard
+                title="System Design Masterclass"
+                description="Consensus, storage engines, cache consistency, sharding, and real-world architectures."
+                href="https://arpitbhayani.me/courses"
+                badge="Cohort 12"
+                tags={["Distributed Systems", "Consensus", "Databases"]}
+                ctaText="View curriculum →"
+              />
+              <CourseCard
+                title="Building an In-Memory Database"
+                description="Zero to production: RESP protocol, event loops, multithreading, and persistence."
+                href="https://dicedb.io"
+                badge="Open Source"
+                tags={["Go", "Redis", "Internals"]}
+                ctaText="Explore code →"
+              />
+            </div>
+          </Specimen>
+
+          <Specimen id="cover-card" name="Cover card (og:image)" description="Precision OpenGraph cover photo for social cards and blog hero banners. Designed with standard 1200x630 aspect ratio, CAD corner crosshairs, and developer typography." usage={`<CoverCard title="Designing a Distributed Key-Value Store" description="Consensus, partition tolerance, and storage layout." category="SYSTEM DESIGN" path="posts/distributed-kv.md" badge="DEEP DIVE" author={{ name: "Arpit Bhayani", handle: "@arpit · Principal Engineer" }} tags={["raft", "consensus", "go"]} readingTime="12 min read" date="Oct 2026" theme="dark" pattern="dots" />`} span={2}>
+            <div class="spec-col" style="gap: 1.5rem;">
+              <div class="cover-card-preview-wrap">
+                <CoverCard
+                  title="Designing a Distributed Key-Value Store"
+                  description="Consensus, partition tolerance, WAL internals, and storage engine layout for extreme write throughput."
+                  category="SYSTEM DESIGN"
+                  path="posts/distributed-kv-store.md"
+                  badge="DEEP DIVE"
+                  author={{
+                    name: "Arpit Bhayani",
+                    handle: "@arpit · Principal Engineer",
+                    avatarUrl: "https://edge.arpitbhayani.me/img/arpit-6.jpg",
+                  }}
+                  tags={["raft", "storage", "consensus", "go"]}
+                  readingTime="14 min read"
+                  date="Oct 2026"
+                  theme="dark"
+                  pattern="dots"
+                />
+              </div>
+            </div>
+          </Specimen>
+        </div>
+      </main>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Scroll-spy for the sidebar
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".aui-sidebar-link"));
+  const map = new Map<string, HTMLAnchorElement>();
+  links.forEach((a) => map.set(a.getAttribute("href")!.slice(1), a));
+
+  const setActive = (id: string) => {
+    links.forEach((a) => a.classList.remove("is-active"));
+    const link = map.get(id);
+    if (link) {
+      link.classList.add("is-active");
+    }
+  };
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setActive(visible[0].target.id);
+    },
+    { rootMargin: "-10% 0px -75% 0px" }
+  );
+  map.forEach((_, id) => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+</script>

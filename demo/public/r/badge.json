@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Status pills and tag badges (crimson, emerald green, amber, rose red, sky blue, outline).",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/badge.tsx",
+      "content": "import * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils\";\n\nconst badgeVariants = cva(\n  \"inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold font-mono transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2\",\n  {\n    variants: {\n      variant: {\n        primary:\n          \"border-transparent bg-primary text-primary-foreground shadow-xs\",\n        default:\n          \"border-transparent bg-primary text-primary-foreground shadow-xs\",\n        secondary:\n          \"border-transparent bg-secondary text-secondary-foreground hover:bg-muted\",\n        outline: \"text-foreground border-border\",\n        green:\n          \"border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\",\n        amber:\n          \"border-amber-500/25 bg-amber-500/10 text-amber-600 dark:text-amber-400\",\n        red:\n          \"border-rose-500/25 bg-rose-500/10 text-rose-600 dark:text-rose-400\",\n        blue:\n          \"border-sky-500/25 bg-sky-500/10 text-sky-600 dark:text-sky-400\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n);\n\nexport interface BadgeProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof badgeVariants> {}\n\nfunction Badge({ className, variant, ...props }: BadgeProps) {\n  return (\n    <div className={cn(badgeVariants({ variant }), className)} {...props} />\n  );\n}\n\nexport { Badge, badgeVariants };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "name": "ping-status",
   "type": "registry:ui",
   "title": "PingStatus",
-  "description": "Live telemetry pulsing dot indicator with label.",
+  "description": "Live telemetry pulsing dot indicator with status and latency.",
   "registryDependencies": [
     "https://ui.arpitbhayani.me/r/aui.json"
   ],

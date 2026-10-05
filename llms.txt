@@ -34,7 +34,7 @@ Add to `components.json`:
 Install design tokens and any component:
 ```bash
 npx shadcn@latest add @aui/aui -y
-npx shadcn@latest add @aui/terminal @aui/diff-block @aui/property-grid @aui/ping-status -y
+npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y
 ```
 
 ### Mode B: Direct GitHub Dependency (Next.js, Astro)
@@ -50,25 +50,48 @@ npm install github:arpitbbhayani/aui
 - [Theme Style](https://ui.arpitbhayani.me/r/aui.json): Theme CSS variables, fonts, and light/dark color tokens.
 - [Agent Guide (AGENTS.md)](https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md): Repository AGENTS.md guide for AI coding assistants.
 
-## Components
+## Components Registry
 
-- [Terminal](https://ui.arpitbhayani.me/r/terminal.json): Machined telemetry terminal with bash command dots and styled outputs. Install: `npx shadcn@latest add @aui/terminal`
-- [DiffBlock](https://ui.arpitbhayani.me/r/diff-block.json): Git patch viewer with line gutters, additions, and deletions. Install: `npx shadcn@latest add @aui/diff-block`
-- [PingStatus](https://ui.arpitbhayani.me/r/ping-status.json): Live telemetry pulsing dot indicator with label. Install: `npx shadcn@latest add @aui/ping-status`
-- [PropertyGrid](https://ui.arpitbhayani.me/r/property-grid.json): Key-value metadata inspector with one-click copy functionality. Install: `npx shadcn@latest add @aui/property-grid`
-- [PackageManager](https://ui.arpitbhayani.me/r/package-manager.json): pnpm/npm/bun/yarn command switcher with copy button. Install: `npx shadcn@latest add @aui/package-manager`
-- [Maxim](https://ui.arpitbhayani.me/r/maxim.json): Editorial quote callout with amber left rail and citation. Install: `npx shadcn@latest add @aui/maxim`
-- [TakeawaysBox](https://ui.arpitbhayani.me/r/takeaways-box.json): Key takeaways container with bulleted highlights. Install: `npx shadcn@latest add @aui/takeaways-box`
-- [Hero](https://ui.arpitbhayani.me/r/hero.json): Editorial profile hero section with avatar, heading, and bio. Install: `npx shadcn@latest add @aui/hero`
-- [FileTree](https://ui.arpitbhayani.me/r/file-tree.json): Directory explorer tree with collapsible folders and item selection. Install: `npx shadcn@latest add @aui/file-tree`
-- [SocialPill](https://ui.arpitbhayani.me/r/social-pill.json): Clean pill button with platform icon, handle, and follower count. Install: `npx shadcn@latest add @aui/social-pill`
-- [CourseCard](https://ui.arpitbhayani.me/r/course-card.json): Editorial course and project card with badges, tags, and CTA. Install: `npx shadcn@latest add @aui/course-card`
-- [StatCard](https://ui.arpitbhayani.me/r/stat-card.json): Large key metric display card with optional trend indicator. Install: `npx shadcn@latest add @aui/stat-card`
-- [EmptyState](https://ui.arpitbhayani.me/r/empty-state.json): Dashed container for empty content and call-to-actions. Install: `npx shadcn@latest add @aui/empty-state`
-- [Footer](https://ui.arpitbhayani.me/r/footer.json): Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills. Install: `npx shadcn@latest add @aui/footer`
-- [Modal](https://ui.arpitbhayani.me/r/modal.json): Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal. Install: `npx shadcn@latest add @aui/modal`
-- [VideoEmbed](https://ui.arpitbhayani.me/r/video-embed.json): Responsive 16:9 aspect ratio video embed wrapper with border hairline styling. Install: `npx shadcn@latest add @aui/video-embed`
-- [Dropdown](https://ui.arpitbhayani.me/r/dropdown.json): Minimal click-trigger dropdown menu with click outside dismissal and actions. Install: `npx shadcn@latest add @aui/dropdown`
+### Core UI & Action Primitives
+- [Button](https://ui.arpitbhayani.me/r/button.json): Signature tactile action button with crimson primary, secondary, outline, ghost, and danger variants. `npx shadcn@latest add @aui/button -y`
+- [Badge](https://ui.arpitbhayani.me/r/badge.json): Status pills and tag badges (crimson, emerald green, amber, rose red, sky blue, outline). `npx shadcn@latest add @aui/badge -y`
+- [Card](https://ui.arpitbhayani.me/r/card.json): Flat card surface with 1px hairline border, header, title, description, content, and footer. `npx shadcn@latest add @aui/card -y`
+- [Input](https://ui.arpitbhayani.me/r/input.json): Machined text input with subtle focus ring and optional keyboard shortcut badge. `npx shadcn@latest add @aui/input -y`
+- [Kbd](https://ui.arpitbhayani.me/r/kbd.json): Monospace keyboard shortcut keycap badge. `npx shadcn@latest add @aui/kbd -y`
+- [Tooltip](https://ui.arpitbhayani.me/r/tooltip.json): Accessible tooltip hint on hover and focus. `npx shadcn@latest add @aui/tooltip -y`
+- [Alert](https://ui.arpitbhayani.me/r/alert.json): Status-tinted inline alert callout (info, success, warning, destructive). `npx shadcn@latest add @aui/alert -y`
+- [Tabs](https://ui.arpitbhayani.me/r/tabs.json): Underline tab navigation with keyboard accessibility. `npx shadcn@latest add @aui/tabs -y`
+- [Accordion](https://ui.arpitbhayani.me/r/accordion.json): Collapsible hairline accordion sections for FAQs and structured content. `npx shadcn@latest add @aui/accordion -y`
+- [Dropdown](https://ui.arpitbhayani.me/r/dropdown.json): Minimal click-trigger dropdown menu with click outside dismissal and actions. `npx shadcn@latest add @aui/dropdown -y`
+
+### Developer & Telemetry Primitives
+- [Terminal](https://ui.arpitbhayani.me/r/terminal.json): Machined telemetry terminal with bash command dots and styled outputs. `npx shadcn@latest add @aui/terminal -y`
+- [DiffBlock](https://ui.arpitbhayani.me/r/diff-block.json): Git patch viewer with line gutters, additions, and deletions. `npx shadcn@latest add @aui/diff-block -y`
+- [PingStatus](https://ui.arpitbhayani.me/r/ping-status.json): Live telemetry pulsing dot indicator with status and latency. `npx shadcn@latest add @aui/ping-status -y`
+- [PropertyGrid](https://ui.arpitbhayani.me/r/property-grid.json): Key-value metadata inspector with one-click copy functionality. `npx shadcn@latest add @aui/property-grid -y`
+- [PackageManager](https://ui.arpitbhayani.me/r/package-manager.json): pnpm/npm/bun/yarn command switcher with copy button. `npx shadcn@latest add @aui/package-manager -y`
+- [FileTree](https://ui.arpitbhayani.me/r/file-tree.json): Directory explorer tree with collapsible folders and item selection. `npx shadcn@latest add @aui/file-tree -y`
+
+### Editorial & Content Primitives
+- [Maxim](https://ui.arpitbhayani.me/r/maxim.json): Editorial quote callout with amber left rail and citation. `npx shadcn@latest add @aui/maxim -y`
+- [TakeawaysBox](https://ui.arpitbhayani.me/r/takeaways-box.json): Key takeaways container with bulleted highlights. `npx shadcn@latest add @aui/takeaways-box -y`
+- [Hero](https://ui.arpitbhayani.me/r/hero.json): Editorial profile hero section with avatar, heading, and bio. `npx shadcn@latest add @aui/hero -y`
+- [SocialPill](https://ui.arpitbhayani.me/r/social-pill.json): Clean pill button with platform icon, handle, and follower count. `npx shadcn@latest add @aui/social-pill -y`
+- [CourseCard](https://ui.arpitbhayani.me/r/course-card.json): Editorial course and project card with badges, tags, and CTA. `npx shadcn@latest add @aui/course-card -y`
+- [StatCard](https://ui.arpitbhayani.me/r/stat-card.json): Large key metric display card with optional trend indicator. `npx shadcn@latest add @aui/stat-card -y`
+- [EmptyState](https://ui.arpitbhayani.me/r/empty-state.json): Dashed container for empty content and call-to-actions. `npx shadcn@latest add @aui/empty-state -y`
+- [Footer](https://ui.arpitbhayani.me/r/footer.json): Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills. `npx shadcn@latest add @aui/footer -y`
+- [Modal](https://ui.arpitbhayani.me/r/modal.json): Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal. `npx shadcn@latest add @aui/modal -y`
+- [VideoEmbed](https://ui.arpitbhayani.me/r/video-embed.json): Responsive 16:9 aspect ratio video embed wrapper with border hairline styling. `npx shadcn@latest add @aui/video-embed -y`
+
+## Full Library Native Components (React & Astro)
+
+In addition to shadcn copy-paste components, the direct package dependency (`github:arpitbbhayani/aui`) includes 48+ native components for React (`aui/nextjs`, `aui/react`) and Astro (`aui/astro/*`):
+- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
+- **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
+- **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
+- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider
+- **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
 
 ## Optional Links
 

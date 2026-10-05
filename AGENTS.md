@@ -56,15 +56,17 @@ npx shadcn@latest add @aui/aui
 
 3. Add any component as needed:
 ```bash
-npx shadcn@latest add @aui/terminal @aui/diff-block @aui/property-grid @aui/ping-status
+npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/diff-block @aui/ping-status
 ```
-*(Or install directly from URL: `npx shadcn@latest add https://ui.arpitbhayani.me/r/terminal.json`)*
+*(Or install directly from URL: `npx shadcn@latest add https://ui.arpitbhayani.me/r/button.json`)*
 
 Components are installed into `@/components/ui/` and imported as:
 ```tsx
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Terminal } from "@/components/ui/terminal";
 import { DiffBlock } from "@/components/ui/diff-block";
-import { PropertyGrid } from "@/components/ui/property-grid";
 import { PingStatus } from "@/components/ui/ping-status";
 ```
 
@@ -116,9 +118,109 @@ import PingStatus from "aui/astro/PingStatus.astro";
 
 ## 3. Component Quick Reference & Props
 
+### Core UI & Action Primitives
+
+#### 1. `Button` (`@aui/button`)
+Tactile action button with signature crimson primary, secondary, outline, ghost, and danger variants.
+```tsx
+<Button variant="primary" size="md">Deploy</Button>
+<Button variant="secondary" size="md">Documentation</Button>
+<Button variant="outline" size="sm">Small Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="destructive" size="sm">Terminate</Button>
+```
+*Variants*: `primary` (signature crimson), `secondary`, `outline`, `ghost`, `destructive`, `link`.
+*Sizes*: `sm`, `default`/`md`, `lg`, `icon`.
+
+#### 2. `Badge` (`@aui/badge`)
+Machined status pill with monospace typography and color variants.
+```tsx
+<Badge variant="green">Healthy</Badge>
+<Badge variant="amber">Degraded</Badge>
+<Badge variant="red">Outage</Badge>
+<Badge variant="primary">Active</Badge>
+<Badge variant="outline">v0.1.0</Badge>
+```
+
+#### 3. `Card` (`@aui/card`)
+Flat card surface with 1px hairline border and structured subcomponents.
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Distributed Consensus</CardTitle>
+    <CardDescription>Raft state machine replication</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Compaction occurs at 50,000 index increments.</p>
+  </CardContent>
+  <CardFooter className="justify-between">
+    <span>Cluster: us-east-1</span>
+    <Button size="sm">Inspect</Button>
+  </CardFooter>
+</Card>
+```
+
+#### 4. `Input` (`@aui/input`)
+Machined text input with subtle focus ring and optional keyboard shortcut badge.
+```tsx
+<Input placeholder="Filter clusters..." shortcut="⌘K" />
+```
+
+#### 5. `Kbd` (`@aui/kbd`)
+Machined monospace keyboard shortcut keycap.
+```tsx
+<Kbd keys={["⌘", "K"]} />
+<Kbd keys={["Ctrl", "Shift", "P"]} />
+```
+
+#### 6. `Tooltip` (`@aui/tooltip`)
+Accessible tooltip hint on hover and focus.
+```tsx
+<Tooltip content="Copy commit SHA to clipboard">
+  <button className="text-xs font-mono">01hx98z</button>
+</Tooltip>
+```
+
+#### 7. `Alert` (`@aui/alert`)
+Status-tinted inline alert callout.
+```tsx
+<Alert variant="warning">
+  <AlertTitle>Replication Lag Detected</AlertTitle>
+  <AlertDescription>Replica eu-west-1b is 418ms behind primary ledger.</AlertDescription>
+</Alert>
+```
+
+#### 8. `Tabs` (`@aui/tabs`)
+Underline tab navigation with keyboard accessibility.
+```tsx
+<Tabs defaultValue="telemetry">
+  <TabsList>
+    <TabsTrigger value="telemetry">Telemetry</TabsTrigger>
+    <TabsTrigger value="logs">Logs</TabsTrigger>
+  </TabsList>
+  <TabsContent value="telemetry">
+    <p>Live metrics and throughput</p>
+  </TabsContent>
+  <TabsContent value="logs">
+    <p>Stdout stream</p>
+  </TabsContent>
+</Tabs>
+```
+
+#### 9. `Accordion` (`@aui/accordion`)
+Collapsible hairline accordion sections.
+```tsx
+<Accordion type="single" defaultValue="item-1">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>How does log compaction work?</AccordionTrigger>
+    <AccordionContent>Snapshots discard prefix entries safely.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
 ### Developer Primitives
 
-#### 1. `Terminal`
+#### 10. `Terminal`
 Machined telemetry terminal with bash command dots and styled outputs.
 ```tsx
 <Terminal
@@ -338,30 +440,14 @@ Accessible action menu with click-outside dismissal and keyboard escape support.
 
 ---
 
-## 4. UI Actions & Layout
+## 4. Complete Native Component Library (48+ Components)
 
-#### `Button`
-```tsx
-<Button variant="primary" size="md">Deploy</Button>
-<Button variant="secondary" size="md">Documentation</Button>
-<Button variant="outline" size="sm">Small Outline</Button>
-<Button variant="ghost">Ghost</Button>
-```
-*Variants*: `primary` (crimson), `secondary`, `outline`, `ghost`, `light`, `danger`.
-*Sizes*: `sm`, `md`, `lg`.
-
-#### `Badge`
-```tsx
-<Badge variant="green">Healthy</Badge>
-<Badge variant="amber">Degraded</Badge>
-<Badge variant="red">Outage</Badge>
-<Badge variant="primary">Primary</Badge>
-```
-
-#### `Kbd`
-```tsx
-<Kbd keys={["⌘", "K"]} />
-```
+In addition to the shadcn registry CLI, the direct repository package (`github:arpitbbhayani/aui`) exports 48+ native components for React (`aui/nextjs`, `aui/react`) and Astro (`aui/astro/*`):
+- **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`
+- **Navigation**: `Breadcrumbs`, `Tabs`, `Pagination`, `Accordion`, `TableOfContents`, `Sidebar`, `Navbar`
+- **Feedback & Loading**: `Alert`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Tooltip`
+- **Data Display**: `Table`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`
+- **Editorial & Media**: `Hero`, `Maxim`, `TakeawaysBox`, `NoticeBox`, `Newsletter`, `Card`, `CoverCard`, `CourseCard`, `SocialPill`, `Footer`, `VideoEmbed`
 
 ---
 

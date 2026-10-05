@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Underline tab navigation with keyboard accessibility.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/tabs.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\ninterface TabsContextValue {\n  value: string;\n  onValueChange: (val: string) => void;\n}\n\nconst TabsContext = React.createContext<TabsContextValue | undefined>(undefined);\n\nexport interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {\n  defaultValue?: string;\n  value?: string;\n  onValueChange?: (val: string) => void;\n}\n\nexport function Tabs({\n  defaultValue,\n  value: controlledValue,\n  onValueChange,\n  children,\n  className,\n  ...props\n}: TabsProps) {\n  const [val, setVal] = React.useState(defaultValue || \"\");\n  const activeValue = controlledValue !== undefined ? controlledValue : val;\n\n  const handleValueChange = (newVal: string) => {\n    if (controlledValue === undefined) {\n      setVal(newVal);\n    }\n    onValueChange?.(newVal);\n  };\n\n  return (\n    <TabsContext.Provider value={{ value: activeValue, onValueChange: handleValueChange }}>\n      <div className={cn(\"w-full\", className)} {...props}>\n        {children}\n      </div>\n    </TabsContext.Provider>\n  );\n}\n\nexport function TabsList({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      className={cn(\n        \"inline-flex h-9 items-center justify-start border-b border-border text-muted-foreground gap-4 w-full\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </div>\n  );\n}\n\nexport interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  value: string;\n}\n\nexport function TabsTrigger({ value, className, children, ...props }: TabsTriggerProps) {\n  const ctx = React.useContext(TabsContext);\n  const isActive = ctx?.value === value;\n\n  return (\n    <button\n      type=\"button\"\n      role=\"tab\"\n      aria-selected={isActive}\n      onClick={() => ctx?.onValueChange(value)}\n      className={cn(\n        \"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all relative py-2 cursor-pointer border-b-2 -mb-px\",\n        isActive\n          ? \"border-primary text-foreground font-semibold\"\n          : \"border-transparent text-muted-foreground hover:text-foreground\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </button>\n  );\n}\n\nexport interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {\n  value: string;\n}\n\nexport function TabsContent({ value, className, children, ...props }: TabsContentProps) {\n  const ctx = React.useContext(TabsContext);\n  if (ctx?.value !== value) return null;\n\n  return (\n    <div\n      role=\"tabpanel\"\n      className={cn(\"mt-3 focus-visible:outline-hidden\", className)}\n      {...props}\n    >\n      {children}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

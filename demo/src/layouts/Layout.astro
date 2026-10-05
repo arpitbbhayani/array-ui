@@ -6,42 +6,44 @@ import SocialPill from "../../../src/astro/SocialPill.astro";
 import Kbd from "../../../src/astro/Kbd.astro";
 import { CommandPalette } from "../../../dist/react.js";
 import "../../../src/styles/index.css";
+import "../styles/docs.css";
 
 interface Props {
   title?: string;
   description?: string;
+  currentPath?: string;
 }
 
 const {
   title = "Array UI (aui) — Editorial Design System for Engineers & AI Agents",
   description = "Array UI (aui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me.",
+  currentPath,
 } = Astro.props;
 
 const navLinks = [
-  { label: "[00] Agent Hub", href: "#ai-agents" },
-  { label: "[01] Overview", href: "#overview" },
-  { label: "[02] Registry", href: "#quickstart" },
-  { label: "[03] Developer", href: "#ping-status" },
-  { label: "[04] Components", href: "#buttons" },
-  { label: "[05] Usage", href: "#install" },
+  { label: "Overview", href: "/" },
+  { label: "Components", href: "/components" },
+  { label: "Foundations", href: "/foundations" },
+  { label: "Patterns", href: "/patterns" },
+  { label: "Agent Hub", href: "/agents" },
 ];
 
 const footerColumns = [
   {
     heading: "Design System",
     links: [
-      { label: "Overview", href: "#overview" },
-      { label: "shadcn Quickstart", href: "#quickstart" },
-      { label: "Component Matrix", href: "#component-matrix" },
-      { label: "GitHub Installation", href: "#install" },
-      { label: "Color Foundations", href: "#colors" },
-      { label: "Typography Scale", href: "#typography" },
+      { label: "Overview", href: "/" },
+      { label: "Component Catalog", href: "/components" },
+      { label: "Design Foundations", href: "/foundations" },
+      { label: "Patterns & Layouts", href: "/patterns" },
+      { label: "Color Tokens", href: "/foundations#colors" },
+      { label: "Typography Scale", href: "/foundations#typography" },
     ],
   },
   {
     heading: "For AI Agents & LLMs",
     links: [
-      { label: "AI Agent Instructions", href: "#ai-agents", isHighlight: true },
+      { label: "AI Agent Instructions", href: "/agents", isHighlight: true },
       { label: "llms.txt (Standard)", href: "/llms.txt", hint: "Manifest", external: true },
       { label: "llms-full.txt", href: "/llms-full.txt", hint: "Full APIs", external: true },
       { label: "shadcn Registry JSON", href: "/r/registry.json", hint: "Schema", external: true },
@@ -68,6 +70,45 @@ const footerColumns = [
     ],
   },
 ];
+
+const commandItems = [
+  // Actions
+  { id: "github", label: "Open GitHub Repository", category: "Actions", href: "https://github.com/arpitbbhayani/aui" },
+
+  // Navigation Pages
+  { id: "page-overview", label: "Overview & Quickstart", category: "Pages", href: "/" },
+  { id: "page-components", label: "Components Catalog (48+ Primitives)", category: "Pages", href: "/components" },
+  { id: "page-foundations", label: "Design Foundations (Colors, Typography, Hairlines)", category: "Pages", href: "/foundations" },
+  { id: "page-patterns", label: "Architectural Patterns (Dashboard, Essay)", category: "Pages", href: "/patterns" },
+  { id: "page-agents", label: "AI Agent & LLM Hub (Prompts & Endpoints)", category: "Pages", href: "/agents" },
+
+  // Agent Endpoints
+  { id: "llms-txt", label: "llms.txt (Standard Context)", category: "AI & Endpoints", href: "/llms.txt" },
+  { id: "llms-full", label: "llms-full.txt (Comprehensive API Spec)", category: "AI & Endpoints", href: "/llms-full.txt" },
+  { id: "registry-json", label: "registry.json (shadcn Registry Schema)", category: "AI & Endpoints", href: "/r/registry.json" },
+
+  // Components
+  { id: "comp-button", label: "Button (@aui/button)", category: "Components", href: "/components#buttons" },
+  { id: "comp-badge", label: "Badge (@aui/badge)", category: "Components", href: "/components#badge" },
+  { id: "comp-card", label: "Card (@aui/card)", category: "Components", href: "/components#card" },
+  { id: "comp-terminal", label: "Terminal (@aui/terminal)", category: "Components", href: "/components#terminal" },
+  { id: "comp-diff", label: "DiffBlock (@aui/diff-block)", category: "Components", href: "/components#diff-block" },
+  { id: "comp-ping", label: "PingStatus (@aui/ping-status)", category: "Components", href: "/components#ping-status" },
+  { id: "comp-property", label: "PropertyGrid (@aui/property-grid)", category: "Components", href: "/components#property-grid" },
+  { id: "comp-filetree", label: "FileTree (@aui/file-tree)", category: "Components", href: "/components#file-tree" },
+  { id: "comp-input", label: "Input (@aui/input)", category: "Components", href: "/components#input" },
+  { id: "comp-kbd", label: "Kbd (@aui/kbd)", category: "Components", href: "/components#kbd" },
+  { id: "comp-tooltip", label: "Tooltip (@aui/tooltip)", category: "Components", href: "/components#tooltip" },
+  { id: "comp-alert", label: "Alert (@aui/alert)", category: "Components", href: "/components#alert" },
+  { id: "comp-tabs", label: "Tabs (@aui/tabs)", category: "Components", href: "/components#tabs" },
+  { id: "comp-accordion", label: "Accordion (@aui/accordion)", category: "Components", href: "/components#accordion" },
+  { id: "comp-maxim", label: "Maxim Quote (@aui/maxim)", category: "Components", href: "/components#maxim" },
+  { id: "comp-takeaways", label: "TakeawaysBox (@aui/takeaways-box)", category: "Components", href: "/components#takeaways" },
+  { id: "comp-hero", label: "Hero (@aui/hero)", category: "Components", href: "/components#hero" },
+  { id: "comp-modal", label: "Modal (@aui/modal)", category: "Components", href: "/components#modal" },
+  { id: "comp-table", label: "Table", category: "Components", href: "/components#table" },
+  { id: "comp-stat", label: "StatCard (@aui/stat-card)", category: "Components", href: "/components#stat" },
+];
 ---
 
 <!doctype html>
@@ -87,7 +128,7 @@ const footerColumns = [
     <meta name="ai:llms-txt" content="https://ui.arpitbhayani.me/llms.txt" />
     <meta name="ai:llms-full" content="https://ui.arpitbhayani.me/llms-full.txt" />
     <meta name="ai:registry" content="https://ui.arpitbhayani.me/r/registry.json" />
-    <meta name="ai:agent-instructions" content="https://ui.arpitbhayani.me/#ai-agents" />
+    <meta name="ai:agent-instructions" content="https://ui.arpitbhayani.me/agents" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
     <!-- Schema.org JSON-LD Structured Data -->
@@ -110,7 +151,7 @@ const footerColumns = [
     <ThemeScript />
   </head>
   <body class="aui-body">
-    <CommandPalette client:load />
+    <CommandPalette client:load items={commandItems} />
     <Navbar brandName="Array UI (aui)" links={navLinks}>
       <div slot="actions" class="aui-nav-custom-actions">
         <a class="aui-nav-llm-btn" href="/llms.txt" target="_blank" title="Machine-readable LLM documentation (llms.txt)">
@@ -131,7 +172,6 @@ const footerColumns = [
           <span>Search...</span>
           <span class="aui-kbd" style="font-size:0.7rem;padding:0.05rem 0.3rem;">⌘K</span>
         </button>
-        <span class="aui-badge aui-badge-light">v0.1.0</span>
         <a class="aui-btn aui-btn-secondary aui-btn-sm" href="https://github.com/arpitbbhayani/aui" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </Navbar>

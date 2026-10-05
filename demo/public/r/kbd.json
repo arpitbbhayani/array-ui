@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "Monospace keyboard shortcut keycap badge.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/kbd.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KbdProps extends React.HTMLAttributes<HTMLElement> {\n  keys?: string[];\n}\n\nexport function Kbd({ keys, children, className, ...props }: KbdProps) {\n  return (\n    <kbd\n      className={cn(\n        \"inline-flex items-center justify-center font-mono text-[0.72rem] font-medium px-1.5 py-0.5 rounded border border-border bg-muted/60 text-muted-foreground shadow-2xs select-none gap-0.5\",\n        className\n      )}\n      {...props}\n    >\n      {keys ? keys.join(\" \") : children}\n    </kbd>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

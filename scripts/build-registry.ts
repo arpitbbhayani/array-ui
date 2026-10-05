@@ -108,118 +108,92 @@ const themeItem: RegistryItem = {
   },
 };
 
-const componentsConfig = [
+interface ComponentDef {
+  name: string;
+  title: string;
+  description: string;
+  file: string;
+  target: string;
+  dependencies?: string[];
+  category: "Core Primitives" | "Developer & Telemetry" | "Editorial & Content";
+}
+
+const componentsConfig: ComponentDef[] = [
+  // --- Core Primitives ---
   {
-    name: "terminal",
-    title: "Terminal",
-    description: "Machined telemetry terminal with bash command dots and styled outputs.",
-    file: "src/registry/aui/ui/terminal.tsx",
-    target: "ui/terminal.tsx",
+    name: "button",
+    title: "Button",
+    description: "Signature tactile action button with crimson primary, secondary, outline, ghost, and danger variants.",
+    file: "src/registry/aui/ui/button.tsx",
+    target: "ui/button.tsx",
+    dependencies: ["@radix-ui/react-slot", "class-variance-authority"],
+    category: "Core Primitives",
   },
   {
-    name: "diff-block",
-    title: "DiffBlock",
-    description: "Git patch viewer with line gutters, additions, and deletions.",
-    file: "src/registry/aui/ui/diff-block.tsx",
-    target: "ui/diff-block.tsx",
+    name: "badge",
+    title: "Badge",
+    description: "Status pills and tag badges (crimson, emerald green, amber, rose red, sky blue, outline).",
+    file: "src/registry/aui/ui/badge.tsx",
+    target: "ui/badge.tsx",
+    dependencies: ["class-variance-authority"],
+    category: "Core Primitives",
   },
   {
-    name: "ping-status",
-    title: "PingStatus",
-    description: "Live telemetry pulsing dot indicator with label.",
-    file: "src/registry/aui/ui/ping-status.tsx",
-    target: "ui/ping-status.tsx",
+    name: "card",
+    title: "Card",
+    description: "Flat card surface with 1px hairline border, header, title, description, content, and footer.",
+    file: "src/registry/aui/ui/card.tsx",
+    target: "ui/card.tsx",
+    category: "Core Primitives",
   },
   {
-    name: "property-grid",
-    title: "PropertyGrid",
-    description: "Key-value metadata inspector with one-click copy functionality.",
-    file: "src/registry/aui/ui/property-grid.tsx",
-    target: "ui/property-grid.tsx",
+    name: "input",
+    title: "Input",
+    description: "Machined text input with subtle focus ring and optional keyboard shortcut badge.",
+    file: "src/registry/aui/ui/input.tsx",
+    target: "ui/input.tsx",
+    category: "Core Primitives",
   },
   {
-    name: "package-manager",
-    title: "PackageManager",
-    description: "pnpm/npm/bun/yarn command switcher with copy button.",
-    file: "src/registry/aui/ui/package-manager.tsx",
-    target: "ui/package-manager.tsx",
+    name: "kbd",
+    title: "Kbd",
+    description: "Monospace keyboard shortcut keycap badge.",
+    file: "src/registry/aui/ui/kbd.tsx",
+    target: "ui/kbd.tsx",
+    category: "Core Primitives",
   },
   {
-    name: "maxim",
-    title: "Maxim",
-    description: "Editorial quote callout with amber left rail and citation.",
-    file: "src/registry/aui/ui/maxim.tsx",
-    target: "ui/maxim.tsx",
+    name: "tooltip",
+    title: "Tooltip",
+    description: "Accessible tooltip hint on hover and focus.",
+    file: "src/registry/aui/ui/tooltip.tsx",
+    target: "ui/tooltip.tsx",
+    category: "Core Primitives",
   },
   {
-    name: "takeaways-box",
-    title: "TakeawaysBox",
-    description: "Key takeaways container with bulleted highlights.",
-    file: "src/registry/aui/ui/takeaways-box.tsx",
-    target: "ui/takeaways-box.tsx",
+    name: "alert",
+    title: "Alert",
+    description: "Status-tinted inline alert callout (info, success, warning, destructive).",
+    file: "src/registry/aui/ui/alert.tsx",
+    target: "ui/alert.tsx",
+    dependencies: ["class-variance-authority"],
+    category: "Core Primitives",
   },
   {
-    name: "hero",
-    title: "Hero",
-    description: "Editorial profile hero section with avatar, heading, and bio.",
-    file: "src/registry/aui/ui/hero.tsx",
-    target: "ui/hero.tsx",
+    name: "tabs",
+    title: "Tabs",
+    description: "Underline tab navigation with keyboard accessibility.",
+    file: "src/registry/aui/ui/tabs.tsx",
+    target: "ui/tabs.tsx",
+    category: "Core Primitives",
   },
   {
-    name: "file-tree",
-    title: "FileTree",
-    description: "Directory explorer tree with collapsible folders and item selection.",
-    file: "src/registry/aui/ui/file-tree.tsx",
-    target: "ui/file-tree.tsx",
-  },
-  {
-    name: "social-pill",
-    title: "SocialPill",
-    description: "Clean pill button with platform icon, handle, and follower count.",
-    file: "src/registry/aui/ui/social-pill.tsx",
-    target: "ui/social-pill.tsx",
-  },
-  {
-    name: "course-card",
-    title: "CourseCard",
-    description: "Editorial course and project card with badges, tags, and CTA.",
-    file: "src/registry/aui/ui/course-card.tsx",
-    target: "ui/course-card.tsx",
-  },
-  {
-    name: "stat-card",
-    title: "StatCard",
-    description: "Large key metric display card with optional trend indicator.",
-    file: "src/registry/aui/ui/stat-card.tsx",
-    target: "ui/stat-card.tsx",
-  },
-  {
-    name: "empty-state",
-    title: "EmptyState",
-    description: "Dashed container for empty content and call-to-actions.",
-    file: "src/registry/aui/ui/empty-state.tsx",
-    target: "ui/empty-state.tsx",
-  },
-  {
-    name: "footer",
-    title: "Footer",
-    description: "Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.",
-    file: "src/registry/aui/ui/footer.tsx",
-    target: "ui/footer.tsx",
-  },
-  {
-    name: "modal",
-    title: "Modal",
-    description: "Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal.",
-    file: "src/registry/aui/ui/modal.tsx",
-    target: "ui/modal.tsx",
-  },
-  {
-    name: "video-embed",
-    title: "VideoEmbed",
-    description: "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling.",
-    file: "src/registry/aui/ui/video-embed.tsx",
-    target: "ui/video-embed.tsx",
+    name: "accordion",
+    title: "Accordion",
+    description: "Collapsible hairline accordion sections for FAQs and structured content.",
+    file: "src/registry/aui/ui/accordion.tsx",
+    target: "ui/accordion.tsx",
+    category: "Core Primitives",
   },
   {
     name: "dropdown",
@@ -227,6 +201,139 @@ const componentsConfig = [
     description: "Minimal click-trigger dropdown menu with click outside dismissal and actions.",
     file: "src/registry/aui/ui/dropdown.tsx",
     target: "ui/dropdown.tsx",
+    category: "Core Primitives",
+  },
+
+  // --- Developer & Telemetry ---
+  {
+    name: "terminal",
+    title: "Terminal",
+    description: "Machined telemetry terminal with bash command dots and styled outputs.",
+    file: "src/registry/aui/ui/terminal.tsx",
+    target: "ui/terminal.tsx",
+    category: "Developer & Telemetry",
+  },
+  {
+    name: "diff-block",
+    title: "DiffBlock",
+    description: "Git patch viewer with line gutters, additions, and deletions.",
+    file: "src/registry/aui/ui/diff-block.tsx",
+    target: "ui/diff-block.tsx",
+    category: "Developer & Telemetry",
+  },
+  {
+    name: "ping-status",
+    title: "PingStatus",
+    description: "Live telemetry pulsing dot indicator with status and latency.",
+    file: "src/registry/aui/ui/ping-status.tsx",
+    target: "ui/ping-status.tsx",
+    category: "Developer & Telemetry",
+  },
+  {
+    name: "property-grid",
+    title: "PropertyGrid",
+    description: "Key-value metadata inspector with one-click copy functionality.",
+    file: "src/registry/aui/ui/property-grid.tsx",
+    target: "ui/property-grid.tsx",
+    category: "Developer & Telemetry",
+  },
+  {
+    name: "package-manager",
+    title: "PackageManager",
+    description: "pnpm/npm/bun/yarn command switcher with copy button.",
+    file: "src/registry/aui/ui/package-manager.tsx",
+    target: "ui/package-manager.tsx",
+    category: "Developer & Telemetry",
+  },
+  {
+    name: "file-tree",
+    title: "FileTree",
+    description: "Directory explorer tree with collapsible folders and item selection.",
+    file: "src/registry/aui/ui/file-tree.tsx",
+    target: "ui/file-tree.tsx",
+    category: "Developer & Telemetry",
+  },
+
+  // --- Editorial & Content ---
+  {
+    name: "maxim",
+    title: "Maxim",
+    description: "Editorial quote callout with amber left rail and citation.",
+    file: "src/registry/aui/ui/maxim.tsx",
+    target: "ui/maxim.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "takeaways-box",
+    title: "TakeawaysBox",
+    description: "Key takeaways container with bulleted highlights.",
+    file: "src/registry/aui/ui/takeaways-box.tsx",
+    target: "ui/takeaways-box.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "hero",
+    title: "Hero",
+    description: "Editorial profile hero section with avatar, heading, and bio.",
+    file: "src/registry/aui/ui/hero.tsx",
+    target: "ui/hero.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "social-pill",
+    title: "SocialPill",
+    description: "Clean pill button with platform icon, handle, and follower count.",
+    file: "src/registry/aui/ui/social-pill.tsx",
+    target: "ui/social-pill.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "course-card",
+    title: "CourseCard",
+    description: "Editorial course and project card with badges, tags, and CTA.",
+    file: "src/registry/aui/ui/course-card.tsx",
+    target: "ui/course-card.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "stat-card",
+    title: "StatCard",
+    description: "Large key metric display card with optional trend indicator.",
+    file: "src/registry/aui/ui/stat-card.tsx",
+    target: "ui/stat-card.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "empty-state",
+    title: "EmptyState",
+    description: "Dashed container for empty content and call-to-actions.",
+    file: "src/registry/aui/ui/empty-state.tsx",
+    target: "ui/empty-state.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "footer",
+    title: "Footer",
+    description: "Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.",
+    file: "src/registry/aui/ui/footer.tsx",
+    target: "ui/footer.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "modal",
+    title: "Modal",
+    description: "Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal.",
+    file: "src/registry/aui/ui/modal.tsx",
+    target: "ui/modal.tsx",
+    category: "Editorial & Content",
+  },
+  {
+    name: "video-embed",
+    title: "VideoEmbed",
+    description: "Responsive 16:9 aspect ratio video embed wrapper with border hairline styling.",
+    file: "src/registry/aui/ui/video-embed.tsx",
+    target: "ui/video-embed.tsx",
+    category: "Editorial & Content",
   },
 ];
 
@@ -248,6 +355,7 @@ export async function buildRegistry() {
       type: "registry:ui",
       title: c.title,
       description: c.description,
+      ...(c.dependencies ? { dependencies: c.dependencies } : {}),
       registryDependencies: [`${BASE_URL}/r/aui.json`],
       files: [
         {
@@ -312,6 +420,19 @@ Allow: /
 `;
   fs.writeFileSync(path.resolve("demo/public/robots.txt"), robotsTxt);
 
+  // Group components by category for llms.txt
+  const coreComps = componentsConfig.filter((c) => c.category === "Core Primitives");
+  const devComps = componentsConfig.filter((c) => c.category === "Developer & Telemetry");
+  const editorialComps = componentsConfig.filter((c) => c.category === "Editorial & Content");
+
+  const renderComponentList = (list: ComponentDef[]) =>
+    list
+      .map(
+        (c) =>
+          `- [${c.title}](${BASE_URL}/r/${c.name}.json): ${c.description} \`npx shadcn@latest add @aui/${c.name} -y\``
+      )
+      .join("\n");
+
   // Generate standard llms.txt (following llmstxt.org specification)
   const llmsTxt = `# Array UI (aui)
 
@@ -349,7 +470,7 @@ Add to \`components.json\`:
 Install design tokens and any component:
 \`\`\`bash
 npx shadcn@latest add @aui/aui -y
-npx shadcn@latest add @aui/terminal @aui/diff-block @aui/property-grid @aui/ping-status -y
+npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y
 \`\`\`
 
 ### Mode B: Direct GitHub Dependency (Next.js, Astro)
@@ -365,14 +486,25 @@ npm install github:arpitbbhayani/aui
 - [Theme Style](${BASE_URL}/r/aui.json): Theme CSS variables, fonts, and light/dark color tokens.
 - [Agent Guide (AGENTS.md)](https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md): Repository AGENTS.md guide for AI coding assistants.
 
-## Components
+## Components Registry
 
-${componentsConfig
-  .map(
-    (c) =>
-      `- [${c.title}](${BASE_URL}/r/${c.name}.json): ${c.description} Install: \`npx shadcn@latest add @aui/${c.name}\``
-  )
-  .join("\n")}
+### Core UI & Action Primitives
+${renderComponentList(coreComps)}
+
+### Developer & Telemetry Primitives
+${renderComponentList(devComps)}
+
+### Editorial & Content Primitives
+${renderComponentList(editorialComps)}
+
+## Full Library Native Components (React & Astro)
+
+In addition to shadcn copy-paste components, the direct package dependency (\`github:arpitbbhayani/aui\`) includes 48+ native components for React (\`aui/nextjs\`, \`aui/react\`) and Astro (\`aui/astro/*\`):
+- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
+- **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
+- **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
+- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider
+- **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
 
 ## Optional Links
 
@@ -432,13 +564,16 @@ Install base theme:
 npx shadcn@latest add @aui/aui -y
 \`\`\`
 
-Install components:
+Install any components:
 \`\`\`bash
-npx shadcn@latest add @aui/terminal @aui/diff-block @aui/property-grid @aui/ping-status -y
+npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/input @aui/terminal @aui/diff-block @aui/property-grid @aui/ping-status -y
 \`\`\`
 
 Components are installed into \`@/components/ui/\` and imported as:
 \`\`\`tsx
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Terminal } from "@/components/ui/terminal";
 import { DiffBlock } from "@/components/ui/diff-block";
 import { PropertyGrid } from "@/components/ui/property-grid";
@@ -460,9 +595,10 @@ import "aui/styles.css";
 Import components:
 \`\`\`tsx
 // Next.js (App Router or Pages Router)
-import { Button, Terminal, DiffBlock, PingStatus, Card } from "aui/nextjs";
+import { Button, Badge, Card, Terminal, DiffBlock, PingStatus } from "aui/nextjs";
 
 // Astro
+import Button from "aui/astro/Button.astro";
 import Terminal from "aui/astro/Terminal.astro";
 import DiffBlock from "aui/astro/DiffBlock.astro";
 import PingStatus from "aui/astro/PingStatus.astro";
@@ -475,9 +611,152 @@ import PingStatus from "aui/astro/PingStatus.astro";
 
 ---
 
-## 3. Component Reference & APIs
+## 3. Core UI & Action Primitives
 
-### 1. Terminal (\`@aui/terminal\`)
+### 1. Button (\`@aui/button\`)
+Signature tactile action button with signature crimson primary, secondary, outline, ghost, and destructive variants.
+- Endpoint: \`${BASE_URL}/r/button.json\`
+- Props:
+  - \`variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive" | "link"\` (default: "primary")
+  - \`size?: "default" | "sm" | "lg" | "icon"\` (default: "default")
+  - \`asChild?: boolean\`
+\`\`\`tsx
+<Button variant="primary">Deploy canary</Button>
+<Button variant="secondary" size="sm">Rollback</Button>
+<Button variant="outline">View audit log</Button>
+<Button variant="destructive" size="sm">Terminate</Button>
+\`\`\`
+
+### 2. Badge (\`@aui/badge\`)
+Machined status pill with monospace typography and color variants.
+- Endpoint: \`${BASE_URL}/r/badge.json\`
+- Props:
+  - \`variant?: "default" | "primary" | "secondary" | "outline" | "green" | "amber" | "red" | "blue"\`
+\`\`\`tsx
+<Badge variant="green">Healthy</Badge>
+<Badge variant="amber">Degraded</Badge>
+<Badge variant="red">Outage</Badge>
+<Badge variant="outline">v0.1.0</Badge>
+\`\`\`
+
+### 3. Card (\`@aui/card\`)
+Flat card surface with 1px hairline border and structured header/content/footer.
+- Endpoint: \`${BASE_URL}/r/card.json\`
+- Components: \`Card\`, \`CardHeader\`, \`CardTitle\`, \`CardDescription\`, \`CardContent\`, \`CardFooter\`
+\`\`\`tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Distributed Consensus</CardTitle>
+    <CardDescription>Raft state machine replication</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm text-muted-foreground">Log compaction occurs at 50,000 index increments.</p>
+  </CardContent>
+  <CardFooter className="justify-between">
+    <span className="text-xs font-mono text-muted-foreground">Cluster: us-east-1</span>
+    <Button size="sm">Inspect</Button>
+  </CardFooter>
+</Card>
+\`\`\`
+
+### 4. Input (\`@aui/input\`)
+Machined input with subtle focus ring and optional keyboard shortcut badge.
+- Endpoint: \`${BASE_URL}/r/input.json\`
+- Props:
+  - \`shortcut?: string\` (e.g. "⌘K")
+  - Standard HTML input props
+\`\`\`tsx
+<Input placeholder="Filter clusters..." shortcut="⌘K" />
+\`\`\`
+
+### 5. Kbd (\`@aui/kbd\`)
+Machined monospace keyboard shortcut keycap.
+- Endpoint: \`${BASE_URL}/r/kbd.json\`
+- Props:
+  - \`keys?: string[]\`
+\`\`\`tsx
+<Kbd keys={["⌘", "K"]} />
+<Kbd keys={["Ctrl", "Shift", "P"]} />
+\`\`\`
+
+### 6. Tooltip (\`@aui/tooltip\`)
+Accessible tooltip hint on hover and focus.
+- Endpoint: \`${BASE_URL}/r/tooltip.json\`
+- Props:
+  - \`content: ReactNode\`
+  - \`placement?: "top" | "bottom"\`
+\`\`\`tsx
+<Tooltip content="Copy commit SHA to clipboard">
+  <button className="text-xs font-mono">01hx98z</button>
+</Tooltip>
+\`\`\`
+
+### 7. Alert (\`@aui/alert\`)
+Status-tinted inline alert callout.
+- Endpoint: \`${BASE_URL}/r/alert.json\`
+- Components: \`Alert\`, \`AlertTitle\`, \`AlertDescription\`
+- Props:
+  - \`variant?: "default" | "info" | "success" | "warning" | "destructive"\`
+\`\`\`tsx
+<Alert variant="warning">
+  <AlertTitle>Replication Lag Detected</AlertTitle>
+  <AlertDescription>Replica eu-west-1b is 418ms behind primary ledger.</AlertDescription>
+</Alert>
+\`\`\`
+
+### 8. Tabs (\`@aui/tabs\`)
+Underline tab navigation with keyboard accessibility.
+- Endpoint: \`${BASE_URL}/r/tabs.json\`
+- Components: \`Tabs\`, \`TabsList\`, \`TabsTrigger\`, \`TabsContent\`
+\`\`\`tsx
+<Tabs defaultValue="telemetry">
+  <TabsList>
+    <TabsTrigger value="telemetry">Telemetry</TabsTrigger>
+    <TabsTrigger value="logs">Logs</TabsTrigger>
+  </TabsList>
+  <TabsContent value="telemetry">
+    <p>Live metrics and throughput</p>
+  </TabsContent>
+  <TabsContent value="logs">
+    <p>Stdout stream</p>
+  </TabsContent>
+</Tabs>
+\`\`\`
+
+### 9. Accordion (\`@aui/accordion\`)
+Collapsible hairline accordion sections.
+- Endpoint: \`${BASE_URL}/r/accordion.json\`
+- Components: \`Accordion\`, \`AccordionItem\`, \`AccordionTrigger\`, \`AccordionContent\`
+\`\`\`tsx
+<Accordion type="single" defaultValue="item-1">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>How does log compaction work?</AccordionTrigger>
+    <AccordionContent>Snapshots discard prefix entries safely.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+\`\`\`
+
+### 10. Dropdown (\`@aui/dropdown\`)
+Accessible action menu with click-outside dismissal and keyboard escape support.
+- Endpoint: \`${BASE_URL}/r/dropdown.json\`
+- Props:
+  - \`trigger: ReactNode\`
+  - \`children: ReactNode\`
+  - \`align?: "left" | "right"\`
+\`\`\`tsx
+<Dropdown trigger={<Button variant="secondary" size="sm">Actions ▼</Button>}>
+  <div className="aui-dropdown-header">Cluster Options</div>
+  <button type="button" className="aui-dropdown-item">Restart Nodes</button>
+  <div className="aui-dropdown-divider" />
+  <button type="button" className="aui-dropdown-item is-destructive">Drain Node</button>
+</Dropdown>
+\`\`\`
+
+---
+
+## 4. Developer & Systems Primitives
+
+### 11. Terminal (\`@aui/terminal\`)
 Machined telemetry terminal with bash command dots and styled outputs.
 - Endpoint: \`${BASE_URL}/r/terminal.json\`
 - Props:
@@ -495,12 +774,12 @@ Machined telemetry terminal with bash command dots and styled outputs.
 />
 \`\`\`
 
-### 2. DiffBlock (\`@aui/diff-block\`)
+### 12. DiffBlock (\`@aui/diff-block\`)
 Unified git patch inspector with line gutters, additions, and deletions.
 - Endpoint: \`${BASE_URL}/r/diff-block.json\`
 - Props:
   - \`file?: string\`
-  - \`diff: string\` (git diff format or unified diff string)
+  - \`diff: string\`
 \`\`\`tsx
 <DiffBlock
   file="migrations/0042_status.sql"
@@ -510,18 +789,18 @@ Unified git patch inspector with line gutters, additions, and deletions.
 />
 \`\`\`
 
-### 3. PingStatus (\`@aui/ping-status\`)
+### 13. PingStatus (\`@aui/ping-status\`)
 Pulsing heartbeat indicator with status and latency.
 - Endpoint: \`${BASE_URL}/r/ping-status.json\`
 - Props:
   - \`status: "operational" | "degraded" | "outage" | "maintenance"\`
-  - \`label?: string\` (e.g. "Operational · 42ms")
+  - \`label?: string\`
   - \`size?: "sm" | "md" | "lg"\`
 \`\`\`tsx
 <PingStatus status="operational" label="Operational · 42ms" size="md" />
 \`\`\`
 
-### 4. PropertyGrid (\`@aui/property-grid\`)
+### 14. PropertyGrid (\`@aui/property-grid\`)
 Dense key-value metadata inspector for entities and systems, with one-click copy.
 - Endpoint: \`${BASE_URL}/r/property-grid.json\`
 - Props:
@@ -536,12 +815,11 @@ Dense key-value metadata inspector for entities and systems, with one-click copy
 />
 \`\`\`
 
-### 5. FileTree (\`@aui/file-tree\`)
+### 15. FileTree (\`@aui/file-tree\`)
 Collapsible directory and file hierarchy tree.
 - Endpoint: \`${BASE_URL}/r/file-tree.json\`
 - Props:
-  - \`data: FileTreeNode[]\` where FileTreeNode is:
-    \`{ name: string; type: "file" | "folder"; children?: FileTreeNode[]; defaultOpen?: boolean; badge?: string }\`
+  - \`data: FileTreeNode[]\`
   - \`onSelect?: (node: FileTreeNode) => void\`
 \`\`\`tsx
 <FileTree
@@ -560,17 +838,21 @@ Collapsible directory and file hierarchy tree.
 />
 \`\`\`
 
-### 6. PackageManager (\`@aui/package-manager\`)
+### 16. PackageManager (\`@aui/package-manager\`)
 Multi-manager install command switcher with instant click-to-copy.
 - Endpoint: \`${BASE_URL}/r/package-manager.json\`
 - Props:
-  - \`pkg: string\` (e.g. "github:arpitbbhayani/aui" or "@aui/terminal")
+  - \`pkg: string\`
   - \`defaultManager?: "pnpm" | "npm" | "bun" | "yarn"\`
 \`\`\`tsx
 <PackageManager pkg="github:arpitbbhayani/aui" defaultManager="pnpm" />
 \`\`\`
 
-### 7. Maxim (\`@aui/maxim\`)
+---
+
+## 5. Editorial & Content Primitives
+
+### 17. Maxim (\`@aui/maxim\`)
 Amber quotation callout box for engineering principles.
 - Endpoint: \`${BASE_URL}/r/maxim.json\`
 - Props:
@@ -584,7 +866,7 @@ Amber quotation callout box for engineering principles.
 </Maxim>
 \`\`\`
 
-### 8. TakeawaysBox (\`@aui/takeaways-box\`)
+### 18. TakeawaysBox (\`@aui/takeaways-box\`)
 Crimson bulleted key takeaways callout.
 - Endpoint: \`${BASE_URL}/r/takeaways-box.json\`
 - Props:
@@ -600,7 +882,7 @@ Crimson bulleted key takeaways callout.
 />
 \`\`\`
 
-### 9. Hero (\`@aui/hero\`)
+### 19. Hero (\`@aui/hero\`)
 Signature editorial portrait hero with bio and social pills.
 - Endpoint: \`${BASE_URL}/r/hero.json\`
 - Props:
@@ -620,7 +902,7 @@ Signature editorial portrait hero with bio and social pills.
 </Hero>
 \`\`\`
 
-### 10. SocialPill (\`@aui/social-pill\`)
+### 20. SocialPill (\`@aui/social-pill\`)
 Interactive platform pills for YouTube, X/Twitter, GitHub, LinkedIn.
 - Endpoint: \`${BASE_URL}/r/social-pill.json\`
 - Props:
@@ -633,7 +915,7 @@ Interactive platform pills for YouTube, X/Twitter, GitHub, LinkedIn.
 <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
 \`\`\`
 
-### 11. CourseCard (\`@aui/course-card\`)
+### 21. CourseCard (\`@aui/course-card\`)
 Card for cohorts, courses, and open source projects.
 - Endpoint: \`${BASE_URL}/r/course-card.json\`
 - Props:
@@ -654,19 +936,19 @@ Card for cohorts, courses, and open source projects.
 />
 \`\`\`
 
-### 12. StatCard (\`@aui/stat-card\`)
+### 22. StatCard (\`@aui/stat-card\`)
 Metric display card for dashboards and telemetry.
 - Endpoint: \`${BASE_URL}/r/stat-card.json\`
 - Props:
   - \`value: string | number\`
   - \`label: string\`
   - \`description?: string\`
-  - \`trend?: { direction: "up" | "down" | "flat"; label: string }\`
+  - \`trend?: ReactNode\`
 \`\`\`tsx
 <StatCard value="99.98%" label="Uptime" description="rolling 30 days" />
 \`\`\`
 
-### 13. EmptyState (\`@aui/empty-state\`)
+### 23. EmptyState (\`@aui/empty-state\`)
 Minimalist dashed container for empty states and zero-data screens.
 - Endpoint: \`${BASE_URL}/r/empty-state.json\`
 - Props:
@@ -675,11 +957,11 @@ Minimalist dashed container for empty states and zero-data screens.
   - \`children?: ReactNode\`
 \`\`\`tsx
 <EmptyState title="No clusters deployed" description="Create a cluster to begin telemetry.">
-  <button className="aui-btn aui-btn-primary aui-btn-sm">New Cluster</button>
+  <Button variant="primary" size="sm">New Cluster</Button>
 </EmptyState>
 \`\`\`
 
-### 14. Footer (\`@aui/footer\`)
+### 24. Footer (\`@aui/footer\`)
 Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.
 - Endpoint: \`${BASE_URL}/r/footer.json\`
 - Props:
@@ -700,7 +982,7 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
 />
 \`\`\`
 
-### 15. Modal (\`@aui/modal\`)
+### 25. Modal (\`@aui/modal\`)
 Accessible dialog modal with backdrop blur, focus trapping, and escape-key dismissal.
 - Endpoint: \`${BASE_URL}/r/modal.json\`
 - Props:
@@ -712,12 +994,12 @@ Accessible dialog modal with backdrop blur, focus trapping, and escape-key dismi
   - \`footer?: ReactNode\`
   - \`size?: "sm" | "md" | "lg" | "xl"\`
 \`\`\`tsx
-<Modal isOpen={open} onClose={() => setOpen(false)} title="Confirmation" footer={<button className="aui-btn aui-btn-sm">Confirm</button>}>
+<Modal isOpen={open} onClose={() => setOpen(false)} title="Confirmation" footer={<Button size="sm">Confirm</Button>}>
   <p>Modal body content</p>
 </Modal>
 \`\`\`
 
-### 16. VideoEmbed (\`@aui/video-embed\`)
+### 26. VideoEmbed (\`@aui/video-embed\`)
 Responsive 16:9 media player container with hairline border and fallback loading slot.
 - Endpoint: \`${BASE_URL}/r/video-embed.json\`
 - Props:
@@ -732,43 +1014,16 @@ Responsive 16:9 media player container with hairline border and fallback loading
 />
 \`\`\`
 
-### 17. Dropdown (\`@aui/dropdown\`)
-Accessible action menu with click-outside dismissal and keyboard escape support.
-- Endpoint: \`${BASE_URL}/r/dropdown.json\`
-- Props:
-  - \`trigger: ReactNode\`
-  - \`children: ReactNode\`
-  - \`align?: "left" | "right"\`
-\`\`\`tsx
-<Dropdown trigger={<button className="aui-btn aui-btn-secondary aui-btn-sm">Actions ▼</button>}>
-  <div className="aui-dropdown-header">Options</div>
-  <button type="button" className="aui-dropdown-item">Edit</button>
-  <div className="aui-dropdown-divider" />
-  <button type="button" className="aui-dropdown-item is-destructive">Delete</button>
-</Dropdown>
-\`\`\`
-
 ---
 
-## 4. UI Actions & Layout Classes
+## 6. Layout & Utility Classes
 
-### Buttons (\`Button\`)
-Variants: \`primary\` (crimson), \`secondary\`, \`outline\`, \`ghost\`, \`light\`, \`danger\`.
-Sizes: \`sm\`, \`md\`, \`lg\`.
-
-### Badges (\`Badge\`)
-Variants: \`green\` (operational), \`amber\` (degraded), \`red\` (outage), \`primary\` (crimson), \`light\`.
-
-### Keyboard Keys (\`Kbd\`)
-\`\`\`tsx
-<Kbd keys={["⌘", "K"]} />
-\`\`\`
-
-### Layout Classes:
 - \`.aui-container\`: Max-width 1280px standard container with responsive padding.
 - \`.aui-container-md\`: Intermediate max-width 900px container for reading and forms.
 - \`.aui-theatre-grid\`: Responsive 2-column player layout (\`minmax(0, 1fr) 340px\`).
 - \`.aui-prose-app\` / \`.aui-prose-compact\`: Dense 15px prose typography for UI tab panels and cards.
+- \`.aui-input-row\`: Flex row for inline inputs with adjacent action buttons.
+- \`.aui-form-hint\`: Subtle helper text beneath inputs.
 `;
 
   fs.writeFileSync(path.resolve("demo/public/llms.txt"), llmsTxt);
@@ -784,4 +1039,3 @@ buildRegistry().catch((err) => {
   console.error("Registry build error:", err);
   process.exit(1);
 });
-

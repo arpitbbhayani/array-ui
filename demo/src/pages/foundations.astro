@@ -1,0 +1,175 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Specimen from "../components/Specimen.astro";
+import Badge from "../../../src/astro/Badge.astro";
+import Button from "../../../src/astro/Button.astro";
+
+const colorTokens = [
+  { name: "primary", v: "--aui-primary", desc: "Signature crimson for primary actions & active tabs" },
+  { name: "primary-soft", v: "--aui-primary-soft", desc: "Tinted background for primary button hover/states" },
+  { name: "bg-primary", v: "--aui-bg-primary", desc: "Base canvas (paper in light, obsidian in dark)" },
+  { name: "bg-secondary", v: "--aui-bg-secondary", desc: "Flat card and container surface" },
+  { name: "bg-tertiary", v: "--aui-bg-tertiary", desc: "Tinted code blocks and subtle inset strips" },
+  { name: "text-primary", v: "--aui-text-primary", desc: "Primary body text" },
+  { name: "text-secondary", v: "--aui-text-secondary", desc: "Headings and prominent titles" },
+  { name: "text-muted", v: "--aui-text-muted", desc: "Helper text, subtitles, and labels" },
+  { name: "border-color", v: "--aui-border-color", desc: "1px hairline border across all surfaces" },
+  { name: "border-strong", v: "--aui-border-strong", desc: "Hover and focused container borders" },
+  { name: "success", v: "--aui-success", desc: "Emerald green for health, ok telemetry & diff additions" },
+  { name: "info", v: "--aui-info", desc: "Sky blue for informational badges & highlights" },
+  { name: "warning", v: "--aui-warning", desc: "Amber for engineering maxim quotes & lag warnings" },
+  { name: "danger", v: "--aui-danger", desc: "Rose red for fatal errors & diff deletions" },
+];
+
+const radii = [
+  { label: "sm · 4px", v: "--aui-radius-sm" },
+  { label: "md · 8px", v: "--aui-radius-md" },
+  { label: "lg · 12px", v: "--aui-radius-lg" },
+];
+
+const shadows = [
+  { label: "xs", v: "--aui-shadow-xs" },
+  { label: "hover", v: "--aui-box-shadow-hover" },
+  { label: "lg", v: "--aui-box-shadow-lg" },
+];
+
+const shadcnBridgeCode = `:root {
+  --background: 43 25% 97%;   /* #faf9f5 Paper */
+  --foreground: 247 7% 19%;   /* #2d2c33 Carbon */
+  --primary: 356 100% 45%;    /* #e5000f Signature Crimson */
+  --border: 41 24% 86%;       /* #e5e0d3 Hairline */
+}
+.dark {
+  --background: 240 8% 8%;    /* #121215 Obsidian */
+  --foreground: 240 10% 88%;  /* #dcdce5 Soft White */
+  --primary: 355 100% 60%;    /* #ff3344 Crimson Dark */
+  --border: 240 12% 20%;      /* #2c2c38 Hairline */
+}`;
+---
+
+<Layout
+  title="Design Foundations & Tokens — Array UI (aui)"
+  description="Editorial palette, mathematical typography scales, 1px hairline borders, and CSS design tokens."
+>
+  <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+    <!-- Page Header -->
+    <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+        <span class="aui-index-tag">[02 FOUNDATIONS]</span>
+        <Badge variant="outline">Design Tokens</Badge>
+      </div>
+      <h1 class="landing-title" style="margin-bottom: 0.5rem;">Foundations & Design Tokens</h1>
+      <p class="landing-sub" style="max-width: 72ch; margin-bottom: 1rem;">
+        Array UI is built around mathematical restraint: an editorial paper & obsidian canvas, 1px warm hairline borders, and strict semantic accents. Zero arbitrary gradients, zero neon glows.
+      </p>
+
+      <div class="docs-framework-bar" style="margin-top: 1rem;">
+        <div class="docs-framework-meta">
+          <span class="meta-chip">Zero-Runtime Tokens</span>
+          <span class="meta-sep">/</span>
+          <span>Light (#f9f8f5) & Dark (#121215)</span>
+          <span class="meta-sep">/</span>
+          <code>tokens.css</code>
+          <span class="meta-sep">/</span>
+          <code>shadcn.css</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Foundations Specimens -->
+    <div class="spec-grid" style="margin-bottom: 2rem;">
+      <!-- Color Palette -->
+      <Specimen id="colors" name="Color Tokens" description="Semantic tokens that automatically swap between Paper light and Obsidian dark." span={2}>
+        <div class="swatches">
+          {colorTokens.map((t) => (
+            <div
+              class="swatch"
+              style="cursor: pointer;"
+              onclick={`navigator.clipboard.writeText('var(${t.v})'); this.style.borderColor = 'var(--aui-success)'; setTimeout(() => this.style.borderColor = '', 1000);`}
+              title="Click to copy CSS variable"
+            >
+              <span class="swatch-chip" style={{ background: `var(${t.v})` }}></span>
+              <div style="min-width: 0;">
+                <div class="swatch-name">{t.name}</div>
+                <code class="swatch-var">{t.v}</code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Specimen>
+
+      <!-- Typography -->
+      <Specimen id="typography" name="Typography Scale & Typefaces" description="Engineered hierarchy: Space Grotesk headings, Assistant body, Lora serif pull quotes, and Geist Mono code." span={2}>
+        <div class="spec-col" style="gap:1rem;">
+          <div style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.75rem;">
+            <div style="font-size:2.2rem;font-family:var(--aui-font-heading);font-weight:800;letter-spacing:-0.035em;line-height:1.1;color:var(--aui-text-secondary);">
+              Heading 1 · 32px (Plus Jakarta Sans / Space Grotesk)
+            </div>
+            <span style="font-size:0.8rem;color:var(--aui-text-muted);font-family:var(--aui-font-mono);">font-heading / bold / -0.03em tracking</span>
+          </div>
+
+          <div style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.75rem;">
+            <div style="font-family:var(--aui-font-heading);font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;color:var(--aui-text-secondary);">
+              Heading 2 · 24px — Component & Section Titles
+            </div>
+            <span style="font-size:0.8rem;color:var(--aui-text-muted);font-family:var(--aui-font-mono);">font-heading / bold / -0.025em tracking</span>
+          </div>
+
+          <div style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.75rem;">
+            <div style="font-family:var(--aui-font-heading);font-size:1.15rem;font-weight:700;color:var(--aui-text-secondary);">
+              Heading 3 · 18px — Card & Widget Headers
+            </div>
+            <span style="font-size:0.8rem;color:var(--aui-text-muted);font-family:var(--aui-font-mono);">font-heading / semi-bold / -0.015em tracking</span>
+          </div>
+
+          <div style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.75rem;">
+            <div style="font-family:var(--aui-font-sans);font-size:1.02rem;line-height:1.6;color:var(--aui-text-primary);">
+              Body · 15px base (Assistant) — Dense, readable, editorial body typography designed for high information density across data screens and engineering essays.
+            </div>
+            <span style="font-size:0.8rem;color:var(--aui-text-muted);font-family:var(--aui-font-mono);">font-sans / regular / 15px</span>
+          </div>
+
+          <div style="border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.75rem;">
+            <div style="font-family:var(--aui-font-serif);font-style:italic;font-size:1.25rem;line-height:1.5;color:var(--aui-text-secondary);">
+              “Simplicity is a prerequisite for reliability. Complex systems always fail in complex ways.” (Lora Italic Serif)
+            </div>
+            <span style="font-size:0.8rem;color:var(--aui-text-muted);font-family:var(--aui-font-mono);">font-serif / italic / reserved for engineering maxims</span>
+          </div>
+
+          <div>
+            <div style="font-family:var(--aui-font-mono);font-size:0.92rem;color:var(--aui-primary);">
+              const cluster = new RaftCluster(&#123; id: "cls_01HX98Z", quorum: 3 &#125;); (Geist Mono)
+            </div>
+            <span style="font-size:0.8rem;color:var(--aui-text-muted);font-family:var(--aui-font-mono);">font-mono / tabular numbers / telemetry & code</span>
+          </div>
+        </div>
+      </Specimen>
+
+      <!-- Geometry, Radius & Hairlines -->
+      <Specimen id="elevation" name="Borders, Radius & Elevation" description="1px hairlines everywhere, flat card surfaces, and restrained shadows.">
+        <div class="spec-label">Corner Radius</div>
+        <div class="spec-row" style="margin-bottom:1.5rem;">
+          {radii.map((r) => (
+            <div class="elev" style={{ borderRadius: `var(${r.v})` }}>{r.label}</div>
+          ))}
+        </div>
+        <div class="spec-label">Shadows (Subtle Restraint)</div>
+        <div class="spec-row">
+          {shadows.map((s) => (
+            <div class="elev" style={{ boxShadow: `var(${s.v})` }}>{s.label}</div>
+          ))}
+        </div>
+      </Specimen>
+
+      <!-- shadcn Bridge -->
+      <Specimen id="bridge" name="shadcn Bridge & HSL Tokens" description="How Array UI bidirectional tokens interoperate with shadcn/ui.">
+        <div class="spec-col" style="gap:0.75rem;">
+          <p style="font-size:0.88rem;color:var(--aui-text-muted);margin:0;">
+            Array UI integrates directly with shadcn/ui. CSS variables defined in <code>shadcn.css</code> automatically map to <code>--primary</code>, <code>--secondary</code>, <code>--background</code>, <code>--border</code>, etc.
+          </p>
+          <pre class="aui-agent-pre"><code>{shadcnBridgeCode}</code></pre>
+        </div>
+      </Specimen>
+    </div>
+  </div>
+</Layout>
