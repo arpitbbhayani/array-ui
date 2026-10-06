@@ -59,7 +59,7 @@ export function LatencyDistribution({
         )}
       </div>
 
-      <div className="flex h-6 rounded border border-border overflow-hidden bg-muted/30">
+      <div className="flex h-7 rounded border border-border overflow-hidden bg-muted/30">
         {percentiles.map((p, idx) => {
           const widthPct = Math.max((p.value / totalVal) * 100, 8);
           const color = getColor(p.color);
@@ -67,7 +67,7 @@ export function LatencyDistribution({
           return (
             <div
               key={idx}
-              className="h-full border-r border-border/50 last:border-r-0 flex items-center justify-center font-mono text-[10px] font-bold"
+              className="h-full border-r border-border/50 last:border-r-0 flex items-center justify-center font-mono text-xs font-bold"
               style={{
                 width: `${widthPct}%`,
                 backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`,
@@ -87,7 +87,7 @@ export function LatencyDistribution({
           return (
             <div
               key={idx}
-              className="flex items-center gap-1.5 px-2 py-1 rounded border border-border bg-muted/20 font-mono text-xs"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-border bg-muted/20 font-mono text-xs font-medium"
             >
               <span
                 className="w-2 h-2 rounded-full"

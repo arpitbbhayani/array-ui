@@ -1,0 +1,89 @@
+---
+interface AnalogyMappingPoint {
+  analogy: string;
+  concept: string;
+}
+
+interface Props {
+  title?: string;
+  analogyTitle: string;
+  analogyBadge?: string;
+  analogyDescription: string;
+  conceptTitle: string;
+  conceptBadge?: string;
+  conceptDescription: string;
+  mappingPoints?: AnalogyMappingPoint[];
+  class?: string;
+}
+
+const {
+  title = "Mental Model & Concept Analogy",
+  analogyTitle,
+  analogyBadge = "Everyday Analogy",
+  analogyDescription,
+  conceptTitle,
+  conceptBadge = "System Mechanics",
+  conceptDescription,
+  mappingPoints = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+---
+
+<div class:list={["aui-analogy-card", className]} {...props}>
+  <div class="aui-analogy-header">
+    <span class="aui-analogy-title">{title}</span>
+  </div>
+
+  <div class="aui-analogy-grid">
+    <div class="aui-analogy-col aui-analogy-col-real">
+      <div class="aui-analogy-col-header">
+        <span class="aui-analogy-col-badge aui-analogy-badge-real">
+          {analogyBadge}
+        </span>
+        <h4 class="aui-analogy-col-title">{analogyTitle}</h4>
+      </div>
+      <p class="aui-analogy-col-desc">{analogyDescription}</p>
+
+      {mappingPoints.length > 0 && (
+        <div class="aui-analogy-points">
+          <span class="font-mono text-xs uppercase font-bold text-muted-foreground mb-1">
+            Metaphor Component:
+          </span>
+          {mappingPoints.map((pt) => (
+            <div class="aui-analogy-point-item">
+              <span class="aui-analogy-point-bullet">↳</span>
+              <span>{pt.analogy}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div class="aui-analogy-col aui-analogy-col-tech">
+      <div class="aui-analogy-col-header">
+        <span class="aui-analogy-col-badge aui-analogy-badge-tech">
+          {conceptBadge}
+        </span>
+        <h4 class="aui-analogy-col-title">{conceptTitle}</h4>
+      </div>
+      <p class="aui-analogy-col-desc">{conceptDescription}</p>
+
+      {mappingPoints.length > 0 && (
+        <div class="aui-analogy-points">
+          <span class="font-mono text-xs uppercase font-bold text-muted-foreground mb-1">
+            Corresponds In Software To:
+          </span>
+          {mappingPoints.map((pt) => (
+            <div class="aui-analogy-point-item">
+              <span class="aui-analogy-point-bullet">↳</span>
+              <span class="font-mono text-xs font-semibold text-foreground">
+                {pt.concept}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,150 @@
+---
+interface ArchitectureNodeItem {
+  id: string;
+  label: string;
+  badge?: string;
+  description?: string;
+  x: number;
+  y: number;
+  status?: "ok" | "warn" | "err" | "info";
+  metadata?: Record<string, string>;
+}
+
+interface ArchitectureConnectionItem {
+  from: string;
+  to: string;
+  label?: string;
+  animated?: boolean;
+  variant?: "solid" | "dashed";
+  status?: "ok" | "warn" | "err" | "primary";
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+  nodes: ArchitectureNodeItem[];
+  connections?: ArchitectureConnectionItem[];
+  class?: string;
+}
+
+const {
+  title = "System Architecture",
+  subtitle,
+  badge,
+  nodes = [],
+  connections = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const nodeMap = new Map<string, ArchitectureNodeItem>();
+nodes.forEach((n) => nodeMap.set(n.id, n));
+---
+
+<div class:list={["aui-arch-canvas", className]} {...props}>
+  <div class="aui-arch-header">
+    <div class="aui-arch-title-group">
+      <span class="aui-arch-title">{title}</span>
+      {subtitle && <span class="aui-arch-subtitle">{subtitle}</span>}
+    </div>
+    {badge && <div class="aui-canvas-badge">{badge}</div>}
+  </div>
+
+  <div class="aui-arch-viewport">
+    <svg class="aui-arch-svg-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <defs>
+        <marker
+          id="aui-arch-arrow-astro"
+          viewBox="0 0 10 10"
+          refX="6"
+          refY="5"
+          markerWidth="6"
+          markerHeight="6"
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--aui-border-strong)" />
+        </marker>
+      </defs>
+
+      {connections.map((conn) => {
+        const src = nodeMap.get(conn.from);
+        const dst = nodeMap.get(conn.to);
+        if (!src || !dst) return null;
+
+        return (
+          <g>
+            <line
+              x1={`${src.x}%`}
+              y1={`${src.y}%`}
+              x2={`${dst.x}%`}
+              y2={`${dst.y}%`}
+              stroke="var(--aui-border-strong)"
+              stroke-width="1.5"
+              stroke-dasharray={conn.variant === "dashed" ? "4 4" : undefined}
+              marker-end="url(#aui-arch-arrow-astro)"
+            />
+            {conn.animated && (
+              <circle r="3" fill="var(--aui-primary)">
+                <animate
+                  attributeName="cx"
+                  from={`${src.x}%`}
+                  to={`${dst.x}%`}
+                  dur="2.4s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="cy"
+                  from={`${src.y}%`}
+                  to={`${dst.y}%`}
+                  dur="2.4s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;1;0"
+                  dur="2.4s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+
+    <div class="aui-arch-nodes-container">
+      {connections.map((conn) => {
+        if (!conn.label) return null;
+        const src = nodeMap.get(conn.from);
+        const dst = nodeMap.get(conn.to);
+        if (!src || !dst) return null;
+
+        const midX = (src.x + dst.x) / 2;
+        const midY = (src.y + dst.y) / 2;
+
+        return (
+          <div
+            class="aui-arch-edge-label-box"
+            style={`left: ${midX}%; top: ${midY}%;`}
+          >
+            {conn.label}
+          </div>
+        );
+      })}
+
+      {nodes.map((node) => (
+        <div
+          class="aui-arch-node"
+          style={`left: ${node.x}%; top: ${node.y}%;`}
+        >
+          <div class="aui-arch-node-top">
+            <span class="aui-arch-node-name">{node.label}</span>
+            {node.badge && <span class="aui-arch-node-badge">{node.badge}</span>}
+          </div>
+          {node.description && <p class="aui-arch-node-desc">{node.description}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

@@ -78,8 +78,8 @@ export function ClusterState({
             )}
             onClick={() => onNodeClick?.(node.id)}
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-mono text-xs font-bold text-foreground">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-mono text-sm font-bold text-foreground">
                 {node.id}
               </span>
               <span
@@ -93,19 +93,19 @@ export function ClusterState({
             </div>
             <span
               className={cn(
-                "font-mono text-[10px] font-bold uppercase tracking-wider mb-1",
+                "font-mono text-xs font-bold uppercase tracking-wider mb-1",
                 node.role === "leader" ? "text-primary" : "text-muted-foreground"
               )}
             >
               {node.role}
             </span>
             {typeof node.term === "number" && (
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-xs text-muted-foreground">
                 Term {node.term}
               </span>
             )}
             {node.latency && (
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="font-mono text-xs text-muted-foreground font-semibold">
                 {node.latency}
               </span>
             )}

@@ -1,0 +1,72 @@
+---
+interface StateNodeItem {
+  id: string;
+  label: string;
+  description?: string;
+  type?: "initial" | "normal" | "terminal";
+}
+
+interface StateTransitionItem {
+  from: string;
+  to: string;
+  trigger: string;
+  description?: string;
+}
+
+interface Props {
+  title?: string;
+  initialState: string;
+  states: StateNodeItem[];
+  transitions: StateTransitionItem[];
+  class?: string;
+}
+
+const {
+  title = "Finite State Machine",
+  initialState,
+  states = [],
+  transitions = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const activeNode = states.find((s) => s.id === initialState);
+const availableTransitions = transitions.filter((t) => t.from === initialState);
+---
+
+<div class:list={["aui-state-machine", className]} {...props}>
+  <div class="aui-fsm-header">
+    <span class="aui-fsm-title">{title}</span>
+    <span class="aui-fsm-active-badge">Initial: {activeNode?.label || initialState}</span>
+  </div>
+
+  <div class="aui-fsm-body">
+    <div class="aui-fsm-nodes-grid">
+      {states.map((state) => {
+        const isActive = state.id === initialState;
+        return (
+          <div class:list={["aui-fsm-node-card", isActive && "is-active"]}>
+            <div class="aui-fsm-node-header">
+              <span class="aui-fsm-node-label">{state.label}</span>
+              <span class="aui-fsm-node-type">{state.type || "state"}</span>
+            </div>
+            {state.description && <p class="aui-fsm-node-desc">{state.description}</p>}
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="aui-fsm-triggers-panel">
+      <div class="aui-fsm-triggers-title">
+        Defined State Transitions:
+      </div>
+      <div class="aui-fsm-triggers-btns">
+        {transitions.map((trans) => (
+          <span class="aui-api-btn">
+            {trans.from} ⚡ {trans.trigger} → <strong>{trans.to}</strong>
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

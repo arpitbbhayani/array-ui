@@ -634,6 +634,132 @@ Interactive slider sandbox for mathematical formulas and live reactive system ca
 />
 ```
 
+#### 31. `ArchitectureCanvas` (`@aui/architecture-canvas`)
+Interactive system architecture and flow diagram canvas with animated traveling packets, directional connections, and node inspector.
+```tsx
+<ArchitectureCanvas
+  title="Distributed Write Path"
+  subtitle="Microservice & Message Queue Architecture"
+  nodes={[
+    { id: "client", label: "Client App", x: 15, y: 50, badge: "Web/Mobile" },
+    { id: "gateway", label: "Envoy Gateway", x: 40, y: 50, badge: "TLS / Rate Limit" },
+    { id: "order", label: "Order Service", x: 68, y: 30, badge: "Go · 8 pods" },
+    { id: "kafka", label: "Kafka Event Bus", x: 68, y: 70, badge: "Topic: orders.v1" },
+    { id: "db", label: "PostgreSQL Primary", x: 92, y: 30, badge: "WAL Active" },
+  ]}
+  connections={[
+    { from: "client", to: "gateway", label: "POST /order", animated: true },
+    { from: "gateway", to: "order", label: "gRPC", animated: true },
+    { from: "order", to: "kafka", label: "produce()", variant: "dashed" },
+    { from: "order", to: "db", label: "fsync", status: "ok" },
+  ]}
+/>
+```
+
+#### 32. `SequenceDiagram` (`@aui/sequence-diagram`)
+Interactive sequence lifelines walkthrough with playback scrubber, request/response arrows, and callout notes.
+```tsx
+<SequenceDiagram
+  title="Two-Phase Commit (2PC) Protocol"
+  actors={["Coordinator", "Participant A", "Participant B"]}
+  steps={[
+    { from: "Coordinator", to: "Participant A", label: "PREPARE" },
+    { from: "Coordinator", to: "Participant B", label: "PREPARE" },
+    { from: "Participant A", to: "Coordinator", label: "VOTE_COMMIT" },
+    { from: "Participant B", to: "Coordinator", label: "VOTE_COMMIT" },
+    { from: "Coordinator", to: "Participant A", label: "GLOBAL_COMMIT", note: "Quorum reached: committing transaction" },
+    { from: "Coordinator", to: "Participant B", label: "GLOBAL_COMMIT" },
+  ]}
+  interactiveScrubber={true}
+/>
+```
+
+#### 33. `StateMachine` (`@aui/state-machine`)
+Finite state machine diagram with interactive transition triggers, active state highlighting, and transition audit history.
+```tsx
+<StateMachine
+  title="Raft Consensus State Machine"
+  initialState="Follower"
+  states={[
+    { id: "Follower", label: "Follower", description: "Listens for leader heartbeats" },
+    { id: "Candidate", label: "Candidate", description: "Increments term, requests votes" },
+    { id: "Leader", label: "Leader", description: "Handles client writes, replicates log" },
+  ]}
+  transitions={[
+    { from: "Follower", to: "Candidate", trigger: "Election Timeout" },
+    { from: "Candidate", to: "Leader", trigger: "Votes Majority Reached" },
+    { from: "Candidate", to: "Follower", trigger: "New Leader Discovered" },
+    { from: "Leader", to: "Follower", trigger: "Higher Term Detected" },
+  ]}
+/>
+```
+
+#### 34. `ConceptWalkthrough` (`@aui/concept-walkthrough`)
+Split-pane storyboard explainer with synchronized visual stage, narrative milestones, and keyboard arrow controls.
+```tsx
+<ConceptWalkthrough
+  steps={[
+    {
+      title: "Write-Ahead Log (WAL)",
+      badge: "Stage 1",
+      content: "Before mutating any state on disk, operations are sequentially appended to an immutable append-only log file.",
+      takeaway: "Sequential disk I/O is 100x faster than random I/O.",
+      visual: <div className="p-4 font-mono text-sm">WAL: [Entry 101] -> [Entry 102]</div>,
+    },
+    {
+      title: "MemTable Ingestion",
+      badge: "Stage 2",
+      content: "The record is concurrently inserted into an in-memory SkipList called MemTable.",
+      takeaway: "In-memory sorted order enables log(N) point lookups.",
+      visual: <div className="p-4 font-mono text-sm">MemTable: SkipList [Key: 42 -> Val: "active"]</div>,
+    },
+  ]}
+/>
+```
+
+#### 35. `TradeoffMatrix` (`@aui/tradeoff-matrix`)
+Architectural trade-off comparison matrix evaluating candidate technologies across weighted dimensions.
+```tsx
+<TradeoffMatrix
+  title="LSM-Tree vs B+ Tree Storage Engines"
+  dimensions={["Write Throughput", "Read Latency", "Space Amplification", "Range Scans"]}
+  options={[
+    {
+      name: "LSM-Tree (RocksDB)",
+      scores: { "Write Throughput": "High", "Read Latency": "Med", "Space Amplification": "Low", "Range Scans": "Med" },
+      pros: ["Optimal for write-heavy workloads", "Sequential I/O"],
+      cons: ["Compaction latency spikes"],
+      verdict: "Ideal for event logs, metrics, timeseries",
+    },
+    {
+      name: "B+ Tree (Postgres/InnoDB)",
+      scores: { "Write Throughput": "Med", "Read Latency": "High", "Space Amplification": "Med", "Range Scans": "High" },
+      pros: ["Predictable read latency", "Instant in-place lookups"],
+      cons: ["Random disk writes", "Page fragmentation"],
+      verdict: "Ideal for relational databases and read-heavy OLTP",
+    },
+  ]}
+  recommendation="Choose LSM-Trees when write throughput dominates; choose B+ Trees for read-heavy transactional queries."
+/>
+```
+
+#### 36. `AnalogyCard` (`@aui/analogy-card`)
+Dual-perspective mental model card bridging real-world analogies to underlying technical mechanisms.
+```tsx
+<AnalogyCard
+  title="Understanding Database Indexes"
+  analogyTitle="The Library Card Catalog"
+  analogyDescription="Instead of searching every bookshelf for a book, you look up the author card to find the exact shelf location."
+  conceptTitle="B-Tree Secondary Index"
+  conceptDescription="Instead of performing a full table scan over millions of disk rows, the database traverses an index tree to fetch the row pointer."
+  mappingPoints={[
+    { analogy: "Catalog sorted alphabetically", concept: "B-Tree sorted balanced key structure" },
+    { analogy: "Shelf location code (call number)", concept: "Direct row pointer (Tuple ID / Primary Key)" },
+    { analogy: "Flipping through a few cards", concept: "Logarithmic O(log N) tree depth traversal" },
+  ]}
+/>
+```
+
 ### SaaS & Control Plane Primitives
 
 #### 31. `Combobox` (`@aui/combobox`)

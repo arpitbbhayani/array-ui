@@ -1,0 +1,81 @@
+---
+interface SequenceStepItem {
+  from: string;
+  to: string;
+  label: string;
+  type?: "request" | "response" | "commit" | "error";
+  note?: string;
+  dashed?: boolean;
+}
+
+interface Props {
+  title?: string;
+  actors: string[];
+  steps: SequenceStepItem[];
+  class?: string;
+}
+
+const {
+  title = "Sequence Protocol",
+  actors = [],
+  steps = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const actorCount = actors.length;
+const getActorIndex = (actorName: string) => {
+  const idx = actors.indexOf(actorName);
+  return idx >= 0 ? idx : 0;
+};
+---
+
+<div class:list={["aui-seq-diagram", className]} {...props}>
+  <div class="aui-seq-header">
+    <span class="aui-seq-title">{title}</span>
+    <span class="aui-seq-step-pill">{steps.length} Steps</span>
+  </div>
+
+  <div class="aui-seq-stage">
+    <div class="aui-seq-actors-row">
+      {actors.map((actor) => (
+        <div class="aui-seq-actor">{actor}</div>
+      ))}
+    </div>
+
+    <div class="aui-seq-messages">
+      {steps.map((step) => {
+        const fromIdx = getActorIndex(step.from);
+        const toIdx = getActorIndex(step.to);
+        const minIdx = Math.min(fromIdx, toIdx);
+        const maxIdx = Math.max(fromIdx, toIdx);
+        const goingRight = fromIdx < toIdx;
+
+        const leftPercent = ((minIdx + 0.5) / actorCount) * 100;
+        const widthPercent = ((maxIdx - minIdx) / actorCount) * 100;
+
+        return (
+          <>
+            <div class="aui-seq-msg-item">
+              <div
+                class:list={["aui-seq-msg-line", step.dashed && "is-dashed"]}
+                style={`margin-left: ${leftPercent}%; width: ${widthPercent}%;`}
+              >
+                <span class:list={["aui-seq-msg-arrow", goingRight ? "arrow-right" : "arrow-left"]}>
+                  {goingRight ? "►" : "◄"}
+                </span>
+                <span class="aui-seq-msg-pill">{step.label}</span>
+              </div>
+            </div>
+
+            {step.note && (
+              <div class="aui-seq-note">
+                💡 {step.note}
+              </div>
+            )}
+          </>
+        );
+      })}
+    </div>
+  </div>
+</div>

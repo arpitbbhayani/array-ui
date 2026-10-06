@@ -1,0 +1,52 @@
+---
+interface ConceptWalkthroughStep {
+  title: string;
+  badge?: string;
+  content: string;
+  takeaway?: string;
+  visualTitle?: string;
+}
+
+interface Props {
+  steps: ConceptWalkthroughStep[];
+  class?: string;
+}
+
+const { steps = [], class: className = "", ...props } = Astro.props;
+const firstStep = steps[0];
+---
+
+<div class:list={["aui-concept-walkthrough", className]} {...props}>
+  <div class="aui-concept-grid">
+    <div class="aui-concept-narrative">
+      <div>
+        <span class="aui-concept-step-badge">
+          {firstStep?.badge || "Overview"}
+        </span>
+
+        <h3 class="aui-concept-step-title">{firstStep?.title}</h3>
+        <div class="aui-concept-step-content">{firstStep?.content}</div>
+
+        {firstStep?.takeaway && (
+          <div class="aui-concept-takeaways">
+            <strong>Key Maxim:</strong> {firstStep.takeaway}
+          </div>
+        )}
+      </div>
+
+      <div class="aui-concept-nav">
+        <span class="aui-concept-nav-counter">
+          {steps.length} Key Concept Milestones
+        </span>
+      </div>
+    </div>
+
+    <div class="aui-concept-visual-stage">
+      <slot name="visual">
+        <div class="p-6 text-center text-muted-foreground font-mono text-sm">
+          {firstStep?.visualTitle || "Visual Concept Stage"}
+        </div>
+      </slot>
+    </div>
+  </div>
+</div>

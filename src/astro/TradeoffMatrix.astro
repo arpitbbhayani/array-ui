@@ -1,0 +1,116 @@
+---
+interface TradeoffOptionItem {
+  name: string;
+  badge?: string;
+  scores: Record<string, "high" | "med" | "low" | string>;
+  pros?: string[];
+  cons?: string[];
+  verdict?: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  dimensions: string[];
+  options: TradeoffOptionItem[];
+  recommendation?: string;
+  class?: string;
+}
+
+const {
+  title = "Architectural Trade-Off Analysis",
+  description = "Evaluating system trade-offs across critical engineering dimensions.",
+  dimensions = [],
+  options = [],
+  recommendation,
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const renderScoreClass = (score: string) => {
+  const lower = score.toLowerCase();
+  if (lower === "high" || lower === "great" || lower === "low latency" || lower === "low cost") {
+    return "aui-tradeoff-score-high";
+  }
+  if (lower === "med" || lower === "medium" || lower === "fair" || lower === "moderate") {
+    return "aui-tradeoff-score-med";
+  }
+  if (lower === "low" || lower === "poor" || lower === "high complexity" || lower === "high cost") {
+    return "aui-tradeoff-score-low";
+  }
+  return "";
+};
+---
+
+<div class:list={["aui-tradeoff-matrix", className]} {...props}>
+  <div class="aui-tradeoff-header">
+    <h3 class="aui-tradeoff-title">{title}</h3>
+    {description && <p class="aui-tradeoff-desc">{description}</p>}
+  </div>
+
+  <div class="aui-tradeoff-table-wrapper">
+    <table class="aui-tradeoff-table">
+      <thead>
+        <tr>
+          <th>Candidate Option</th>
+          {dimensions.map((dim) => (
+            <th>{dim}</th>
+          ))}
+          <th>Key Advantages & Trade-Offs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {options.map((opt) => (
+          <tr>
+            <td>
+              <div class="flex flex-col gap-1">
+                <span class="aui-tradeoff-opt-name">{opt.name}</span>
+                {opt.badge && (
+                  <span class="font-mono text-xs text-muted-foreground">
+                    {opt.badge}
+                  </span>
+                )}
+              </div>
+            </td>
+            {dimensions.map((dim) => {
+              const score = opt.scores[dim] || "—";
+              return (
+                <td>
+                  <span class:list={["aui-tradeoff-score-pill", renderScoreClass(score)]}>
+                    {score}
+                  </span>
+                </td>
+              );
+            })}
+            <td>
+              <div class="flex flex-col gap-1.5 min-w-[200px]">
+                {opt.pros && opt.pros.length > 0 && (
+                  <div class="text-xs text-emerald-600 dark:text-emerald-400">
+                    <strong>+ </strong> {opt.pros.join(", ")}
+                  </div>
+                )}
+                {opt.cons && opt.cons.length > 0 && (
+                  <div class="text-xs text-rose-600 dark:text-rose-400">
+                    <strong>− </strong> {opt.cons.join(", ")}
+                  </div>
+                )}
+                {opt.verdict && (
+                  <div class="font-mono text-xs text-muted-foreground mt-0.5">
+                    Verdict: {opt.verdict}
+                  </div>
+                )}
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  {recommendation && (
+    <div class="aui-tradeoff-verdict">
+      <span class="font-bold">Architectural Recommendation:</span>
+      <span>{recommendation}</span>
+    </div>
+  )}
+</div>

@@ -34,27 +34,27 @@ export function PipelineFlow({
         <React.Fragment key={idx}>
           <div
             className={cn(
-              "flex flex-col p-3 rounded-md border border-border bg-card shadow-xs min-w-[140px] max-w-[200px] flex-shrink-0 transition-colors",
+              "flex flex-col p-3.5 rounded-md border border-border bg-card shadow-xs min-w-[170px] max-w-[240px] flex-shrink-0 transition-colors",
               stage.active && "border-primary ring-1 ring-primary"
             )}
           >
-            <div className="flex items-center justify-between gap-1 mb-1">
-              <span className="font-mono text-xs font-bold text-foreground">
+            <div className="flex items-center justify-between gap-1.5 mb-1.5">
+              <span className="font-mono text-sm font-bold text-foreground">
                 {stage.title}
               </span>
               {stage.badge && (
-                <span className="font-mono text-[10px] px-1 py-0.5 rounded bg-muted text-muted-foreground">
+                <span className="font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
                   {stage.badge}
                 </span>
               )}
             </div>
             {stage.description && (
-              <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
+              <p className="text-sm text-muted-foreground line-clamp-2 mb-2 leading-snug">
                 {stage.description}
               </p>
             )}
             {stage.metric && (
-              <div className="font-mono text-xs font-semibold text-emerald-500 mt-auto">
+              <div className="font-mono text-sm font-semibold text-emerald-500 mt-auto">
                 {stage.metric}
               </div>
             )}
@@ -66,7 +66,7 @@ export function PipelineFlow({
                 {animated && (
                   <div className="absolute -top-[3px] w-2 h-2 rounded-full bg-primary animate-pulse" />
                 )}
-                <span className="absolute -right-1 -top-2 text-[10px] text-muted-foreground">
+                <span className="absolute -right-1 -top-2 text-xs text-muted-foreground">
                   ►
                 </span>
               </div>
