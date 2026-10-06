@@ -44,8 +44,30 @@ const derivedHtml = usage
       <a href={`#${id}`} class="aui-font-mono" style="font-size: 0.8rem; color: var(--aui-text-muted); opacity: 0.4; text-decoration: none;">#</a>
     </div>
 
-    {shadcnName && (
-      <div class="aui-row aui-row-xs">
+    <div class="aui-row aui-row-xs" style="gap: 0.35rem;">
+      {usage && (
+        <button
+          type="button"
+          class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono spec-toggle-btn"
+          style="font-size: 0.72rem; padding: 0.15rem 0.55rem; height: auto; display: inline-flex; align-items: center; gap: 0.35rem;"
+          title="View and copy code"
+          onclick={`
+            const root = this.closest('section');
+            const bar = root.querySelector('.spec-usage-bar');
+            if (!bar) return;
+            const isHidden = bar.style.display === 'none' || getComputedStyle(bar).display === 'none';
+            bar.style.display = isHidden ? 'flex' : 'none';
+            this.classList.toggle('is-active', isHidden);
+            const label = this.querySelector('.spec-toggle-label');
+            if (label) label.textContent = isHidden ? 'Hide Code' : 'Code';
+          `}
+        >
+          <span style="font-size: 0.72rem; opacity: 0.8;">&lt;/&gt;</span>
+          <span class="spec-toggle-label">Code</span>
+        </button>
+      )}
+
+      {shadcnName && (
         <a
           href={`/r/${shadcnName}.json`}
           target="_blank"
@@ -65,8 +87,8 @@ const derivedHtml = usage
           <span>⚡</span>
           <code class="spec-shadcn-btn-text" style="font-family: inherit; border: none; background: transparent; padding: 0;">add @aui/{shadcnName}</code>
         </button>
-      </div>
-    )}
+      )}
+    </div>
   </header>
   {description && <p class="aui-editorial-sub" style="margin: 0; font-size: 0.88rem;">{description}</p>}
 
@@ -77,27 +99,49 @@ const derivedHtml = usage
   {usage && (
     <div
       class="spec-usage-bar aui-stack aui-stack-xs"
-      style="background-color: var(--aui-pre-bg); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); padding: 0.5rem 0.75rem; gap: 0.35rem; min-width: 0;"
+      style="display: none; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); padding: 0.6rem 0.85rem; gap: 0.45rem; min-width: 0; margin-top: 0.5rem;"
       data-nextjs={reactUsage}
       data-react={reactUsage}
       data-astro={astroUsage}
       data-html={derivedHtml || usage}
       data-shadcn={shadcnUsage || reactUsage}
     >
-      <div class="aui-row-between" style="width: 100%; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.25rem;">
-        <span class="aui-font-mono" style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aui-text-muted); opacity: 0.8;">Usage Example</span>
-        <button
-          type="button"
-          class="aui-btn aui-btn-ghost aui-btn-sm spec-copy-btn aui-font-mono"
-          style="padding: 0.15rem 0.45rem; height: auto; color: var(--aui-text-muted); font-size: 0.72rem;"
-          title="Copy snippet"
-          data-usage={reactUsage}
-          onclick="navigator.clipboard.writeText(this.dataset.usage); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 1600);"
-        >
-          Copy
-        </button>
+      <div class="aui-row-between" style="width: 100%; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.35rem;">
+        <span class="aui-font-mono" style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aui-text-muted);">Usage Snippet</span>
+        <div class="aui-row aui-row-xs" style="gap: 0.35rem;">
+          <button
+            type="button"
+            class="aui-btn aui-btn-secondary aui-btn-sm spec-copy-btn aui-font-mono"
+            style="padding: 0.18rem 0.55rem; height: auto; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 0.35rem;"
+            title="Copy snippet"
+            data-usage={reactUsage}
+            onclick={`navigator.clipboard.writeText(this.dataset.usage); const orig=this.innerHTML; this.innerHTML='<span style=\"color:var(--aui-success);\">✓</span> Copied!'; setTimeout(() => this.innerHTML=orig, 1600);`}
+          >
+            <span>⎘</span>
+            <span>Copy Code</span>
+          </button>
+          <button
+            type="button"
+            class="aui-btn aui-btn-ghost aui-btn-sm aui-font-mono"
+            style="padding: 0.18rem 0.4rem; height: auto; font-size: 0.72rem; color: var(--aui-text-muted);"
+            title="Close code preview"
+            onclick={`
+              const root = this.closest('section');
+              const bar = root.querySelector('.spec-usage-bar');
+              if (bar) bar.style.display = 'none';
+              const btn = root.querySelector('.spec-toggle-btn');
+              if (btn) {
+                btn.classList.remove('is-active');
+                const label = btn.querySelector('.spec-toggle-label');
+                if (label) label.textContent = 'Code';
+              }
+            `}
+          >
+            ✕
+          </button>
+        </div>
       </div>
-      <pre class="aui-pre" style="margin: 0; padding: 0.25rem 0 0 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; overflow-x: auto; max-height: 240px; overflow-y: auto; flex-grow: 1; white-space: pre; font-size: 0.78rem; line-height: 1.55; color: #888894;"><code class="spec-code-text" style="font-family: inherit;">{reactUsage}</code></pre>
+      <pre class="aui-pre" style="margin: 0; padding: 0.4rem 0 0.2rem 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; overflow-x: auto; max-height: 260px; overflow-y: auto; flex-grow: 1; white-space: pre; font-size: 0.82rem; line-height: 1.55; color: var(--aui-text-primary);"><code class="spec-code-text" style="font-family: inherit;">{reactUsage}</code></pre>
     </div>
   )}
 </section>
