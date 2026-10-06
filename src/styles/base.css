@@ -68,22 +68,62 @@ small,
   letter-spacing: 0.018em;
 }
 
-/* Accessible focus outline (surgical laser indicator) */
+/* Accessible focus outline (surgical laser indicator for navigation links and standalone buttons) */
 .aui-body a:focus-visible,
-.aui-body button:focus-visible,
-.aui-body input:focus-visible,
-.aui-body textarea:focus-visible,
-.aui-body select:focus-visible,
 .aui-theme-root a:focus-visible,
-.aui-theme-root button:focus-visible,
-.aui-theme-root input:focus-visible,
-.aui-theme-root textarea:focus-visible,
-.aui-theme-root select:focus-visible,
-[class*="aui-"]:focus-visible,
-.aui-btn:focus-visible {
+.aui-btn:focus-visible,
+.aui-body button:focus-visible:not(.aui-combobox-trigger):not(.aui-select-trigger):not(.aui-multiselect-trigger):not(.aui-datepicker-trigger):not(.aui-checkbox),
+.aui-theme-root button:focus-visible:not(.aui-combobox-trigger):not(.aui-select-trigger):not(.aui-multiselect-trigger):not(.aui-datepicker-trigger):not(.aui-checkbox) {
   outline: 2px solid var(--aui-primary) !important;
   outline-offset: 2px;
   border-radius: var(--aui-radius-sm);
+}
+
+/* Form controls manage their own precision hairline focus ring - prevent double border upon active */
+:where(
+  input,
+  textarea,
+  select,
+  .aui-input,
+  .aui-textarea,
+  .aui-select,
+  .aui-checkbox,
+  .aui-switch input,
+  .aui-combobox-trigger,
+  .aui-select-trigger,
+  .aui-multiselect-trigger,
+  .aui-datepicker-trigger
+):focus,
+:where(
+  input,
+  textarea,
+  select,
+  .aui-input,
+  .aui-textarea,
+  .aui-select,
+  .aui-checkbox,
+  .aui-switch input,
+  .aui-combobox-trigger,
+  .aui-select-trigger,
+  .aui-multiselect-trigger,
+  .aui-datepicker-trigger
+):focus-visible,
+:where(
+  input,
+  textarea,
+  select,
+  .aui-input,
+  .aui-textarea,
+  .aui-select,
+  .aui-checkbox,
+  .aui-switch input,
+  .aui-combobox-trigger,
+  .aui-select-trigger,
+  .aui-multiselect-trigger,
+  .aui-datepicker-trigger
+):active {
+  outline: none !important;
+  outline-offset: 0 !important;
 }
 
 /* Accessible Selection (scoped to aui contexts) */

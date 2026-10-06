@@ -13,6 +13,7 @@ export interface ModalProps
   title?: React.ReactNode;
   footer?: React.ReactNode;
   closeOnBackdropClick?: boolean;
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
@@ -26,6 +27,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
       footer,
       className,
       closeOnBackdropClick = true,
+      size = "md",
       ...props
     },
     ref
@@ -123,7 +125,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
       >
         <div
           ref={modalRef}
-          className={cn("aui-modal", className)}
+          className={cn("aui-modal", size && `aui-modal-${size}`, className)}
           tabIndex={-1}
           {...props}
         >

@@ -36,10 +36,13 @@ const { align = "right", className = "", id } = Astro.props;
         document.querySelectorAll<HTMLElement>("[data-aui-dropdown-menu].is-open").forEach((m) => {
           if (m !== menu) {
             m.classList.remove("is-open");
-            m.closest("[data-aui-dropdown]")?.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
+            const otherDd = m.closest("[data-aui-dropdown]");
+            otherDd?.classList.remove("is-open");
+            otherDd?.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
           }
         });
         const isOpen = menu.classList.toggle("is-open");
+        dd.classList.toggle("is-open", isOpen);
         trigger.setAttribute("aria-expanded", String(isOpen));
       });
     });
@@ -49,6 +52,7 @@ const { align = "right", className = "", id } = Astro.props;
         const dd = menu.closest("[data-aui-dropdown]");
         if (dd && !dd.contains(e.target as Node)) {
           menu.classList.remove("is-open");
+          dd.classList.remove("is-open");
           dd.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
         }
       });
@@ -59,6 +63,7 @@ const { align = "right", className = "", id } = Astro.props;
         document.querySelectorAll<HTMLElement>("[data-aui-dropdown-menu].is-open").forEach((menu) => {
           menu.classList.remove("is-open");
           const dd = menu.closest("[data-aui-dropdown]");
+          dd?.classList.remove("is-open");
           dd?.querySelector("[data-aui-dropdown-trigger]")?.setAttribute("aria-expanded", "false");
         });
       }

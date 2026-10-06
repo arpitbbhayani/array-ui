@@ -46,15 +46,15 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
       >
         {!children && (
           <span
-            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-muted font-mono text-xs font-bold"
+            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-muted font-mono text-[11px] font-bold mt-[1px] shadow-[0_0_8px_currentColor]"
             aria-hidden="true"
           >
             {glyph[variant]}
           </span>
         )}
-        <div className="flex-1 space-y-1">
-          {title && <p className="font-heading font-semibold text-foreground">{title}</p>}
-          {description && <p className="text-xs text-muted-foreground">{description}</p>}
+        <div className="flex-1 min-w-0">
+          {title && <p className="font-heading font-semibold text-foreground text-sm leading-5">{title}</p>}
+          {description && <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{description}</p>}
           {children}
         </div>
         {onClose && (

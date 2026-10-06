@@ -50,7 +50,7 @@ export interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement>
 
 export function AccordionItem({ value, className, children, ...props }: AccordionItemProps) {
   return (
-    <div className={cn("py-1", className)} data-value={value} {...props}>
+    <div className={cn(className)} data-value={value} {...props}>
       {children}
     </div>
   );
@@ -69,15 +69,26 @@ export function AccordionTrigger({ value, className, children, ...props }: Accor
       type="button"
       onClick={() => ctx?.toggleItem(value)}
       className={cn(
-        "flex flex-1 items-center justify-between py-3 text-sm font-semibold text-foreground transition-all hover:text-primary cursor-pointer w-full text-left",
+        "flex flex-1 items-center justify-between py-2.5 text-sm font-semibold text-foreground transition-all hover:text-primary cursor-pointer w-full text-left",
         className
       )}
       {...props}
     >
       <span>{children}</span>
-      <span className={cn("text-xs text-muted-foreground transition-transform duration-200", isOpen && "rotate-180")}>
-        ▼
-      </span>
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={cn("shrink-0 text-muted-foreground transition-transform duration-200", isOpen && "rotate-180 text-foreground")}
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
     </button>
   );
 }
@@ -93,7 +104,7 @@ export function AccordionContent({ value, className, children, ...props }: Accor
   if (!isOpen) return null;
 
   return (
-    <div className={cn("pb-3 text-sm text-muted-foreground leading-relaxed", className)} {...props}>
+    <div className={cn("pb-2.5 pt-0.5 text-sm text-muted-foreground leading-relaxed", className)} {...props}>
       {children}
     </div>
   );

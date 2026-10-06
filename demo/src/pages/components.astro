@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo } from "../components/Interactive";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
@@ -202,7 +202,7 @@ const takeaways = [
 ---
 
 <Layout
-  title="Component Catalog — Array UI"
+  title="Array UI"
   description="Explore the complete interactive catalog of 58+ native components and shadcn CLI registry primitives."
 >
   <div class="aui-container">
@@ -957,7 +957,8 @@ const takeaways = [
                 <div class="spec-label" style="margin-bottom:0.5rem;">Astro Component</div>
                 <Dropdown align="left">
                   <Button slot="trigger" variant="secondary" size="sm">
-                    Actions ▼
+                    <span>Actions</span>
+                    <svg class="aui-dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   </Button>
                   <div class="aui-dropdown-header">Operations</div>
                   <a href="#dropdown" class="aui-dropdown-item">View Cluster Telemetry</a>
@@ -993,26 +994,19 @@ const takeaways = [
           <Specimen
             id="select"
             name="Select & textarea"
+            description="Dropdown single select with clean hairline trigger, checkmark indicators, and monospace badges."
             usage={`<Select
   label="Target Region"
   options={[
-    { label: "eu-west-1 (Ireland)", value: "eu" },
-    { label: "us-east-1 (Virginia)", value: "us" },
+    { label: "eu-west-1 (Ireland)", value: "eu", badge: "Primary" },
+    { label: "us-east-1 (Virginia)", value: "us", badge: "Replica" },
     { label: "ap-south-1 (Mumbai)", value: "ap" },
   ]}
-  value="eu"
+  defaultValue="eu"
 />
 <Textarea label="Rollout Notes" placeholder="Specify release notes..." rows={3} />`}
           >
-            <Select
-              label="Region"
-              options={[
-                { label: "eu-west-1 (Ireland)", value: "eu" },
-                { label: "us-east-1 (Virginia)", value: "us" },
-                { label: "ap-south-1 (Mumbai)", value: "ap" },
-              ]}
-            />
-            <Textarea label="Notes" placeholder="Rollout notes…" rows={3} />
+            <SelectDemo client:load />
           </Specimen>
 
           <Specimen
@@ -1030,17 +1024,12 @@ const takeaways = [
           <Specimen
             id="switch"
             name="Switch & checkbox"
+            description="Crisp squircle checkbox with vector checkmark and smooth toggle switch."
             usage={`<Switch label="Auto-deploy on push" defaultChecked />
 <Checkbox label="Require quorum confirmation" defaultChecked />`}
             span={2}
           >
-            <div class="spec-row" style="gap:1.5rem;">
-              <Switch label="Auto-deploy" defaultChecked />
-              <Switch label="Maintenance mode" />
-              <Checkbox label="Run tests" defaultChecked />
-              <Checkbox label="Lint" defaultChecked />
-              <Checkbox label="Type-check" />
-            </div>
+            <SwitchCheckboxDemo client:load />
           </Specimen>
         </div>
 
@@ -1534,11 +1523,11 @@ const takeaways = [
             id="notice"
             name="Notice box"
             usage={`<NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
-  <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun slides.md</code></p>
+  <span slot="footer">Open with <code class="aui-code">npx deckrun slides.md</code></span>
 </NoticeBox>`}
           >
             <NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
-              <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></p>
+              <span slot="footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></span>
             </NoticeBox>
           </Specimen>
 
@@ -1869,9 +1858,7 @@ const takeaways = [
 >
   <div style={{ padding: "0.75rem", minWidth: "200px" }}>
     <div style={{ fontWeight: 600, fontSize: "0.85rem", marginBottom: "0.5rem" }}>Filters</div>
-    <label style={{ display: "flex", gap: "0.5rem", fontSize: "0.82rem" }}>
-      <input type="checkbox" defaultChecked /> Active connections
-    </label>
+    <Checkbox label="Active connections" defaultChecked />
   </div>
 </Popover>`}
             shadcnName="popover"

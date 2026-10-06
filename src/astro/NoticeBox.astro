@@ -60,7 +60,11 @@ const {
 
   <slot />
 
-  <div class="aui-notice-footer">
-    <slot name="footer" />
-  </div>
+  {
+    Astro.slots.has("footer") && (
+      <div class="aui-notice-footer">
+        <slot name="footer" />
+      </div>
+    )
+  }
 </div>

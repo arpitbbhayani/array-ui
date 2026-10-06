@@ -37,7 +37,12 @@ export function DocStepper({
         return (
           <div key={idx} className="flex gap-4 relative">
             {idx < steps.length - 1 && (
-              <div className="absolute left-[13px] top-[26px] bottom-[-24px] w-px bg-border" />
+              <div
+                className={cn(
+                  "absolute left-[13px] top-[26px] bottom-[-24px] w-0.5 transition-colors",
+                  isCompleted ? "bg-emerald-500" : "bg-border"
+                )}
+              />
             )}
 
             <div className="flex flex-col items-center flex-shrink-0 z-10">

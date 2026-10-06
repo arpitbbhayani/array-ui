@@ -7,10 +7,15 @@ import {
   Toast,
   ToastStack,
   Input,
+  Textarea,
+  Select,
+  Checkbox,
+  Switch,
   Kbd,
   Table,
   SearchBox,
   Dropdown,
+  DropdownChevron,
   VideoEmbed,
   Combobox,
   Drawer,
@@ -131,6 +136,37 @@ export function FormDemo() {
   );
 }
 
+export function SelectDemo() {
+  const [region, setRegion] = useState("eu");
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%", maxWidth: 360 }}>
+      <Select
+        label="Target Region"
+        value={region}
+        onChange={setRegion}
+        options={[
+          { label: "eu-west-1 (Ireland)", value: "eu", badge: "Primary" },
+          { label: "us-east-1 (Virginia)", value: "us", badge: "Replica" },
+          { label: "ap-south-1 (Mumbai)", value: "ap" },
+        ]}
+      />
+      <Textarea label="Rollout Notes" placeholder="Specify release notes…" rows={3} />
+    </div>
+  );
+}
+
+export function SwitchCheckboxDemo() {
+  return (
+    <div className="spec-row" style={{ gap: "1.5rem", flexWrap: "wrap" }}>
+      <Switch label="Auto-deploy" defaultChecked />
+      <Switch label="Maintenance mode" />
+      <Checkbox label="Run tests" defaultChecked />
+      <Checkbox label="Lint" defaultChecked />
+      <Checkbox label="Type-check" />
+    </div>
+  );
+}
+
 export function TableDemo({ rows }: { rows: { service: string; region: string; p99: string; status: string }[] }) {
   const [dense, setDense] = useState(false);
 
@@ -218,7 +254,7 @@ export function DropdownDemo() {
         trigger={
           <Button variant="secondary" size="sm">
             <span>Actions</span>
-            <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>▼</span>
+            <DropdownChevron />
           </Button>
         }
       >
@@ -382,17 +418,11 @@ export function PopoverDemo() {
         </Button>
       }
     >
-      <div style={{ width: 200, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      <div style={{ width: 200, display: "flex", flexDirection: "column", gap: "0.65rem" }}>
         <p style={{ margin: 0, fontWeight: 600, fontSize: "0.82rem" }}>Filter Deployments</p>
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem" }}>
-          <input type="checkbox" defaultChecked /> Operational
-        </label>
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem" }}>
-          <input type="checkbox" /> Degraded
-        </label>
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem" }}>
-          <input type="checkbox" /> Outages
-        </label>
+        <Checkbox label="Operational" defaultChecked />
+        <Checkbox label="Degraded" />
+        <Checkbox label="Outages" />
       </div>
     </Popover>
   );

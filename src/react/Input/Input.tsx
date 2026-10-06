@@ -126,50 +126,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 Textarea.displayName = "Textarea";
 
-export interface SelectProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string;
-  options?: Array<{ label: string; value: string }>;
-  error?: string;
-}
-
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, options, error, className, id, children, ...props }, ref) => {
-    const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
-    const selectElement = (
-      <select ref={ref} id={inputId} className={cn("aui-select", className)} {...props}>
-        {options
-          ? options.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))
-          : children}
-      </select>
-    );
-
-    if (!label && !error) {
-      return selectElement;
-    }
-
-    return (
-      <div className="aui-form-group">
-        {label && (
-          <label htmlFor={inputId} className="aui-label">
-            {label}
-          </label>
-        )}
-        {selectElement}
-        {error && (
-          <p style={{ color: "var(--aui-primary)", fontSize: "0.82rem", margin: "0.3rem 0 0 0" }}>
-            {error}
-          </p>
-        )}
-      </div>
-    );
-  }
-);
-Select.displayName = "Select";
+export { Select } from "../Select";
+export type { SelectProps, SelectOption } from "../Select";
 
 export interface SwitchProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;

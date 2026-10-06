@@ -17,6 +17,7 @@ export * from "./Breadcrumbs/Breadcrumbs";
 export * from "./CourseCard/CourseCard";
 export * from "./Icons";
 export * from "./Input/Input";
+export * from "./Select";
 export * from "./Modal/Modal";
 export * from "./Alert/Alert";
 export * from "./Tabs/Tabs";

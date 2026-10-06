@@ -114,3 +114,23 @@ export function DropdownItem({
 export function DropdownDivider({ className }: { className?: string }) {
   return <div className={cn("h-px bg-border my-1", className)} />;
 }
+
+export function DropdownChevron({ className, ...props }: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("ml-1.5 h-3 w-3 shrink-0 text-muted-foreground transition-transform duration-150", className)}
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}

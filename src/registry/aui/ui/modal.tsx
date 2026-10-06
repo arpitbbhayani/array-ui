@@ -66,7 +66,7 @@ export function Modal({
       <div
         ref={modalRef}
         className={cn(
-          "w-full max-w-lg bg-card text-card-foreground border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95",
+          "w-full max-w-md bg-card text-card-foreground border border-border rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95",
           className
         )}
         tabIndex={-1}

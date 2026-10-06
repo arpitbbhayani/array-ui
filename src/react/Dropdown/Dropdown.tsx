@@ -2,6 +2,23 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { cn } from "../../utils/cn";
+import { ChevronDownIcon, type IconProps } from "../Icons";
+
+export interface DropdownChevronProps extends IconProps {}
+
+export function DropdownChevron({
+  className,
+  size = 12,
+  ...props
+}: DropdownChevronProps) {
+  return (
+    <ChevronDownIcon
+      size={size}
+      className={cn("aui-dropdown-chevron", className)}
+      {...props}
+    />
+  );
+}
 
 export interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   trigger: React.ReactNode;
@@ -68,7 +85,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           if (typeof ref === "function") ref(node);
           else if (ref) (ref as any).current = node;
         }}
-        className={cn("aui-dropdown", className)}
+        className={cn("aui-dropdown", open && "is-open", className)}
         {...props}
       >
         <div

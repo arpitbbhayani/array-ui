@@ -9,25 +9,208 @@ interface Props {
   label?: string;
   versions: VersionOption[];
   defaultValue?: string;
+  name?: string;
   class?: string;
+  id?: string;
 }
 
 const {
   label = "Version:",
   versions = [],
   defaultValue,
+  name,
   class: className = "",
+  id,
   ...props
 } = Astro.props;
+
+const initialSelected = versions.find((v) => v.value === defaultValue) || versions[0];
 ---
 
-<div class:list={["aui-version-selector", className]} {...props}>
+<div id={id} class:list={["aui-version-selector", className]} data-aui-version-selector {...props}>
   {label && <span class="aui-version-label">{label}</span>}
-  <select class="aui-version-select">
-    {versions.map((ver) => (
-      <option value={ver.value} selected={ver.value === defaultValue}>
-        {ver.label} {ver.badge ? `(${ver.badge})` : ""}
-      </option>
-    ))}
-  </select>
+  <div class="aui-version-wrapper">
+    {name && <input type="hidden" name={name} value={initialSelected?.value || ""} data-aui-version-input />}
+    <button
+      type="button"
+      class="aui-version-trigger"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      data-aui-version-trigger
+    >
+      <span class="aui-version-trigger-label" data-aui-version-trigger-label>{initialSelected?.label || "Select..."}</span>
+      {initialSelected?.badge && (
+        <span class="aui-version-badge" data-aui-version-trigger-badge>{initialSelected.badge}</span>
+      )}
+      <svg
+        class="aui-version-chevron"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        data-aui-version-chevron
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
+    <div class="aui-version-popover" style="display: none;" data-aui-version-popover>
+      <ul class="aui-version-list" role="listbox">
+        {versions.map((ver) => {
+          const isSelected = ver.value === initialSelected?.value;
+          return (
+            <li
+              class:list={["aui-version-item", isSelected && "is-selected"]}
+              role="option"
+              aria-selected={isSelected ? "true" : "false"}
+              data-aui-version-item
+              data-value={ver.value}
+              data-label={ver.label}
+              data-badge={ver.badge || ""}
+            >
+              <span class="aui-version-item-label">{ver.label}</span>
+              <div class="aui-version-item-meta">
+                {ver.badge && <span class="aui-version-badge">{ver.badge}</span>}
+                <svg
+                  class="aui-version-check"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  style={isSelected ? "" : "display: none;"}
+                  data-aui-version-check
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </div>
 </div>
+
+<script>
+  function setupVersionSelectors() {
+    document.querySelectorAll<HTMLElement>("[data-aui-version-selector]").forEach((container) => {
+      if (container.hasAttribute("data-aui-initialized")) return;
+      container.setAttribute("data-aui-initialized", "true");
+
+      const trigger = container.querySelector<HTMLButtonElement>("[data-aui-version-trigger]");
+      const popover = container.querySelector<HTMLElement>("[data-aui-version-popover]");
+      const chevron = container.querySelector<HTMLElement>("[data-aui-version-chevron]");
+      const labelSpan = container.querySelector<HTMLElement>("[data-aui-version-trigger-label]");
+      const hiddenInput = container.querySelector<HTMLInputElement>("[data-aui-version-input]");
+      const items = container.querySelectorAll<HTMLElement>("[data-aui-version-item]");
+
+      if (!trigger || !popover) return;
+
+      const open = () => {
+        popover.style.display = "block";
+        trigger.classList.add("is-open");
+        trigger.setAttribute("aria-expanded", "true");
+        chevron?.classList.add("is-rotated");
+      };
+
+      const close = () => {
+        popover.style.display = "none";
+        trigger.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
+        chevron?.classList.remove("is-rotated");
+      };
+
+      trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (popover.style.display === "block") {
+          close();
+        } else {
+          document.querySelectorAll<HTMLElement>("[data-aui-version-popover]").forEach((p) => {
+            if (p !== popover) {
+              p.style.display = "none";
+              p.closest("[data-aui-version-selector]")?.querySelector("[data-aui-version-trigger]")?.classList.remove("is-open");
+              p.closest("[data-aui-version-selector]")?.querySelector("[data-aui-version-chevron]")?.classList.remove("is-rotated");
+            }
+          });
+          open();
+        }
+      });
+
+      items.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const val = item.getAttribute("data-value") || "";
+          const lbl = item.getAttribute("data-label") || "";
+          const badge = item.getAttribute("data-badge") || "";
+
+          if (hiddenInput) hiddenInput.value = val;
+          if (labelSpan) labelSpan.textContent = lbl;
+
+          let badgeWrap = trigger.querySelector<HTMLElement>("[data-aui-version-trigger-badge]");
+          if (badge) {
+            if (badgeWrap) {
+              badgeWrap.textContent = badge;
+              badgeWrap.style.display = "inline-flex";
+            } else {
+              const newBadge = document.createElement("span");
+              newBadge.className = "aui-version-badge";
+              newBadge.setAttribute("data-aui-version-trigger-badge", "");
+              newBadge.textContent = badge;
+              labelSpan?.after(newBadge);
+            }
+          } else if (badgeWrap) {
+            badgeWrap.style.display = "none";
+          }
+
+          items.forEach((it) => {
+            const isIt = it === item;
+            it.classList.toggle("is-selected", isIt);
+            it.setAttribute("aria-selected", String(isIt));
+            const check = it.querySelector<HTMLElement>("[data-aui-version-check]");
+            if (check) check.style.display = isIt ? "" : "none";
+          });
+
+          close();
+          container.dispatchEvent(new CustomEvent("versionchange", { detail: { value: val, label: lbl } }));
+        });
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      document.querySelectorAll<HTMLElement>("[data-aui-version-popover]").forEach((p) => {
+        const sel = p.closest("[data-aui-version-selector]");
+        if (sel && !sel.contains(e.target as Node)) {
+          p.style.display = "none";
+          sel.querySelector("[data-aui-version-trigger]")?.classList.remove("is-open");
+          sel.querySelector("[data-aui-version-chevron]")?.classList.remove("is-rotated");
+        }
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll<HTMLElement>("[data-aui-version-popover]").forEach((p) => {
+          p.style.display = "none";
+          const sel = p.closest("[data-aui-version-selector]");
+          sel?.querySelector("[data-aui-version-trigger]")?.classList.remove("is-open");
+          sel?.querySelector("[data-aui-version-chevron]")?.classList.remove("is-rotated");
+        });
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupVersionSelectors);
+  } else {
+    setupVersionSelectors();
+  }
+  document.addEventListener("astro:page-load", setupVersionSelectors);
+</script>
