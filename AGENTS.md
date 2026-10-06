@@ -646,6 +646,121 @@ Interactive slider sandbox for mathematical formulas and live reactive system ca
 />
 ```
 
+### SaaS & Control Plane Primitives
+
+#### 31. `Combobox` (`@aui/combobox`)
+Searchable autocomplete select with keyboard navigation, empty states, and badge support.
+```tsx
+<Combobox
+  options={[
+    { value: "main", label: "main", description: "Default production branch", badge: "protected" },
+    { value: "feat/wal", label: "feat/wal", description: "Storage engine compaction" },
+  ]}
+  value={selected}
+  onChange={setSelected}
+  placeholder="Select branch..."
+/>
+```
+
+#### 32. `Drawer` / `Sheet` (`@aui/drawer`)
+Slide-over drawer panel for deep inspection of telemetry, configurations, and logs.
+```tsx
+<Drawer isOpen={open} onClose={() => setOpen(false)} title="Workspace Specs" size="md">
+  <p>Container specs and runtime diffs...</p>
+</Drawer>
+```
+
+#### 33. `AlertDialog` (`@aui/alert-dialog`)
+Destructive action confirmation modal with danger styling, autofocus on Cancel, and optional confirmation phrase.
+```tsx
+<AlertDialog
+  isOpen={open}
+  onClose={() => setOpen(false)}
+  onConfirm={handleTeardown}
+  title="Teardown Cluster"
+  description="This will destroy all volumes and replicas."
+  confirmationPhrase="teardown prod-01"
+  confirmText="Teardown"
+/>
+```
+
+#### 34. `SecretInput` (`@aui/secret-input`)
+Masked credential display input with reveal toggle and one-click copy feedback.
+```tsx
+<SecretInput
+  label="API Secret Key"
+  value="px0_live_8f0a3b89c72e140d83b9281a94e0c1f5"
+  helperText="Copy this token now. It will not be shown again."
+/>
+```
+
+#### 35. `MultiSelect` (`@aui/multi-select`)
+Scoped multi-select tag picker with badge pills, search filter, and batch actions.
+```tsx
+<MultiSelect
+  label="Assigned Permissions"
+  options={[
+    { value: "read:reviews", label: "read:reviews" },
+    { value: "write:reviews", label: "write:reviews" },
+  ]}
+  selected={scopes}
+  onChange={setScopes}
+/>
+```
+
+#### 36. `Slider` (`@aui/slider`)
+Precision range slider with filled accent bar, tactile thumb, and value readout.
+```tsx
+<Slider
+  label="Idle Sleep Timeout"
+  value={timeout}
+  onChange={setTimeout}
+  min={15}
+  max={180}
+  step={15}
+  valueFormatter={(v) => `${v} minutes`}
+/>
+```
+
+#### 37. `Popover` (`@aui/popover`)
+Floating anchor-positioned overlay container with collision awareness for custom forms and filter cards.
+```tsx
+<Popover trigger={<Button size="sm">Filter Clusters</Button>}>
+  <div>Filter checklist content...</div>
+</Popover>
+```
+
+#### 38. `Charts` (`@aui/charts`)
+Lightweight SVG-based telemetry charts (`AreaChart`, `BarChart`, `Sparkline`) styled 100% with Array UI design tokens.
+```tsx
+<AreaChart
+  data={telemetry}
+  index="timestamp"
+  categories={["active", "queued"]}
+  colors={["primary", "emerald"]}
+  height={220}
+/>
+<Sparkline data={[12, 18, 25, 34, 42, 55]} color="primary" />
+```
+
+#### 39. `DatePicker` & `DateRangePicker` (`@aui/date-picker`)
+Calendar date picker and date range picker with monospace display and quick range presets.
+```tsx
+<DateRangePicker value={range} onChange={setRange} />
+```
+
+#### 40. `DataTable` (`@aui/data-table`)
+Dense SaaS data table with search filtering, multi-row selection, sorting, and pagination.
+```tsx
+<DataTable
+  data={workspaces}
+  columns={columns}
+  selectable
+  pageSize={10}
+  renderBulkActions={(selected) => <Button size="sm">Sleep ({selected.length})</Button>}
+/>
+```
+
 ### Layout & Utility Classes
 
 - `.aui-container-md`: Intermediate max-width (900px) container for forms, reading, and account pages.
@@ -659,15 +774,16 @@ Interactive slider sandbox for mathematical formulas and live reactive system ca
 
 ---
 
-## 4. Complete Native Component Library (61+ Components)
+## 4. Complete Native Component Library (72+ Components)
 
-In addition to the shadcn registry CLI, the direct repository package (`array-ui`) exports 61+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
-- **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`, `VersionSelector`
+In addition to the shadcn registry CLI, the direct repository package (`array-ui`) exports 72+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
+- **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`, `VersionSelector`, `Combobox`, `SecretInput`, `MultiSelect`, `Slider`
 - **Navigation**: `Breadcrumbs`, `Tabs`, `Pagination`, `Accordion`, `TableOfContents`, `Sidebar`, `Navbar`
-- **Feedback & Loading**: `Alert`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Tooltip`
-- **Data Display**: `Table`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`, `Gutter`
+- **Feedback & Loading**: `Alert`, `AlertDialog`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Drawer`, `Tooltip`, `Popover`
+- **Data Display & Tables**: `Table`, `DataTable`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`, `Gutter`, `DatePicker`, `DateRangePicker`
+- **Telemetry & Charts**: `AreaChart`, `BarChart`, `Sparkline`, `LatencyDistribution`, `BenchmarkDelta`
 - **Technical Documentation**: `ApiEndpoint`, `DocStepper`, `ParamTable`, `FeatureMatrix`, `Canvas`
-- **Interactive Systems Explorables**: `MemoryLayout`, `PipelineFlow`, `BenchmarkDelta`, `LatencyDistribution`, `StepScrubber`, `ClusterState`, `ParamSandbox`
+- **Interactive Systems Explorables**: `MemoryLayout`, `PipelineFlow`, `StepScrubber`, `ClusterState`, `ParamSandbox`
 - **Editorial & Media**: `Hero`, `Maxim`, `TakeawaysBox`, `NoticeBox`, `Newsletter`, `Card`, `CoverCard`, `CourseCard`, `SocialPill`, `Footer`, `VideoEmbed`
 
 

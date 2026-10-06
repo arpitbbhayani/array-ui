@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "type": "registry:ui",
+  "title": "Popover",
+  "description": "Floating anchor-positioned overlay container with collision awareness for forms and filter cards.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/popover.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PopoverProps {\n  trigger: React.ReactNode;\n  children: React.ReactNode;\n  align?: \"start\" | \"center\" | \"end\";\n  side?: \"top\" | \"bottom\" | \"left\" | \"right\";\n  sideOffset?: number;\n  isOpen?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  className?: string;\n}\n\nexport function Popover({\n  trigger,\n  children,\n  align = \"start\",\n  side = \"bottom\",\n  sideOffset = 6,\n  isOpen: controlledIsOpen,\n  onOpenChange,\n  className,\n}: PopoverProps) {\n  const [uncontrolledIsOpen, setUncontrolledIsOpen] = React.useState(false);\n  const isControlled = controlledIsOpen !== undefined;\n  const open = isControlled ? controlledIsOpen : uncontrolledIsOpen;\n\n  const containerRef = React.useRef<HTMLDivElement>(null);\n\n  const setOpen = (next: boolean) => {\n    if (!isControlled) {\n      setUncontrolledIsOpen(next);\n    }\n    onOpenChange?.(next);\n  };\n\n  React.useEffect(() => {\n    if (!open) return;\n    const handleClickOutside = (e: MouseEvent) => {\n      if (\n        containerRef.current &&\n        !containerRef.current.contains(e.target as Node)\n      ) {\n        setOpen(false);\n      }\n    };\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") setOpen(false);\n    };\n\n    document.addEventListener(\"mousedown\", handleClickOutside);\n    document.addEventListener(\"keydown\", handleKeyDown);\n    return () => {\n      document.removeEventListener(\"mousedown\", handleClickOutside);\n      document.removeEventListener(\"keydown\", handleKeyDown);\n    };\n  }, [open]);\n\n  const alignClasses = {\n    start: \"left-0\",\n    center: \"left-1/2 -translate-x-1/2\",\n    end: \"right-0\",\n  };\n\n  const sideClasses = {\n    bottom: \"top-full mt-1.5\",\n    top: \"bottom-full mb-1.5\",\n    left: \"right-full mr-1.5 top-0\",\n    right: \"left-full ml-1.5 top-0\",\n  };\n\n  return (\n    <div ref={containerRef} className={cn(\"relative inline-block\", className)}>\n      <div\n        onClick={() => setOpen(!open)}\n        role=\"button\"\n        tabIndex={0}\n        className=\"inline-block cursor-pointer\"\n      >\n        {trigger}\n      </div>\n\n      {open && (\n        <div\n          className={cn(\n            \"absolute z-50 rounded-md border border-border bg-popover text-popover-foreground shadow-md outline-hidden p-4 animate-in fade-in-0 zoom-in-95\",\n            alignClasses[align],\n            sideClasses[side]\n          )}\n          style={{\n            marginTop: side === \"bottom\" ? `${sideOffset}px` : undefined,\n          }}\n          role=\"dialog\"\n        >\n          {children}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

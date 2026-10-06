@@ -12,7 +12,21 @@ import {
   SearchBox,
   Dropdown,
   VideoEmbed,
+  Combobox,
+  Drawer,
+  AlertDialog,
+  SecretInput,
+  MultiSelect,
+  Slider,
+  Popover,
+  AreaChart,
+  BarChart,
+  Sparkline,
+  DatePicker,
+  DateRangePicker,
+  DataTable,
 } from "../../../dist/react.js";
+
 
 export function ModalDemo() {
   const [open, setOpen] = useState(false);
@@ -222,4 +236,242 @@ export function DropdownDemo() {
     </div>
   );
 }
+
+export function ComboboxDemo() {
+  const [val, setVal] = useState("repo-1");
+  const options = [
+    { value: "repo-1", label: "px0-control/engine", description: "Main consensus daemon", badge: "v2.4" },
+    { value: "repo-2", label: "px0-control/ingress", description: "Edge gateway and TLS proxy", badge: "v1.9" },
+    { value: "repo-3", label: "px0-control/wal", description: "Write-ahead log storage engine", badge: "v3.0" },
+    { value: "repo-4", label: "px0-control/dashboard", description: "Next.js cloud control plane", badge: "v0.8" },
+  ];
+  return (
+    <div style={{ maxWidth: 320 }}>
+      <Combobox
+        options={options}
+        value={val}
+        onChange={setVal}
+        placeholder="Select repository..."
+        searchPlaceholder="Filter repos..."
+      />
+    </div>
+  );
+}
+
+export function DrawerDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        Inspect Workspace Specs
+      </Button>
+      <Drawer
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title="Workspace Details: rev-4029"
+        description="Active container telemetry and mount paths"
+        footer={
+          <>
+            <Button variant="secondary" size="sm" onClick={() => setOpen(false)}>
+              Close
+            </Button>
+            <Button variant="primary" size="sm" onClick={() => setOpen(false)}>
+              Restart Pod
+            </Button>
+          </>
+        }
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <p style={{ margin: 0, color: "var(--aui-text-muted)", fontSize: "0.85rem" }}>
+            Pod spec running on node <code className="aui-code">k8s-node-eu-04</code>.
+          </p>
+          <pre style={{ margin: 0, padding: "0.75rem", background: "var(--aui-bg-tertiary)", borderRadius: "var(--aui-radius-md)", fontSize: "0.8rem", fontFamily: "var(--aui-font-mono)" }}>
+{`status: Running
+memory_usage: 412MiB / 2048MiB
+cpu_shares: 1024
+restarts: 0
+egress_ip: 198.51.100.42`}
+          </pre>
+        </div>
+      </Drawer>
+    </>
+  );
+}
+
+export function AlertDialogDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="destructive" size="sm" onClick={() => setOpen(true)}>
+        Teardown Cluster
+      </Button>
+      <AlertDialog
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={async () => {
+          setOpen(false);
+        }}
+        title="Teardown Cluster Confirmation"
+        description="This action is irreversible. All persistent storage volumes and quorum state machines will be terminated."
+        confirmationPhrase="teardown prod-cluster-01"
+        confirmText="Teardown Cluster"
+        variant="danger"
+      />
+    </>
+  );
+}
+
+export function SecretInputDemo() {
+  return (
+    <div style={{ maxWidth: 380, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      <SecretInput
+        label="Organization API Key"
+        value="px0_live_8f0a3b89c72e140d83b9281a94e0c1f5"
+        helperText="Copy this token now. It will not be shown again."
+      />
+    </div>
+  );
+}
+
+export function MultiSelectDemo() {
+  const [selected, setSelected] = useState(["read:reviews", "write:reviews"]);
+  const options = [
+    { value: "read:reviews", label: "read:reviews", group: "Scopes", description: "View workspace diffs" },
+    { value: "write:reviews", label: "write:reviews", group: "Scopes", description: "Approve and comment" },
+    { value: "admin:members", label: "admin:members", group: "Admin", description: "Invite or remove users" },
+    { value: "manage:billing", label: "manage:billing", group: "Admin", description: "Update credit card" },
+  ];
+  return (
+    <div style={{ maxWidth: 360 }}>
+      <MultiSelect
+        label="Token Permissions"
+        options={options}
+        selected={selected}
+        onChange={setSelected}
+        placeholder="Assign scopes..."
+      />
+    </div>
+  );
+}
+
+export function SliderDemo() {
+  const [minutes, setMinutes] = useState(45);
+  return (
+    <div style={{ maxWidth: 320 }}>
+      <Slider
+        label="Idle Sleep Timeout"
+        value={minutes}
+        onChange={setMinutes}
+        min={15}
+        max={180}
+        step={15}
+        valueFormatter={(v) => `${v} minutes`}
+      />
+    </div>
+  );
+}
+
+export function PopoverDemo() {
+  return (
+    <Popover
+      trigger={
+        <Button variant="secondary" size="sm">
+          <span>Filter Status</span>
+          <span style={{ fontSize: "0.75rem", opacity: 0.7 }}>▾</span>
+        </Button>
+      }
+    >
+      <div style={{ width: 200, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <p style={{ margin: 0, fontWeight: 600, fontSize: "0.82rem" }}>Filter Deployments</p>
+        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem" }}>
+          <input type="checkbox" defaultChecked /> Operational
+        </label>
+        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem" }}>
+          <input type="checkbox" /> Degraded
+        </label>
+        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem" }}>
+          <input type="checkbox" /> Outages
+        </label>
+      </div>
+    </Popover>
+  );
+}
+
+export function ChartsDemo() {
+  const data = [
+    { date: "09:00", active: 24, queued: 6 },
+    { date: "10:00", active: 48, queued: 12 },
+    { date: "11:00", active: 75, queued: 18 },
+    { date: "12:00", active: 92, queued: 14 },
+    { date: "13:00", active: 84, queued: 9 },
+    { date: "14:00", active: 110, queued: 22 },
+    { date: "15:00", active: 95, queued: 11 },
+  ];
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", width: "100%", maxWidth: 640 }}>
+      <div>
+        <p style={{ margin: "0 0 0.5rem 0", fontSize: "0.85rem", fontWeight: 600 }}>AreaChart (Active Compute Hours)</p>
+        <AreaChart
+          data={data}
+          index="date"
+          categories={["active", "queued"]}
+          colors={["primary", "emerald"]}
+          height={180}
+        />
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <span style={{ fontSize: "0.82rem", color: "var(--aui-text-muted)" }}>Throughput Sparkline:</span>
+        <Sparkline data={[12, 19, 15, 27, 34, 42, 38, 55, 62]} color="primary" />
+        <Sparkline data={[80, 75, 71, 65, 50, 42, 30, 25, 20]} color="emerald" />
+      </div>
+    </div>
+  );
+}
+
+export function DatePickerDemo() {
+  const [range, setRange] = useState({
+    from: new Date(Date.now() - 7 * 86400000),
+    to: new Date(),
+  });
+  return (
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      <DateRangePicker
+        value={range}
+        onChange={setRange}
+      />
+    </div>
+  );
+}
+
+export function DataTableDemo() {
+  const rows = [
+    { id: "rev-4021", branch: "feat/raft-wal", status: "Running", memory: "412 MB", spend: "$1.40" },
+    { id: "rev-4022", branch: "fix/tls-handshake", status: "Sleeping", memory: "0 MB", spend: "$0.10" },
+    { id: "rev-4023", branch: "perf/simd-crc32", status: "Running", memory: "640 MB", spend: "$2.15" },
+    { id: "rev-4024", branch: "chore/deps-bump", status: "Terminated", memory: "0 MB", spend: "$0.00" },
+  ];
+  const columns = [
+    { header: "Workspace", accessor: "id" as const, sortable: true },
+    { header: "Branch", accessor: "branch" as const },
+    { header: "Status", accessor: "status" as const, sortable: true },
+    { header: "Memory", accessor: "memory" as const },
+    { header: "Spend", accessor: "spend" as const, align: "right" as const },
+  ];
+  return (
+    <div style={{ width: "100%", maxWidth: 640 }}>
+      <DataTable
+        data={rows}
+        columns={columns}
+        selectable
+        pageSize={3}
+        renderBulkActions={(selected) => (
+          <Button size="sm" variant="outline">
+            Sleep ({selected.length})
+          </Button>
+        )}
+      />
+    </div>
+  );
+}
+
 

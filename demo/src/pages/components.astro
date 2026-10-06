@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo } from "../components/Interactive";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
@@ -170,6 +170,21 @@ const sidebarGroups = [
       { label: "Gutter", href: "#gutter" },
       { label: "Course card", href: "#course" },
       { label: "Cover card", href: "#cover-card" },
+    ],
+  },
+  {
+    title: "[10] SaaS & Control Plane",
+    links: [
+      { label: "Combobox", href: "#combobox" },
+      { label: "Drawer / Sheet", href: "#drawer" },
+      { label: "Alert dialog", href: "#alert-dialog" },
+      { label: "Secret input", href: "#secret-input" },
+      { label: "Multi select", href: "#multi-select" },
+      { label: "Slider", href: "#slider" },
+      { label: "Popover", href: "#popover" },
+      { label: "Telemetry charts", href: "#charts" },
+      { label: "Date picker", href: "#datepicker" },
+      { label: "Data table", href: "#datatable" },
     ],
   },
 ];
@@ -1009,6 +1024,122 @@ const takeaways = [
               </div>
             </div>
           </Specimen>
+
+        <!-- SaaS & Control Plane -->
+        <h2 class="aui-h2"><span class="aui-index-tag">[10]</span> SaaS & Control Plane</h2>
+        <div class="spec-grid">
+          <!-- Combobox -->
+          <Specimen
+            id="combobox"
+            name="Combobox"
+            description="Searchable autocomplete select with keyboard navigation, empty states, and badge support."
+            usage="<Combobox options={repos} value={selectedRepo} onChange={setSelectedRepo} />"
+            shadcnName="combobox"
+          >
+            <ComboboxDemo client:load />
+          </Specimen>
+
+          <!-- Drawer / Sheet -->
+          <Specimen
+            id="drawer"
+            name="Drawer / Sheet"
+            description="Slide-over drawer panel for deep inspection of telemetry, configurations, and logs."
+            usage="<Drawer isOpen={open} onClose={() => setOpen(false)} title=&quot;Workspace Specs&quot;>...</Drawer>"
+            shadcnName="drawer"
+          >
+            <DrawerDemo client:load />
+          </Specimen>
+
+          <!-- AlertDialog -->
+          <Specimen
+            id="alert-dialog"
+            name="AlertDialog"
+            description="Destructive action confirmation modal with autofocus on Cancel and confirmation phrase."
+            usage="<AlertDialog isOpen={open} onClose={() => setOpen(false)} onConfirm={handleTeardown} />"
+            shadcnName="alert-dialog"
+          >
+            <AlertDialogDemo client:load />
+          </Specimen>
+
+          <!-- SecretInput -->
+          <Specimen
+            id="secret-input"
+            name="SecretInput / CopyInput"
+            description="Masked credential input with reveal toggle, copy feedback, and monospace layout."
+            usage="<SecretInput label=&quot;API Key&quot; value=&quot;px0_live_...&quot; />"
+            shadcnName="secret-input"
+          >
+            <SecretInputDemo client:load />
+          </Specimen>
+
+          <!-- MultiSelect -->
+          <Specimen
+            id="multi-select"
+            name="MultiSelect / TagInput"
+            description="Scoped tag selector with dismissable badges, quick filtering, and batch select/clear actions."
+            usage="<MultiSelect label=&quot;Permissions&quot; options={scopes} selected={selected} onChange={setSelected} />"
+            shadcnName="multi-select"
+          >
+            <MultiSelectDemo client:load />
+          </Specimen>
+
+          <!-- Slider -->
+          <Specimen
+            id="slider"
+            name="Slider"
+            description="Precision range slider with filled accent bar, tactile thumb, and value readout."
+            usage="<Slider label=&quot;Timeout&quot; value={timeout} onChange={setTimeout} min={15} max={180} />"
+            shadcnName="slider"
+          >
+            <SliderDemo client:load />
+          </Specimen>
+
+          <!-- Popover -->
+          <Specimen
+            id="popover"
+            name="Popover"
+            description="Floating anchor-positioned overlay container with collision awareness for custom forms and filters."
+            usage="<Popover trigger={<Button size=&quot;sm&quot;>Filter</Button>}>...</Popover>"
+            shadcnName="popover"
+          >
+            <PopoverDemo client:load />
+          </Specimen>
+
+          <!-- Telemetry Charts -->
+          <Specimen
+            id="charts"
+            name="Telemetry Charts"
+            description="Pure SVG charts styled 100% with Array UI design tokens with hover crosshairs and tooltips."
+            usage="<AreaChart data={telemetry} index=&quot;date&quot; categories={[&quot;active&quot;, &quot;queued&quot;]} />"
+            shadcnName="charts"
+            span={2}
+          >
+            <ChartsDemo client:load />
+          </Specimen>
+
+          <!-- DatePicker -->
+          <Specimen
+            id="datepicker"
+            name="DatePicker & DateRangePicker"
+            description="Calendar date pickers with monospace formatting and one-click range presets."
+            usage="<DateRangePicker value={range} onChange={setRange} />"
+            shadcnName="date-picker"
+          >
+            <DatePickerDemo client:load />
+          </Specimen>
+
+          <!-- DataTable -->
+          <Specimen
+            id="datatable"
+            name="DataTable"
+            description="Dense SaaS data table with search filtering, multi-row selection, sorting, and pagination."
+            usage="<DataTable data={workspaces} columns={columns} selectable pageSize={10} />"
+            shadcnName="data-table"
+            span={2}
+          >
+            <DataTableDemo client:load />
+          </Specimen>
+        </div>
         </div>
       </main>
     </div>

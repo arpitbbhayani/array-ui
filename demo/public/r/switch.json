@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "Switch",
+  "description": "Machined toggle switch with smooth state animation.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/switch.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SwitchProps\n  extends React.InputHTMLAttributes<HTMLInputElement> {\n  label?: React.ReactNode;\n}\n\nconst Switch = React.forwardRef<HTMLInputElement, SwitchProps>(\n  ({ label, className, checked, defaultChecked, disabled, ...props }, ref) => {\n    return (\n      <label\n        className={cn(\n          \"inline-flex items-center gap-2.5 cursor-pointer text-sm select-none\",\n          disabled && \"cursor-not-allowed opacity-50\",\n          className\n        )}\n      >\n        <span className=\"relative inline-flex items-center\">\n          <input\n            ref={ref}\n            type=\"checkbox\"\n            role=\"switch\"\n            disabled={disabled}\n            checked={checked}\n            defaultChecked={defaultChecked}\n            className=\"peer sr-only\"\n            {...props}\n          />\n          <span className=\"w-9 h-5 bg-muted peer-checked:bg-primary border border-border rounded-full transition-colors duration-200\" />\n          <span className=\"absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-xs transition-transform duration-200 peer-checked:translate-x-4\" />\n        </span>\n        {label && <span className=\"text-foreground\">{label}</span>}\n      </label>\n    );\n  }\n);\nSwitch.displayName = \"Switch\";\n\nexport { Switch };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

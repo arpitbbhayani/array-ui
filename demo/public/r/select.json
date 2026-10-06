@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select",
+  "type": "registry:ui",
+  "title": "Select",
+  "description": "Minimal machined select input with native option support.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/select.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SelectProps\n  extends React.SelectHTMLAttributes<HTMLSelectElement> {\n  label?: string;\n  options?: Array<{ label: string; value: string }>;\n  error?: string;\n}\n\nconst Select = React.forwardRef<HTMLSelectElement, SelectProps>(\n  ({ label, options, error, className, id, children, ...props }, ref) => {\n    const inputId = id || (label ? label.toLowerCase().replace(/\\s+/g, \"-\") : undefined);\n\n    const selectElement = (\n      <select\n        ref={ref}\n        id={inputId}\n        className={cn(\n          \"flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50\",\n          error && \"border-destructive\",\n          className\n        )}\n        {...props}\n      >\n        {options\n          ? options.map((opt) => (\n              <option key={opt.value} value={opt.value}>\n                {opt.label}\n              </option>\n            ))\n          : children}\n      </select>\n    );\n\n    if (!label && !error) {\n      return selectElement;\n    }\n\n    return (\n      <div className=\"flex flex-col gap-1.5 w-full\">\n        {label && (\n          <label htmlFor={inputId} className=\"text-xs font-medium text-foreground\">\n            {label}\n          </label>\n        )}\n        {selectElement}\n        {error && (\n          <p className=\"text-xs text-destructive mt-0.5\">{error}</p>\n        )}\n      </div>\n    );\n  }\n);\nSelect.displayName = \"Select\";\n\nexport { Select };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

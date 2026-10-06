@@ -120,7 +120,8 @@ interface ComponentDef {
     | "Developer & Telemetry"
     | "Editorial & Content"
     | "Technical Documentation"
-    | "Interactive Explorables";
+    | "Interactive Explorables"
+    | "SaaS & Control Plane";
 }
 
 
@@ -158,6 +159,78 @@ const componentsConfig: ComponentDef[] = [
     description: "Machined text input with subtle focus ring and optional keyboard shortcut badge.",
     file: "src/registry/aui/ui/input.tsx",
     target: "ui/input.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "select",
+    title: "Select",
+    description: "Minimal machined select input with native option support.",
+    file: "src/registry/aui/ui/select.tsx",
+    target: "ui/select.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "textarea",
+    title: "Textarea",
+    description: "Machined multi-line text field with hairline border.",
+    file: "src/registry/aui/ui/textarea.tsx",
+    target: "ui/textarea.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "switch",
+    title: "Switch",
+    description: "Machined toggle switch with smooth state animation.",
+    file: "src/registry/aui/ui/switch.tsx",
+    target: "ui/switch.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "checkbox",
+    title: "Checkbox",
+    description: "Machined checkbox input with custom accent color.",
+    file: "src/registry/aui/ui/checkbox.tsx",
+    target: "ui/checkbox.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "table",
+    title: "Table",
+    description: "Dense monospace table with hover rows and structured subcomponents.",
+    file: "src/registry/aui/ui/table.tsx",
+    target: "ui/table.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "toast",
+    title: "Toast",
+    description: "Status-tinted notification toast with dismiss button.",
+    file: "src/registry/aui/ui/toast.tsx",
+    target: "ui/toast.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "spinner",
+    title: "Spinner",
+    description: "Minimal rotating loader indicator with size variants.",
+    file: "src/registry/aui/ui/spinner.tsx",
+    target: "ui/spinner.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "skeleton",
+    title: "Skeleton",
+    description: "Animated placeholder loader for text, cards, and avatars.",
+    file: "src/registry/aui/ui/skeleton.tsx",
+    target: "ui/skeleton.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "searchbox",
+    title: "SearchBox",
+    description: "Machined search input with search icon and keyboard shortcut keycap.",
+    file: "src/registry/aui/ui/searchbox.tsx",
+    target: "ui/searchbox.tsx",
     category: "Core Primitives",
   },
   {
@@ -458,6 +531,96 @@ const componentsConfig: ComponentDef[] = [
     target: "ui/param-sandbox.tsx",
     category: "Interactive Explorables",
   },
+
+  // --- SaaS & Control Plane ---
+  {
+    name: "combobox",
+    title: "Combobox",
+    description: "Searchable autocomplete select with keyboard navigation, empty states, and badge support.",
+    file: "src/registry/aui/ui/combobox.tsx",
+    target: "ui/combobox.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "drawer",
+    title: "Drawer",
+    description: "Slide-over panel for inspecting logs, resources, and configurations without losing page context.",
+    file: "src/registry/aui/ui/drawer.tsx",
+    target: "ui/drawer.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "alert-dialog",
+    title: "AlertDialog",
+    description: "Destructive action confirmation dialog with danger styling and optional string confirmation phrase.",
+    file: "src/registry/aui/ui/alert-dialog.tsx",
+    target: "ui/alert-dialog.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "secret-input",
+    title: "SecretInput",
+    description: "Masked credential display input with reveal toggle and one-click copy feedback.",
+    file: "src/registry/aui/ui/secret-input.tsx",
+    target: "ui/secret-input.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "sidebar",
+    title: "Sidebar",
+    description: "Application shell navigation sidebar with route icons, tenant header, profile footer, and collapse mode.",
+    file: "src/registry/aui/ui/sidebar.tsx",
+    target: "ui/sidebar.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "multi-select",
+    title: "MultiSelect",
+    description: "Scoped multi-select tag picker with badge pills, search filter, and batch actions.",
+    file: "src/registry/aui/ui/multi-select.tsx",
+    target: "ui/multi-select.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "slider",
+    title: "Slider",
+    description: "Continuous or stepped range slider with styled track, tactile thumb, and value readout.",
+    file: "src/registry/aui/ui/slider.tsx",
+    target: "ui/slider.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "popover",
+    title: "Popover",
+    description: "Floating anchor-positioned overlay container with collision awareness for forms and filter cards.",
+    file: "src/registry/aui/ui/popover.tsx",
+    target: "ui/popover.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "charts",
+    title: "Charts",
+    description: "Lightweight SVG-based telemetry charts (AreaChart, BarChart, Sparkline) with crosshair and hover tooltips.",
+    file: "src/registry/aui/ui/charts.tsx",
+    target: "ui/charts.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "date-picker",
+    title: "DatePicker",
+    description: "Calendar date picker and date range picker with monospace display and quick range presets.",
+    file: "src/registry/aui/ui/date-picker.tsx",
+    target: "ui/date-picker.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "data-table",
+    title: "DataTable",
+    description: "Dense SaaS data table with search filtering, multi-row selection, sorting, and pagination.",
+    file: "src/registry/aui/ui/data-table.tsx",
+    target: "ui/data-table.tsx",
+    category: "SaaS & Control Plane",
+  },
 ];
 
 
@@ -550,6 +713,7 @@ Allow: /
   const editorialComps = componentsConfig.filter((c) => c.category === "Editorial & Content");
   const docComps = componentsConfig.filter((c) => c.category === "Technical Documentation");
   const explorableComps = componentsConfig.filter((c) => c.category === "Interactive Explorables");
+  const saasComps = componentsConfig.filter((c) => c.category === "SaaS & Control Plane");
 
   const renderComponentList = (list: ComponentDef[]) =>
     list
@@ -630,15 +794,19 @@ ${renderComponentList(docComps)}
 ### Interactive Explorables & Systems Visualizers
 ${renderComponentList(explorableComps)}
 
+### SaaS & Control Plane Primitives
+${renderComponentList(saasComps)}
+
 ## Full Library Native Components (React & Astro)
 
-In addition to shadcn copy-paste components, the official package dependency (\`array-ui\`) includes 61+ native components for React (\`array-ui/nextjs\`, \`array-ui/react\`) and Astro (\`array-ui/astro/*\`):
-- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl, VersionSelector
+In addition to shadcn copy-paste components, the official package dependency (\`array-ui\`) includes 72+ native components for React (\`array-ui/nextjs\`, \`array-ui/react\`) and Astro (\`array-ui/astro/*\`):
+- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl, VersionSelector, Combobox, SecretInput, MultiSelect, Slider
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
-- **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
-- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter
+- **Feedback & Loading**: Alert, AlertDialog, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Drawer, Tooltip, Popover
+- **Data Display & Tables**: Table, DataTable, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter, DatePicker, DateRangePicker
+- **Telemetry & Charts**: AreaChart, BarChart, Sparkline, LatencyDistribution, BenchmarkDelta
 - **Technical Documentation**: ApiEndpoint, DocStepper, ParamTable, FeatureMatrix, Canvas
-- **Interactive Explorables**: MemoryLayout, PipelineFlow, BenchmarkDelta, LatencyDistribution, StepScrubber, ClusterState, ParamSandbox
+- **Interactive Explorables**: MemoryLayout, PipelineFlow, StepScrubber, ClusterState, ParamSandbox
 - **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
 
 

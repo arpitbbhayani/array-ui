@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Machined multi-line text field with hairline border.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/textarea.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TextareaProps\n  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {\n  label?: string;\n  error?: string;\n  helperText?: string;\n}\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(\n  ({ label, error, helperText, className, id, ...props }, ref) => {\n    const inputId = id || (label ? label.toLowerCase().replace(/\\s+/g, \"-\") : undefined);\n\n    const textareaElement = (\n      <textarea\n        ref={ref}\n        id={inputId}\n        className={cn(\n          \"flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50\",\n          error && \"border-destructive\",\n          className\n        )}\n        aria-invalid={Boolean(error)}\n        {...props}\n      />\n    );\n\n    if (!label && !error && !helperText) {\n      return textareaElement;\n    }\n\n    return (\n      <div className=\"flex flex-col gap-1.5 w-full\">\n        {label && (\n          <label htmlFor={inputId} className=\"text-xs font-medium text-foreground\">\n            {label}\n          </label>\n        )}\n        {textareaElement}\n        {error && (\n          <p className=\"text-xs text-destructive mt-0.5\">{error}</p>\n        )}\n        {helperText && !error && (\n          <p className=\"text-xs text-muted-foreground mt-0.5\">{helperText}</p>\n        )}\n      </div>\n    );\n  }\n);\nTextarea.displayName = \"Textarea\";\n\nexport { Textarea };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

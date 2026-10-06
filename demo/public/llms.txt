@@ -57,6 +57,15 @@ npm install array-ui
 - [Badge](https://ui.arpitbhayani.me/r/badge.json): Status pills and tag badges (crimson, emerald green, amber, rose red, sky blue, outline). `npx shadcn@latest add @aui/badge -y`
 - [Card](https://ui.arpitbhayani.me/r/card.json): Flat card surface with 1px hairline border, header, title, description, content, and footer. `npx shadcn@latest add @aui/card -y`
 - [Input](https://ui.arpitbhayani.me/r/input.json): Machined text input with subtle focus ring and optional keyboard shortcut badge. `npx shadcn@latest add @aui/input -y`
+- [Select](https://ui.arpitbhayani.me/r/select.json): Minimal machined select input with native option support. `npx shadcn@latest add @aui/select -y`
+- [Textarea](https://ui.arpitbhayani.me/r/textarea.json): Machined multi-line text field with hairline border. `npx shadcn@latest add @aui/textarea -y`
+- [Switch](https://ui.arpitbhayani.me/r/switch.json): Machined toggle switch with smooth state animation. `npx shadcn@latest add @aui/switch -y`
+- [Checkbox](https://ui.arpitbhayani.me/r/checkbox.json): Machined checkbox input with custom accent color. `npx shadcn@latest add @aui/checkbox -y`
+- [Table](https://ui.arpitbhayani.me/r/table.json): Dense monospace table with hover rows and structured subcomponents. `npx shadcn@latest add @aui/table -y`
+- [Toast](https://ui.arpitbhayani.me/r/toast.json): Status-tinted notification toast with dismiss button. `npx shadcn@latest add @aui/toast -y`
+- [Spinner](https://ui.arpitbhayani.me/r/spinner.json): Minimal rotating loader indicator with size variants. `npx shadcn@latest add @aui/spinner -y`
+- [Skeleton](https://ui.arpitbhayani.me/r/skeleton.json): Animated placeholder loader for text, cards, and avatars. `npx shadcn@latest add @aui/skeleton -y`
+- [SearchBox](https://ui.arpitbhayani.me/r/searchbox.json): Machined search input with search icon and keyboard shortcut keycap. `npx shadcn@latest add @aui/searchbox -y`
 - [Kbd](https://ui.arpitbhayani.me/r/kbd.json): Monospace keyboard shortcut keycap badge. `npx shadcn@latest add @aui/kbd -y`
 - [Tooltip](https://ui.arpitbhayani.me/r/tooltip.json): Accessible tooltip hint on hover and focus. `npx shadcn@latest add @aui/tooltip -y`
 - [Alert](https://ui.arpitbhayani.me/r/alert.json): Status-tinted inline alert callout (info, success, warning, destructive). `npx shadcn@latest add @aui/alert -y`
@@ -102,15 +111,29 @@ npm install array-ui
 - [ClusterState](https://ui.arpitbhayani.me/r/cluster-state.json): Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status). `npx shadcn@latest add @aui/cluster-state -y`
 - [ParamSandbox](https://ui.arpitbhayani.me/r/param-sandbox.json): Interactive slider sandbox for mathematical formulas and live reactive system calculations. `npx shadcn@latest add @aui/param-sandbox -y`
 
+### SaaS & Control Plane Primitives
+- [Combobox](https://ui.arpitbhayani.me/r/combobox.json): Searchable autocomplete select with keyboard navigation, empty states, and badge support. `npx shadcn@latest add @aui/combobox -y`
+- [Drawer](https://ui.arpitbhayani.me/r/drawer.json): Slide-over panel for inspecting logs, resources, and configurations without losing page context. `npx shadcn@latest add @aui/drawer -y`
+- [AlertDialog](https://ui.arpitbhayani.me/r/alert-dialog.json): Destructive action confirmation dialog with danger styling and optional string confirmation phrase. `npx shadcn@latest add @aui/alert-dialog -y`
+- [SecretInput](https://ui.arpitbhayani.me/r/secret-input.json): Masked credential display input with reveal toggle and one-click copy feedback. `npx shadcn@latest add @aui/secret-input -y`
+- [Sidebar](https://ui.arpitbhayani.me/r/sidebar.json): Application shell navigation sidebar with route icons, tenant header, profile footer, and collapse mode. `npx shadcn@latest add @aui/sidebar -y`
+- [MultiSelect](https://ui.arpitbhayani.me/r/multi-select.json): Scoped multi-select tag picker with badge pills, search filter, and batch actions. `npx shadcn@latest add @aui/multi-select -y`
+- [Slider](https://ui.arpitbhayani.me/r/slider.json): Continuous or stepped range slider with styled track, tactile thumb, and value readout. `npx shadcn@latest add @aui/slider -y`
+- [Popover](https://ui.arpitbhayani.me/r/popover.json): Floating anchor-positioned overlay container with collision awareness for forms and filter cards. `npx shadcn@latest add @aui/popover -y`
+- [Charts](https://ui.arpitbhayani.me/r/charts.json): Lightweight SVG-based telemetry charts (AreaChart, BarChart, Sparkline) with crosshair and hover tooltips. `npx shadcn@latest add @aui/charts -y`
+- [DatePicker](https://ui.arpitbhayani.me/r/date-picker.json): Calendar date picker and date range picker with monospace display and quick range presets. `npx shadcn@latest add @aui/date-picker -y`
+- [DataTable](https://ui.arpitbhayani.me/r/data-table.json): Dense SaaS data table with search filtering, multi-row selection, sorting, and pagination. `npx shadcn@latest add @aui/data-table -y`
+
 ## Full Library Native Components (React & Astro)
 
-In addition to shadcn copy-paste components, the official package dependency (`array-ui`) includes 61+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
-- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl, VersionSelector
+In addition to shadcn copy-paste components, the official package dependency (`array-ui`) includes 72+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
+- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl, VersionSelector, Combobox, SecretInput, MultiSelect, Slider
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
-- **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
-- **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter
+- **Feedback & Loading**: Alert, AlertDialog, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Drawer, Tooltip, Popover
+- **Data Display & Tables**: Table, DataTable, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter, DatePicker, DateRangePicker
+- **Telemetry & Charts**: AreaChart, BarChart, Sparkline, LatencyDistribution, BenchmarkDelta
 - **Technical Documentation**: ApiEndpoint, DocStepper, ParamTable, FeatureMatrix, Canvas
-- **Interactive Explorables**: MemoryLayout, PipelineFlow, BenchmarkDelta, LatencyDistribution, StepScrubber, ClusterState, ParamSandbox
+- **Interactive Explorables**: MemoryLayout, PipelineFlow, StepScrubber, ClusterState, ParamSandbox
 - **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
 
 

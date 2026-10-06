@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "Spinner",
+  "description": "Minimal rotating loader indicator with size variants.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/spinner.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n\nconst Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(\n  ({ size = \"md\", className, ...props }, ref) => {\n    const sizeClasses = {\n      sm: \"h-3.5 w-3.5 border-2\",\n      md: \"h-5 w-5 border-2\",\n      lg: \"h-7 w-7 border-3\",\n    };\n\n    return (\n      <span\n        ref={ref}\n        role=\"status\"\n        aria-label=\"Loading\"\n        className={cn(\n          \"inline-block rounded-full border-border border-t-primary animate-spin\",\n          sizeClasses[size],\n          className\n        )}\n        {...props}\n      />\n    );\n  }\n);\nSpinner.displayName = \"Spinner\";\n\nexport { Spinner };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

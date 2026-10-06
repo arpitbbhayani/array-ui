@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "searchbox",
+  "type": "registry:ui",
+  "title": "SearchBox",
+  "description": "Machined search input with search icon and keyboard shortcut keycap.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/searchbox.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SearchBoxProps\n  extends React.InputHTMLAttributes<HTMLInputElement> {\n  shortcut?: string;\n  onClear?: () => void;\n}\n\nconst SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(\n  ({ shortcut = \"⌘K\", onClear, value, onChange, className, ...props }, ref) => {\n    return (\n      <div className={cn(\"relative flex items-center w-full\", className)}>\n        <svg\n          className=\"absolute left-3 h-4 w-4 text-muted-foreground pointer-events-none\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n          viewBox=\"0 0 24 24\"\n          fill=\"none\"\n          stroke=\"currentColor\"\n          strokeWidth=\"2\"\n          strokeLinecap=\"round\"\n          strokeLinejoin=\"round\"\n        >\n          <circle cx=\"11\" cy=\"11\" r=\"8\" />\n          <line x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\" />\n        </svg>\n\n        <input\n          ref={ref}\n          type=\"text\"\n          value={value}\n          onChange={onChange}\n          className=\"flex h-9 w-full rounded-md border border-input bg-background pl-9 pr-12 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring\"\n          {...props}\n        />\n\n        {shortcut && (\n          <kbd className=\"absolute right-2 pointer-events-none inline-flex items-center font-mono text-[0.7rem] font-medium px-1.5 py-0.5 rounded border border-border bg-muted text-muted-foreground\">\n            {shortcut}\n          </kbd>\n        )}\n      </div>\n    );\n  }\n);\nSearchBox.displayName = \"SearchBox\";\n\nexport { SearchBox };\n",
+      "type": "registry:ui"
+    }
+  ]
+}
