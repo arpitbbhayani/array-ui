@@ -76,25 +76,28 @@ const derivedHtml = usage
 
   {usage && (
     <div
-      class="spec-usage-bar aui-row-between"
-      style="background-color: var(--aui-pre-bg); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); padding: 0.35rem 0.65rem 0.35rem 0.85rem; gap: 0.5rem;"
+      class="spec-usage-bar aui-stack aui-stack-xs"
+      style="background-color: var(--aui-pre-bg); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); padding: 0.5rem 0.75rem; gap: 0.35rem; min-width: 0;"
       data-nextjs={reactUsage}
       data-react={reactUsage}
       data-astro={astroUsage}
       data-html={derivedHtml || usage}
       data-shadcn={shadcnUsage || reactUsage}
     >
-      <pre class="aui-pre" style="margin: 0; padding: 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; overflow-x: auto; flex-grow: 1; white-space: nowrap; font-size: 0.78rem; line-height: 1.5; color: #888894;"><code class="spec-code-text" style="font-family: inherit;">{reactUsage}</code></pre>
-      <button
-        type="button"
-        class="aui-btn aui-btn-ghost aui-btn-sm spec-copy-btn"
-        style="padding: 0.2rem 0.45rem; height: auto; color: #888894; font-size: 0.75rem;"
-        title="Copy snippet"
-        data-usage={reactUsage}
-        onclick="navigator.clipboard.writeText(this.dataset.usage); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 1600);"
-      >
-        Copy
-      </button>
+      <div class="aui-row-between" style="width: 100%; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 0.25rem;">
+        <span class="aui-font-mono" style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aui-text-muted); opacity: 0.8;">Usage Example</span>
+        <button
+          type="button"
+          class="aui-btn aui-btn-ghost aui-btn-sm spec-copy-btn aui-font-mono"
+          style="padding: 0.15rem 0.45rem; height: auto; color: var(--aui-text-muted); font-size: 0.72rem;"
+          title="Copy snippet"
+          data-usage={reactUsage}
+          onclick="navigator.clipboard.writeText(this.dataset.usage); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy', 1600);"
+        >
+          Copy
+        </button>
+      </div>
+      <pre class="aui-pre" style="margin: 0; padding: 0.25rem 0 0 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; overflow-x: auto; max-height: 240px; overflow-y: auto; flex-grow: 1; white-space: pre; font-size: 0.78rem; line-height: 1.55; color: #888894;"><code class="spec-code-text" style="font-family: inherit;">{reactUsage}</code></pre>
     </div>
   )}
 </section>

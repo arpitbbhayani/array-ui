@@ -231,7 +231,28 @@ const takeaways = [
         <!-- Technical Documentation -->
         <h2 class="aui-h2"><span class="aui-index-tag">[01]</span> Technical Documentation</h2>
         <div class="spec-grid">
-          <Specimen id="api-endpoint" name="Api endpoint" description="Machined API spec block with method pill, parameters, and status responses." usage={`<ApiEndpoint method="POST" path="/v1/clusters/{id}/replicate" ... />`} span={2} shadcnName="api-endpoint">
+          <Specimen
+            id="api-endpoint"
+            name="Api endpoint"
+            description="Machined API spec block with method pill, parameters, and status responses."
+            usage={`<ApiEndpoint
+  method="POST"
+  path="/v1/clusters/{cluster_id}/replicate"
+  description="Triggers immediate Raft write-ahead log replication across active quorum peers."
+  badge="Idempotent"
+  params={[
+    { name: "cluster_id", type: "string", required: true, description: "Unique target cluster identifier" },
+    { name: "fsync", type: "boolean", required: false, description: "Block until disk sync completes" },
+    { name: "timeout_ms", type: "uint32", required: false, description: "RPC timeout limit (default: 500ms)" },
+  ]}
+  responses={[
+    { status: 200, label: "OK", body: '{\\n  "replicated_index": 45091,\\n  "peers_acknowledged": 3,\\n  "latency_ms": 1.4\\n}' },
+    { status: 409, label: "Conflict", body: '{\\n  "error": "LEADER_DEPOSED",\\n  "current_term": 5\\n}' },
+  ]}
+/>`}
+            span={2}
+            shadcnName="api-endpoint"
+          >
             <ApiEndpoint
               client:load
               method="POST"
@@ -250,7 +271,20 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="doc-stepper" name="Doc stepper" description="Connected tutorial walkthrough with numbered progression track." usage={`<DocStepper steps={[...]} activeStep={1} />`} shadcnName="doc-stepper">
+          <Specimen
+            id="doc-stepper"
+            name="Doc stepper"
+            description="Connected tutorial walkthrough with numbered progression track."
+            usage={`<DocStepper
+  steps={[
+    { title: "Initialize Root Node", description: "Bootstrap primary state machine on port 8080." },
+    { title: "Attach Voter Peers", description: "Register secondary replica addresses in consensus quorum." },
+    { title: "Verify Health & Heartbeat", description: "Send ping probe to ensure sub-5ms replication latency." },
+  ]}
+  activeStep={1}
+/>`}
+            shadcnName="doc-stepper"
+          >
             <DocStepper
               client:load
               steps={[
@@ -262,7 +296,19 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="param-table" name="Param table" description="Dense configuration reference table with types, requirements, and defaults." usage={`<ParamTable items={[...]} />`} shadcnName="param-table">
+          <Specimen
+            id="param-table"
+            name="Param table"
+            description="Dense configuration reference table with types, requirements, and defaults."
+            usage={`<ParamTable
+  items={[
+    { name: "--wal-dir", type: "string", required: true, description: "Path to write-ahead log storage" },
+    { name: "--sync-interval", type: "Duration", required: false, default: "100ms", description: "Fsync interval for durability" },
+    { name: "--max-batch-size", type: "uint32", required: false, default: "1024", description: "Max operations before flush" },
+  ]}
+/>`}
+            shadcnName="param-table"
+          >
             <ParamTable
               client:load
               items={[
@@ -273,7 +319,28 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="feature-matrix" name="Feature matrix" description="Dense matrix comparison comparing engines or editions with indicators." usage={`<FeatureMatrix columns={[...]} rows={[...]} />`} span={2} shadcnName="feature-matrix">
+          <Specimen
+            id="feature-matrix"
+            name="Feature matrix"
+            description="Dense matrix comparison comparing engines or editions with indicators."
+            usage={`<FeatureMatrix
+  columns={[
+    { key: "lsm", label: "LSM-Tree (Pebbles/Rocks)" },
+    { key: "btree", label: "B+ Tree (Postgres/InnoDB)" },
+  ]}
+  rows={[
+    { category: "Storage & Latency" },
+    { name: "Write Amplification", values: { lsm: "Low (Sequential I/O)", btree: "High (Random Pages)" } },
+    { name: "Point Lookups", values: { lsm: "partial", btree: true } },
+    { name: "Range Scans", values: { lsm: true, btree: true } },
+    { category: "Hardware Characteristics" },
+    { name: "NVMe SSD Optimization", values: { lsm: true, btree: "partial" } },
+    { name: "Zero-Allocation Compaction", values: { lsm: true, btree: false } },
+  ]}
+/>`}
+            span={2}
+            shadcnName="feature-matrix"
+          >
             <FeatureMatrix
               client:load
               columns={[
@@ -292,7 +359,20 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="version-selector" name="Version selector" description="Compact documentation switcher for versions and runtime environments." usage={`<VersionSelector versions={[...]} />`} shadcnName="version-selector">
+          <Specimen
+            id="version-selector"
+            name="Version selector"
+            description="Compact documentation switcher for versions and runtime environments."
+            usage={`<VersionSelector
+  label="Doc Version:"
+  versions={[
+    { label: "v2.4", value: "v2.4", badge: "Latest" },
+    { label: "v2.3", value: "v2.3" },
+    { label: "v1.9", value: "v1.9", badge: "LTS" },
+  ]}
+/>`}
+            shadcnName="version-selector"
+          >
             <div class="spec-col" style="gap: 1rem;">
               <VersionSelector
                 client:load
@@ -315,7 +395,19 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="canvas" name="Canvas" description="Engineering coordinate drafting canvas with dotted grid, corner markers, and title bar." usage={`<Canvas variant="grid" title="Topology Frame">...</Canvas>`} shadcnName="canvas">
+          <Specimen
+            id="canvas"
+            name="Canvas"
+            description="Engineering coordinate drafting canvas with dotted grid, corner markers, and title bar."
+            usage={`<Canvas title="Raft Consensus Replication Flow" variant="grid">
+  <div style={{ padding: "1.25rem 0.75rem", display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+    <div>Leader: node-01 (Term 5)</div>
+    <div>AppendEntries RPC (0.4ms)</div>
+    <div>Follower: node-02 (Term 5)</div>
+  </div>
+</Canvas>`}
+            shadcnName="canvas"
+          >
             <Canvas client:load title="Raft Consensus Replication Flow" variant="grid">
               <div style="padding: 1.25rem 0.75rem; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
                 <div style="border: 1px solid var(--aui-primary); background: var(--aui-bg-secondary); border-radius: var(--aui-radius-md); padding: 0.75rem 1rem; font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; min-width: 140px; box-shadow: 0 0 0 1px var(--aui-primary);">
@@ -343,7 +435,26 @@ const takeaways = [
         <!-- Systems Explorables -->
         <h2 class="aui-h2"><span class="aui-index-tag">[02]</span> Interactive Systems Explorables</h2>
         <div class="spec-grid">
-          <Specimen id="memory-layout" name="Memory layout" description="Contiguous binary struct and packet inspector with interactive field breakdown." usage={`<MemoryLayout segments={[...]} />`} span={2} shadcnName="memory-layout">
+          <Specimen
+            id="memory-layout"
+            name="Memory layout"
+            description="Contiguous binary struct and packet inspector with interactive field breakdown."
+            usage={`<MemoryLayout
+  title="TCP Segment Header (20 Bytes)"
+  totalBytes={20}
+  segments={[
+    { name: "Source Port", bytes: 2, offset: "0x00 - 0x01", type: "uint16", value: "0x1F90 (8080)", color: "crimson", description: "Origin port transmitting payload packet." },
+    { name: "Dest Port", bytes: 2, offset: "0x02 - 0x03", type: "uint16", value: "0x01BB (443)", color: "emerald", description: "Target service destination port." },
+    { name: "Sequence No", bytes: 4, offset: "0x04 - 0x07", type: "uint32", value: "0x28B49001", color: "blue", description: "Initial Sequence Number (ISN) for data stream ordering." },
+    { name: "Ack Number", bytes: 4, offset: "0x08 - 0x0B", type: "uint32", value: "0x00000000", color: "amber", description: "Next expected sequence number from peer." },
+    { name: "Data Offset & Flags", bytes: 2, offset: "0x0C - 0x0D", type: "uint16", value: "0x5002 (SYN)", color: "violet", description: "Header length and TCP control flags (SYN, ACK, FIN)." },
+    { name: "Window Size", bytes: 2, offset: "0x0E - 0x0F", type: "uint16", value: "0xFFFF (65535)", color: "neutral", description: "Receive window size for flow control buffer." },
+    { name: "Checksum & Urgent", bytes: 4, offset: "0x10 - 0x13", type: "uint32", value: "0x3A210000", color: "neutral", description: "Error detection checksum and urgent pointer offset." },
+  ]}
+/>`}
+            span={2}
+            shadcnName="memory-layout"
+          >
             <MemoryLayout
               client:load
               title="TCP Segment Header (20 Bytes)"
@@ -360,7 +471,22 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="pipeline-flow" name="Pipeline flow" description="Multi-stage data streaming flow with stage metrics and animated pulse dots." usage={`<PipelineFlow stages={[...]} />`} span={2} shadcnName="pipeline-flow">
+          <Specimen
+            id="pipeline-flow"
+            name="Pipeline flow"
+            description="Multi-stage data streaming flow with stage metrics and animated pulse dots."
+            usage={`<PipelineFlow
+  animated={true}
+  stages={[
+    { title: "Ingress Gateway", badge: "HTTP/3", description: "TLS termination and routing", metric: "142k req/s" },
+    { title: "Write-Ahead Log", badge: "NVMe", description: "Sequential disk append fsync", metric: "0.28ms flush", active: true },
+    { title: "MemTable", badge: "SkipList", description: "Lock-free key-value sort", metric: "64MB cap" },
+    { title: "SSTable Level-0", badge: "Disk", description: "Immutable sorted strings table", metric: "Compacting" },
+  ]}
+/>`}
+            span={2}
+            shadcnName="pipeline-flow"
+          >
             <PipelineFlow
               client:load
               animated={true}
@@ -373,7 +499,49 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="benchmark-delta" name="Benchmark delta" description="Comparative performance block showing baseline vs candidate gains." usage={`<BenchmarkDelta benchmarks={[...]} />`} shadcnName="benchmark-delta">
+          <Specimen
+            id="benchmark-delta"
+            name="Benchmark delta"
+            description="Comparative performance block showing baseline vs candidate gains."
+            usage={`<BenchmarkDelta
+  benchmarks={[
+    {
+      name: "Throughput (ops/sec)",
+      baselineLabel: "v1.2 Baseline",
+      baselineValue: 42000,
+      baselineDisplay: "42,000 ops/s",
+      candidateLabel: "v2.0 Optimized",
+      candidateValue: 98000,
+      candidateDisplay: "98,000 ops/s",
+      delta: "+133%",
+      better: "higher",
+    },
+    {
+      name: "P99 Write Latency",
+      baselineLabel: "v1.2",
+      baselineValue: 45,
+      baselineDisplay: "45.2 ms",
+      candidateLabel: "v2.0",
+      candidateValue: 12,
+      candidateDisplay: "12.1 ms",
+      delta: "-73%",
+      better: "lower",
+    },
+    {
+      name: "Heap Allocation Rate",
+      baselineLabel: "v1.2",
+      baselineValue: 180,
+      baselineDisplay: "180 MB/s",
+      candidateLabel: "v2.0",
+      candidateValue: 48,
+      candidateDisplay: "48 MB/s",
+      delta: "-73%",
+      better: "lower",
+    },
+  ]}
+/>`}
+            shadcnName="benchmark-delta"
+          >
             <BenchmarkDelta
               client:load
               benchmarks={[
@@ -414,7 +582,23 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="latency-distribution" name="Latency distribution" description="Percentile telemetry bar comparing p50, p75, p90, p99 brackets against SLA." usage={`<LatencyDistribution percentiles={[...]} />`} shadcnName="latency-distribution">
+          <Specimen
+            id="latency-distribution"
+            name="Latency distribution"
+            description="Percentile telemetry bar comparing p50, p75, p90, p99 brackets against SLA."
+            usage={`<LatencyDistribution
+  title="HTTP Gateway Request Latency"
+  sla="SLA Objective: p99 < 30ms"
+  percentiles={[
+    { label: "p50", value: 1.4, display: "1.4ms", color: "emerald" },
+    { label: "p75", value: 3.2, display: "3.2ms", color: "blue" },
+    { label: "p90", value: 6.8, display: "6.8ms", color: "amber" },
+    { label: "p99", value: 18.2, display: "18.2ms", color: "amber" },
+    { label: "p99.9", value: 72.5, display: "72.5ms", color: "rose" },
+  ]}
+/>`}
+            shadcnName="latency-distribution"
+          >
             <LatencyDistribution
               client:load
               title="HTTP Gateway Request Latency"
@@ -429,7 +613,22 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="cluster-state" name="Cluster state" description="Distributed consensus topology showing Leader, Followers, and Quorum health." usage={`<ClusterState nodes={[...]} />`} shadcnName="cluster-state">
+          <Specimen
+            id="cluster-state"
+            name="Cluster state"
+            description="Distributed consensus topology showing Leader, Followers, and Quorum health."
+            usage={`<ClusterState
+  title="Raft Consensus (us-east-1)"
+  nodes={[
+    { id: "node-01", role: "leader", term: 5, latency: "0.2ms" },
+    { id: "node-02", role: "follower", term: 5, latency: "1.2ms" },
+    { id: "node-03", role: "follower", term: 5, latency: "1.4ms" },
+    { id: "node-04", role: "follower", term: 5, latency: "2.1ms" },
+    { id: "node-05", role: "offline", term: 4 },
+  ]}
+/>`}
+            shadcnName="cluster-state"
+          >
             <ClusterState
               client:load
               title="Raft Consensus (us-east-1)"
@@ -443,7 +642,24 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="param-sandbox" name="Param sandbox" description="Interactive mathematical sandbox with real-time reactive calculation." usage={`<ParamSandbox formula="..." inputs={[...]} outputs={[...]} />`} shadcnName="param-sandbox">
+          <Specimen
+            id="param-sandbox"
+            name="Param sandbox"
+            description="Interactive mathematical sandbox with real-time reactive calculation."
+            usage={`<ParamSandbox
+  title="Raft Quorum & Failure Calculator"
+  description="Compute majority quorum and maximum tolerable node failures."
+  formula="Quorum Q = floor(N / 2) + 1, Max Tolerable Failures F = floor((N - 1) / 2)"
+  inputs={[
+    { id: "nodes", label: "Cluster Nodes (N)", min: 3, max: 11, step: 2, defaultValue: 5 },
+  ]}
+  outputs={[
+    { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
+    { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
+  ]}
+/>`}
+            shadcnName="param-sandbox"
+          >
             <ParamSandboxDemo client:load />
           </Specimen>
         </div>
@@ -454,7 +670,13 @@ const takeaways = [
         <h2 class="aui-h2"><span class="aui-index-tag">[03]</span> Developer Primitives</h2>
 
         <div class="spec-grid">
-          <Specimen id="ping-status" name="Ping status" description="Live heartbeat indicator with smooth CSS pulse." usage={`<PingStatus variant="success" label="Operational" />`} shadcnName="ping-status">
+          <Specimen
+            id="ping-status"
+            name="Ping status"
+            description="Live heartbeat indicator with smooth CSS pulse."
+            usage={`<PingStatus status="operational" label="Operational · 24ms" size="md" />`}
+            shadcnName="ping-status"
+          >
             <div class="spec-col" style="gap:1rem;">
               <div class="spec-row" style="gap:1.5rem;">
                 <PingStatus variant="success" label="Operational" client:load />
@@ -471,7 +693,21 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="property-grid" name="Property grid" description="Dense inspector for infrastructure entities with click-to-copy." usage={`<PropertyGrid items={[…]} />`} shadcnName="property-grid">
+          <Specimen
+            id="property-grid"
+            name="Property grid"
+            description="Dense inspector for infrastructure entities with click-to-copy."
+            usage={`<PropertyGrid
+  items={[
+    { label: "Cluster ID", value: "cls_01HX98Z", copyValue: "cls_01HX98Z" },
+    { label: "Region", value: "eu-west-1 (Ireland)" },
+    { label: "Kubernetes", value: "v1.31.2-eks" },
+    { label: "VPC CIDR", value: "10.140.0.0/16", copyValue: "10.140.0.0/16" },
+    { label: "TLS Version", value: "TLS 1.3 (X25519)" },
+  ]}
+/>`}
+            shadcnName="property-grid"
+          >
             <PropertyGrid
               client:load
               items={[
@@ -484,7 +720,23 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="diff-block" name="Diff block" description="Unified git patch block with syntax additions and deletions." usage={`<DiffBlock file="migrations/0042.sql" diff={…} />`} span={2} shadcnName="diff-block">
+          <Specimen
+            id="diff-block"
+            name="Diff block"
+            description="Unified git patch block with syntax additions and deletions."
+            usage={`<DiffBlock
+  file="migrations/0042_cluster_status.sql"
+  diff={\`@@ -12,7 +12,8 @@
+ id: uuid PRIMARY KEY,
+ created_at: timestamp NOT NULL DEFAULT now(),
+-status: varchar(32) DEFAULT 'pending',
++status: cluster_status NOT NULL DEFAULT 'provisioning',
++replicas: integer NOT NULL DEFAULT 3,
+ region: text NOT NULL\`}
+/>`}
+            span={2}
+            shadcnName="diff-block"
+          >
             <DiffBlock
               client:load
               file="migrations/0042_cluster_status.sql"
@@ -498,7 +750,29 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="file-tree" name="File tree" description="Interactive, collapsible directory and file hierarchy." usage={`<FileTree data={[…]} />`} span={2} shadcnName="file-tree">
+          <Specimen
+            id="file-tree"
+            name="File tree"
+            description="Interactive, collapsible directory and file hierarchy."
+            usage={`<FileTree
+  data={[
+    {
+      name: "src",
+      type: "folder",
+      defaultOpen: true,
+      children: [
+        { name: "Button.tsx", type: "file", badge: "React" },
+        { name: "DiffBlock.tsx", type: "file", badge: "React" },
+        { name: "PingStatus.astro", type: "file", badge: "Astro" },
+      ],
+    },
+    { name: "package.json", type: "file", badge: "0.1.3" },
+    { name: "README.md", type: "file" },
+  ]}
+/>`}
+            span={2}
+            shadcnName="file-tree"
+          >
             <FileTree
               client:load
               data={[
@@ -535,15 +809,35 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="package-manager" name="Package manager" description="Multi-manager installer switcher with click-to-copy." usage={`<PackageManager pkg="array-ui" />`} span={2} shadcnName="package-manager">
+          <Specimen
+            id="package-manager"
+            name="Package manager"
+            description="Multi-manager installer switcher with click-to-copy."
+            usage={`<PackageManager pkg="array-ui" defaultManager="pnpm" />`}
+            span={2}
+            shadcnName="package-manager"
+          >
             <PackageManager client:load pkg="array-ui" />
           </Specimen>
         </div>
 
+        <div style="height: 2.5rem;"></div>
+
         <!-- Actions -->
         <h2 class="aui-h2"><span class="aui-index-tag">[04]</span> Actions</h2>
         <div class="spec-grid">
-          <Specimen id="buttons" name="Button" description="High-precision tactile variants, sizes and states." usage={`<Button variant="primary" size="md">Deploy</Button>`} span={2} shadcnName="button">
+          <Specimen
+            id="buttons"
+            name="Button"
+            description="High-precision tactile variants, sizes and states."
+            usage={`<Button variant="primary" size="md">Deploy</Button>
+<Button variant="secondary" size="md">Documentation</Button>
+<Button variant="danger" size="sm">Terminate</Button>
+<Button variant="outline" size="sm">Outline</Button>
+<Button variant="ghost" size="sm">Ghost</Button>`}
+            span={2}
+            shadcnName="button"
+          >
             <div class="spec-label">Variants</div>
             <div class="aui-btn-group" style="margin-bottom:1rem;">
               <Button variant="primary">Primary</Button>
@@ -583,11 +877,32 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="segmented" name="Segmented control" description="Mutually exclusive view switcher." usage={`<SegmentedControl options={[…]} onChange={setView} />`}>
+          <Specimen
+            id="segmented"
+            name="Segmented control"
+            description="Mutually exclusive view switcher."
+            usage={`<SegmentedControl
+  options={[
+    { value: "overview", label: "Overview" },
+    { value: "telemetry", label: "Telemetry" },
+    { value: "logs", label: "Logs" },
+  ]}
+  value={view}
+  onChange={setView}
+/>`}
+          >
             <SegmentedDemo client:load />
           </Specimen>
 
-          <Specimen id="kbd" name="Kbd" description="Keyboard shortcuts." usage={`<Kbd keys={["⌘", "K"]} />`} shadcnName="kbd">
+          <Specimen
+            id="kbd"
+            name="Kbd"
+            description="Keyboard shortcuts."
+            usage={`<Kbd keys={["⌘", "K"]} />
+<Kbd keys={["Ctrl", "Shift", "P"]} />
+<Kbd>Esc</Kbd>`}
+            shadcnName="kbd"
+          >
             <div class="spec-col">
               <div>Open command menu <Kbd keys={["⌘", "K"]} /></div>
               <div>Save <Kbd keys={["Ctrl", "S"]} /> · Close <Kbd>Esc</Kbd></div>
@@ -595,7 +910,15 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="tooltip" name="Tooltip" description="CSS-only, shows on hover and focus." usage={`<Tooltip content="Copy to clipboard">…</Tooltip>`} shadcnName="tooltip">
+          <Specimen
+            id="tooltip"
+            name="Tooltip"
+            description="CSS-only, shows on hover and focus."
+            usage={`<Tooltip content="Copy commit SHA to clipboard" placement="top">
+  <Button variant="secondary" size="sm">Hover me</Button>
+</Tooltip>`}
+            shadcnName="tooltip"
+          >
             <div class="spec-row" style="padding-top:1.5rem;">
               <Tooltip content="Copy to clipboard"><Button variant="secondary" size="sm">Hover me</Button></Tooltip>
               <Tooltip content="Shown below" placement="bottom"><Button variant="secondary" size="sm">Bottom</Button></Tooltip>
@@ -603,11 +926,28 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="theme-toggle" name="Theme toggle" description="Persists to localStorage." usage={`<ThemeToggle />`}>
+          <Specimen
+            id="theme-toggle"
+            name="Theme toggle"
+            description="Persists to localStorage."
+            usage={`<ThemeToggle />`}
+          >
             <div class="spec-row"><ThemeToggle /><span style="color:var(--aui-text-muted);font-size:0.93rem;">Click to switch light / dark</span></div>
           </Specimen>
 
-          <Specimen id="dropdown" name="Dropdown" description="Clean action menu with click outside dismissal and keyboard escape." usage={`<Dropdown trigger={<Button>…</Button>}>…</Dropdown>`} shadcnName="dropdown">
+          <Specimen
+            id="dropdown"
+            name="Dropdown"
+            description="Clean action menu with click outside dismissal and keyboard escape."
+            usage={`<Dropdown trigger={<Button variant="secondary" size="sm">Actions ▼</Button>}>
+  <div className="aui-dropdown-header">Operations</div>
+  <button type="button" className="aui-dropdown-item">View Cluster Telemetry</button>
+  <button type="button" className="aui-dropdown-item">Export Audit Log</button>
+  <div className="aui-dropdown-divider" />
+  <button type="button" className="aui-dropdown-item is-destructive">Drain Nodes</button>
+</Dropdown>`}
+            shadcnName="dropdown"
+          >
             <div class="spec-row" style="align-items: flex-start; gap: 2rem;">
               <div>
                 <div class="spec-label" style="margin-bottom:0.5rem;">React Component</div>
@@ -630,14 +970,40 @@ const takeaways = [
           </Specimen>
         </div>
 
+        <div style="height: 2.5rem;"></div>
+
         <!-- Forms -->
         <h2 class="aui-h2"><span class="aui-index-tag">[05]</span> Forms</h2>
         <div class="spec-grid">
-          <Specimen id="input" name="Input" description="Label, shortcut hint, helper and error text." usage={`<Input label="Search" shortcut="⌘K" />`} shadcnName="input">
+          <Specimen
+            id="input"
+            name="Input"
+            description="Label, shortcut hint, helper and error text."
+            usage={`<Input
+  label="Search Clusters"
+  placeholder="Type a cluster name..."
+  shortcut="⌘K"
+  helperText="Filters live across all availability zones"
+/>`}
+            shadcnName="input"
+          >
             <FormDemo client:load />
           </Specimen>
 
-          <Specimen id="select" name="Select & textarea" usage={`<Select label="Region" options={[…]} />`}>
+          <Specimen
+            id="select"
+            name="Select & textarea"
+            usage={`<Select
+  label="Target Region"
+  options={[
+    { label: "eu-west-1 (Ireland)", value: "eu" },
+    { label: "us-east-1 (Virginia)", value: "us" },
+    { label: "ap-south-1 (Mumbai)", value: "ap" },
+  ]}
+  value="eu"
+/>
+<Textarea label="Rollout Notes" placeholder="Specify release notes..." rows={3} />`}
+          >
             <Select
               label="Region"
               options={[
@@ -649,13 +1015,25 @@ const takeaways = [
             <Textarea label="Notes" placeholder="Rollout notes…" rows={3} />
           </Specimen>
 
-          <Specimen id="searchbox" name="Search box" description="Debounced search input with shortcut hint and live results dropdown." usage={`<SearchBox placeholder="Search writings and topics…" shortcut="⌘K" />`} span={2}>
+          <Specimen
+            id="searchbox"
+            name="Search box"
+            description="Debounced search input with shortcut hint and live results dropdown."
+            usage={`<SearchBox placeholder="Search writings and topics…" shortcut="⌘K" />`}
+            span={2}
+          >
             <div style="max-width: 520px; width: 100%;">
               <SearchBoxDemo client:load />
             </div>
           </Specimen>
 
-          <Specimen id="switch" name="Switch & checkbox" usage={`<Switch label="Auto-deploy" defaultChecked />`} span={2}>
+          <Specimen
+            id="switch"
+            name="Switch & checkbox"
+            usage={`<Switch label="Auto-deploy on push" defaultChecked />
+<Checkbox label="Require quorum confirmation" defaultChecked />`}
+            span={2}
+          >
             <div class="spec-row" style="gap:1.5rem;">
               <Switch label="Auto-deploy" defaultChecked />
               <Switch label="Maintenance mode" />
@@ -666,10 +1044,21 @@ const takeaways = [
           </Specimen>
         </div>
 
+        <div style="height: 2.5rem;"></div>
+
         <!-- Feedback -->
         <h2 class="aui-h2"><span class="aui-index-tag">[06]</span> Feedback</h2>
         <div class="spec-grid">
-          <Specimen id="alert" name="Alert" description="Inline, status-tinted." usage={`<Alert variant="warning" title="…">…</Alert>`} span={2} shadcnName="alert">
+          <Specimen
+            id="alert"
+            name="Alert"
+            description="Inline, status-tinted."
+            usage={`<Alert variant="warning" title="Replication Lag Detected">
+  Replica lag above 200ms in region eu-west-1. Compaction deferred.
+</Alert>`}
+            span={2}
+            shadcnName="alert"
+          >
             <div class="spec-grid" style="margin:0;gap:0.5rem 1rem;">
               <Alert variant="info" title="Heads up">Schema migration scheduled for 02:00 UTC.</Alert>
               <Alert variant="success" title="Deployed">build #4821 is live in all regions.</Alert>
@@ -678,7 +1067,17 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="toast" name="Toast" description="Transient, stackable messages." usage={`<Toast variant="success" title="Saved" onClose={…} />`}>
+          <Specimen
+            id="toast"
+            name="Toast"
+            description="Transient, stackable messages."
+            usage={`<Toast
+  variant="success"
+  title="Deployed to production"
+  description="build #4821 · 38s"
+  onClose={() => {}}
+/>`}
+          >
             <div class="spec-col">
               <Toast variant="success" title="Deployed to production" description="build #4821 · 38s" />
               <Toast variant="error" title="Build failed" description="exit code 137 (OOM)" />
@@ -686,7 +1085,12 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="progress" name="Progress" usage={`<Progress value={72} label="Upload" showValue />`}>
+          <Specimen
+            id="progress"
+            name="Progress"
+            usage={`<Progress value={72} label="Uploading assets" showValue />
+<Progress value={100} label="Tests passed" showValue variant="success" size="sm" />`}
+          >
             <div class="spec-col">
               <Progress value={72} label="Uploading assets" showValue />
               <Progress value={100} label="Tests passed" showValue variant="success" size="sm" />
@@ -695,7 +1099,13 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="spinner" name="Spinner & skeleton" description="Loading states." usage={`<Spinner size="lg" />   <Skeleton height={12} />`}>
+          <Specimen
+            id="spinner"
+            name="Spinner & skeleton"
+            description="Loading states."
+            usage={`<Spinner size="md" />
+<Skeleton height={20} width="100%" />`}
+          >
             <div class="spec-row" style="margin-bottom:1rem;gap:1rem;">
               <Spinner size="sm" /><Spinner /><Spinner size="lg" />
               <span style="color:var(--aui-text-muted);font-size:0.93rem;">Fetching metrics…</span>
@@ -710,11 +1120,35 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="modal" name="Modal" description="Esc and backdrop close. Locks scroll." usage={`<Modal isOpen={open} onClose={…} title="…" footer={…} />`} shadcnName="modal">
+          <Specimen
+            id="modal"
+            name="Modal"
+            description="Esc and backdrop close. Locks scroll."
+            usage={`<Modal
+  isOpen={open}
+  onClose={() => setOpen(false)}
+  title="Confirm Deployment"
+  footer={<Button variant="primary" size="sm">Deploy</Button>}
+>
+  <p>Are you sure you want to deploy build #4821 to production?</p>
+</Modal>`}
+            shadcnName="modal"
+          >
             <ModalDemo client:load />
           </Specimen>
 
-          <Specimen id="empty" name="Empty state" usage={`<EmptyState title="No deployments" description="…" />`} span={2} shadcnName="empty-state">
+          <Specimen
+            id="empty"
+            name="Empty state"
+            usage={`<EmptyState
+  title="No deployments yet"
+  description="Connect a repository to ship your first production build."
+>
+  <Button size="sm" variant="primary">Connect repo</Button>
+</EmptyState>`}
+            span={2}
+            shadcnName="empty-state"
+          >
             <EmptyState title="No deployments yet" description="Connect a repository to ship your first build.">
               <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
               <Button size="sm" variant="primary">Connect repo</Button>
@@ -722,10 +1156,22 @@ const takeaways = [
           </Specimen>
         </div>
 
+        <div style="height: 2.5rem;"></div>
+
         <!-- Data display -->
         <h2 class="aui-h2"><span class="aui-index-tag">[07]</span> Data display</h2>
         <div class="spec-grid">
-          <Specimen id="badge" name="Badge" description="Tags, statuses and counts." usage={`<Badge variant="green">Healthy</Badge>`} shadcnName="badge">
+          <Specimen
+            id="badge"
+            name="Badge"
+            description="Tags, statuses and counts."
+            usage={`<Badge variant="green">Healthy</Badge>
+<Badge variant="amber">Degraded</Badge>
+<Badge variant="red">Outage</Badge>
+<Badge variant="primary">Active</Badge>
+<Badge variant="outline">v0.1.3</Badge>`}
+            shadcnName="badge"
+          >
             <div class="spec-row">
               <Badge>Default</Badge>
               <Badge variant="primary">Primary</Badge>
@@ -744,7 +1190,16 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="avatar" name="Avatar" usage={`<Avatar src="…" size="md" />   <AvatarGroup>…</AvatarGroup>`}>
+          <Specimen
+            id="avatar"
+            name="Avatar"
+            usage={`<Avatar src="https://edge.arpitbhayani.me/img/arpit-6.jpg" alt="Arpit Bhayani" size="md" />
+<AvatarGroup max={3}>
+  <Avatar fallback="AB" />
+  <Avatar fallback="CD" />
+  <Avatar fallback="+4" />
+</AvatarGroup>`}
+          >
             <div class="spec-row" style="gap:1.25rem;">
               <Avatar size="sm" fallback="AB" />
               <Avatar size="md" src="https://edge.arpitbhayani.me/img/arpit-6.jpg" alt="Arpit" />
@@ -758,7 +1213,15 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="stat" name="Stat card" usage={`<StatCard value="99.98%" label="Uptime" />`} span={2} shadcnName="stat-card">
+          <Specimen
+            id="stat"
+            name="Stat card"
+            usage={`<StatCard value="99.98%" label="Availability" description="last 30 days rolling" />
+<StatCard value="42 ms" label="p99 Latency" description="eu-west-1 ingress" />
+<StatCard value="1.2M" label="Throughput" description="req/sec peak" />`}
+            span={2}
+            shadcnName="stat-card"
+          >
             <div class="aui-grid aui-grid-cols-3" style="gap:0.75rem;">
               <StatCard value="99.98%" label="Availability" description="last 30 days" />
               <StatCard value="42 ms" label="p99 Latency" description="eu-west-1" />
@@ -766,11 +1229,40 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="table" name="Table" description="Typed columns, sortable headers, dense toggle, custom renderers." usage={`<Table columns={[{ header: "Service", accessor: "service", sortable: true }, …]} dense data={rows} />`} span={2}>
+          <Specimen
+            id="table"
+            name="Table"
+            description="Typed columns, sortable headers, dense toggle, custom renderers."
+            usage={`<Table
+  columns={[
+    { header: "Service", accessor: "service", sortable: true },
+    { header: "Region", accessor: "region" },
+    { header: "P99 Latency", accessor: "p99" },
+    { header: "Status", accessor: "status" },
+  ]}
+  data={[
+    { service: "auth-gateway", region: "us-east-1", p99: "1.2ms", status: "Healthy" },
+    { service: "raft-ledger", region: "eu-west-1", p99: "2.4ms", status: "Healthy" },
+    { service: "wal-storage", region: "ap-south-1", p99: "8.1ms", status: "Degraded" },
+  ]}
+  dense
+/>`}
+            span={2}
+          >
             <TableDemo client:load rows={tableRows} />
           </Specimen>
 
-          <Specimen id="timeline" name="Timeline" usage={`<Timeline events={[{ date, title, body }]} />`}>
+          <Specimen
+            id="timeline"
+            name="Timeline"
+            usage={`<Timeline
+  events={[
+    { date: "14:22", title: "Canary deployed", body: "v2.4.0 routed 5% traffic", status: "success" },
+    { date: "14:18", title: "Integration passed", body: "142 tests, 0 failures" },
+    { date: "14:02", title: "Build triggered", body: "commit 8c2f10b by arpit" },
+  ]}
+/>`}
+          >
             <Timeline
               events={[
                 { date: "14:22", title: "Canary deployed", body: "v2.4.0 routed 5% traffic", status: "success" },
@@ -780,7 +1272,22 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="codeblock" name="Code block" description="Language label, line numbers, line highlighting, and one-click copy." usage={`<CodeBlock language="ts" filename="lock.ts" showLineNumbers highlightLines={[2]} code={…} />`}>
+          <Specimen
+            id="codeblock"
+            name="Code block"
+            description="Language label, line numbers, line highlighting, and one-click copy."
+            usage={`<CodeBlock
+  language="typescript"
+  filename="mutex.ts"
+  showLineNumbers
+  highlightLines={[3]}
+  code={\`export async function acquire(key: string, ttl: number) {
+  const token = crypto.randomUUID();
+  const ok = await redis.set(key, token, "NX", "PX", ttl);
+  return ok ? token : null;
+}\`}
+/>`}
+          >
             <ReactCodeBlock
               language="typescript"
               filename="mutex.ts"
@@ -795,7 +1302,25 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="terminal" name="Terminal" description="Commands, output, status lines." usage={`<Terminal title="bash" lines={[…]} />`} span={2} shadcnName="terminal">
+          <Specimen
+            id="terminal"
+            name="Terminal"
+            description="Commands, output, status lines."
+            usage={`<Terminal
+  title="cluster-deploy"
+  lines={[
+    "git checkout master && git pull",
+    { text: "Fast-forward to 8c2f10b", kind: "out" },
+    "pnpm build && pnpm test",
+    { text: "142 tests passed, 0 failures", kind: "ok" },
+    "kubectl apply -f k8s/prod.yaml",
+    { text: "deployment.apps/api-server configured", kind: "out" },
+    { text: "canary rollout degraded in eu-west-1", kind: "err" },
+  ]}
+/>`}
+            span={2}
+            shadcnName="terminal"
+          >
             <Terminal
               title="cluster-deploy"
               lines={[
@@ -814,15 +1339,42 @@ const takeaways = [
         <!-- Navigation -->
         <h2 class="aui-h2"><span class="aui-index-tag">[08]</span> Navigation</h2>
         <div class="spec-grid">
-          <Specimen id="breadcrumbs" name="Breadcrumbs" usage={`<Breadcrumbs items={[{ label, href }]} />`}>
+          <Specimen
+            id="breadcrumbs"
+            name="Breadcrumbs"
+            usage={`<Breadcrumbs
+  items={[
+    { label: "Console", href: "/" },
+    { label: "Clusters", href: "/clusters" },
+    { label: "prod-eu-west-1", active: true },
+  ]}
+/>`}
+          >
             <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Docs", href: "#" }, { label: "Components", href: "#" }, { label: "Breadcrumbs", active: true }]} />
           </Specimen>
 
-          <Specimen id="pagination" name="Pagination" usage={`<Pagination currentPage={3} totalPages={7} … />`}>
+          <Specimen
+            id="pagination"
+            name="Pagination"
+            usage={`<Pagination currentPage={3} totalPages={7} onPageChange={(page) => console.log(page)} />`}
+          >
             <PaginationDemo client:load />
           </Specimen>
 
-          <Specimen id="tabs" name="Tabs" description="Underline tabs, keyboard accessible." usage={`<Tabs tabs={[{ id, label, content }]} />`} shadcnName="tabs">
+          <Specimen
+            id="tabs"
+            name="Tabs"
+            description="Underline tabs, keyboard accessible."
+            usage={`<Tabs
+  tabs={[
+    { id: "react", label: "React", content: "Import from array-ui/react." },
+    { id: "astro", label: "Astro", content: "Import from array-ui/astro/*.astro." },
+    { id: "css", label: "CSS Tokens", content: "Use .aui-* classes directly." },
+  ]}
+  defaultValue="react"
+/>`}
+            shadcnName="tabs"
+          >
             <Tabs
               tabs={[
                 { id: "t-react", label: "React", content: "<p style='margin:0'>Import from <code class='aui-code'>aui/react</code>.</p>" },
@@ -832,7 +1384,17 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="accordion" name="Accordion" usage={`<Accordion items={[{ id, title, content }]} />`} shadcnName="accordion">
+          <Specimen
+            id="accordion"
+            name="Accordion"
+            usage={`<Accordion
+  items={[
+    { id: "a1", title: "Does it need JavaScript?", content: "Astro components and plain CSS ship zero JS. React islands hydrate only where used." },
+    { id: "a2", title: "Can I theme it?", content: "Override any --aui-* custom property, globally or per subtree." },
+  ]}
+/>`}
+            shadcnName="accordion"
+          >
             <Accordion
               items={[
                 { id: "a1", title: "Does it need JavaScript?", content: "Astro components and plain CSS ship zero JS. React islands hydrate only where used." },
@@ -841,7 +1403,21 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="toc" name="Table of contents" description="Scroll-spy aware outline with depth indentation and active states." usage={`<TableOfContents headings={[{ depth: 2, slug: "overview", text: "Overview" }, …]} />`} span={2}>
+          <Specimen
+            id="toc"
+            name="Table of contents"
+            description="Scroll-spy aware outline with depth indentation and active states."
+            usage={`<TableOfContents
+  headings={[
+    { depth: 2, slug: "overview", text: "Overview & Features" },
+    { depth: 2, slug: "architecture", text: "Architecture & Storage Engine" },
+    { depth: 3, slug: "storage-engine", text: "LSM Tree & MemTable Compaction" },
+    { depth: 3, slug: "wal-internals", text: "Write-Ahead Log Durability" },
+    { depth: 2, slug: "benchmarks", text: "Performance & Recovery Benchmarks" },
+  ]}
+/>`}
+            span={2}
+          >
             <TableOfContents
               sticky={false}
               headings={[
@@ -854,7 +1430,30 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="sidebar" name="Sidebar & navbar" description="The sidebar on the left and the navbar above are live examples." usage={`<Sidebar groups={[{ title, links }]} />`} span={2}>
+          <Specimen
+            id="sidebar"
+            name="Sidebar & navbar"
+            description="The sidebar on the left and the navbar above are live examples."
+            usage={`<Sidebar
+  groups={[
+    {
+      title: "Primitives",
+      links: [
+        { label: "Buttons", href: "#buttons", badge: "Core" },
+        { label: "Terminal", href: "#terminal", badge: "Dev" },
+      ],
+    },
+    {
+      title: "Explorables",
+      links: [
+        { label: "Cluster State", href: "#cluster-state" },
+        { label: "Memory Layout", href: "#memory-layout" },
+      ],
+    },
+  ]}
+/>`}
+            span={2}
+          >
             <div class="spec-row">
               <Badge variant="light">aui-nav-*</Badge>
               <Badge variant="light">aui-sidebar-*</Badge>
@@ -863,10 +1462,29 @@ const takeaways = [
           </Specimen>
         </div>
 
+        <div style="height: 2.5rem;"></div>
+
         <!-- Content -->
         <h2 class="aui-h2"><span class="aui-index-tag">[09]</span> Content</h2>
         <div class="spec-grid">
-          <Specimen id="hero" name="Hero" usage={`<Hero title subtitle avatarUrl>…</Hero>`} span={2} shadcnName="hero">
+          <Specimen
+            id="hero"
+            name="Hero"
+            usage={`<Hero
+  title="Hey, I am Arpit"
+  subtitle="engineering, databases, and systems."
+  avatarUrl="https://edge.arpitbhayani.me/img/arpit-6.jpg"
+  avatarAlt="Arpit Bhayani"
+>
+  <p>Principal engineer writing about the internals of systems that scale.</p>
+  <div slot="actions" class="aui-btn-group">
+    <Button variant="primary" size="sm">Read essays</Button>
+    <Button variant="secondary" size="sm">Watch videos</Button>
+  </div>
+</Hero>`}
+            span={2}
+            shadcnName="hero"
+          >
             <Hero
               title="Hey, I am Arpit"
               subtitle="engineering, databases, and systems."
@@ -881,23 +1499,63 @@ const takeaways = [
             </Hero>
           </Specimen>
 
-          <Specimen id="maxim" name="Maxim quote" description="Signature amber callout with author and source attribution." usage={`<Maxim author="Arpit Bhayani">Simplicity is a prerequisite for reliability.</Maxim>`} shadcnName="maxim">
+          <Specimen
+            id="maxim"
+            name="Maxim quote"
+            description="Signature amber callout with author and source attribution."
+            usage={`<Maxim author="Arpit Bhayani" source="Asli Engineering" sourceUrl="https://arpitbhayani.me">
+  Simplicity is a prerequisite for reliability. Complex systems always fail in complex ways.
+</Maxim>`}
+            shadcnName="maxim"
+          >
             <Maxim author="Arpit Bhayani" source="Asli Engineering" sourceUrl="https://arpitbhayani.me">
               Simplicity is a prerequisite for reliability. Complex systems always fail in complex ways.
             </Maxim>
           </Specimen>
 
-          <Specimen id="takeaways" name="Takeaways box" description="Crimson editorial key takeaway callout box." usage={`<TakeawaysBox title="Key takeaways" items={takeaways} />`} shadcnName="takeaways-box">
+          <Specimen
+            id="takeaways"
+            name="Takeaways box"
+            description="Crimson editorial key takeaway callout box."
+            usage={`<TakeawaysBox
+  title="Key Takeaways"
+  items={[
+    "A write-ahead log ensures crash recovery is sequential and deterministic.",
+    "Storage engines trade write amplification for read latency.",
+    "Designed for engineers: high information density and machined typography.",
+  ]}
+/>`}
+            shadcnName="takeaways-box"
+          >
             <TakeawaysBox title="Key takeaways" items={takeaways} />
           </Specimen>
 
-          <Specimen id="notice" name="Notice box" usage={`<NoticeBox title driveUrl>…</NoticeBox>`}>
+          <Specimen
+            id="notice"
+            name="Notice box"
+            usage={`<NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
+  <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun slides.md</code></p>
+</NoticeBox>`}
+          >
             <NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
               <p slot="footer" class="aui-notice-footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></p>
             </NoticeBox>
           </Specimen>
 
-          <Specimen id="newsletter" name="Newsletter" description="Lead-capture callout with email input, CTA, and external platform links." usage={`<Newsletter title="Stay in the loop" linkedinUrl="…" substackUrl="…" />`} span={2}>
+          <Specimen
+            id="newsletter"
+            name="Newsletter"
+            description="Lead-capture callout with email input, CTA, and external platform links."
+            usage={`<Newsletter
+  title="Stay in the loop"
+  description="No-fluff engineering essays, database teardowns, and system design insights delivered straight to your inbox."
+  action="/api/subscribe"
+  buttonText="Subscribe"
+  linkedinUrl="https://linkedin.com/in/arpitbhayani"
+  substackUrl="https://arpitbhayani.substack.com"
+/>`}
+            span={2}
+          >
             <Newsletter
               title="Stay in the loop"
               description="No-fluff engineering essays, database teardowns, and system design insights delivered straight to your inbox."
@@ -908,20 +1566,49 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="card" name="Card" description="Base surface; hover lifts border and shadow." usage={`<Card hoverable>…</Card>`} shadcnName="card">
+          <Specimen
+            id="card"
+            name="Card"
+            description="Base surface; hover lifts border and shadow."
+            usage={`<Card hoverable={true}>
+  <strong>Hoverable Card</strong>
+  <p style={{ margin: "0.25rem 0 0", color: "var(--aui-text-muted)", fontSize: "0.93rem" }}>
+    Border and shadow respond to cursor hover.
+  </p>
+</Card>`}
+            shadcnName="card"
+          >
             <div class="aui-grid aui-grid-cols-2" style="gap:0.75rem;">
               <Card><strong>Hoverable</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">Border and shadow respond.</p></Card>
               <Card hoverable={false}><strong>Static</strong><p style="margin:0.25rem 0 0;color:var(--aui-text-muted);font-size:0.93rem;">No hover effect.</p></Card>
             </div>
           </Specimen>
 
-          <Specimen id="video-embed" name="Video embed" description="Responsive 16:9 media player container with hairline border." usage={`<VideoEmbed src="https://www.youtube.com/embed/..." title="Video" />`} span={2} shadcnName="video-embed">
+          <Specimen
+            id="video-embed"
+            name="Video embed"
+            description="Responsive 16:9 media player container with hairline border."
+            usage={`<VideoEmbed
+  src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+  title="Array UI Video Player Demo"
+  aspectRatio="16 / 9"
+/>`}
+            span={2}
+            shadcnName="video-embed"
+          >
             <div style="max-width: 640px; margin: 0 auto; width: 100%;">
               <VideoEmbed src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Array UI Video Player Demo" />
             </div>
           </Specimen>
 
-          <Specimen id="social" name="Social pill" usage={`<SocialPill platform="github" href count="7k" />`} shadcnName="social-pill">
+          <Specimen
+            id="social"
+            name="Social pill"
+            usage={`<SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+<SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
+<SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />`}
+            shadcnName="social-pill"
+          >
             <div class="aui-social-pill-group">
               <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
               <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
@@ -931,7 +1618,13 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="divider" name="Divider" usage={`<Divider label="or" />`}>
+          <Specimen
+            id="divider"
+            name="Divider"
+            usage={`<Divider />
+<Divider label="OR CONTINUE WITH" />
+<Divider label="SECTION BREAK" />`}
+          >
             <div class="spec-col">
               <Divider />
               <Divider label="OR CONTINUE WITH" />
@@ -939,7 +1632,15 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="gutter" name="Gutter" description="Whitespace blank spacing primitive between components. Eliminates ad-hoc external CSS margins." usage={`<Gutter size="lg" />`} shadcnName="gutter">
+          <Specimen
+            id="gutter"
+            name="Gutter"
+            description="Whitespace blank spacing primitive between components. Eliminates ad-hoc external CSS margins."
+            usage={`<Gutter size="lg" />
+<Gutter size={32} />
+<Gutter orientation="horizontal" size="sm" />`}
+            shadcnName="gutter"
+          >
             <div class="spec-col" style="width: 100%;">
               <div class="aui-badge aui-badge-outline aui-font-mono" style="font-size:0.75rem; text-align:center; display:block;">&lt;Navbar /&gt;</div>
               <Gutter size="sm" />
@@ -957,7 +1658,20 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="course" name="Course card" usage={`<CourseCard title description badge tags … />`} span={2} shadcnName="course-card">
+          <Specimen
+            id="course"
+            name="Course card"
+            usage={`<CourseCard
+  title="System Design Masterclass"
+  description="Consensus, storage engines, cache consistency, sharding, and real-world architectures."
+  href="https://arpitbhayani.me/courses"
+  badge="Cohort 12"
+  tags={["Distributed Systems", "Consensus", "Databases"]}
+  ctaText="View curriculum →"
+/>`}
+            span={2}
+            shadcnName="course-card"
+          >
             <div class="aui-grid aui-grid-cols-2" style="gap:1rem;">
               <CourseCard
                 title="System Design Masterclass"
@@ -978,7 +1692,29 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="cover-card" name="Cover card (og:image)" description="Precision OpenGraph cover photo for social cards and blog hero banners. Designed with standard 1200x630 aspect ratio, CAD corner crosshairs, and developer typography." usage={`<CoverCard title="Designing a Distributed Key-Value Store" description="Consensus, partition tolerance, and storage layout." category="SYSTEM DESIGN" path="posts/distributed-kv.md" badge="DEEP DIVE" author={{ name: "Arpit Bhayani", handle: "@arpit · Principal Engineer" }} tags={["raft", "consensus", "go"]} readingTime="12 min read" date="Oct 2026" theme="dark" pattern="dots" />`} span={2}>
+          <Specimen
+            id="cover-card"
+            name="Cover card (og:image)"
+            description="Precision OpenGraph cover photo for social cards and blog hero banners. Designed with standard 1200x630 aspect ratio, CAD corner crosshairs, and developer typography."
+            usage={`<CoverCard
+  title="Designing a Distributed Key-Value Store"
+  description="Consensus, partition tolerance, WAL internals, and storage engine layout for extreme write throughput."
+  category="SYSTEM DESIGN"
+  path="posts/distributed-kv-store.md"
+  badge="DEEP DIVE"
+  author={{
+    name: "Arpit Bhayani",
+    handle: "@arpit · Principal Engineer",
+    avatarUrl: "https://edge.arpitbhayani.me/img/arpit-6.jpg",
+  }}
+  tags={["raft", "storage", "consensus", "go"]}
+  readingTime="14 min read"
+  date="Oct 2026"
+  theme="dark"
+  pattern="dots"
+/>`}
+            span={2}
+          >
             <div class="spec-col" style="gap: 1.5rem;">
               <div class="cover-card-preview-wrap">
                 <CoverCard
@@ -1001,6 +1737,9 @@ const takeaways = [
               </div>
             </div>
           </Specimen>
+        </div>
+
+        <div style="height: 2.5rem;"></div>
 
         <!-- SaaS & Control Plane -->
         <h2 class="aui-h2"><span class="aui-index-tag">[10]</span> SaaS & Control Plane</h2>
@@ -1010,7 +1749,16 @@ const takeaways = [
             id="combobox"
             name="Combobox"
             description="Searchable autocomplete select with keyboard navigation, empty states, and badge support."
-            usage="<Combobox options={repos} value={selectedRepo} onChange={setSelectedRepo} />"
+            usage={`<Combobox
+  options={[
+    { value: "main", label: "main", description: "Default production branch", badge: "protected" },
+    { value: "feat/wal", label: "feat/wal", description: "Storage engine compaction" },
+    { value: "feat/raft", label: "feat/raft", description: "Quorum replication" },
+  ]}
+  value={selectedRepo}
+  onChange={setSelectedRepo}
+  placeholder="Select branch..."
+/>`}
             shadcnName="combobox"
           >
             <ComboboxDemo client:load />
@@ -1021,7 +1769,16 @@ const takeaways = [
             id="drawer"
             name="Drawer / Sheet"
             description="Slide-over drawer panel for deep inspection of telemetry, configurations, and logs."
-            usage="<Drawer isOpen={open} onClose={() => setOpen(false)} title=&quot;Workspace Specs&quot;>...</Drawer>"
+            usage={`<Drawer
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  title="Workspace Specs & Runtime"
+  size="md"
+>
+  <div style={{ padding: "1rem" }}>
+    <p>Container specs, memory limits, and runtime telemetry...</p>
+  </div>
+</Drawer>`}
             shadcnName="drawer"
           >
             <DrawerDemo client:load />
@@ -1032,7 +1789,15 @@ const takeaways = [
             id="alert-dialog"
             name="AlertDialog"
             description="Destructive action confirmation modal with autofocus on Cancel and confirmation phrase."
-            usage="<AlertDialog isOpen={open} onClose={() => setOpen(false)} onConfirm={handleTeardown} />"
+            usage={`<AlertDialog
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  onConfirm={handleTeardown}
+  title="Teardown Cluster"
+  description="This will terminate all 5 replicas and delete persistent volumes. This action cannot be reversed."
+  confirmationPhrase="teardown prod-01"
+  confirmText="Teardown Cluster"
+/>`}
             shadcnName="alert-dialog"
           >
             <AlertDialogDemo client:load />
@@ -1043,7 +1808,11 @@ const takeaways = [
             id="secret-input"
             name="SecretInput / CopyInput"
             description="Masked credential input with reveal toggle, copy feedback, and monospace layout."
-            usage="<SecretInput label=&quot;API Key&quot; value=&quot;px0_live_...&quot; />"
+            usage={`<SecretInput
+  label="API Secret Key"
+  value="px0_live_8f0a3b89c72e140d83b9281a94e0c1f5"
+  helperText="Copy this token now. It will not be shown again."
+/>`}
             shadcnName="secret-input"
           >
             <SecretInputDemo client:load />
@@ -1054,7 +1823,17 @@ const takeaways = [
             id="multi-select"
             name="MultiSelect / TagInput"
             description="Scoped tag selector with dismissable badges, quick filtering, and batch select/clear actions."
-            usage="<MultiSelect label=&quot;Permissions&quot; options={scopes} selected={selected} onChange={setSelected} />"
+            usage={`<MultiSelect
+  label="Assigned Permissions"
+  options={[
+    { value: "read:telemetry", label: "read:telemetry" },
+    { value: "write:snapshots", label: "write:snapshots" },
+    { value: "admin:clusters", label: "admin:clusters" },
+  ]}
+  selected={selectedScopes}
+  onChange={setSelectedScopes}
+  placeholder="Select permissions..."
+/>`}
             shadcnName="multi-select"
           >
             <MultiSelectDemo client:load />
@@ -1065,7 +1844,15 @@ const takeaways = [
             id="slider"
             name="Slider"
             description="Precision range slider with filled accent bar, tactile thumb, and value readout."
-            usage="<Slider label=&quot;Timeout&quot; value={timeout} onChange={setTimeout} min={15} max={180} />"
+            usage={`<Slider
+  label="Heartbeat Timeout"
+  value={timeout}
+  onChange={setTimeout}
+  min={15}
+  max={180}
+  step={5}
+  unit="ms"
+/>`}
             shadcnName="slider"
           >
             <SliderDemo client:load />
@@ -1076,7 +1863,17 @@ const takeaways = [
             id="popover"
             name="Popover"
             description="Floating anchor-positioned overlay container with collision awareness for custom forms and filters."
-            usage="<Popover trigger={<Button size=&quot;sm&quot;>Filter</Button>}>...</Popover>"
+            usage={`<Popover
+  trigger={<Button variant="secondary" size="sm">Filter Metrics ▼</Button>}
+  align="start"
+>
+  <div style={{ padding: "0.75rem", minWidth: "200px" }}>
+    <div style={{ fontWeight: 600, fontSize: "0.85rem", marginBottom: "0.5rem" }}>Filters</div>
+    <label style={{ display: "flex", gap: "0.5rem", fontSize: "0.82rem" }}>
+      <input type="checkbox" defaultChecked /> Active connections
+    </label>
+  </div>
+</Popover>`}
             shadcnName="popover"
           >
             <PopoverDemo client:load />
@@ -1087,7 +1884,19 @@ const takeaways = [
             id="charts"
             name="Telemetry Charts"
             description="Pure SVG charts styled 100% with Array UI design tokens with hover crosshairs and tooltips."
-            usage="<AreaChart data={telemetry} index=&quot;date&quot; categories={[&quot;active&quot;, &quot;queued&quot;]} />"
+            usage={`<AreaChart
+  data={[
+    { date: "00:00", active: 24, queued: 4 },
+    { date: "04:00", active: 18, queued: 2 },
+    { date: "08:00", active: 65, queued: 12 },
+    { date: "12:00", active: 89, queued: 28 },
+    { date: "16:00", active: 72, queued: 15 },
+    { date: "20:00", active: 45, queued: 6 },
+  ]}
+  index="date"
+  categories={["active", "queued"]}
+  height={220}
+/>`}
             shadcnName="charts"
             span={2}
           >
@@ -1099,7 +1908,10 @@ const takeaways = [
             id="datepicker"
             name="DatePicker & DateRangePicker"
             description="Calendar date pickers with monospace formatting and one-click range presets."
-            usage="<DateRangePicker value={range} onChange={setRange} />"
+            usage={`<DateRangePicker
+  value={{ from: new Date(2026, 9, 1), to: new Date(2026, 9, 7) }}
+  onChange={(range) => console.log("Selected range:", range)}
+/>`}
             shadcnName="date-picker"
           >
             <DatePickerDemo client:load />
@@ -1110,13 +1922,27 @@ const takeaways = [
             id="datatable"
             name="DataTable"
             description="Dense SaaS data table with search filtering, multi-row selection, sorting, and pagination."
-            usage="<DataTable data={workspaces} columns={columns} selectable pageSize={10} />"
+            usage={`<DataTable
+  data={[
+    { id: "ws-01", name: "prod-ledger", region: "eu-west-1", status: "Active", nodes: 5 },
+    { id: "ws-02", name: "staging-ingest", region: "us-east-1", status: "Provisioning", nodes: 3 },
+    { id: "ws-03", name: "analytics-sink", region: "ap-south-1", status: "Active", nodes: 7 },
+  ]}
+  columns={[
+    { key: "id", header: "Workspace ID", sortable: true },
+    { key: "name", header: "Name", sortable: true },
+    { key: "region", header: "Region" },
+    { key: "nodes", header: "Nodes" },
+    { key: "status", header: "Status" },
+  ]}
+  selectable
+  pageSize={10}
+/>`}
             shadcnName="data-table"
             span={2}
           >
             <DataTableDemo client:load />
           </Specimen>
-        </div>
         </div>
       </main>
     </div>

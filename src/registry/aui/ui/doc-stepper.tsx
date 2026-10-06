@@ -53,12 +53,12 @@ export function DocStepper({
               </div>
             </div>
 
-            <div className="flex-1 min-w-0 pt-0.5">
-              <h4 className="font-heading font-semibold text-foreground text-base leading-snug">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-heading font-semibold text-foreground text-base leading-[28px] m-0 p-0">
                 {step.title}
               </h4>
               {step.description && (
-                <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                <p className="text-sm text-muted-foreground mt-1 mb-0 leading-relaxed">
                   {step.description}
                 </p>
               )}
