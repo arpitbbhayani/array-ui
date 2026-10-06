@@ -287,7 +287,12 @@ Unified git patch inspector with line gutters, additions, and deletions.
 - Endpoint: `https://ui.arpitbhayani.me/r/diff-block.json`
 - Props:
   - `file?: string`
-  - `diff: string`
+  - `diff?: string` (unified patch; hunk headers set line numbers)
+  - `lines?: DiffLine[]` (alternative to diff; per-line `coverage`, `segments`, `note`)
+  - `view?: "unified" | "split"`
+  - `collapseContext?: number | false` (fold unchanged lines beyond N around each change)
+  - `showCoverage?: boolean` (coverage rail from `coverage: "covered" | "uncovered" | "partial"`)
+  - `highlightWords?: boolean` (default true)
 ```tsx
 <DiffBlock
   file="migrations/0042_status.sql"

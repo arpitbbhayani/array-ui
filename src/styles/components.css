@@ -3835,6 +3835,15 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
    DiffBlock (Unified Git Diff / Patch Viewer)
    ========================================================================== */
 .aui-diff {
+  /* The diff body is a dark surface in both themes: use a fixed on-dark palette
+     so text, tints and rails stay readable when the page theme is light. */
+  --aui-diff-text: #ececf1;
+  --aui-diff-muted: #9d9eae;
+  --aui-diff-add: #6ee7b7;
+  --aui-diff-del: #fda4af;
+  --aui-diff-warn: #fbbf24;
+  --aui-diff-surface: #1a1a20;
+  --aui-diff-border: #2c2c38;
   background-color: var(--aui-pre-bg);
   border: 1px solid var(--aui-border-color);
   border-radius: var(--aui-radius-lg);
@@ -3892,33 +3901,39 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 }
 
 .aui-diff-line-add {
-  background-color: rgba(5, 150, 105, 0.16);
-  color: var(--aui-success);
+  background-color: rgba(16, 185, 129, 0.16);
+  color: var(--aui-diff-add);
 }
 
 .aui-diff-line-del {
-  background-color: rgba(220, 38, 38, 0.16);
-  color: var(--aui-danger);
+  background-color: rgba(244, 63, 94, 0.18);
+  color: var(--aui-diff-del);
 }
 
 .aui-diff-line-normal {
-  color: var(--aui-pre-text);
+  color: var(--aui-diff-text);
 }
 
 .aui-diff-line-meta {
-  color: var(--aui-text-muted);
+  color: var(--aui-diff-muted);
   background-color: rgba(255, 255, 255, 0.03);
   font-style: italic;
 }
 
 .aui-diff-gutter {
   user-select: none;
-  min-width: 2.5rem;
-  color: var(--aui-text-muted);
-  opacity: 0.6;
+  display: flex;
+  gap: 0.5rem;
+  color: var(--aui-diff-muted);
+  opacity: 0.7;
   text-align: right;
   padding-right: 0.75rem;
   flex-shrink: 0;
+}
+
+.aui-diff-num {
+  min-width: 3ch;
+  text-align: right;
 }
 
 .aui-diff-symbol {
@@ -3931,6 +3946,69 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-diff-text {
   flex-grow: 1;
 }
+
+/* Word-level highlight inside paired deleted/added lines */
+.aui-diff-word {
+  border-radius: 2px;
+}
+.aui-diff-line-add .aui-diff-word { background-color: rgba(16, 185, 129, 0.38); }
+.aui-diff-line-del .aui-diff-word { background-color: rgba(244, 63, 94, 0.38); }
+
+/* Coverage rail (showCoverage) */
+.aui-diff-cov {
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 3px;
+  margin-right: 0.5rem;
+  border-radius: 1px;
+}
+.aui-diff-cov-covered { background-color: var(--aui-diff-add); }
+.aui-diff-cov-uncovered { background-color: var(--aui-diff-del); }
+.aui-diff-cov-partial { background-color: var(--aui-diff-warn); }
+
+/* Inline annotation beneath a line */
+.aui-diff-note {
+  padding: 0.35rem 0.85rem 0.35rem 4.25rem;
+  background-color: rgba(251, 191, 36, 0.12);
+  border-left: 2px solid var(--aui-diff-warn);
+  color: var(--aui-diff-text);
+  font-family: var(--aui-font-sans);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+/* Collapsed unchanged context */
+.aui-diff-fold > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.2rem 0.85rem;
+  background-color: var(--aui-diff-surface);
+  border-top: 1px solid var(--aui-diff-border);
+  border-bottom: 1px solid var(--aui-diff-border);
+  color: var(--aui-diff-muted);
+  font-size: 0.75rem;
+  font-style: italic;
+  user-select: none;
+}
+.aui-diff-fold > summary::-webkit-details-marker { display: none; }
+.aui-diff-fold > summary:hover { color: var(--aui-diff-text); }
+.aui-diff-fold[open] > summary { font-style: normal; }
+
+/* Split (side-by-side) view */
+.aui-diff-row-split {
+  display: grid;
+  grid-template-columns: minmax(20rem, 1fr) minmax(20rem, 1fr);
+}
+.aui-diff-half {
+  display: flex;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 0.08rem 0.75rem;
+  white-space: pre;
+}
+.aui-diff-half + .aui-diff-half { border-left: 1px solid var(--aui-diff-border); }
+.aui-diff-half-empty { background-color: var(--aui-diff-surface); opacity: 0.6; }
 
 /* ==========================================================================
    PropertyGrid (Entity / Metadata Inspector)
@@ -5404,8 +5482,12 @@ pre.aui-pre,
   }
 
   .aui-diff-gutter {
-    min-width: 2rem;
+    gap: 0.3rem;
     padding-right: 0.45rem;
+  }
+
+  .aui-diff-num {
+    min-width: 2ch;
   }
 
   .aui-diff-line {

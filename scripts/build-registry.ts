@@ -841,6 +841,82 @@ ${renderComponentList(explorableComps)}
 ### SaaS & Control Plane Primitives
 ${renderComponentList(saasComps)}
 
+## Components by Use Case
+
+Find components by the job you are doing. A component can appear under more than one use case.
+
+### Code Review & Change Understanding
+- \`DiffBlock\`: unified patch with line gutters and add/delete stats.
+- \`FileTree\`: changed-file map with per-node badges.
+- \`CodeBlock\`: syntax-highlighted source for context around a change.
+- \`Terminal\`: command output, build logs, and failing test output.
+- \`PropertyGrid\`: PR metadata (author, base, commit SHAs) with copy.
+- \`Badge\`, \`Alert\`: risk labels and merge warnings.
+- \`Tabs\`, \`Accordion\`: group files, hunks, and notes.
+- \`Timeline\`: commit history and review activity.
+
+### Explaining How a System Works
+- \`ArchitectureCanvas\`: blast radius and data flow between services.
+- \`SequenceDiagram\`: request and protocol call flows.
+- \`StateMachine\`: states and transitions.
+- \`PipelineFlow\`: multi-stage data paths with metrics.
+- \`ClusterState\`: consensus and replication topology.
+- \`MemoryLayout\`: byte-level struct and wire formats.
+- \`ConceptWalkthrough\`, \`StepScrubber\`: guided, stepwise explainers.
+- \`AnalogyCard\`: mental models for non-obvious mechanisms.
+- \`Canvas\`: frame for any custom diagram.
+
+### Testing, Assurance & Performance
+- \`BenchmarkDelta\`: baseline vs candidate regressions.
+- \`LatencyDistribution\`: percentile tails against an SLA.
+- \`AreaChart\`, \`BarChart\`, \`Sparkline\`: metrics over time.
+- \`StatCard\`, \`Progress\`: pass rate, coverage, and threshold readouts.
+- \`PingStatus\`: health of checks and environments.
+- \`Terminal\`: raw test and CI output.
+- \`DataTable\`, \`Table\`: test and check results with sorting and filtering.
+
+### Decisions & Trade-offs
+- \`TradeoffMatrix\`: weighted comparison with a verdict.
+- \`FeatureMatrix\`: capability comparison across options or versions.
+- \`ParamSandbox\`: tune inputs and see computed outcomes.
+- \`TakeawaysBox\`, \`Maxim\`: conclusions and principles.
+
+### Technical Documentation & Reference
+- \`ApiEndpoint\`: HTTP/gRPC specs with parameters and responses.
+- \`ParamTable\`: configuration and flag references.
+- \`DocStepper\`: runbooks and tutorials.
+- \`PackageManager\`: install commands.
+- \`VersionSelector\`: version and environment switching.
+- \`CodeBlock\`, \`Terminal\`: code and shell samples.
+- \`TableOfContents\`, \`Breadcrumbs\`, \`Sidebar\`: navigation.
+- \`Accordion\`, \`Tabs\`: FAQs and grouped content.
+
+### Operations & Control Plane
+- \`Sidebar\`, \`Navbar\`: application shell.
+- \`DataTable\`: resource lists with selection and bulk actions.
+- \`Drawer\`: inspect logs and config in place.
+- \`AlertDialog\`: confirm destructive actions.
+- \`SecretInput\`: credentials with reveal and copy.
+- \`ClusterState\`, \`PingStatus\`: live system health.
+- \`Timeline\`: incident and deploy history.
+- \`Charts\`: telemetry dashboards.
+- \`Toast\`, \`Alert\`: feedback and incident banners.
+
+### Forms & Filtering
+- \`Input\`, \`Textarea\`, \`Select\`, \`Checkbox\`, \`Switch\`, \`SearchBox\`
+- \`Combobox\`, \`MultiSelect\`, \`Slider\`, \`SegmentedControl\`
+- \`DatePicker\`, \`DateRangePicker\`
+- \`Popover\`, \`Dropdown\`, \`CommandPalette\`
+
+### Editorial, Marketing & Content
+- \`Hero\`, \`SocialPill\`, \`CourseCard\`, \`CoverCard\`, \`Newsletter\`
+- \`Maxim\`, \`TakeawaysBox\`, \`NoticeBox\`
+- \`VideoEmbed\`, \`Footer\`, \`EmptyState\`
+
+### Layout & Primitives
+- \`Button\`, \`Card\`, \`Badge\`, \`Kbd\`, \`Tooltip\`, \`Avatar\`, \`Divider\`, \`Gutter\`
+- \`Modal\`, \`Spinner\`, \`Skeleton\`, \`Pagination\`
+
 ## Full Library Native Components (React & Astro)
 
 In addition to shadcn copy-paste components, the official package dependency (\`array-ui\`) includes 72+ native components for React (\`array-ui/nextjs\`, \`array-ui/react\`) and Astro (\`array-ui/astro/*\`):
@@ -1150,7 +1226,12 @@ Unified git patch inspector with line gutters, additions, and deletions.
 - Endpoint: \`${BASE_URL}/r/diff-block.json\`
 - Props:
   - \`file?: string\`
-  - \`diff: string\`
+  - \`diff?: string\` (unified patch; hunk headers set line numbers)
+  - \`lines?: DiffLine[]\` (alternative to diff; per-line \`coverage\`, \`segments\`, \`note\`)
+  - \`view?: "unified" | "split"\`
+  - \`collapseContext?: number | false\` (fold unchanged lines beyond N around each change)
+  - \`showCoverage?: boolean\` (coverage rail from \`coverage: "covered" | "uncovered" | "partial"\`)
+  - \`highlightWords?: boolean\` (default true)
 \`\`\`tsx
 <DiffBlock
   file="migrations/0042_status.sql"

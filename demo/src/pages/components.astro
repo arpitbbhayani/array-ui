@@ -751,6 +751,46 @@ const takeaways = [
           </Specimen>
 
           <Specimen
+            id="diff-block-review"
+            name="Diff block (review mode)"
+            description="Split view, folded context, word-level highlights, coverage rail, and inline notes."
+            usage={`<DiffBlock
+  file="raft/log.go"
+  view="split"
+  collapseContext={1}
+  showCoverage
+  diff={patch}
+  lines={linesWithCoverageAndNotes}
+/>`}
+            span={2}
+            shadcnName="diff-block"
+          >
+            <DiffBlock
+              client:load
+              file="raft/log.go"
+              view="split"
+              collapseContext={1}
+              showCoverage
+              lines={[
+                { type: "meta", content: "@@ -40,9 +40,11 @@ func (l *Log) Append", oldNum: "...", newNum: "..." },
+                { type: "normal", content: "func (l *Log) Append(e Entry) error {", oldNum: 40, newNum: 40, coverage: "covered" },
+                { type: "normal", content: "  l.mu.Lock()", oldNum: 41, newNum: 41, coverage: "covered" },
+                { type: "normal", content: "  defer l.mu.Unlock()", oldNum: 42, newNum: 42, coverage: "covered" },
+                { type: "normal", content: "  e.Index = l.last + 1", oldNum: 43, newNum: 43, coverage: "covered" },
+                { type: "del", content: "  return l.w.Write(e)", oldNum: 44 },
+                { type: "add", content: "  if err := l.w.Write(e); err != nil {", newNum: 44, coverage: "covered" },
+                { type: "add", content: "    return fmt.Errorf(\"append %d: %w\", e.Index, err)", newNum: 45, coverage: "uncovered", note: "Error path has no test. Add a failing-writer case." },
+                { type: "add", content: "  }", newNum: 46, coverage: "covered" },
+                { type: "add", content: "  l.last = e.Index", newNum: 47, coverage: "partial" },
+                { type: "normal", content: "  return nil", oldNum: 45, newNum: 48, coverage: "covered" },
+                { type: "normal", content: "}", oldNum: 46, newNum: 49, coverage: "covered" },
+                { type: "normal", content: "", oldNum: 47, newNum: 50 },
+                { type: "normal", content: "func (l *Log) Last() uint64 { return l.last }", oldNum: 48, newNum: 51, coverage: "covered" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen
             id="file-tree"
             name="File tree"
             description="Interactive, collapsible directory and file hierarchy."

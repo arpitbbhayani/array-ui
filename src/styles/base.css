@@ -13,7 +13,24 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
-  color-scheme: light dark;
+  color-scheme: light;
+  /* Themed scrollbars: inherited by every scroll container */
+  scrollbar-width: thin;
+  scrollbar-color: var(--aui-border-strong) transparent;
+  scrollbar-color: color-mix(in srgb, var(--aui-text-muted) 50%, transparent) transparent;
+}
+
+/* Follow the active theme (data-theme / .dark), not the OS preference,
+   so native scrollbars and form controls never mismatch the page. */
+html[data-theme="dark"],
+html.dark {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]):not(.dark) {
+    color-scheme: dark;
+  }
 }
 
 html,

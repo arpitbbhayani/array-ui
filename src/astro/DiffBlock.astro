@@ -1,14 +1,29 @@
 ---
-import { parseDiff, type DiffLine } from "../react/DiffBlock/DiffBlock";
+import { parseDiff, buildDiffRows, type DiffLine, type DiffView } from "../react/DiffBlock/DiffBlock";
+import DiffRows from "./DiffRows.astro";
 
 interface Props {
   file?: string;
   diff?: string;
   lines?: DiffLine[];
+  view?: DiffView;
+  collapseContext?: number | false;
+  showCoverage?: boolean;
+  highlightWords?: boolean;
   class?: string;
 }
 
-const { file, diff, lines: customLines, class: className = "", ...props } = Astro.props;
+const {
+  file,
+  diff,
+  lines: customLines,
+  view = "unified",
+  collapseContext = false,
+  showCoverage = false,
+  highlightWords = true,
+  class: className = "",
+  ...props
+} = Astro.props;
 
 const parsed = diff ? parseDiff(diff) : { lines: customLines || [], adds: 0, dels: 0 };
 const lines = customLines || parsed.lines;
@@ -18,9 +33,10 @@ const adds = customLines
 const dels = customLines
   ? customLines.filter((l) => l.type === "del").length
   : parsed.dels;
+const rows = buildDiffRows(lines, { view, collapseContext, highlightWords });
 ---
 
-<div class:list={["aui-diff", className]} {...props}>
+<div class:list={["aui-diff", view === "split" && "aui-diff-split", className]} {...props}>
   {file && (
     <div class="aui-diff-header">
       <div class="aui-diff-file">
@@ -37,29 +53,6 @@ const dels = customLines
     </div>
   )}
   <div class="aui-diff-content">
-    {lines.map((l) => {
-      let lineClass = "aui-diff-line-normal";
-      let symbol = " ";
-      if (l.type === "add") {
-        lineClass = "aui-diff-line-add";
-        symbol = "+";
-      } else if (l.type === "del") {
-        lineClass = "aui-diff-line-del";
-        symbol = "-";
-      } else if (l.type === "meta") {
-        lineClass = "aui-diff-line-meta";
-        symbol = "@";
-      }
-
-      return (
-        <div class:list={["aui-diff-line", lineClass]}>
-          <span class="aui-diff-gutter">
-            {l.oldNum ?? " "} {l.newNum ?? " "}
-          </span>
-          <span class="aui-diff-symbol">{symbol}</span>
-          <span class="aui-diff-text">{l.content}</span>
-        </div>
-      );
-    })}
+    <DiffRows rows={rows} showCoverage={showCoverage} />
   </div>
 </div>

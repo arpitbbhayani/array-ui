@@ -1,0 +1,91 @@
+---
+import type { DiffLine, DiffRow } from "../react/DiffBlock/DiffBlock";
+
+interface Props {
+  rows: DiffRow[];
+  showCoverage?: boolean;
+}
+
+const { rows, showCoverage = false } = Astro.props;
+
+const SYMBOLS: Record<DiffLine["type"], string> = { add: "+", del: "-", meta: "@", normal: " " };
+const LINE_CLASS: Record<DiffLine["type"], string> = {
+  add: "aui-diff-line-add",
+  del: "aui-diff-line-del",
+  meta: "aui-diff-line-meta",
+  normal: "aui-diff-line-normal",
+};
+---
+
+{rows.map((row) => {
+  if (row.kind === "line") {
+    const l = row.line;
+    return (
+      <>
+        <div class:list={["aui-diff-line", LINE_CLASS[l.type]]}>
+          {showCoverage && (
+            <span
+              class:list={["aui-diff-cov", l.coverage && `aui-diff-cov-${l.coverage}`]}
+              title={l.coverage ? `Coverage: ${l.coverage}` : undefined}
+              aria-label={l.coverage ? `Coverage: ${l.coverage}` : undefined}
+            />
+          )}
+          <span class="aui-diff-gutter">
+            <span class="aui-diff-num">{l.oldNum ?? ""}</span>
+            <span class="aui-diff-num">{l.newNum ?? ""}</span>
+          </span>
+          <span class="aui-diff-symbol">{SYMBOLS[l.type]}</span>
+          <span class="aui-diff-text">
+            {l.segments
+              ? l.segments.map((s) => (s.changed ? <span class="aui-diff-word">{s.text}</span> : s.text))
+              : l.content}
+          </span>
+        </div>
+        {l.note && <div class="aui-diff-note">{l.note}</div>}
+      </>
+    );
+  }
+  if (row.kind === "pair") {
+    const note = row.right?.note ?? row.left?.note;
+    return (
+      <>
+        <div class="aui-diff-row-split">
+          {[
+            { l: row.left, side: "left" },
+            { l: row.right, side: "right" },
+          ].map(({ l, side }) =>
+            l ? (
+              <div class:list={["aui-diff-half", LINE_CLASS[l.type]]}>
+                {side === "right" && showCoverage && (
+                  <span
+                    class:list={["aui-diff-cov", l.coverage && `aui-diff-cov-${l.coverage}`]}
+                    title={l.coverage ? `Coverage: ${l.coverage}` : undefined}
+                    aria-label={l.coverage ? `Coverage: ${l.coverage}` : undefined}
+                  />
+                )}
+                <span class="aui-diff-gutter">
+                  <span class="aui-diff-num">{(side === "left" ? l.oldNum : l.newNum) ?? ""}</span>
+                </span>
+                <span class="aui-diff-symbol">{SYMBOLS[l.type]}</span>
+                <span class="aui-diff-text">
+                  {l.segments
+                    ? l.segments.map((s) => (s.changed ? <span class="aui-diff-word">{s.text}</span> : s.text))
+                    : l.content}
+                </span>
+              </div>
+            ) : (
+              <div class="aui-diff-half aui-diff-half-empty" />
+            )
+          )}
+        </div>
+        {note && <div class="aui-diff-note">{note}</div>}
+      </>
+    );
+  }
+  return (
+    <details class="aui-diff-fold">
+      <summary>{row.count} unchanged lines</summary>
+      <Astro.self rows={row.rows} showCoverage={showCoverage} />
+    </details>
+  );
+})}
