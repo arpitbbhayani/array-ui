@@ -25,6 +25,7 @@ import {
   DatePicker,
   DateRangePicker,
   DataTable,
+  ParamSandbox,
 } from "../../../dist/react.js";
 
 
@@ -471,6 +472,21 @@ export function DataTableDemo() {
         )}
       />
     </div>
+  );
+}
+
+export function ParamSandboxDemo() {
+  return (
+    <ParamSandbox
+      formula="Quorum Q = floor(N / 2) + 1, Max Tolerable Failures F = floor((N - 1) / 2)"
+      inputs={[
+        { id: "nodes", label: "Cluster Nodes (N)", min: 3, max: 11, step: 2, defaultValue: 5 },
+      ]}
+      outputs={[
+        { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
+        { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
+      ]}
+    />
   );
 }
 

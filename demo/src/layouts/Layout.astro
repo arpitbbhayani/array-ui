@@ -14,8 +14,8 @@ interface Props {
 }
 
 const {
-  title = "Array UI (aui) — Editorial Design System for Engineers & AI Agents",
-  description = "Array UI (aui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me.",
+  title = "Array UI — Editorial Design System for Engineers & AI Agents",
+  description = "Array UI (array-ui): Editorial, typography-led systems engineering design system for engineers and AI coding agents. Complete component registry, llms.txt, and shadcn CLI distribution for ui.arpitbhayani.me.",
   currentPath,
 } = Astro.props;
 
@@ -23,8 +23,7 @@ const navLinks = [
   { label: "Overview", href: "/" },
   { label: "Components", href: "/components" },
   { label: "Foundations", href: "/foundations" },
-  { label: "Patterns", href: "/patterns" },
-  { label: "Agent Hub", href: "/agents" },
+  { label: "Agents", href: "/agents" },
 ];
 
 const footerColumns = [
@@ -34,17 +33,16 @@ const footerColumns = [
       { label: "Overview", href: "/" },
       { label: "Component Catalog", href: "/components" },
       { label: "Design Foundations", href: "/foundations" },
-      { label: "Patterns & Layouts", href: "/patterns" },
       { label: "Color Tokens", href: "/foundations#colors" },
       { label: "Typography Scale", href: "/foundations#typography" },
-      { label: "Spacing & Layout", href: "/foundations#spacing" },
+      { label: "Spacing & Gutters", href: "/foundations#spacing" },
       { label: "Base Invariants", href: "/foundations#invariants" },
     ],
   },
   {
     heading: "For AI Agents & LLMs",
     links: [
-      { label: "AI Agent Instructions", href: "/agents", isHighlight: true },
+      { label: "Agents Protocol & Prompt", href: "/agents", isHighlight: true },
       { label: "llms.txt (Standard)", href: "/llms.txt", hint: "Manifest", external: true },
       { label: "llms-full.txt", href: "/llms-full.txt", hint: "Full APIs", external: true },
       { label: "shadcn Registry JSON", href: "/r/registry.json", hint: "Schema", external: true },
@@ -78,20 +76,24 @@ const commandItems = [
 
   // Navigation Pages
   { id: "page-overview", label: "Overview & Quickstart", category: "Pages", href: "/" },
-  { id: "page-components", label: "Components Catalog (48+ Primitives)", category: "Pages", href: "/components" },
+  { id: "page-components", label: "Components Catalog (58+ Primitives)", category: "Pages", href: "/components" },
   { id: "page-foundations", label: "Design Foundations (Colors, Typography, Spacing, Hairlines)", category: "Pages", href: "/foundations" },
   { id: "foundations-spacing", label: "Foundations: Spacing Scale & Gutters", category: "Pages", href: "/foundations#spacing" },
   { id: "foundations-invariants", label: "Foundations: Base Invariants & Resets", category: "Pages", href: "/foundations#invariants" },
-  { id: "page-patterns", label: "Architectural Patterns (Dashboard, Essay, Theatre)", category: "Pages", href: "/patterns" },
-  { id: "pattern-theatre", label: "Pattern: Course Video Player (.aui-theatre-grid)", category: "Pages", href: "/patterns#theatre-view" },
-  { id: "page-agents", label: "AI Agent & LLM Hub (Prompts & Endpoints)", category: "Pages", href: "/agents" },
+  { id: "page-agents", label: "Agents (System Prompts, LLM Endpoints & CLI)", category: "Pages", href: "/agents" },
 
   // Agent Endpoints
   { id: "llms-txt", label: "llms.txt (Standard Context)", category: "AI & Endpoints", href: "/llms.txt" },
   { id: "llms-full", label: "llms-full.txt (Comprehensive API Spec)", category: "AI & Endpoints", href: "/llms-full.txt" },
   { id: "registry-json", label: "registry.json (shadcn Registry Schema)", category: "AI & Endpoints", href: "/r/registry.json" },
 
-  // Components
+  // SaaS & Primitives
+  { id: "comp-combobox", label: "Combobox (@aui/combobox)", category: "Components", href: "/components#combobox" },
+  { id: "comp-drawer", label: "Drawer / Sheet (@aui/drawer)", category: "Components", href: "/components#drawer" },
+  { id: "comp-datatable", label: "DataTable (@aui/data-table)", category: "Components", href: "/components#datatable" },
+  { id: "comp-charts", label: "Telemetry Charts (@aui/charts)", category: "Components", href: "/components#charts" },
+  { id: "comp-secret", label: "SecretInput (@aui/secret-input)", category: "Components", href: "/components#secret-input" },
+  { id: "comp-alert-dialog", label: "AlertDialog (@aui/alert-dialog)", category: "Components", href: "/components#alert-dialog" },
   { id: "comp-button", label: "Button (@aui/button)", category: "Components", href: "/components#buttons" },
   { id: "comp-badge", label: "Badge (@aui/badge)", category: "Components", href: "/components#badge" },
   { id: "comp-card", label: "Card (@aui/card)", category: "Components", href: "/components#card" },
@@ -141,7 +143,7 @@ const commandItems = [
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Array UI (aui)",
+        "name": "Array UI",
         "description": "Editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution.",
         "url": "https://ui.arpitbhayani.me",
         "applicationCategory": "DeveloperApplication",
@@ -157,7 +159,7 @@ const commandItems = [
   </head>
   <body class="aui-body">
     <CommandPalette client:load items={commandItems} />
-    <Navbar brandName="Array UI (aui)" links={navLinks}>
+    <Navbar brandName="Array UI" links={navLinks}>
       <div slot="actions" class="aui-row aui-row-sm">
         <a class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono" href="/llms.txt" target="_blank" title="Machine-readable LLM documentation (llms.txt)" style="gap: 0.35rem; font-size: 0.78rem;">
           <span class="aui-ping-dot" style="width: 7px; height: 7px; background-color: var(--aui-success); border-radius: 50%; display: inline-block;"></span>
@@ -185,7 +187,7 @@ const commandItems = [
     <Footer
       columns={footerColumns}
       copyright="Array UI — Built for curious systems engineers & AI agents. MIT Licensed."
-      disclaimer="Array UI (aui) is an editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution for ui.arpitbhayani.me."
+      disclaimer="Array UI is an editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution for ui.arpitbhayani.me."
     >
       <div slot="socials" class="aui-social-pill-group">
         <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />

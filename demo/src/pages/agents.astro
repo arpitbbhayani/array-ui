@@ -81,7 +81,7 @@ const endpoints = [
   },
 ];
 
-const universalAgentPrompt = `You are an expert engineer building UI with Array UI (@aui), an editorial engineering design system inspired by arpitbhayani.me.
+const universalAgentPrompt = `You are an expert engineer building UI with Array UI (array-ui), an editorial engineering design system inspired by arpitbhayani.me.
 
 # Documentation & Registry
 - Official Site & Catalog: https://ui.arpitbhayani.me
@@ -121,16 +121,16 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
 ---
 
 <Layout
-  title="AI Agent & LLM Hub — Array UI (aui)"
+  title="Agents — Array UI (aui)"
   description="First-class system prompts, autonomous coding rules, and machine-readable registry endpoints (llms.txt, llms-full.txt) for AI assistants."
 >
   <div class="aui-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
     <!-- Page Header -->
     <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--aui-border-color); padding-bottom: 1.5rem;">
       <div class="aui-row aui-row-xs" style="margin-bottom: 0.5rem;">
-        <span class="aui-index-tag">[AI HUB]</span>
+        <span class="aui-index-tag">[AGENTS]</span>
       </div>
-      <h1 class="aui-h1">AI Agent & LLM Hub</h1>
+      <h1 class="aui-h1">Agents</h1>
       <p class="aui-sub" style="max-width: 72ch; margin-bottom: 1rem;">
         Array UI is architected for autonomous AI coding assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity) who need machine-readable specifications, copy-paste prompts, and instant component installations.
       </p>
@@ -288,7 +288,7 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
 
 <script>
   const agentPresets: Record<string, string> = {
-    universal: `You are an expert engineer building UI with Array UI (@aui), an editorial engineering design system inspired by arpitbhayani.me.
+    universal: `You are an expert engineer building UI with Array UI (array-ui), an editorial engineering design system inspired by arpitbhayani.me.
 
 # Documentation & Registry
 - Official Site & Catalog: https://ui.arpitbhayani.me
@@ -325,8 +325,8 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
 - Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, IBM Plex Mono code.
 - Always use cn() from @/lib/utils for custom classes.`,
-    cursor: `# Array UI (.cursorrules / .cursor/rules/aui.mdc)
-You are an expert engineer building interfaces with Array UI (@aui).
+    cursor: `# Array UI (.cursorrules / .cursor/rules/array-ui.mdc)
+You are an expert engineer building interfaces with Array UI (array-ui).
 
 - Official Registry: https://ui.arpitbhayani.me/r/{name}.json
 - LLM Context: https://ui.arpitbhayani.me/llms.txt
@@ -345,7 +345,7 @@ You are an expert engineer building interfaces with Array UI (@aui).
 - Headings: Space Grotesk / Plus Jakarta Sans (relaxed tracking -0.015em).
 - Body: Assistant (15px dense). Quotes: Lora italic serif. Monospace: IBM Plex Mono.
 - Flat tinted surfaces, dense tables, machined telemetry. Never inject arbitrary gradients or heavy shadows.`,
-    claude: `# Claude Code Guidelines: Array UI (@aui)
+    claude: `# Claude Code Guidelines: Array UI (array-ui)
 
 ## UI Framework
 - Design system: Array UI (https://ui.arpitbhayani.me)
@@ -365,7 +365,7 @@ npx shadcn@latest add @aui/<component> -y
 - Signature crimson (#e5000f light, #ff3344 dark) reserved for primary actions.
 - Amber (#cc9900) exclusively for engineering maxims.
 - Always import cn() from "@/lib/utils" for className composition.`,
-    windsurf: `# Windsurf Cascade Rules: Array UI (@aui)
+    windsurf: `# Windsurf Cascade Rules: Array UI (array-ui)
 - Design System: Array UI (https://ui.arpitbhayani.me)
 - Components Registry: https://ui.arpitbhayani.me/r/{name}.json
 - Manifest: https://ui.arpitbhayani.me/llms.txt

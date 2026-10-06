@@ -507,14 +507,7 @@ const componentsConfig: ComponentDef[] = [
     target: "ui/latency-distribution.tsx",
     category: "Interactive Explorables",
   },
-  {
-    name: "step-scrubber",
-    title: "StepScrubber",
-    description: "Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.",
-    file: "src/registry/aui/ui/step-scrubber.tsx",
-    target: "ui/step-scrubber.tsx",
-    category: "Interactive Explorables",
-  },
+
   {
     name: "cluster-state",
     title: "ClusterState",
@@ -725,7 +718,7 @@ Allow: /
 
 
   // Generate standard llms.txt (following llmstxt.org specification)
-  const llmsTxt = `# Array UI (aui)
+  const llmsTxt = `# Array UI (array-ui)
 
 > Editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution hosted at ui.arpitbhayani.me.
 
@@ -817,9 +810,9 @@ In addition to shadcn copy-paste components, the official package dependency (\`
 `;
 
   // Generate comprehensive llms-full.txt
-  const llmsFullTxt = `# Array UI (aui) — Complete LLM & Agent Documentation
+  const llmsFullTxt = `# Array UI (array-ui) — Complete LLM & Agent Documentation
 
-> Full specification, design tokens, component APIs, props, and code examples for Array UI (aui) hosted at ${BASE_URL}.
+> Full specification, design tokens, component APIs, props, and code examples for Array UI (array-ui) hosted at ${BASE_URL}.
 
 ---
 
@@ -1547,22 +1540,7 @@ Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thres
 />
 \`\`\`
 
-### 38. StepScrubber (\`@aui/step-scrubber\`)
-Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.
-- Endpoint: \`${BASE_URL}/r/step-scrubber.json\`
-- Props:
-  - \`steps: ExplorableStep[]\`
-  - \`autoplayInterval?: number\`
-\`\`\`tsx
-<StepScrubber
-  steps={[
-    { title: "1. Heartbeat Timeout", description: "Follower detects leader absence after 150ms timeout." },
-    { title: "2. Election Started", description: "Node transitions to Candidate state and increments term." },
-    { title: "3. Votes Granted", description: "Candidate collects quorum of votes (3 of 5)." },
-    { title: "4. Leader Established", description: "New leader sends AppendEntries heartbeats." },
-  ]}
-/>
-\`\`\`
+
 
 ### 39. ClusterState (\`@aui/cluster-state\`)
 Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status).

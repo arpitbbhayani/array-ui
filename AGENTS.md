@@ -1,13 +1,13 @@
-# AGENTS.md — AI Coding Assistant Guide for Array UI (aui)
+# AGENTS.md — AI Coding Assistant Guide for Array UI (array-ui)
 
 > **For AI Coding Assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity):**
-> This file contains the complete system prompt, rules, installation options, and component API reference for building interfaces with **Array UI** (`aui`).
+> This file contains the complete system prompt, rules, installation options, and component API reference for building interfaces with **Array UI** (`array-ui`).
 
 ---
 
 ## 1. Quick Identity & Design Rules
 
-**Array UI (`aui`)** is an editorial, systems-engineering design system inspired by [arpitbhayani.me](https://arpitbhayani.me). It is designed for engineers who value mathematical precision, high information density, and editorial typography.
+**Array UI (`array-ui`)** is an editorial, systems-engineering design system inspired by [arpitbhayani.me](https://arpitbhayani.me). It is designed for engineers who value mathematical precision, high information density, and editorial typography.
 
 ### Core Visual Principles
 1. **Editorial Palette**:
@@ -603,18 +603,6 @@ Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thres
 />
 ```
 
-#### 28. `StepScrubber` (`@aui/step-scrubber`)
-Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.
-```tsx
-<StepScrubber
-  steps={[
-    { title: "1. Heartbeat Timeout", description: "Follower detects leader absence after 150ms timeout." },
-    { title: "2. Election Started", description: "Node transitions to Candidate state and increments term." },
-    { title: "3. Votes Granted", description: "Candidate collects quorum of votes (3 of 5)." },
-    { title: "4. Leader Established", description: "New leader sends AppendEntries heartbeats." },
-  ]}
-/>
-```
 
 #### 29. `ClusterState` (`@aui/cluster-state`)
 Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status).

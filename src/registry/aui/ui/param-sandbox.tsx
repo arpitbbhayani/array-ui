@@ -15,7 +15,8 @@ export interface SandboxInput {
 
 export interface SandboxOutput {
   label: string;
-  compute: (vals: Record<string, number>) => string | number;
+  compute?: ((vals: Record<string, number>) => string | number) | null;
+  value?: string | number;
 }
 
 export interface ParamSandboxProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -26,13 +27,13 @@ export interface ParamSandboxProps extends React.HTMLAttributes<HTMLDivElement> 
 
 export function ParamSandbox({
   formula,
-  inputs,
-  outputs,
+  inputs = [],
+  outputs = [],
   className,
   ...props
 }: ParamSandboxProps) {
   const initialVals: Record<string, number> = {};
-  inputs.forEach((inp) => {
+  (inputs || []).forEach((inp) => {
     initialVals[inp.id] = inp.defaultValue ?? inp.min;
   });
 
@@ -40,6 +41,27 @@ export function ParamSandbox({
 
   const handleChange = (id: string, val: number) => {
     setValues((prev) => ({ ...prev, [id]: val }));
+  };
+
+  const getOutputValue = (out: SandboxOutput) => {
+    if (typeof out.compute === "function") {
+      try {
+        return out.compute(values);
+      } catch {
+        return "—";
+      }
+    }
+    const nodes = values["nodes"] ?? Object.values(values)[0] ?? 5;
+    if (out.label.toLowerCase().includes("quorum")) {
+      return Math.floor(nodes / 2) + 1;
+    }
+    if (out.label.toLowerCase().includes("failure") || out.label.toLowerCase().includes("tolerable")) {
+      return Math.floor((nodes - 1) / 2);
+    }
+    if (out.value !== undefined) {
+      return out.value;
+    }
+    return "—";
   };
 
   return (
@@ -61,14 +83,14 @@ export function ParamSandbox({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5">
         <div className="space-y-4">
-          {inputs.map((inp) => (
+          {(inputs || []).map((inp) => (
             <div key={inp.id} className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-mono font-medium text-foreground">
                   {inp.label}
                 </span>
                 <span className="font-mono font-bold text-primary">
-                  {values[inp.id]} {inp.unit ?? ""}
+                  {values[inp.id] ?? inp.defaultValue ?? inp.min} {inp.unit ?? ""}
                 </span>
               </div>
               <input
@@ -76,7 +98,7 @@ export function ParamSandbox({
                 min={inp.min}
                 max={inp.max}
                 step={inp.step ?? 1}
-                value={values[inp.id]}
+                value={values[inp.id] ?? inp.defaultValue ?? inp.min}
                 className="w-full accent-primary cursor-pointer"
                 onChange={(e) =>
                   handleChange(inp.id, parseFloat(e.target.value))
@@ -87,7 +109,7 @@ export function ParamSandbox({
         </div>
 
         <div className="flex flex-col justify-center gap-3">
-          {outputs.map((out, idx) => (
+          {(outputs || []).map((out, idx) => (
             <div
               key={idx}
               className="flex items-center justify-between p-3.5 rounded-md border border-border bg-muted/20"
@@ -96,7 +118,7 @@ export function ParamSandbox({
                 {out.label}
               </span>
               <span className="font-mono text-base font-bold text-foreground">
-                {out.compute(values)}
+                {getOutputValue(out)}
               </span>
             </div>
           ))}

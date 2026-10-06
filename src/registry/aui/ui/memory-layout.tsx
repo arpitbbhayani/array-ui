@@ -68,7 +68,7 @@ export function MemoryLayout({
       </div>
 
       <div className="p-4 bg-muted/10 border-b border-border overflow-x-auto">
-        <div className="flex min-h-[48px] w-full border border-border rounded-md overflow-hidden bg-card">
+        <div className="flex min-h-[52px] min-w-[580px] w-full border border-border rounded-md overflow-hidden bg-card">
           {segments.map((seg, idx) => {
             const flexGrow = Math.max(seg.bytes, 1);
             const isSelected = selectedIndex === idx;
@@ -77,18 +77,18 @@ export function MemoryLayout({
               <div
                 key={idx}
                 className={cn(
-                  "flex flex-col justify-center items-center p-2 border-r border-border cursor-pointer transition-all min-w-[60px] last:border-r-0 select-none",
+                  "flex flex-col justify-center items-center p-2 border-r border-border cursor-pointer transition-all min-w-0 max-w-full overflow-hidden last:border-r-0 select-none",
                   getColorClass(seg.color),
                   isSelected && "ring-2 ring-primary ring-inset z-10 font-bold"
                 )}
                 style={{ flex: `${flexGrow} 1 0%` }}
                 onClick={() => setSelectedIndex(idx)}
-                title={`${seg.name} (${seg.bytes} bytes)`}
+                title={`${seg.name} (${seg.bytes} bytes, ${seg.offset ?? ""})`}
               >
-                <span className="font-mono text-xs truncate w-full text-center">
+                <span className="font-mono text-xs truncate w-full text-center block">
                   {seg.name}
                 </span>
-                <span className="font-mono text-[10px] opacity-75">
+                <span className="font-mono text-[10px] opacity-75 truncate w-full text-center block">
                   {seg.offset ?? `${seg.bytes}B`}
                 </span>
               </div>

@@ -1,4 +1,4 @@
-# Array UI (aui)
+# Array UI (array-ui)
 
 > Editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution hosted at ui.arpitbhayani.me.
 
@@ -107,7 +107,6 @@ npm install array-ui
 - [PipelineFlow](https://ui.arpitbhayani.me/r/pipeline-flow.json): Multi-stage data pipeline flow visualizer with throughput metrics and animated pulse lines. `npx shadcn@latest add @aui/pipeline-flow -y`
 - [BenchmarkDelta](https://ui.arpitbhayani.me/r/benchmark-delta.json): Comparative system performance delta block showing baseline vs candidate metrics. `npx shadcn@latest add @aui/benchmark-delta -y`
 - [LatencyDistribution](https://ui.arpitbhayani.me/r/latency-distribution.json): Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thresholds and SLA lines. `npx shadcn@latest add @aui/latency-distribution -y`
-- [StepScrubber](https://ui.arpitbhayani.me/r/step-scrubber.json): Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations. `npx shadcn@latest add @aui/step-scrubber -y`
 - [ClusterState](https://ui.arpitbhayani.me/r/cluster-state.json): Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status). `npx shadcn@latest add @aui/cluster-state -y`
 - [ParamSandbox](https://ui.arpitbhayani.me/r/param-sandbox.json): Interactive slider sandbox for mathematical formulas and live reactive system calculations. `npx shadcn@latest add @aui/param-sandbox -y`
 

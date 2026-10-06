@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo } from "../components/Interactive";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
@@ -61,9 +61,7 @@ import {
   PipelineFlow,
   BenchmarkDelta,
   LatencyDistribution,
-  StepScrubber,
   ClusterState,
-  ParamSandbox,
 } from "../../../dist/react.js";
 
 const sidebarGroups = [
@@ -85,7 +83,6 @@ const sidebarGroups = [
       { label: "Pipeline flow", href: "#pipeline-flow" },
       { label: "Benchmark delta", href: "#benchmark-delta" },
       { label: "Latency distribution", href: "#latency-distribution" },
-      { label: "Step scrubber", href: "#step-scrubber" },
       { label: "Cluster state", href: "#cluster-state" },
       { label: "Param sandbox", href: "#param-sandbox" },
     ],
@@ -205,8 +202,8 @@ const takeaways = [
 ---
 
 <Layout
-  title="Component Catalog — Array UI (aui)"
-  description="Explore the complete interactive catalog of 48+ native components and shadcn CLI registry primitives."
+  title="Component Catalog — Array UI"
+  description="Explore the complete interactive catalog of 58+ native components and shadcn CLI registry primitives."
 >
   <div class="aui-container">
     <div class="aui-mobile-only">
@@ -318,10 +315,24 @@ const takeaways = [
             </div>
           </Specimen>
 
-          <Specimen id="canvas" name="Canvas" description="Engineering coordinate canvas with dotted grid and corner tick marks." usage={`<Canvas variant="grid" title="Topology Frame">...</Canvas>`} shadcnName="canvas">
-            <Canvas client:load title="Raft Leader State Machine" variant="grid">
-              <div style="font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; padding: 1.5rem 0; color: var(--aui-text-muted);">
-                [Term: 4] · [Leader: Node-01] · [Commit Index: 54,120]
+          <Specimen id="canvas" name="Canvas" description="Engineering coordinate drafting canvas with dotted grid, corner markers, and title bar." usage={`<Canvas variant="grid" title="Topology Frame">...</Canvas>`} shadcnName="canvas">
+            <Canvas client:load title="Raft Consensus Replication Flow" variant="grid">
+              <div style="padding: 1.25rem 0.75rem; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                <div style="border: 1px solid var(--aui-primary); background: var(--aui-bg-secondary); border-radius: var(--aui-radius-md); padding: 0.75rem 1rem; font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; min-width: 140px; box-shadow: 0 0 0 1px var(--aui-primary);">
+                  <div style="color: var(--aui-primary); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">● Leader</div>
+                  <div style="font-weight: 600; color: var(--aui-text-primary); margin-top: 0.2rem;">node-01 (Term 5)</div>
+                  <div style="font-size: 0.7rem; color: var(--aui-text-muted); margin-top: 0.15rem;">Commit: 94,820</div>
+                </div>
+                <div style="font-family: var(--aui-font-mono); font-size: 0.72rem; color: var(--aui-text-muted); text-align: center; display: flex; flex-direction: column; align-items: center;">
+                  <span>AppendEntries RPC</span>
+                  <span style="color: var(--aui-primary); font-size: 1.1rem; line-height: 1.2;">⇄ ⇄</span>
+                  <span>0.4ms ping</span>
+                </div>
+                <div style="border: 1px solid var(--aui-border-color); background: var(--aui-bg-secondary); border-radius: var(--aui-radius-md); padding: 0.75rem 1rem; font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; min-width: 140px;">
+                  <div style="color: var(--aui-success); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">○ Follower</div>
+                  <div style="font-weight: 600; color: var(--aui-text-primary); margin-top: 0.2rem;">node-02 (Term 5)</div>
+                  <div style="font-size: 0.7rem; color: var(--aui-text-muted); margin-top: 0.15rem;">Match: 94,820</div>
+                </div>
               </div>
             </Canvas>
           </Specimen>
@@ -418,30 +429,6 @@ const takeaways = [
             />
           </Specimen>
 
-          <Specimen id="step-scrubber" name="Step scrubber" description="Interactive explorable player with play/pause and step slider." usage={`<StepScrubber steps={[...]} />`} span={2} shadcnName="step-scrubber">
-            <StepScrubber
-              client:load
-              steps={[
-                {
-                  title: "Step 1: Heartbeat Timeout Detected",
-                  description: "Follower node-02 misses periodic AppendEntries heartbeat from previous leader within 150ms election window.",
-                },
-                {
-                  title: "Step 2: Transition to Candidate State",
-                  description: "Node-02 increments term to 5, votes for itself, and broadcasts RequestVote RPCs across all cluster peers.",
-                },
-                {
-                  title: "Step 3: Quorum Votes Acknowledged",
-                  description: "Nodes 01, 02, and 03 grant votes, achieving strict majority consensus quorum (3 of 5 nodes).",
-                },
-                {
-                  title: "Step 4: New Leader Established",
-                  description: "Node-02 assumes cluster leadership for term 5 and begins broadcasting heartbeat pulses to suppress new elections.",
-                },
-              ]}
-            />
-          </Specimen>
-
           <Specimen id="cluster-state" name="Cluster state" description="Distributed consensus topology showing Leader, Followers, and Quorum health." usage={`<ClusterState nodes={[...]} />`} shadcnName="cluster-state">
             <ClusterState
               client:load
@@ -457,17 +444,7 @@ const takeaways = [
           </Specimen>
 
           <Specimen id="param-sandbox" name="Param sandbox" description="Interactive mathematical sandbox with real-time reactive calculation." usage={`<ParamSandbox formula="..." inputs={[...]} outputs={[...]} />`} shadcnName="param-sandbox">
-            <ParamSandbox
-              client:load
-              formula="Quorum Q = floor(N / 2) + 1, Max Failures F = floor((N - 1) / 2)"
-              inputs={[
-                { id: "nodes", label: "Cluster Nodes (N)", min: 3, max: 11, step: 2, defaultValue: 5 },
-              ]}
-              outputs={[
-                { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
-                { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
-              ]}
-            />
+            <ParamSandboxDemo client:load />
           </Specimen>
         </div>
 

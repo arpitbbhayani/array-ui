@@ -1,6 +1,6 @@
-# Array UI (aui) — Complete LLM & Agent Documentation
+# Array UI (array-ui) — Complete LLM & Agent Documentation
 
-> Full specification, design tokens, component APIs, props, and code examples for Array UI (aui) hosted at https://ui.arpitbhayani.me.
+> Full specification, design tokens, component APIs, props, and code examples for Array UI (array-ui) hosted at https://ui.arpitbhayani.me.
 
 ---
 
@@ -728,22 +728,7 @@ Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thres
 />
 ```
 
-### 38. StepScrubber (`@aui/step-scrubber`)
-Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.
-- Endpoint: `https://ui.arpitbhayani.me/r/step-scrubber.json`
-- Props:
-  - `steps: ExplorableStep[]`
-  - `autoplayInterval?: number`
-```tsx
-<StepScrubber
-  steps={[
-    { title: "1. Heartbeat Timeout", description: "Follower detects leader absence after 150ms timeout." },
-    { title: "2. Election Started", description: "Node transitions to Candidate state and increments term." },
-    { title: "3. Votes Granted", description: "Candidate collects quorum of votes (3 of 5)." },
-    { title: "4. Leader Established", description: "New leader sends AppendEntries heartbeats." },
-  ]}
-/>
-```
+
 
 ### 39. ClusterState (`@aui/cluster-state`)
 Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status).

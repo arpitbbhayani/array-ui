@@ -118,7 +118,7 @@ const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this
             <Button variant="primary" size="md">Explore Components →</Button>
           </a>
           <a href="/agents">
-            <Button variant="secondary" size="md">AI Agent Hub</Button>
+            <Button variant="secondary" size="md">Agents</Button>
           </a>
         </div>
 
@@ -190,8 +190,7 @@ const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this
           <span style="font-size: 0.8rem; font-weight: 600; color: var(--aui-text-muted);">Registry:</span>
           <a href="/components"><Button variant="secondary" size="sm">Catalog</Button></a>
           <a href="/foundations"><Button variant="secondary" size="sm">Foundations</Button></a>
-          <a href="/patterns"><Button variant="secondary" size="sm">Patterns</Button></a>
-          <a href="/agents"><Button variant="primary" size="sm">AI Hub</Button></a>
+          <a href="/agents"><Button variant="primary" size="sm">Agents</Button></a>
         </div>
       </div>
     </Card>
@@ -271,10 +270,10 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-s
         <div>
           <h2 class="aui-h2" style="border-bottom: none; margin: 0; padding: 0;">Browse Library by Category</h2>
           <p class="aui-sub" style="font-size: 0.88rem;">
-            Explore all 48+ native components, design tokens, architectural patterns, and AI endpoints.
+            Explore all 58+ native components, design tokens, and AI agent endpoints.
           </p>
         </div>
-        <a href="/components" style="font-size: 0.85rem; font-weight: 600; color: var(--aui-primary); text-decoration: none;">View All 48+ Components →</a>
+        <a href="/components" style="font-size: 0.85rem; font-weight: 600; color: var(--aui-primary); text-decoration: none;">View All 58+ Components →</a>
       </div>
 
       <div class="aui-grid aui-grid-cols-3" style="gap: 1rem;">
@@ -338,7 +337,7 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-s
           </Table>
           <div style="text-align: right; margin-top: 0.5rem;">
             <a href="/agents#component-matrix" style="font-size: 0.84rem; font-weight: 600; color: var(--aui-primary); text-decoration: none;">
-              View all 26 registry components in Agent Hub →
+              View all components in Agents →
             </a>
           </div>
         </div>
@@ -348,7 +347,7 @@ npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-s
     <!-- Framework Integration -->
     <h2 class="aui-h2"><span class="aui-index-tag">[10]</span> Usage & Frameworks</h2>
     <div class="spec-grid" style="margin-bottom: 3rem;">
-      <Specimen id="shadcn" name="shadcn CLI Registry" description="Copy signature aui primitives directly into your project via shadcn CLI.">
+      <Specimen id="shadcn" name="shadcn CLI Registry" description="Copy signature array-ui primitives directly into your project via shadcn CLI.">
         <ReactCodeBlock
           language="bash"
           code={`# Configure registry in components.json, then:
@@ -365,8 +364,8 @@ import { Terminal } from "@/components/ui/terminal";`}
         <ReactCodeBlock
           language="tsx"
           filename="app/page.tsx"
-          code={`import "aui/styles.css";
-import { Button, Terminal, PingStatus } from "aui/nextjs";
+          code={`import "array-ui/styles.css";
+import { Button, Terminal, PingStatus } from "array-ui/nextjs";
 
 export default function Page() {
   return (
