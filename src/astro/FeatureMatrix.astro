@@ -1,0 +1,61 @@
+---
+interface FeatureMatrixColumn {
+  key: string;
+  label: string;
+}
+
+interface FeatureMatrixRow {
+  category?: string;
+  name?: string;
+  values?: Record<string, boolean | "partial" | string>;
+}
+
+interface Props {
+  columns: FeatureMatrixColumn[];
+  rows: FeatureMatrixRow[];
+  class?: string;
+}
+
+const { columns = [], rows = [], class: className = "", ...props } = Astro.props;
+---
+
+<div class:list={["aui-feature-matrix-wrapper", className]} {...props}>
+  <table class="aui-feature-matrix">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        {columns.map((col) => (
+          <th>{col.label}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => {
+        if (row.category) {
+          return (
+            <tr class="is-category-row">
+              <td colspan={columns.length + 1}>{row.category}</td>
+            </tr>
+          );
+        }
+
+        return (
+          <tr>
+            <td>{row.name}</td>
+            {columns.map((col) => {
+              const val = row.values ? row.values[col.key] : false;
+              return (
+                <td>
+                  {val === true && <span class="aui-feature-check">✓</span>}
+                  {val === false && <span class="aui-feature-cross">✕</span>}
+                  {val === "partial" && <span class="aui-feature-partial">Partial</span>}
+                  {typeof val === "string" && val !== "partial" && <span>{val}</span>}
+                </td>
+              );
+            })}
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>

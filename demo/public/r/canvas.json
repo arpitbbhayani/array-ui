@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "canvas",
+  "type": "registry:ui",
+  "title": "Canvas",
+  "description": "Engineering diagram frame with dotted coordinate grid and hairline border.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/canvas.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface CanvasProps extends React.HTMLAttributes<HTMLDivElement> {\n  variant?: \"plain\" | \"grid\" | \"ruled\";\n  frame?: boolean;\n  title?: string;\n  badge?: React.ReactNode;\n  footer?: React.ReactNode;\n}\n\nexport function Canvas({\n  variant = \"grid\",\n  frame = true,\n  title,\n  badge,\n  footer,\n  children,\n  className,\n  ...props\n}: CanvasProps) {\n  return (\n    <div\n      className={cn(\n        \"relative rounded-lg border border-border bg-card text-card-foreground overflow-hidden shadow-xs\",\n        variant === \"grid\" && \"bg-[radial-gradient(var(--border)_1px,transparent_1px)] [background-size:20px_20px]\",\n        variant === \"ruled\" && \"bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:24px_24px]\",\n        className\n      )}\n      {...props}\n    >\n      {(title || badge) && (\n        <div className=\"flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/30 font-mono text-xs\">\n          <div className=\"flex items-center gap-2 font-semibold text-foreground\">\n            <span className=\"w-1.5 h-1.5 rounded-full bg-primary\" />\n            <span>{title}</span>\n          </div>\n          {badge && <div>{badge}</div>}\n        </div>\n      )}\n      <div className=\"p-5\">{children}</div>\n      {footer && (\n        <div className=\"flex items-center justify-between px-4 py-2 border-t border-border bg-muted/20 font-mono text-xs text-muted-foreground\">\n          {footer}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

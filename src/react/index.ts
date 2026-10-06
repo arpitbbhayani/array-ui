@@ -51,3 +51,17 @@ export * from "./SearchBox/SearchBox";
 export * from "./Newsletter/Newsletter";
 export * from "./Dropdown/Dropdown";
 export * from "./VideoEmbed/VideoEmbed";
+export * from "./Canvas/Canvas";
+export * from "./ApiEndpoint/ApiEndpoint";
+export * from "./DocStepper/DocStepper";
+export * from "./ParamTable/ParamTable";
+export * from "./FeatureMatrix/FeatureMatrix";
+export * from "./VersionSelector/VersionSelector";
+export * from "./MemoryLayout/MemoryLayout";
+export * from "./PipelineFlow/PipelineFlow";
+export * from "./BenchmarkDelta/BenchmarkDelta";
+export * from "./LatencyDistribution/LatencyDistribution";
+export * from "./StepScrubber/StepScrubber";
+export * from "./ClusterState/ClusterState";
+export * from "./ParamSandbox/ParamSandbox";
+

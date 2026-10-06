@@ -610,8 +610,22 @@ Compact, dense building blocks for dashboards and dev tools. Each exists in `arr
 | TableOfContents | `<TableOfContents headings={…} />` | `TableOfContents.astro` | `.aui-toc` |
 | SearchBox | `<SearchBox endpoint="…" />` | `SearchBox.astro` | `.aui-searchbox` |
 | Newsletter | `<Newsletter linkedinUrl="…" />` | `Newsletter.astro` | `.aui-newsletter` |
+| ApiEndpoint | `<ApiEndpoint method="POST" path="…" />` | `ApiEndpoint.astro` | `.aui-api-endpoint` |
+| DocStepper | `<DocStepper steps={[…]} />` | `DocStepper.astro` | `.aui-doc-stepper` |
+| ParamTable | `<ParamTable items={[…]} />` | `ParamTable.astro` | `.aui-param-table` |
+| FeatureMatrix | `<FeatureMatrix columns={[…]} rows={[…]} />` | `FeatureMatrix.astro` | `.aui-feature-matrix` |
+| VersionSelector | `<VersionSelector versions={[…]} />` | `VersionSelector.astro` | `.aui-version-selector` |
+| Canvas | `<Canvas variant="grid">` | `Canvas.astro` | `.aui-canvas` |
+| MemoryLayout | `<MemoryLayout segments={[…]} />` | `MemoryLayout.astro` | `.aui-memory-layout` |
+| PipelineFlow | `<PipelineFlow stages={[…]} />` | `PipelineFlow.astro` | `.aui-pipeline-flow` |
+| BenchmarkDelta | `<BenchmarkDelta benchmarks={[…]} />` | `BenchmarkDelta.astro` | `.aui-benchmark-delta` |
+| LatencyDistribution | `<LatencyDistribution percentiles={[…]} />` | `LatencyDistribution.astro` | `.aui-latency-dist` |
+| StepScrubber | `<StepScrubber steps={[…]} />` | `StepScrubber.astro` | `.aui-step-scrubber` |
+| ClusterState | `<ClusterState nodes={[…]} />` | `ClusterState.astro` | `.aui-cluster-state` |
+| ParamSandbox | `<ParamSandbox formula="…" inputs={[…]} outputs={[…]} />` | `ParamSandbox.astro` | `.aui-param-sandbox` |
 
 The base font size is 15px, so every `rem`-based size is compact by default.
+
 
 ## Design principles
 

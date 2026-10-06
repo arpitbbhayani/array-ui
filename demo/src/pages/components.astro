@@ -51,9 +51,46 @@ import {
   PropertyGrid,
   FileTree,
   PackageManager,
+  Canvas,
+  ApiEndpoint,
+  DocStepper,
+  ParamTable,
+  FeatureMatrix,
+  VersionSelector,
+  MemoryLayout,
+  PipelineFlow,
+  BenchmarkDelta,
+  LatencyDistribution,
+  StepScrubber,
+  ClusterState,
+  ParamSandbox,
 } from "../../../dist/react.js";
 
 const sidebarGroups = [
+  {
+    title: "[01] Documentation",
+    links: [
+      { label: "Api endpoint", href: "#api-endpoint" },
+      { label: "Doc stepper", href: "#doc-stepper" },
+      { label: "Param table", href: "#param-table" },
+      { label: "Feature matrix", href: "#feature-matrix" },
+      { label: "Version selector", href: "#version-selector" },
+      { label: "Canvas", href: "#canvas" },
+    ],
+  },
+  {
+    title: "[02] Systems Explorables",
+    links: [
+      { label: "Memory layout", href: "#memory-layout" },
+      { label: "Pipeline flow", href: "#pipeline-flow" },
+      { label: "Benchmark delta", href: "#benchmark-delta" },
+      { label: "Latency distribution", href: "#latency-distribution" },
+      { label: "Step scrubber", href: "#step-scrubber" },
+      { label: "Cluster state", href: "#cluster-state" },
+      { label: "Param sandbox", href: "#param-sandbox" },
+    ],
+  },
+
   {
     title: "[03] Developer",
     links: [
@@ -179,8 +216,251 @@ const takeaways = [
       <Sidebar groups={sidebarGroups} />
 
       <main style="min-width: 0;">
+        <!-- Technical Documentation -->
+        <h2 class="aui-h2"><span class="aui-index-tag">[01]</span> Technical Documentation</h2>
+        <div class="spec-grid">
+          <Specimen id="api-endpoint" name="Api endpoint" description="Machined API spec block with method pill, parameters, and status responses." usage={`<ApiEndpoint method="POST" path="/v1/clusters/{id}/replicate" ... />`} span={2} shadcnName="api-endpoint">
+            <ApiEndpoint
+              client:load
+              method="POST"
+              path="/v1/clusters/{cluster_id}/replicate"
+              description="Triggers immediate Raft write-ahead log replication across active quorum peers."
+              badge="Idempotent"
+              params={[
+                { name: "cluster_id", type: "string", required: true, description: "Unique target cluster identifier" },
+                { name: "fsync", type: "boolean", required: false, description: "Block until disk sync completes" },
+                { name: "timeout_ms", type: "uint32", required: false, description: "RPC timeout limit (default: 500ms)" },
+              ]}
+              responses={[
+                { status: 200, label: "OK", body: '{\n  "replicated_index": 45091,\n  "peers_acknowledged": 3,\n  "latency_ms": 1.4\n}' },
+                { status: 409, label: "Conflict", body: '{\n  "error": "LEADER_DEPOSED",\n  "current_term": 5\n}' },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="doc-stepper" name="Doc stepper" description="Connected tutorial walkthrough with numbered progression track." usage={`<DocStepper steps={[...]} activeStep={1} />`} shadcnName="doc-stepper">
+            <DocStepper
+              client:load
+              steps={[
+                { title: "Initialize Root Node", description: "Bootstrap primary state machine on port 8080." },
+                { title: "Attach Voter Peers", description: "Register secondary replica addresses in consensus quorum." },
+                { title: "Verify Health & Heartbeat", description: "Send ping probe to ensure sub-5ms replication latency." },
+              ]}
+              activeStep={1}
+            />
+          </Specimen>
+
+          <Specimen id="param-table" name="Param table" description="Dense configuration reference table with types, requirements, and defaults." usage={`<ParamTable items={[...]} />`} shadcnName="param-table">
+            <ParamTable
+              client:load
+              items={[
+                { name: "--wal-dir", type: "string", required: true, description: "Path to write-ahead log storage" },
+                { name: "--sync-interval", type: "Duration", required: false, default: "100ms", description: "Fsync interval for durability" },
+                { name: "--max-batch-size", type: "uint32", required: false, default: "1024", description: "Max operations before flush" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="feature-matrix" name="Feature matrix" description="Dense matrix comparison comparing engines or editions with indicators." usage={`<FeatureMatrix columns={[...]} rows={[...]} />`} span={2} shadcnName="feature-matrix">
+            <FeatureMatrix
+              client:load
+              columns={[
+                { key: "lsm", label: "LSM-Tree (Pebbles/Rocks)" },
+                { key: "btree", label: "B+ Tree (Postgres/InnoDB)" },
+              ]}
+              rows={[
+                { category: "Storage & Latency" },
+                { name: "Write Amplification", values: { lsm: "Low (Sequential I/O)", btree: "High (Random Pages)" } },
+                { name: "Point Lookups", values: { lsm: "partial", btree: true } },
+                { name: "Range Scans", values: { lsm: true, btree: true } },
+                { category: "Hardware Characteristics" },
+                { name: "NVMe SSD Optimization", values: { lsm: true, btree: "partial" } },
+                { name: "Zero-Allocation Compaction", values: { lsm: true, btree: false } },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="version-selector" name="Version selector" description="Compact documentation switcher for versions and runtime environments." usage={`<VersionSelector versions={[...]} />`} shadcnName="version-selector">
+            <div class="spec-col" style="gap: 1rem;">
+              <VersionSelector
+                client:load
+                label="Doc Version:"
+                versions={[
+                  { label: "v2.4", value: "v2.4", badge: "Latest" },
+                  { label: "v2.3", value: "v2.3" },
+                  { label: "v1.9", value: "v1.9", badge: "LTS" },
+                ]}
+              />
+              <VersionSelector
+                client:load
+                label="Runtime:"
+                versions={[
+                  { label: "Kubernetes Operator", value: "k8s" },
+                  { label: "Docker Compose", value: "docker" },
+                  { label: "Bare Metal Binary", value: "bare-metal" },
+                ]}
+              />
+            </div>
+          </Specimen>
+
+          <Specimen id="canvas" name="Canvas" description="Engineering coordinate canvas with dotted grid and corner tick marks." usage={`<Canvas variant="grid" title="Topology Frame">...</Canvas>`} shadcnName="canvas">
+            <Canvas client:load title="Raft Leader State Machine" variant="grid">
+              <div style="font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; padding: 1.5rem 0; color: var(--aui-text-muted);">
+                [Term: 4] · [Leader: Node-01] · [Commit Index: 54,120]
+              </div>
+            </Canvas>
+          </Specimen>
+        </div>
+
+        <div style="height: 2.5rem;"></div>
+
+        <!-- Systems Explorables -->
+        <h2 class="aui-h2"><span class="aui-index-tag">[02]</span> Interactive Systems Explorables</h2>
+        <div class="spec-grid">
+          <Specimen id="memory-layout" name="Memory layout" description="Contiguous binary struct and packet inspector with interactive field breakdown." usage={`<MemoryLayout segments={[...]} />`} span={2} shadcnName="memory-layout">
+            <MemoryLayout
+              client:load
+              title="TCP Segment Header (20 Bytes)"
+              totalBytes={20}
+              segments={[
+                { name: "Source Port", bytes: 2, offset: "0x00 - 0x01", type: "uint16", value: "0x1F90 (8080)", color: "crimson", description: "Origin port transmitting payload packet." },
+                { name: "Dest Port", bytes: 2, offset: "0x02 - 0x03", type: "uint16", value: "0x01BB (443)", color: "emerald", description: "Target service destination port." },
+                { name: "Sequence No", bytes: 4, offset: "0x04 - 0x07", type: "uint32", value: "0x28B49001", color: "blue", description: "Initial Sequence Number (ISN) for data stream ordering." },
+                { name: "Ack Number", bytes: 4, offset: "0x08 - 0x0B", type: "uint32", value: "0x00000000", color: "amber", description: "Next expected sequence number from peer." },
+                { name: "Data Offset & Flags", bytes: 2, offset: "0x0C - 0x0D", type: "uint16", value: "0x5002 (SYN)", color: "violet", description: "Header length and TCP control flags (SYN, ACK, FIN)." },
+                { name: "Window Size", bytes: 2, offset: "0x0E - 0x0F", type: "uint16", value: "0xFFFF (65535)", color: "neutral", description: "Receive window size for flow control buffer." },
+                { name: "Checksum & Urgent", bytes: 4, offset: "0x10 - 0x13", type: "uint32", value: "0x3A210000", color: "neutral", description: "Error detection checksum and urgent pointer offset." },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="pipeline-flow" name="Pipeline flow" description="Multi-stage data streaming flow with stage metrics and animated pulse dots." usage={`<PipelineFlow stages={[...]} />`} span={2} shadcnName="pipeline-flow">
+            <PipelineFlow
+              client:load
+              animated={true}
+              stages={[
+                { title: "Ingress Gateway", badge: "HTTP/3", description: "TLS termination and request routing", metric: "142k req/s" },
+                { title: "Write-Ahead Log", badge: "NVMe", description: "Sequential disk append fsync", metric: "0.28ms flush", active: true },
+                { title: "MemTable", badge: "SkipList", description: "Lock-free in-memory key-value sort", metric: "64MB cap" },
+                { title: "SSTable Level-0", badge: "Disk", description: "Immutable block sorted strings table", metric: "Compacting" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="benchmark-delta" name="Benchmark delta" description="Comparative performance block showing baseline vs candidate gains." usage={`<BenchmarkDelta benchmarks={[...]} />`} shadcnName="benchmark-delta">
+            <BenchmarkDelta
+              client:load
+              benchmarks={[
+                {
+                  name: "Throughput (ops/sec)",
+                  baselineLabel: "v1.2 Baseline",
+                  baselineValue: 42000,
+                  baselineDisplay: "42,000 ops/s",
+                  candidateLabel: "v2.0 Optimized",
+                  candidateValue: 98000,
+                  candidateDisplay: "98,000 ops/s",
+                  delta: "+133%",
+                  better: "higher",
+                },
+                {
+                  name: "P99 Write Latency",
+                  baselineLabel: "v1.2",
+                  baselineValue: 45,
+                  baselineDisplay: "45.2 ms",
+                  candidateLabel: "v2.0",
+                  candidateValue: 12,
+                  candidateDisplay: "12.1 ms",
+                  delta: "-73%",
+                  better: "lower",
+                },
+                {
+                  name: "Heap Allocation Rate",
+                  baselineLabel: "v1.2",
+                  baselineValue: 180,
+                  baselineDisplay: "180 MB/s",
+                  candidateLabel: "v2.0",
+                  candidateValue: 48,
+                  candidateDisplay: "48 MB/s",
+                  delta: "-73%",
+                  better: "lower",
+                },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="latency-distribution" name="Latency distribution" description="Percentile telemetry bar comparing p50, p75, p90, p99 brackets against SLA." usage={`<LatencyDistribution percentiles={[...]} />`} shadcnName="latency-distribution">
+            <LatencyDistribution
+              client:load
+              title="HTTP Gateway Request Latency"
+              sla="SLA Objective: p99 < 30ms"
+              percentiles={[
+                { label: "p50", value: 1.4, display: "1.4ms", color: "emerald" },
+                { label: "p75", value: 3.2, display: "3.2ms", color: "blue" },
+                { label: "p90", value: 6.8, display: "6.8ms", color: "amber" },
+                { label: "p99", value: 18.2, display: "18.2ms", color: "amber" },
+                { label: "p99.9", value: 72.5, display: "72.5ms", color: "rose" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="step-scrubber" name="Step scrubber" description="Interactive explorable player with play/pause and step slider." usage={`<StepScrubber steps={[...]} />`} span={2} shadcnName="step-scrubber">
+            <StepScrubber
+              client:load
+              steps={[
+                {
+                  title: "Step 1: Heartbeat Timeout Detected",
+                  description: "Follower node-02 misses periodic AppendEntries heartbeat from previous leader within 150ms election window.",
+                },
+                {
+                  title: "Step 2: Transition to Candidate State",
+                  description: "Node-02 increments term to 5, votes for itself, and broadcasts RequestVote RPCs across all cluster peers.",
+                },
+                {
+                  title: "Step 3: Quorum Votes Acknowledged",
+                  description: "Nodes 01, 02, and 03 grant votes, achieving strict majority consensus quorum (3 of 5 nodes).",
+                },
+                {
+                  title: "Step 4: New Leader Established",
+                  description: "Node-02 assumes cluster leadership for term 5 and begins broadcasting heartbeat pulses to suppress new elections.",
+                },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="cluster-state" name="Cluster state" description="Distributed consensus topology showing Leader, Followers, and Quorum health." usage={`<ClusterState nodes={[...]} />`} shadcnName="cluster-state">
+            <ClusterState
+              client:load
+              title="Raft Consensus (us-east-1)"
+              nodes={[
+                { id: "node-01", role: "leader", term: 5, latency: "0.2ms" },
+                { id: "node-02", role: "follower", term: 5, latency: "1.2ms" },
+                { id: "node-03", role: "follower", term: 5, latency: "1.4ms" },
+                { id: "node-04", role: "follower", term: 5, latency: "2.1ms" },
+                { id: "node-05", role: "offline", term: 4 },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen id="param-sandbox" name="Param sandbox" description="Interactive mathematical sandbox with real-time reactive calculation." usage={`<ParamSandbox formula="..." inputs={[...]} outputs={[...]} />`} shadcnName="param-sandbox">
+            <ParamSandbox
+              client:load
+              formula="Quorum Q = floor(N / 2) + 1, Max Failures F = floor((N - 1) / 2)"
+              inputs={[
+                { id: "nodes", label: "Cluster Nodes (N)", min: 3, max: 11, step: 2, defaultValue: 5 },
+              ]}
+              outputs={[
+                { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
+                { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
+              ]}
+            />
+          </Specimen>
+        </div>
+
+        <div style="height: 2.5rem;"></div>
+
         <!-- Developer Primitives -->
         <h2 class="aui-h2"><span class="aui-index-tag">[03]</span> Developer Primitives</h2>
+
         <div class="spec-grid">
           <Specimen id="ping-status" name="Ping status" description="Live heartbeat indicator with smooth CSS pulse." usage={`<PingStatus variant="success" label="Operational" />`} shadcnName="ping-status">
             <div class="spec-col" style="gap:1rem;">

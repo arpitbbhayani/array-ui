@@ -1,0 +1,88 @@
+---
+interface ExplorableStep {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  steps: ExplorableStep[];
+  currentStep?: number;
+  class?: string;
+}
+
+const { steps = [], currentStep = 0, class: className = "", ...props } = Astro.props;
+const totalSteps = steps.length;
+const activeStep = steps[currentStep] || steps[0];
+---
+
+<div class:list={["aui-step-scrubber", className]} {...props}>
+  <div class="aui-canvas-body">
+    <slot />
+  </div>
+
+  <div class="aui-scrubber-controls">
+    <div class="aui-scrubber-btn-group">
+      <button
+        type="button"
+        class="aui-scrubber-btn"
+        title="Reset"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10" />
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="aui-scrubber-btn"
+        disabled={currentStep === 0}
+        title="Previous"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="19 20 9 12 19 4 19 20" />
+          <line x1="5" y1="19" x2="5" y2="5" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="aui-scrubber-btn aui-scrubber-btn-primary"
+        title="Play"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="aui-scrubber-btn"
+        disabled={currentStep === totalSteps - 1}
+        title="Next"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="5 4 15 12 5 20 5 4" />
+          <line x1="19" y1="5" x2="19" y2="19" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="aui-scrubber-timeline">
+      <input
+        type="range"
+        min="0"
+        max={totalSteps - 1}
+        value={currentStep}
+        class="aui-scrubber-slider"
+      />
+      <span class="aui-scrubber-counter">
+        {currentStep + 1} / {totalSteps}
+      </span>
+    </div>
+  </div>
+
+  {activeStep && (
+    <div class="aui-scrubber-step-info">
+      <h4 class="aui-scrubber-step-title">{activeStep.title}</h4>
+      <p class="aui-scrubber-step-desc">{activeStep.description}</p>
+    </div>
+  )}
+</div>

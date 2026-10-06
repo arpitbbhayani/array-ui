@@ -1,0 +1,74 @@
+---
+interface ClusterNodeItem {
+  id: string;
+  role: "leader" | "follower" | "candidate" | "offline";
+  term?: number;
+  latency?: string;
+  state?: string;
+}
+
+interface Props {
+  title?: string;
+  nodes: ClusterNodeItem[];
+  requiredQuorum?: number;
+  class?: string;
+}
+
+const {
+  title = "Cluster Topology",
+  nodes = [],
+  requiredQuorum,
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const totalNodes = nodes.length;
+const activeNodes = nodes.filter((n) => n.role !== "offline").length;
+const quorum = requiredQuorum ?? Math.floor(totalNodes / 2) + 1;
+const isQuorumReached = activeNodes >= quorum;
+
+const getNodeRoleClass = (role: string) => {
+  switch (role) {
+    case "leader":
+      return "aui-cluster-node-leader";
+    case "candidate":
+      return "aui-cluster-node-candidate";
+    case "offline":
+      return "aui-cluster-node-offline";
+    default:
+      return "";
+  }
+};
+---
+
+<div class:list={["aui-cluster-state", className]} {...props}>
+  <div class="aui-cluster-header">
+    <div class="aui-cluster-title">{title}</div>
+    <div
+      class:list={[
+        "aui-cluster-quorum-badge",
+        !isQuorumReached && "is-compromised",
+      ]}
+    >
+      Quorum: {activeNodes}/{totalNodes} {isQuorumReached ? "Achieved" : "Lost"} (Need {quorum})
+    </div>
+  </div>
+
+  <div class="aui-cluster-grid">
+    {nodes.map((node) => (
+      <div class:list={["aui-cluster-node", getNodeRoleClass(node.role)]}>
+        <div class="aui-cluster-node-header">
+          <span class="aui-cluster-node-id">{node.id}</span>
+          <span class="aui-cluster-node-dot" />
+        </div>
+        <span class="aui-cluster-node-role">{node.role}</span>
+        {typeof node.term === "number" && (
+          <span class="aui-cluster-node-term">Term {node.term}</span>
+        )}
+        {node.latency && (
+          <span class="aui-cluster-node-term font-mono">{node.latency}</span>
+        )}
+      </div>
+    ))}
+  </div>
+</div>

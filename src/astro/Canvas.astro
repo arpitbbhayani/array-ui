@@ -1,0 +1,53 @@
+---
+interface Props {
+  variant?: "plain" | "grid" | "ruled";
+  frame?: boolean;
+  title?: string;
+  badge?: string;
+  footer?: string;
+  class?: string;
+}
+
+const {
+  variant = "grid",
+  frame = true,
+  title,
+  badge,
+  footer,
+  class: className = "",
+  ...props
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "aui-canvas",
+    variant === "grid" && "aui-canvas-grid",
+    variant === "ruled" && "aui-canvas-ruled",
+    frame && "aui-canvas-frame",
+    className,
+  ]}
+  {...props}
+>
+  {(title || badge || Astro.slots.has("header")) && (
+    <div class="aui-canvas-header">
+      <div class="aui-canvas-title">
+        <span class="aui-canvas-title-dot" />
+        <span>{title}</span>
+      </div>
+      {(badge || Astro.slots.has("badge")) && (
+        <div class="aui-canvas-badge">
+          <slot name="badge">{badge}</slot>
+        </div>
+      )}
+    </div>
+  )}
+  <div class="aui-canvas-body">
+    <slot />
+  </div>
+  {(footer || Astro.slots.has("footer")) && (
+    <div class="aui-canvas-footer">
+      <slot name="footer">{footer}</slot>
+    </div>
+  )}
+</div>

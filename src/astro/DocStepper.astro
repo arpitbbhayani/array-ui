@@ -1,0 +1,60 @@
+---
+interface DocStepItem {
+  title: string;
+  description?: string;
+  status?: "completed" | "active" | "pending";
+}
+
+interface Props {
+  steps: DocStepItem[];
+  activeStep?: number;
+  class?: string;
+}
+
+const { steps = [], activeStep, class: className = "", ...props } = Astro.props;
+---
+
+<div class:list={["aui-doc-stepper", className]} {...props}>
+  {steps.map((step, idx) => {
+    let resolvedStatus = step.status || "pending";
+    if (typeof activeStep === "number") {
+      if (idx < activeStep) resolvedStatus = "completed";
+      else if (idx === activeStep) resolvedStatus = "active";
+      else resolvedStatus = "pending";
+    }
+
+    const isCompleted = resolvedStatus === "completed";
+    const isActive = resolvedStatus === "active";
+
+    return (
+      <div
+        class:list={[
+          "aui-doc-step",
+          isCompleted && "is-completed",
+          isActive && "is-active",
+        ]}
+      >
+        <div class="aui-doc-step-rail">
+          <div class="aui-doc-step-indicator">
+            {isCompleted ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            ) : (
+              <span>{idx + 1}</span>
+            )}
+          </div>
+          <div class="aui-doc-step-line" />
+        </div>
+
+        <div class="aui-doc-step-content">
+          <div class="aui-doc-step-header">
+            <h4 class="aui-doc-step-title">{step.title}</h4>
+            {step.description && <p class="aui-doc-step-desc">{step.description}</p>}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+  <slot />
+</div>

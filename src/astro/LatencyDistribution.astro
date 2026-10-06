@@ -1,0 +1,78 @@
+---
+interface LatencyBracket {
+  label: string;
+  value: number;
+  display: string;
+  color?: "emerald" | "amber" | "rose" | "blue" | "violet" | string;
+}
+
+interface Props {
+  title?: string;
+  sla?: string;
+  percentiles: LatencyBracket[];
+  class?: string;
+}
+
+const {
+  title = "Latency Distribution",
+  sla,
+  percentiles = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const totalVal = percentiles.reduce((acc, p) => acc + p.value, 0) || 1;
+
+const getBracketColor = (c?: string) => {
+  switch (c) {
+    case "emerald":
+      return "var(--aui-success)";
+    case "amber":
+      return "var(--aui-warning)";
+    case "rose":
+      return "var(--aui-danger)";
+    case "blue":
+      return "var(--aui-info)";
+    case "violet":
+      return "var(--aui-c-violet)";
+    default:
+      return "var(--aui-primary)";
+  }
+};
+---
+
+<div class:list={["aui-latency-dist", className]} {...props}>
+  <div class="aui-latency-dist-header">
+    <span class="aui-latency-dist-title">{title}</span>
+    {sla && <span class="aui-latency-dist-sla">{sla}</span>}
+  </div>
+
+  <div class="aui-latency-bar-container">
+    {percentiles.map((p) => {
+      const widthPct = Math.max((p.value / totalVal) * 100, 8);
+      const color = getBracketColor(p.color);
+      return (
+        <div
+          class="aui-latency-bar-segment"
+          style={`width: ${widthPct}%; background-color: color-mix(in srgb, ${color} 20%, transparent); color: ${color};`}
+          title={`${p.label}: ${p.display}`}
+        >
+          {p.label}
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="aui-latency-pills">
+    {percentiles.map((p) => {
+      const color = getBracketColor(p.color);
+      return (
+        <div class="aui-latency-pill">
+          <span class="aui-latency-pill-dot" style={`background-color: ${color};`} />
+          <span class="aui-latency-pill-name">{p.label}:</span>
+          <span class="aui-latency-pill-val">{p.display}</span>
+        </div>
+      );
+    })}
+  </div>
+</div>

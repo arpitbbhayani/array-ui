@@ -1,0 +1,41 @@
+---
+interface PipelineStageItem {
+  title: string;
+  badge?: string;
+  description?: string;
+  metric?: string;
+  active?: boolean;
+}
+
+interface Props {
+  stages: PipelineStageItem[];
+  animated?: boolean;
+  class?: string;
+}
+
+const { stages = [], animated = true, class: className = "", ...props } = Astro.props;
+---
+
+<div class:list={["aui-pipeline-flow", className]} {...props}>
+  {stages.map((stage, idx) => (
+    <>
+      <div class:list={["aui-pipeline-stage", stage.active && "is-active"]}>
+        <div class="aui-pipeline-stage-top">
+          <span class="aui-pipeline-stage-title">{stage.title}</span>
+          {stage.badge && <span class="aui-pipeline-stage-badge">{stage.badge}</span>}
+        </div>
+        {stage.description && <p class="aui-pipeline-stage-desc">{stage.description}</p>}
+        {stage.metric && <div class="aui-pipeline-stage-metric">{stage.metric}</div>}
+      </div>
+
+      {idx < stages.length - 1 && (
+        <div class="aui-pipeline-connector">
+          <div class="aui-pipeline-connector-line">
+            {animated && <div class="aui-pipeline-pulse" />}
+            <span class="aui-pipeline-arrow">►</span>
+          </div>
+        </div>
+      )}
+    </>
+  ))}
+</div>

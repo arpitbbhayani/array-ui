@@ -1,0 +1,102 @@
+---
+interface MemorySegment {
+  name: string;
+  bytes: number;
+  offset?: string;
+  type?: string;
+  value?: string;
+  description?: string;
+  color?: "crimson" | "emerald" | "amber" | "blue" | "violet" | "neutral";
+}
+
+interface Props {
+  title?: string;
+  totalBytes?: number | string;
+  segments: MemorySegment[];
+  class?: string;
+}
+
+const {
+  title = "Memory Layout",
+  totalBytes,
+  segments = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+
+const totalCalculated =
+  totalBytes ??
+  segments.reduce((acc, s) => acc + (typeof s.bytes === "number" ? s.bytes : 0), 0);
+
+const getColorClass = (c?: string) => {
+  switch (c) {
+    case "crimson":
+      return "aui-memory-block-crimson";
+    case "emerald":
+      return "aui-memory-block-emerald";
+    case "amber":
+      return "aui-memory-block-amber";
+    case "blue":
+      return "aui-memory-block-blue";
+    case "violet":
+      return "aui-memory-block-violet";
+    default:
+      return "aui-memory-block-neutral";
+  }
+};
+---
+
+<div class:list={["aui-memory-layout", className]} {...props}>
+  <div class="aui-canvas-header">
+    <div class="aui-canvas-title">
+      <span class="aui-canvas-title-dot" />
+      <span>{title}</span>
+    </div>
+    <div style="font-size: 0.75rem; font-family: var(--aui-font-mono); color: var(--aui-text-muted);">
+      Total: {totalCalculated} bytes
+    </div>
+  </div>
+
+  <div class="aui-memory-bar-wrapper">
+    <div class="aui-memory-bar">
+      {segments.map((seg, idx) => {
+        const flexGrow = Math.max(seg.bytes, 1);
+        return (
+          <div
+            class:list={["aui-memory-block", getColorClass(seg.color)]}
+            style={`flex: ${flexGrow} 1 0%;`}
+            title={`${seg.name} (${seg.bytes} bytes)`}
+          >
+            <span class="aui-memory-block-name">{seg.name}</span>
+            <span class="aui-memory-block-bytes">{seg.offset ?? `${seg.bytes}B`}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  {segments.length > 0 && (
+    <div class="aui-memory-inspector">
+      <div class="aui-memory-inspector-grid">
+        <div class="aui-memory-inspector-item">
+          <span class="aui-memory-inspector-label">Primary Field</span>
+          <span class="aui-memory-inspector-value">{segments[0].name}</span>
+        </div>
+        <div class="aui-memory-inspector-item">
+          <span class="aui-memory-inspector-label">Offset</span>
+          <span class="aui-memory-inspector-value">{segments[0].offset ?? "0x00"}</span>
+        </div>
+        <div class="aui-memory-inspector-item">
+          <span class="aui-memory-inspector-label">Size</span>
+          <span class="aui-memory-inspector-value">{segments[0].bytes} bytes</span>
+        </div>
+        {segments[0].type && (
+          <div class="aui-memory-inspector-item">
+            <span class="aui-memory-inspector-label">Type</span>
+            <span class="aui-memory-inspector-value">{segments[0].type}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</div>

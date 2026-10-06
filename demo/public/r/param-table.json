@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "param-table",
+  "type": "registry:ui",
+  "title": "ParamTable",
+  "description": "Dense configuration options and parameter reference table with types, required badges, and defaults.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/param-table.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ParamItem {\n  name: string;\n  type: string;\n  required?: boolean;\n  default?: string;\n  description: React.ReactNode;\n  deprecated?: boolean;\n}\n\nexport interface ParamTableProps extends React.HTMLAttributes<HTMLDivElement> {\n  items: ParamItem[];\n}\n\nexport function ParamTable({ items, className, ...props }: ParamTableProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-lg border border-border bg-card overflow-x-auto my-4 shadow-xs\",\n        className\n      )}\n      {...props}\n    >\n      <table className=\"w-full text-left text-sm border-collapse\">\n        <thead className=\"bg-muted/40 font-mono text-xs uppercase text-muted-foreground border-b border-border\">\n          <tr>\n            <th className=\"px-4 py-2.5\">Option</th>\n            <th className=\"px-4 py-2.5\">Type</th>\n            <th className=\"px-4 py-2.5\">Default</th>\n            <th className=\"px-4 py-2.5\">Description</th>\n          </tr>\n        </thead>\n        <tbody className=\"divide-y divide-border\">\n          {items.map((item, idx) => (\n            <tr key={idx} className=\"hover:bg-muted/30\">\n              <td className=\"px-4 py-3 align-top\">\n                <div className=\"flex items-center gap-1.5 flex-wrap\">\n                  <span\n                    className={cn(\n                      \"font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-foreground\",\n                      item.deprecated && \"line-through opacity-60\"\n                    )}\n                  >\n                    {item.name}\n                  </span>\n                  {item.required ? (\n                    <span className=\"font-mono text-[10px] uppercase font-bold text-primary bg-primary/10 px-1 rounded\">\n                      req\n                    </span>\n                  ) : (\n                    <span className=\"font-mono text-[10px] text-muted-foreground bg-muted px-1 rounded\">\n                      opt\n                    </span>\n                  )}\n                </div>\n              </td>\n              <td className=\"px-4 py-3 align-top font-mono text-xs text-blue-500 dark:text-blue-400\">\n                {item.type}\n              </td>\n              <td className=\"px-4 py-3 align-top font-mono text-xs text-muted-foreground\">\n                {item.default ?? \"—\"}\n              </td>\n              <td className=\"px-4 py-3 align-top text-xs text-muted-foreground leading-relaxed\">\n                {item.description}\n              </td>\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+---
+interface SandboxInput {
+  id: string;
+  label: string;
+  min: number;
+  max: number;
+  step?: number;
+  unit?: string;
+  defaultValue?: number;
+}
+
+interface SandboxOutput {
+  label: string;
+  value: string | number;
+}
+
+interface Props {
+  formula: string;
+  inputs: SandboxInput[];
+  outputs: SandboxOutput[];
+  class?: string;
+}
+
+const {
+  formula,
+  inputs = [],
+  outputs = [],
+  class: className = "",
+  ...props
+} = Astro.props;
+---
+
+<div class:list={["aui-param-sandbox", className]} {...props}>
+  <div class="aui-sandbox-formula-bar">
+    <span class="aui-sandbox-formula-badge">Formula:</span>
+    <code class="aui-sandbox-formula-code">{formula}</code>
+  </div>
+
+  <div class="aui-sandbox-grid">
+    <div class="aui-sandbox-inputs">
+      {inputs.map((inp) => (
+        <div class="aui-sandbox-input-item">
+          <div class="aui-sandbox-input-header">
+            <span class="aui-sandbox-input-label">{inp.label}</span>
+            <span class="aui-sandbox-input-val">
+              {inp.defaultValue ?? inp.min} {inp.unit ?? ""}
+            </span>
+          </div>
+          <input
+            type="range"
+            min={inp.min}
+            max={inp.max}
+            step={inp.step ?? 1}
+            value={inp.defaultValue ?? inp.min}
+            class="aui-sandbox-slider"
+          />
+        </div>
+      ))}
+    </div>
+
+    <div class="aui-sandbox-outputs">
+      {outputs.map((out) => (
+        <div class="aui-sandbox-output-card">
+          <span class="aui-sandbox-output-label">{out.label}</span>
+          <span class="aui-sandbox-output-val font-mono">{out.value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

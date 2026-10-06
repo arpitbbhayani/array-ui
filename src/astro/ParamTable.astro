@@ -1,0 +1,55 @@
+---
+interface ParamItem {
+  name: string;
+  type: string;
+  required?: boolean;
+  default?: string;
+  description: string;
+  deprecated?: boolean;
+}
+
+interface Props {
+  items: ParamItem[];
+  class?: string;
+}
+
+const { items = [], class: className = "", ...props } = Astro.props;
+---
+
+<div class:list={["aui-param-table-wrapper", className]} {...props}>
+  <table class="aui-param-table">
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {items.map((item) => (
+        <tr>
+          <td>
+            <div class="aui-row-xs aui-flex-wrap">
+              <span class:list={["aui-param-name", item.deprecated && "opacity-60"]}>
+                {item.name}
+              </span>
+              {item.required ? (
+                <span class="aui-param-badge-req">req</span>
+              ) : (
+                <span class="aui-param-badge-opt">opt</span>
+              )}
+            </div>
+          </td>
+          <td>
+            <span class="aui-param-type">{item.type}</span>
+          </td>
+          <td>
+            <span class="aui-param-default">{item.default ?? "—"}</span>
+          </td>
+          <td>{item.description}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

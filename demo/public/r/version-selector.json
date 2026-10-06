@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "version-selector",
+  "type": "registry:ui",
+  "title": "VersionSelector",
+  "description": "Compact documentation version switcher and runtime environment selector.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/version-selector.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface VersionOption {\n  label: string;\n  value: string;\n  badge?: string;\n}\n\nexport interface VersionSelectorProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  label?: string;\n  versions: VersionOption[];\n  value?: string;\n  defaultValue?: string;\n  onChange?: (val: string) => void;\n}\n\nexport function VersionSelector({\n  label = \"Version:\",\n  versions,\n  value,\n  defaultValue,\n  onChange,\n  className,\n  ...props\n}: VersionSelectorProps) {\n  return (\n    <div className={cn(\"inline-flex items-center gap-2\", className)} {...props}>\n      {label && (\n        <span className=\"font-mono text-xs uppercase tracking-wider text-muted-foreground\">\n          {label}\n        </span>\n      )}\n      <select\n        className=\"font-mono text-xs font-semibold px-2.5 py-1.5 rounded border border-border bg-card text-foreground cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors\"\n        value={value}\n        defaultValue={defaultValue ?? versions[0]?.value}\n        onChange={(e) => onChange?.(e.target.value)}\n      >\n        {versions.map((ver) => (\n          <option key={ver.value} value={ver.value}>\n            {ver.label} {ver.badge ? `(${ver.badge})` : \"\"}\n          </option>\n        ))}\n      </select>\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

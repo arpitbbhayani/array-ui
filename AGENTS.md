@@ -450,6 +450,202 @@ Accessible action menu with click-outside dismissal and keyboard escape support.
 </Dropdown>
 ```
 
+### Technical Documentation Primitives
+
+#### 18. `ApiEndpoint` (`@aui/api-endpoint`)
+Machined HTTP/gRPC API specification block with method badges, copyable path & cURL commands, parameters, and status response tabs.
+```tsx
+<ApiEndpoint
+  method="POST"
+  path="/v1/clusters/{cluster_id}/replicate"
+  description="Triggers immediate Raft log replication across active quorum peers."
+  badge="Idempotent"
+  params={[
+    { name: "cluster_id", type: "string", required: true, description: "Unique target cluster identifier" },
+    { name: "fsync", type: "boolean", required: false, description: "Block until disk sync completes" },
+  ]}
+  responses={[
+    { status: 200, label: "OK", body: '{\n  "replicated_index": 45091,\n  "peers_acknowledged": 3\n}' },
+    { status: 409, label: "Conflict", body: '{\n  "error": "LEADER_DEPOSED"\n}' },
+  ]}
+/>
+```
+
+#### 19. `DocStepper` (`@aui/doc-stepper`)
+Connected numbered step walkthrough for tutorials, runbooks, and installation guides.
+```tsx
+<DocStepper
+  steps={[
+    { title: "Initialize Ledger", description: "Bootstrap root node on port 8080." },
+    { title: "Join Quorum Peers", description: "Attach secondary voter replicas." },
+    { title: "Verify Health", description: "Poll heartbeat ping status." },
+  ]}
+  activeStep={1}
+/>
+```
+
+#### 20. `ParamTable` (`@aui/param-table`)
+Dense configuration options and parameter reference table with types, required badges, and defaults.
+```tsx
+<ParamTable
+  items={[
+    { name: "--wal-dir", type: "string", required: true, description: "Directory path for write-ahead logs" },
+    { name: "--sync-interval", type: "Duration", required: false, default: "100ms", description: "Disk sync frequency" },
+  ]}
+/>
+```
+
+#### 21. `FeatureMatrix` (`@aui/feature-matrix`)
+Dense matrix comparison table comparing engines, editions, or versions with check/cross/partial indicators.
+```tsx
+<FeatureMatrix
+  columns={[
+    { key: "lsm", label: "LSM-Tree" },
+    { key: "btree", label: "B+ Tree" },
+  ]}
+  rows={[
+    { category: "Storage Characteristics" },
+    { name: "Write Amplification", values: { lsm: "Low (Sequential)", btree: "High (Random I/O)" } },
+    { name: "Point Lookups", values: { lsm: "partial", btree: true } },
+  ]}
+/>
+```
+
+#### 22. `VersionSelector` (`@aui/version-selector`)
+Compact documentation version switcher and runtime environment selector.
+```tsx
+<VersionSelector
+  label="API Version:"
+  versions={[
+    { label: "v2.4", value: "v2.4", badge: "Latest" },
+    { label: "v2.3", value: "v2.3" },
+    { label: "v1.9", value: "v1.9", badge: "LTS" },
+  ]}
+/>
+```
+
+#### 23. `Canvas` (`@aui/canvas`)
+Engineering diagram frame with dotted coordinate grid and hairline border.
+```tsx
+<Canvas title="Storage Engine Architecture" variant="grid">
+  <div>Technical diagram content...</div>
+</Canvas>
+```
+
+### Interactive Concept Illustrations & Explorables ("Systems Explainer Kit")
+
+#### 24. `MemoryLayout` (`@aui/memory-layout`)
+Contiguous byte/memory layout visualizer with offsets, binary structs, and interactive field inspector.
+```tsx
+<MemoryLayout
+  title="TCP Header Segment (20 Bytes)"
+  segments={[
+    { name: "Source Port", bytes: 2, offset: "0x00 - 0x01", type: "uint16", color: "crimson" },
+    { name: "Destination Port", bytes: 2, offset: "0x02 - 0x03", type: "uint16", color: "emerald" },
+    { name: "Sequence Number", bytes: 4, offset: "0x04 - 0x07", type: "uint32", color: "blue" },
+    { name: "Acknowledgment", bytes: 4, offset: "0x08 - 0x0B", type: "uint32", color: "amber" },
+  ]}
+/>
+```
+
+#### 25. `PipelineFlow` (`@aui/pipeline-flow`)
+Multi-stage data pipeline flow visualizer with throughput metrics and animated pulse lines.
+```tsx
+<PipelineFlow
+  stages={[
+    { title: "Ingress", badge: "HTTP", metric: "62k req/s" },
+    { title: "WAL Log", badge: "Disk", metric: "fsync 0.4ms", active: true },
+    { title: "MemTable", badge: "RAM", metric: "SkipList" },
+    { title: "SSTable", badge: "Storage", metric: "Level-0" },
+  ]}
+/>
+```
+
+#### 26. `BenchmarkDelta` (`@aui/benchmark-delta`)
+Comparative system performance delta block showing baseline vs candidate metrics.
+```tsx
+<BenchmarkDelta
+  benchmarks={[
+    {
+      name: "Throughput (ops/sec)",
+      baselineValue: 42000,
+      baselineDisplay: "42,000 ops/s",
+      candidateValue: 98000,
+      candidateDisplay: "98,000 ops/s",
+      delta: "+133%",
+      better: "higher",
+    },
+    {
+      name: "Heap Allocations",
+      baselineValue: 120,
+      baselineDisplay: "120 MB",
+      candidateValue: 34,
+      candidateDisplay: "34 MB",
+      delta: "-71%",
+      better: "lower",
+    },
+  ]}
+/>
+```
+
+#### 27. `LatencyDistribution` (`@aui/latency-distribution`)
+Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thresholds and SLA lines.
+```tsx
+<LatencyDistribution
+  title="Gateway Latency"
+  sla="Target: p99 < 50ms"
+  percentiles={[
+    { label: "p50", value: 1.2, display: "1.2ms", color: "emerald" },
+    { label: "p90", value: 4.8, display: "4.8ms", color: "blue" },
+    { label: "p99", value: 18.5, display: "18.5ms", color: "amber" },
+    { label: "p99.9", value: 84.1, display: "84.1ms", color: "rose" },
+  ]}
+/>
+```
+
+#### 28. `StepScrubber` (`@aui/step-scrubber`)
+Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.
+```tsx
+<StepScrubber
+  steps={[
+    { title: "1. Heartbeat Timeout", description: "Follower detects leader absence after 150ms timeout." },
+    { title: "2. Election Started", description: "Node transitions to Candidate state and increments term." },
+    { title: "3. Votes Granted", description: "Candidate collects quorum of votes (3 of 5)." },
+    { title: "4. Leader Established", description: "New leader sends AppendEntries heartbeats." },
+  ]}
+/>
+```
+
+#### 29. `ClusterState` (`@aui/cluster-state`)
+Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status).
+```tsx
+<ClusterState
+  title="Raft Consensus Cluster"
+  nodes={[
+    { id: "node-01", role: "leader", term: 4, latency: "0.2ms" },
+    { id: "node-02", role: "follower", term: 4, latency: "1.4ms" },
+    { id: "node-03", role: "follower", term: 4, latency: "1.1ms" },
+    { id: "node-04", role: "follower", term: 4, latency: "2.3ms" },
+    { id: "node-05", role: "offline", term: 3 },
+  ]}
+/>
+```
+
+#### 30. `ParamSandbox` (`@aui/param-sandbox`)
+Interactive slider sandbox for mathematical formulas and live reactive system calculations.
+```tsx
+<ParamSandbox
+  formula="Quorum Q = floor(N / 2) + 1, Max Tolerable Failures F = floor((N - 1) / 2)"
+  inputs={[
+    { id: "nodes", label: "Cluster Nodes (N)", min: 3, max: 11, step: 2, defaultValue: 5 },
+  ]}
+  outputs={[
+    { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
+    { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
+  ]}
+/>
+```
+
 ### Layout & Utility Classes
 
 - `.aui-container-md`: Intermediate max-width (900px) container for forms, reading, and account pages.
@@ -457,18 +653,23 @@ Accessible action menu with click-outside dismissal and keyboard escape support.
 - `.aui-theatre-grid`: Responsive 2-column player layout (`minmax(0, 1fr) 340px`) with sticky right sidebar that collapses on mobile screens (`< 900px`).
 - `.aui-input-row`: Flex row for inline inputs with adjacent action buttons.
 - `.aui-form-hint`: Subtle helper text beneath inputs.
-
+- `.aui-canvas-grid`: Dotted coordinate grid (20px pitch) for engineering diagrams and explorables.
+- `.aui-canvas-ruled`: Ruled engineering coordinate grid (24px pitch).
+- `.aui-canvas-frame`: Subtle corner tick marks (`+`) for machined architectural diagrams.
 
 ---
 
-## 4. Complete Native Component Library (48+ Components)
+## 4. Complete Native Component Library (61+ Components)
 
-In addition to the shadcn registry CLI, the direct repository package (`array-ui`) exports 48+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
-- **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`
+In addition to the shadcn registry CLI, the direct repository package (`array-ui`) exports 61+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
+- **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`, `VersionSelector`
 - **Navigation**: `Breadcrumbs`, `Tabs`, `Pagination`, `Accordion`, `TableOfContents`, `Sidebar`, `Navbar`
 - **Feedback & Loading**: `Alert`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Tooltip`
 - **Data Display**: `Table`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`, `Gutter`
+- **Technical Documentation**: `ApiEndpoint`, `DocStepper`, `ParamTable`, `FeatureMatrix`, `Canvas`
+- **Interactive Systems Explorables**: `MemoryLayout`, `PipelineFlow`, `BenchmarkDelta`, `LatencyDistribution`, `StepScrubber`, `ClusterState`, `ParamSandbox`
 - **Editorial & Media**: `Hero`, `Maxim`, `TakeawaysBox`, `NoticeBox`, `Newsletter`, `Card`, `CoverCard`, `CourseCard`, `SocialPill`, `Footer`, `VideoEmbed`
+
 
 ---
 

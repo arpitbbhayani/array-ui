@@ -115,8 +115,14 @@ interface ComponentDef {
   file: string;
   target: string;
   dependencies?: string[];
-  category: "Core Primitives" | "Developer & Telemetry" | "Editorial & Content";
+  category:
+    | "Core Primitives"
+    | "Developer & Telemetry"
+    | "Editorial & Content"
+    | "Technical Documentation"
+    | "Interactive Explorables";
 }
+
 
 const componentsConfig: ComponentDef[] = [
   // --- Core Primitives ---
@@ -344,7 +350,116 @@ const componentsConfig: ComponentDef[] = [
     target: "ui/video-embed.tsx",
     category: "Editorial & Content",
   },
+
+  // --- Technical Documentation ---
+  {
+    name: "canvas",
+    title: "Canvas",
+    description: "Engineering diagram frame with dotted coordinate grid and hairline border.",
+    file: "src/registry/aui/ui/canvas.tsx",
+    target: "ui/canvas.tsx",
+    category: "Technical Documentation",
+  },
+  {
+    name: "api-endpoint",
+    title: "ApiEndpoint",
+    description: "Machined HTTP/gRPC API specification block with method pill, copyable paths, parameters, and response tabs.",
+    file: "src/registry/aui/ui/api-endpoint.tsx",
+    target: "ui/api-endpoint.tsx",
+    category: "Technical Documentation",
+  },
+  {
+    name: "doc-stepper",
+    title: "DocStepper",
+    description: "Connected numbered step walkthrough for tutorials, runbooks, and installation guides.",
+    file: "src/registry/aui/ui/doc-stepper.tsx",
+    target: "ui/doc-stepper.tsx",
+    category: "Technical Documentation",
+  },
+  {
+    name: "param-table",
+    title: "ParamTable",
+    description: "Dense configuration options and parameter reference table with types, required badges, and defaults.",
+    file: "src/registry/aui/ui/param-table.tsx",
+    target: "ui/param-table.tsx",
+    category: "Technical Documentation",
+  },
+  {
+    name: "feature-matrix",
+    title: "FeatureMatrix",
+    description: "Dense matrix comparison table comparing engines, editions, or versions with status indicators.",
+    file: "src/registry/aui/ui/feature-matrix.tsx",
+    target: "ui/feature-matrix.tsx",
+    category: "Technical Documentation",
+  },
+  {
+    name: "version-selector",
+    title: "VersionSelector",
+    description: "Compact documentation version switcher and runtime environment selector.",
+    file: "src/registry/aui/ui/version-selector.tsx",
+    target: "ui/version-selector.tsx",
+    category: "Technical Documentation",
+  },
+
+  // --- Interactive Explorables & Systems Visualizers ---
+  {
+    name: "memory-layout",
+    title: "MemoryLayout",
+    description: "Contiguous byte/memory layout visualizer with offsets, binary structs, and interactive field inspector.",
+    file: "src/registry/aui/ui/memory-layout.tsx",
+    target: "ui/memory-layout.tsx",
+    category: "Interactive Explorables",
+  },
+  {
+    name: "pipeline-flow",
+    title: "PipelineFlow",
+    description: "Multi-stage data pipeline flow visualizer with throughput metrics and animated pulse lines.",
+    file: "src/registry/aui/ui/pipeline-flow.tsx",
+    target: "ui/pipeline-flow.tsx",
+    category: "Interactive Explorables",
+  },
+  {
+    name: "benchmark-delta",
+    title: "BenchmarkDelta",
+    description: "Comparative system performance delta block showing baseline vs candidate metrics.",
+    file: "src/registry/aui/ui/benchmark-delta.tsx",
+    target: "ui/benchmark-delta.tsx",
+    category: "Interactive Explorables",
+  },
+  {
+    name: "latency-distribution",
+    title: "LatencyDistribution",
+    description: "Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thresholds and SLA lines.",
+    file: "src/registry/aui/ui/latency-distribution.tsx",
+    target: "ui/latency-distribution.tsx",
+    category: "Interactive Explorables",
+  },
+  {
+    name: "step-scrubber",
+    title: "StepScrubber",
+    description: "Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.",
+    file: "src/registry/aui/ui/step-scrubber.tsx",
+    target: "ui/step-scrubber.tsx",
+    category: "Interactive Explorables",
+  },
+  {
+    name: "cluster-state",
+    title: "ClusterState",
+    description: "Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status).",
+    file: "src/registry/aui/ui/cluster-state.tsx",
+    target: "ui/cluster-state.tsx",
+    category: "Interactive Explorables",
+  },
+  {
+    name: "param-sandbox",
+    title: "ParamSandbox",
+    description: "Interactive slider sandbox for mathematical formulas and live reactive system calculations.",
+    file: "src/registry/aui/ui/param-sandbox.tsx",
+    target: "ui/param-sandbox.tsx",
+    category: "Interactive Explorables",
+  },
 ];
+
 
 export async function buildRegistry() {
   const publicRDir = path.resolve("demo/public/r");
@@ -433,6 +548,8 @@ Allow: /
   const coreComps = componentsConfig.filter((c) => c.category === "Core Primitives");
   const devComps = componentsConfig.filter((c) => c.category === "Developer & Telemetry");
   const editorialComps = componentsConfig.filter((c) => c.category === "Editorial & Content");
+  const docComps = componentsConfig.filter((c) => c.category === "Technical Documentation");
+  const explorableComps = componentsConfig.filter((c) => c.category === "Interactive Explorables");
 
   const renderComponentList = (list: ComponentDef[]) =>
     list
@@ -441,6 +558,7 @@ Allow: /
           `- [${c.title}](${BASE_URL}/r/${c.name}.json): ${c.description} \`npx shadcn@latest add @aui/${c.name} -y\``
       )
       .join("\n");
+
 
   // Generate standard llms.txt (following llmstxt.org specification)
   const llmsTxt = `# Array UI (aui)
@@ -506,14 +624,23 @@ ${renderComponentList(devComps)}
 ### Editorial & Content Primitives
 ${renderComponentList(editorialComps)}
 
+### Technical Documentation Primitives
+${renderComponentList(docComps)}
+
+### Interactive Explorables & Systems Visualizers
+${renderComponentList(explorableComps)}
+
 ## Full Library Native Components (React & Astro)
 
-In addition to shadcn copy-paste components, the official package dependency (\`array-ui\`) includes 48+ native components for React (\`array-ui/nextjs\`, \`array-ui/react\`) and Astro (\`array-ui/astro/*\`):
-- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
+In addition to shadcn copy-paste components, the official package dependency (\`array-ui\`) includes 61+ native components for React (\`array-ui/nextjs\`, \`array-ui/react\`) and Astro (\`array-ui/astro/*\`):
+- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl, VersionSelector
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
 - **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
 - **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter
+- **Technical Documentation**: ApiEndpoint, DocStepper, ParamTable, FeatureMatrix, Canvas
+- **Interactive Explorables**: MemoryLayout, PipelineFlow, BenchmarkDelta, LatencyDistribution, StepScrubber, ClusterState, ParamSandbox
 - **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
+
 
 ## Optional Links
 
@@ -1048,7 +1175,270 @@ Responsive 16:9 media player container with hairline border and fallback loading
 
 ---
 
-## 6. Layout & Utility Classes
+## 6. Technical Documentation Primitives
+
+### 28. Canvas (\`@aui/canvas\`)
+Engineering diagram frame with dotted coordinate grid and hairline border.
+- Endpoint: \`${BASE_URL}/r/canvas.json\`
+- Props:
+  - \`variant?: "plain" | "grid" | "ruled"\` (default: "grid")
+  - \`frame?: boolean\` (default: true)
+  - \`title?: string\`
+  - \`badge?: ReactNode\`
+  - \`footer?: ReactNode\`
+\`\`\`tsx
+<Canvas title="Storage Engine Architecture" variant="grid">
+  <p>Diagram content here...</p>
+</Canvas>
+\`\`\`
+
+### 29. ApiEndpoint (\`@aui/api-endpoint\`)
+Machined HTTP/gRPC API specification block with method pill, copyable paths, parameters, and response tabs.
+- Endpoint: \`${BASE_URL}/r/api-endpoint.json\`
+- Props:
+  - \`method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | string\`
+  - \`path: string\`
+  - \`description?: string\`
+  - \`badge?: ReactNode\`
+  - \`curl?: string\`
+  - \`params?: ApiParam[]\`
+  - \`responses?: ApiResponseTab[]\`
+\`\`\`tsx
+<ApiEndpoint
+  method="POST"
+  path="/v1/clusters/{cluster_id}/replicate"
+  description="Triggers immediate Raft log replication across active quorum peers."
+  params={[
+    { name: "cluster_id", type: "string", required: true, description: "Unique cluster identifier" },
+    { name: "sync", type: "boolean", required: false, description: "Wait for write-ahead log fsync" },
+  ]}
+  responses={[
+    { status: 200, label: "OK", body: '{\\n  "replicated_index": 45091,\\n  "peers_acknowledged": 3\\n}' },
+    { status: 409, label: "Conflict", body: '{\\n  "error": "LEADER_DEPOSED",\\n  "term": 4\\n}' },
+  ]}
+/>
+\`\`\`
+
+### 30. DocStepper (\`@aui/doc-stepper\`)
+Connected numbered step walkthrough for tutorials, runbooks, and installation guides.
+- Endpoint: \`${BASE_URL}/r/doc-stepper.json\`
+- Props:
+  - \`steps: DocStepItem[]\`
+  - \`activeStep?: number\`
+\`\`\`tsx
+<DocStepper
+  steps={[
+    { title: "Initialize Ledger", description: "Bootstrap root node on port 8080." },
+    { title: "Join Quorum Peers", description: "Attach secondary voter replicas." },
+    { title: "Verify Health", description: "Poll heartbeat ping status." },
+  ]}
+  activeStep={1}
+/>
+\`\`\`
+
+### 31. ParamTable (\`@aui/param-table\`)
+Dense configuration options and parameter reference table with types, required badges, and defaults.
+- Endpoint: \`${BASE_URL}/r/param-table.json\`
+- Props:
+  - \`items: ParamItem[]\`
+\`\`\`tsx
+<ParamTable
+  items={[
+    { name: "--wal-dir", type: "string", required: true, description: "Directory path for write-ahead logs" },
+    { name: "--sync-interval", type: "Duration", required: false, default: "100ms", description: "Disk sync frequency" },
+  ]}
+/>
+\`\`\`
+
+### 32. FeatureMatrix (\`@aui/feature-matrix\`)
+Dense matrix comparison table comparing engines, editions, or versions with status indicators.
+- Endpoint: \`${BASE_URL}/r/feature-matrix.json\`
+- Props:
+  - \`columns: FeatureMatrixColumn[]\`
+  - \`rows: FeatureMatrixRow[]\`
+\`\`\`tsx
+<FeatureMatrix
+  columns={[
+    { key: "lsm", label: "LSM-Tree" },
+    { key: "btree", label: "B+ Tree" },
+  ]}
+  rows={[
+    { category: "Storage Performance" },
+    { name: "Write Amplification", values: { lsm: "Low (Sequential)", btree: "High (Random I/O)" } },
+    { name: "Point Lookups", values: { lsm: "partial", btree: true } },
+  ]}
+/>
+\`\`\`
+
+### 33. VersionSelector (\`@aui/version-selector\`)
+Compact documentation version switcher and runtime environment selector.
+- Endpoint: \`${BASE_URL}/r/version-selector.json\`
+- Props:
+  - \`label?: string\`
+  - \`versions: VersionOption[]\`
+  - \`defaultValue?: string\`
+  - \`onChange?: (val: string) => void\`
+\`\`\`tsx
+<VersionSelector
+  label="API Version:"
+  versions={[
+    { label: "v2.4", value: "v2.4", badge: "Latest" },
+    { label: "v2.3", value: "v2.3" },
+    { label: "v1.9", value: "v1.9", badge: "LTS" },
+  ]}
+/>
+\`\`\`
+
+---
+
+## 7. Interactive Explorables & Systems Visualizers
+
+### 34. MemoryLayout (\`@aui/memory-layout\`)
+Contiguous byte/memory layout visualizer with offsets, binary structs, and interactive field inspector.
+- Endpoint: \`${BASE_URL}/r/memory-layout.json\`
+- Props:
+  - \`title?: string\`
+  - \`totalBytes?: number | string\`
+  - \`segments: MemorySegment[]\`
+\`\`\`tsx
+<MemoryLayout
+  title="TCP Header Segment (20 Bytes)"
+  segments={[
+    { name: "Source Port", bytes: 2, offset: "0x00 - 0x01", type: "uint16", color: "crimson" },
+    { name: "Destination Port", bytes: 2, offset: "0x02 - 0x03", type: "uint16", color: "emerald" },
+    { name: "Sequence Number", bytes: 4, offset: "0x04 - 0x07", type: "uint32", color: "blue" },
+    { name: "Acknowledgment", bytes: 4, offset: "0x08 - 0x0B", type: "uint32", color: "amber" },
+  ]}
+/>
+\`\`\`
+
+### 35. PipelineFlow (\`@aui/pipeline-flow\`)
+Multi-stage data pipeline flow visualizer with throughput metrics and animated pulse lines.
+- Endpoint: \`${BASE_URL}/r/pipeline-flow.json\`
+- Props:
+  - \`stages: PipelineStageItem[]\`
+  - \`animated?: boolean\`
+\`\`\`tsx
+<PipelineFlow
+  stages={[
+    { title: "Ingress", badge: "HTTP", metric: "62k req/s" },
+    { title: "WAL Log", badge: "Disk", metric: "fsync 0.4ms", active: true },
+    { title: "MemTable", badge: "RAM", metric: "SkipList" },
+    { title: "SSTable", badge: "Storage", metric: "Level-0" },
+  ]}
+/>
+\`\`\`
+
+### 36. BenchmarkDelta (\`@aui/benchmark-delta\`)
+Comparative system performance delta block showing baseline vs candidate metrics.
+- Endpoint: \`${BASE_URL}/r/benchmark-delta.json\`
+- Props:
+  - \`benchmarks: BenchmarkItem[]\`
+\`\`\`tsx
+<BenchmarkDelta
+  benchmarks={[
+    {
+      name: "Throughput (ops/sec)",
+      baselineValue: 42000,
+      baselineDisplay: "42,000 ops/s",
+      candidateValue: 98000,
+      candidateDisplay: "98,000 ops/s",
+      delta: "+133%",
+      better: "higher",
+    },
+    {
+      name: "Heap Allocations",
+      baselineValue: 120,
+      baselineDisplay: "120 MB",
+      candidateValue: 34,
+      candidateDisplay: "34 MB",
+      delta: "-71%",
+      better: "lower",
+    },
+  ]}
+/>
+\`\`\`
+
+### 37. LatencyDistribution (\`@aui/latency-distribution\`)
+Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thresholds and SLA lines.
+- Endpoint: \`${BASE_URL}/r/latency-distribution.json\`
+- Props:
+  - \`title?: string\`
+  - \`sla?: string\`
+  - \`percentiles: LatencyBracket[]\`
+\`\`\`tsx
+<LatencyDistribution
+  title="Gateway Latency"
+  sla="Target: p99 < 50ms"
+  percentiles={[
+    { label: "p50", value: 1.2, display: "1.2ms", color: "emerald" },
+    { label: "p90", value: 4.8, display: "4.8ms", color: "blue" },
+    { label: "p99", value: 18.5, display: "18.5ms", color: "amber" },
+    { label: "p99.9", value: 84.1, display: "84.1ms", color: "rose" },
+  ]}
+/>
+\`\`\`
+
+### 38. StepScrubber (\`@aui/step-scrubber\`)
+Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations.
+- Endpoint: \`${BASE_URL}/r/step-scrubber.json\`
+- Props:
+  - \`steps: ExplorableStep[]\`
+  - \`autoplayInterval?: number\`
+\`\`\`tsx
+<StepScrubber
+  steps={[
+    { title: "1. Heartbeat Timeout", description: "Follower detects leader absence after 150ms timeout." },
+    { title: "2. Election Started", description: "Node transitions to Candidate state and increments term." },
+    { title: "3. Votes Granted", description: "Candidate collects quorum of votes (3 of 5)." },
+    { title: "4. Leader Established", description: "New leader sends AppendEntries heartbeats." },
+  ]}
+/>
+\`\`\`
+
+### 39. ClusterState (\`@aui/cluster-state\`)
+Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status).
+- Endpoint: \`${BASE_URL}/r/cluster-state.json\`
+- Props:
+  - \`title?: string\`
+  - \`nodes: ClusterNodeItem[]\`
+  - \`requiredQuorum?: number\`
+\`\`\`tsx
+<ClusterState
+  title="Raft Consensus Cluster"
+  nodes={[
+    { id: "node-01", role: "leader", term: 4, latency: "0.2ms" },
+    { id: "node-02", role: "follower", term: 4, latency: "1.4ms" },
+    { id: "node-03", role: "follower", term: 4, latency: "1.1ms" },
+    { id: "node-04", role: "follower", term: 4, latency: "2.3ms" },
+    { id: "node-05", role: "offline", term: 3 },
+  ]}
+/>
+\`\`\`
+
+### 40. ParamSandbox (\`@aui/param-sandbox\`)
+Interactive slider sandbox for mathematical formulas and live reactive system calculations.
+- Endpoint: \`${BASE_URL}/r/param-sandbox.json\`
+- Props:
+  - \`formula: string\`
+  - \`inputs: SandboxInput[]\`
+  - \`outputs: SandboxOutput[]\`
+\`\`\`tsx
+<ParamSandbox
+  formula="Quorum Q = floor(N / 2) + 1, Max Tolerable Failures F = floor((N - 1) / 2)"
+  inputs={[
+    { id: "nodes", label: "Cluster Nodes (N)", min: 3, max: 11, step: 2, defaultValue: 5 },
+  ]}
+  outputs={[
+    { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
+    { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
+  ]}
+/>
+\`\`\`
+
+---
+
+## 8. Layout & Utility Classes
 
 - \`.aui-container\`: Max-width 1280px standard container with responsive padding.
 - \`.aui-container-md\`: Intermediate max-width 900px container for reading and forms.

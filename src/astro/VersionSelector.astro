@@ -1,0 +1,33 @@
+---
+interface VersionOption {
+  label: string;
+  value: string;
+  badge?: string;
+}
+
+interface Props {
+  label?: string;
+  versions: VersionOption[];
+  defaultValue?: string;
+  class?: string;
+}
+
+const {
+  label = "Version:",
+  versions = [],
+  defaultValue,
+  class: className = "",
+  ...props
+} = Astro.props;
+---
+
+<div class:list={["aui-version-selector", className]} {...props}>
+  {label && <span class="aui-version-label">{label}</span>}
+  <select class="aui-version-select">
+    {versions.map((ver) => (
+      <option value={ver.value} selected={ver.value === defaultValue}>
+        {ver.label} {ver.badge ? `(${ver.badge})` : ""}
+      </option>
+    ))}
+  </select>
+</div>

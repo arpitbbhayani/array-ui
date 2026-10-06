@@ -85,14 +85,34 @@ npm install array-ui
 - [Modal](https://ui.arpitbhayani.me/r/modal.json): Accessible dialog modal with backdrop blur, focus handling, and escape key dismissal. `npx shadcn@latest add @aui/modal -y`
 - [VideoEmbed](https://ui.arpitbhayani.me/r/video-embed.json): Responsive 16:9 aspect ratio video embed wrapper with border hairline styling. `npx shadcn@latest add @aui/video-embed -y`
 
+### Technical Documentation Primitives
+- [Canvas](https://ui.arpitbhayani.me/r/canvas.json): Engineering diagram frame with dotted coordinate grid and hairline border. `npx shadcn@latest add @aui/canvas -y`
+- [ApiEndpoint](https://ui.arpitbhayani.me/r/api-endpoint.json): Machined HTTP/gRPC API specification block with method pill, copyable paths, parameters, and response tabs. `npx shadcn@latest add @aui/api-endpoint -y`
+- [DocStepper](https://ui.arpitbhayani.me/r/doc-stepper.json): Connected numbered step walkthrough for tutorials, runbooks, and installation guides. `npx shadcn@latest add @aui/doc-stepper -y`
+- [ParamTable](https://ui.arpitbhayani.me/r/param-table.json): Dense configuration options and parameter reference table with types, required badges, and defaults. `npx shadcn@latest add @aui/param-table -y`
+- [FeatureMatrix](https://ui.arpitbhayani.me/r/feature-matrix.json): Dense matrix comparison table comparing engines, editions, or versions with status indicators. `npx shadcn@latest add @aui/feature-matrix -y`
+- [VersionSelector](https://ui.arpitbhayani.me/r/version-selector.json): Compact documentation version switcher and runtime environment selector. `npx shadcn@latest add @aui/version-selector -y`
+
+### Interactive Explorables & Systems Visualizers
+- [MemoryLayout](https://ui.arpitbhayani.me/r/memory-layout.json): Contiguous byte/memory layout visualizer with offsets, binary structs, and interactive field inspector. `npx shadcn@latest add @aui/memory-layout -y`
+- [PipelineFlow](https://ui.arpitbhayani.me/r/pipeline-flow.json): Multi-stage data pipeline flow visualizer with throughput metrics and animated pulse lines. `npx shadcn@latest add @aui/pipeline-flow -y`
+- [BenchmarkDelta](https://ui.arpitbhayani.me/r/benchmark-delta.json): Comparative system performance delta block showing baseline vs candidate metrics. `npx shadcn@latest add @aui/benchmark-delta -y`
+- [LatencyDistribution](https://ui.arpitbhayani.me/r/latency-distribution.json): Percentile latency distribution bar (p50, p75, p90, p99, p99.9) with color thresholds and SLA lines. `npx shadcn@latest add @aui/latency-distribution -y`
+- [StepScrubber](https://ui.arpitbhayani.me/r/step-scrubber.json): Simulation player control bar with play/pause, prev/next, timeline slider, and step explanations. `npx shadcn@latest add @aui/step-scrubber -y`
+- [ClusterState](https://ui.arpitbhayani.me/r/cluster-state.json): Distributed consensus cluster topology visualizer (Leader, Followers, Candidates, Quorum status). `npx shadcn@latest add @aui/cluster-state -y`
+- [ParamSandbox](https://ui.arpitbhayani.me/r/param-sandbox.json): Interactive slider sandbox for mathematical formulas and live reactive system calculations. `npx shadcn@latest add @aui/param-sandbox -y`
+
 ## Full Library Native Components (React & Astro)
 
-In addition to shadcn copy-paste components, the official package dependency (`array-ui`) includes 48+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
-- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl
+In addition to shadcn copy-paste components, the official package dependency (`array-ui`) includes 61+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
+- **Inputs & Forms**: Button, Input, Select, Textarea, Switch, Checkbox, SearchBox, SegmentedControl, VersionSelector
 - **Navigation**: Breadcrumbs, Tabs, Pagination, Accordion, TableOfContents, Sidebar, Navbar
 - **Feedback & Loading**: Alert, Toast, Progress, Spinner, Skeleton, EmptyState, Modal, Tooltip
 - **Data Display**: Table, Timeline, StatCard, DiffBlock, Terminal, PropertyGrid, FileTree, Avatar, AvatarGroup, Badge, Kbd, Divider, Gutter
+- **Technical Documentation**: ApiEndpoint, DocStepper, ParamTable, FeatureMatrix, Canvas
+- **Interactive Explorables**: MemoryLayout, PipelineFlow, BenchmarkDelta, LatencyDistribution, StepScrubber, ClusterState, ParamSandbox
 - **Editorial & Media**: Hero, Maxim, TakeawaysBox, NoticeBox, Newsletter, Card, CoverCard, CourseCard, SocialPill, Footer, VideoEmbed
+
 
 ## Optional Links
 

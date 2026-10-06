@@ -1,0 +1,79 @@
+---
+interface BenchmarkItem {
+  name: string;
+  baselineLabel?: string;
+  baselineValue: number;
+  baselineDisplay: string;
+  candidateLabel?: string;
+  candidateValue: number;
+  candidateDisplay: string;
+  delta: string;
+  better?: "higher" | "lower";
+}
+
+interface Props {
+  benchmarks: BenchmarkItem[];
+  class?: string;
+}
+
+const { benchmarks = [], class: className = "", ...props } = Astro.props;
+---
+
+<div class:list={["aui-benchmark-delta", className]} {...props}>
+  {benchmarks.map((item) => {
+    const maxVal = Math.max(item.baselineValue, item.candidateValue, 1);
+    const baselinePct = Math.min((item.baselineValue / maxVal) * 100, 100);
+    const candidatePct = Math.min((item.candidateValue / maxVal) * 100, 100);
+
+    const isPositive =
+      item.better === "lower"
+        ? item.candidateValue < item.baselineValue
+        : item.candidateValue > item.baselineValue;
+
+    return (
+      <div class="aui-benchmark-row">
+        <div class="aui-benchmark-row-header">
+          <span class="aui-benchmark-metric-name">{item.name}</span>
+          <span
+            class:list={[
+              "aui-benchmark-delta-badge",
+              isPositive ? "is-positive" : "is-negative",
+            ]}
+          >
+            {item.delta}
+          </span>
+        </div>
+
+        <div class="aui-benchmark-bars">
+          <div class="aui-benchmark-bar-track">
+            <span class="aui-benchmark-bar-label">
+              {item.baselineLabel ?? "Baseline"}
+            </span>
+            <div class="aui-benchmark-bar-fill-wrapper">
+              <div
+                class="aui-benchmark-bar-fill is-baseline"
+                style={`width: ${baselinePct}%;`}
+              />
+            </div>
+            <span class="aui-benchmark-bar-value">{item.baselineDisplay}</span>
+          </div>
+
+          <div class="aui-benchmark-bar-track">
+            <span class="aui-benchmark-bar-label font-semibold">
+              {item.candidateLabel ?? "Optimized"}
+            </span>
+            <div class="aui-benchmark-bar-fill-wrapper">
+              <div
+                class="aui-benchmark-bar-fill is-candidate"
+                style={`width: ${candidatePct}%;`}
+              />
+            </div>
+            <span class="aui-benchmark-bar-value text-primary font-bold">
+              {item.candidateDisplay}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
