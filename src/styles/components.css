@@ -1576,8 +1576,8 @@ ol.aui-stack {
 
 .aui-footer-disclaimer {
   border-top: 1px solid var(--aui-border-light);
-  padding: 1.25rem 0;
-  margin-bottom: 1.25rem;
+  padding: 1.25rem 0 0;
+  margin-bottom: 0.85rem;
   font-size: 0.8rem;
   line-height: 1.5;
   color: var(--aui-text-primary);
@@ -1595,6 +1595,11 @@ ol.aui-stack {
   font-size: 0.85rem;
   color: var(--aui-text-primary);
   opacity: 0.75;
+}
+
+.aui-footer-disclaimer + .aui-footer-bottom {
+  border-top: none;
+  padding-top: 0;
 }
 
 @media (max-width: 640px) {
@@ -3160,6 +3165,7 @@ a.aui-badge-interactive:not(.aui-badge-primary):hover {
 .aui-footer-links a { color: var(--aui-text-primary) !important; opacity: 1; }
 .aui-footer-links a:hover { color: var(--aui-text-secondary) !important; text-decoration: underline; text-underline-offset: 3px; transform: none; }
 .aui-footer-disclaimer, .aui-footer-bottom { opacity: 1; color: var(--aui-text-muted); border-top-color: var(--aui-border-color); }
+.aui-footer-disclaimer + .aui-footer-bottom { border-top: none; padding-top: 0; }
 
 /* ---- Forms --------------------------------------------------------------- */
 .aui-form-group { margin-bottom: 0.9rem; }

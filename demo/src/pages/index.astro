@@ -9,6 +9,7 @@ import Card from "../../../src/astro/Card.astro";
 import Table from "../../../src/astro/Table.astro";
 import Alert from "../../../src/astro/Alert.astro";
 import { CodeBlock as ReactCodeBlock, PackageManager } from "../../../dist/react.js";
+import pkg from "../../../package.json";
 
 const categories = [
   {
@@ -105,12 +106,15 @@ const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this
     <!-- Hero Section -->
     <section class="aui-grid aui-grid-cols-2" id="overview" style="align-items: center; margin-bottom: 2.5rem;">
       <div class="aui-stack aui-stack-sm">
+        <div class="aui-row aui-row-xs" style="align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+          <Badge>v{pkg.version}</Badge>
+        </div>
         <h1 class="aui-h1">
-          Don’t Use This Design System.
+          The Design System for Lazy Engineers.
         </h1>
 
         <p class="aui-sub" style="max-width: 60ch;">
-          Inspired by <strong>arpitbhayani.me</strong>. Flat surfaces, monospace gutters, and signature crimson accents—crafted for human operators and autonomous coding agents.
+          One design system for personal sites, developer SaaS, and HTML explainer docs. Zero custom CSS, machined telemetry, and an agent-first component architecture.
         </p>
 
         <div class="aui-row aui-row-sm" style="margin: 0.75rem 0 0.5rem;">
@@ -174,26 +178,6 @@ const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this
       </div>
     </section>
 
-    <!-- Context & Framework Bar -->
-    <Card hoverable={false} style="margin-bottom: 2rem; padding: 0.65rem 1rem; background-color: var(--aui-bg-secondary);">
-      <div class="aui-row-between aui-flex-wrap" style="gap: 0.75rem;">
-        <div class="aui-row aui-row-xs" style="font-size: 0.85rem; color: var(--aui-text-muted);">
-          <Badge variant="outline">48+ Primitives</Badge>
-          <span>/</span>
-          <span>Astro · Next.js · React · Plain CSS</span>
-          <span>/</span>
-          <code class="aui-code">shadcn CLI</code>
-          <span>/</span>
-          <a href="/llms.txt" style="color: var(--aui-primary); font-family: var(--aui-font-mono); font-size: 0.82rem; font-weight: 600; text-decoration: none;">llms.txt</a>
-        </div>
-        <div class="aui-row aui-row-xs">
-          <span style="font-size: 0.8rem; font-weight: 600; color: var(--aui-text-muted);">Registry:</span>
-          <a href="/components"><Button variant="secondary" size="sm">Catalog</Button></a>
-          <a href="/foundations"><Button variant="secondary" size="sm">Foundations</Button></a>
-          <a href="/agents"><Button variant="primary" size="sm">Agents</Button></a>
-        </div>
-      </div>
-    </Card>
 
     <!-- Quickstart Guide -->
     <div class="spec-grid" style="margin-bottom: 2.5rem;">

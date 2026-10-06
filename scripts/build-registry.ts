@@ -1339,12 +1339,11 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
   - \`columns?: FooterColumn[]\`
 \`\`\`tsx
 <Footer
-  copyright={\`© \${new Date().getFullYear()} Arpit Bhayani. Built for curious engineers.\`}
-  disclaimer="Masterclasses and educational programs are offered by Relog Deeptech Pvt. Ltd."
+  copyright={\`© \${new Date().getFullYear()} Array UI — Built for curious systems engineers & AI agents. MIT Licensed.\`}
+  disclaimer="Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs."
   socialPills={
     <div style={{ display: "flex", gap: "0.5rem" }}>
-      <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
-      <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
+      <SocialPill platform="github" href="https://github.com/arpitbbhayani/aui" label="GitHub" />
     </div>
   }
 />

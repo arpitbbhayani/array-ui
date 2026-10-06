@@ -35,8 +35,20 @@ const footerColumns = [
       { label: "Design Foundations", href: "/foundations" },
       { label: "Color Tokens", href: "/foundations#colors" },
       { label: "Typography Scale", href: "/foundations#typography" },
-      { label: "Spacing & Gutters", href: "/foundations#spacing" },
-      { label: "Base Invariants", href: "/foundations#invariants" },
+      { label: "Spacing & Hairlines", href: "/foundations#spacing" },
+      { label: "Zero-CSS Invariants", href: "/foundations#invariants" },
+    ],
+  },
+  {
+    heading: "Components",
+    links: [
+      { label: "Developer & Telemetry", href: "/components#ping-status" },
+      { label: "Core UI & Actions", href: "/components#buttons" },
+      { label: "Forms & Inputs", href: "/components#input" },
+      { label: "Feedback & Overlays", href: "/components#alert" },
+      { label: "Data Display", href: "/components#table" },
+      { label: "Navigation Primitives", href: "/components#tabs" },
+      { label: "Explainer Kit", href: "/components#explorables" },
     ],
   },
   {
@@ -46,26 +58,18 @@ const footerColumns = [
       { label: "llms.txt (Standard)", href: "/llms.txt", hint: "Manifest", external: true },
       { label: "llms-full.txt", href: "/llms-full.txt", hint: "Full APIs", external: true },
       { label: "shadcn Registry JSON", href: "/r/registry.json", hint: "Schema", external: true },
-      { label: "AGENTS.md", href: "https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md", external: true },
+      { label: "AGENTS.md", href: "https://raw.githubusercontent.com/arpitbbhayani/aui/main/AGENTS.md", hint: "Rules", external: true },
       { label: "robots.txt", href: "/robots.txt", external: true },
     ],
   },
   {
-    heading: "Ecosystem & Code",
+    heading: "Installation & Code",
     links: [
       { label: "GitHub Repository", href: "https://github.com/arpitbbhayani/aui", external: true, hint: "Source" },
-      { label: "DiceDB", href: "https://github.com/DiceDB/Dice", external: true, hint: "In-memory DB" },
-      { label: "arpitbhayani.me", href: "https://arpitbhayani.me", external: true, hint: "Essays" },
-      { label: "System Design Cohort", href: "https://arpitbhayani.me/courses", external: true },
-    ],
-  },
-  {
-    heading: "Connect",
-    links: [
-      { label: "Twitter / X", href: "https://twitter.com/arpit_bhayani", external: true },
-      { label: "LinkedIn", href: "https://linkedin.com/in/arpitbhayani", external: true },
-      { label: "YouTube", href: "https://youtube.com/c/ArpitBhayani", external: true },
-      { label: "GitHub Profile", href: "https://github.com/arpitbbhayani", external: true },
+      { label: "npm Package", href: "https://www.npmjs.com/package/array-ui", external: true, hint: "v0.1.4" },
+      { label: "shadcn Registry Guide", href: "/agents#shadcn" },
+      { label: "React & Next.js Setup", href: "/#overview" },
+      { label: "Astro Integration", href: "/#overview" },
     ],
   },
 ];
@@ -161,25 +165,6 @@ const commandItems = [
     <CommandPalette client:load items={commandItems} />
     <Navbar brandName="Array UI" links={navLinks}>
       <div slot="actions" class="aui-row aui-row-sm">
-        <a class="aui-btn aui-btn-secondary aui-btn-sm aui-font-mono" href="/llms.txt" target="_blank" title="Machine-readable LLM documentation (llms.txt)" style="gap: 0.35rem; font-size: 0.78rem;">
-          <span class="aui-ping-dot" style="width: 7px; height: 7px; background-color: var(--aui-success); border-radius: 50%; display: inline-block;"></span>
-          <span>llms.txt</span>
-        </a>
-        <button
-          type="button"
-          class="aui-btn aui-btn-secondary aui-btn-sm"
-          id="aui-search-trigger"
-          title="Search docs (⌘K)"
-          onclick="window.dispatchEvent(new KeyboardEvent('keydown', {key:'k', metaKey:true}))"
-          style="gap: 0.45rem; font-size: 0.82rem; color: var(--aui-text-muted);"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-          <span>Search...</span>
-          <span class="aui-kbd" style="font-size:0.7rem;padding:0.05rem 0.3rem;">⌘K</span>
-        </button>
         <a class="aui-btn aui-btn-secondary aui-btn-sm" href="https://github.com/arpitbbhayani/aui" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </Navbar>
@@ -187,14 +172,10 @@ const commandItems = [
     <Footer
       columns={footerColumns}
       copyright="Array UI — Built for curious systems engineers & AI agents. MIT Licensed."
-      disclaimer="Array UI is an editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution for ui.arpitbhayani.me."
+      disclaimer="Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution."
     >
       <div slot="socials" class="aui-social-pill-group">
-        <SocialPill platform="youtube" href="https://youtube.com/c/ArpitBhayani" count="210k" />
-        <SocialPill platform="twitter" href="https://twitter.com/arpit_bhayani" count="120k" />
-        <SocialPill platform="linkedin" href="https://linkedin.com/in/arpitbhayani" count="280k" />
-        <SocialPill platform="github" href="https://github.com/arpitbbhayani" count="7k" />
-        <SocialPill platform="rss" href="/rss.xml" />
+        <SocialPill platform="github" href="https://github.com/arpitbbhayani/aui" label="GitHub" />
       </div>
     </Footer>
 
