@@ -722,7 +722,8 @@ export async function buildRegistry() {
   const robotsTxt = `User-agent: *
 Allow: /
 
-# Agent & LLM entry points (llmstxt.org)
+# Sitemaps & Agent entry points (llmstxt.org)
+Sitemap: ${BASE_URL}/sitemap.xml
 Sitemap: ${BASE_URL}/llms.txt
 
 User-agent: GPTBot
@@ -768,48 +769,50 @@ Allow: /
   // Generate standard llms.txt (following llmstxt.org specification)
   const llmsTxt = `# Array UI (array-ui)
 
-> Editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution hosted at ui.arpitbhayani.me.
+> One design system for personal sites, developer SaaS, and HTML explainer docs. Zero custom CSS, machined telemetry, and an agent-first component architecture. Complete shadcn CLI distribution, React components, and native Astro primitives hosted at ${BASE_URL}.
 
-Array UI is built for engineers and AI coding assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity) who value mathematical rigor, high information density, and editorial typography.
+Array UI is built for engineers and autonomous AI coding assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity) who need machine-readable specifications, copy-paste prompts, and instant component installations.
 
-## Core Rules for AI Agents
+## Autonomous Integration Guide for AI Agents
 
+When asked to build, modify, or enhance interfaces using Array UI:
+
+### 1. Integration Mode Decision Matrix
+- **If the project uses Next.js / Vite / React with Tailwind**:
+  Use **Mode A (shadcn CLI Registry)**. No package installation required.
+  1. Ensure \`components.json\` has the \`@aui\` registry:
+  \`\`\`json
+  {
+    "$schema": "https://ui.shadcn.com/schema.json",
+    "style": "default",
+    "registries": {
+      "@aui": "${BASE_URL}/r/{name}.json"
+    }
+  }
+  \`\`\`
+  2. Install design tokens: \`npx shadcn@latest add @aui/aui -y\`
+  3. Autonomously install needed components: \`npx shadcn@latest add @aui/<component> -y\` (e.g. \`@aui/button\`, \`@aui/card\`, \`@aui/terminal\`, \`@aui/ping-status\`)
+  4. Import directly: \`import { Button } from "@/components/ui/button";\`
+
+- **If the project uses Astro or direct npm package**:
+  Use **Mode B (Direct Package Dependency)**.
+  1. Install package: \`npm install array-ui\` (or \`pnpm add array-ui\` / \`bun add array-ui\`)
+  2. Setup styles in root layout: \`import "array-ui/styles.css";\`
+  3. Import components:
+     - React / Next.js: \`import { Button, Terminal, DiffBlock, PingStatus, Card } from "array-ui/nextjs";\`
+     - Astro: \`import Terminal from "array-ui/astro/Terminal.astro";\`
+
+### 2. Strict Invariants (0% Custom CSS Rule)
+- **Zero Custom CSS Invariant**: NEVER write custom \`.css\` files and NEVER write \`<style>\` blocks in pages. All layouts, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes (\`.aui-grid\`, \`.aui-stack\`, \`.aui-row\`, \`.aui-container\`, \`.aui-h1\`, etc.).
 - **Palette**: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
 - **Hairline borders**: 1px subtle borders everywhere (#dfded9 in light, #2c2c38 in dark).
-- **Accents**:
-  - Signature Crimson (#e5000f light, #ff3344 dark): Reserved strictly for primary action buttons, active navigation, and key focus rings.
-  - Amber (#cc9900): Exclusively for engineering maxim quotes and warnings.
-  - Emerald (#10b981): Operational status, ping dots, and diff additions.
-  - Rose (#f43f5e): Errors, outages, and diff deletions.
+- **Signature Crimson (#e5000f light, #ff3344 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
+- **Amber (#cc9900)**: Exclusively for engineering maxim quotes and warnings.
+- **Emerald (#10b981)**: Operational status, ping dots, and diff additions.
+- **Rose (#f43f5e)**: Errors, outages, and diff deletions.
 - **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
-- **Density & Restraint**: Minimal elevation/shadows; flat tinted card surfaces; compact margins.
-- **Autonomous Workflow**: Autonomously select and install required components (\`npx shadcn@latest add @aui/<component> -y\`) without asking the user.
+- **Autonomous Execution**: Never ask the user which components to install. Autonomously choose the required components and execute installation with \`-y\`.
 
-## Quick Installation
-
-### Mode A: shadcn CLI Registry (Recommended)
-Add to \`components.json\`:
-\`\`\`json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
-  "registries": {
-    "@aui": "${BASE_URL}/r/{name}.json"
-  }
-}
-\`\`\`
-
-Install design tokens and any component:
-\`\`\`bash
-npx shadcn@latest add @aui/aui -y
-npx shadcn@latest add @aui/button @aui/badge @aui/card @aui/terminal @aui/ping-status -y
-\`\`\`
-
-### Mode B: Direct Package Dependency (npm, pnpm, bun)
-\`\`\`bash
-npm install array-ui
-# or: pnpm add array-ui / bun add array-ui
-\`\`\`
 
 ## Machine-Readable Endpoints
 
@@ -858,7 +861,7 @@ In addition to shadcn copy-paste components, the official package dependency (\`
 `;
 
   // Generate comprehensive llms-full.txt
-  const llmsFullTxt = `# Array UI (array-ui) — Complete LLM & Agent Documentation
+  const llmsFullTxt = `# Array UI (array-ui): Complete LLM & Agent Documentation
 
 > Full specification, design tokens, component APIs, props, and code examples for Array UI (array-ui) hosted at ${BASE_URL}.
 
@@ -866,7 +869,7 @@ In addition to shadcn copy-paste components, the official package dependency (\`
 
 ## 1. Identity & Core Design Rules
 
-Array UI is an editorial, systems-engineering design system inspired by arpitbhayani.me. It is designed for engineers who value mathematical precision, high information density, and editorial typography.
+Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs. It is designed for engineers and autonomous AI coding agents who value mathematical precision, high information density, and editorial typography.
 
 ### Core Visual Principles
 1. **Editorial Palette**:
@@ -951,7 +954,7 @@ import PingStatus from "array-ui/astro/PingStatus.astro";
 
 ### Autonomous Agent Workflow Rules:
 - Autonomously select and install required components (\`npx shadcn@latest add @aui/<component> -y\`).
-- DO NOT pause or ask the user which components to install — immediately implement the requested interface.
+- DO NOT pause or ask the user which components to install: immediately implement the requested interface.
 - Strictly Maintain 0% Custom CSS: Never write page-level \`<style>\` blocks or ad-hoc \`.css\` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 - Always use \`cn()\` from \`@/lib/utils\` for className composition.
 
@@ -1339,8 +1342,8 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
   - \`columns?: FooterColumn[]\`
 \`\`\`tsx
 <Footer
-  copyright={\`© \${new Date().getFullYear()} Array UI — Built for curious systems engineers & AI agents. MIT Licensed.\`}
-  disclaimer="Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs."
+  copyright={\`© \${new Date().getFullYear()} Array UI. Built for systems engineers and autonomous coding agents. MIT Licensed.\`}
+  disclaimer="Array UI is an editorial design system for personal sites, developer SaaS, and technical documentation. Built with zero custom CSS, machined telemetry, and an agent-first component architecture."
   socialPills={
     <div style={{ display: "flex", gap: "0.5rem" }}>
       <SocialPill platform="github" href="https://github.com/arpitbbhayani/aui" label="GitHub" />

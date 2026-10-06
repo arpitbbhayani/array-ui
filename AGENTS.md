@@ -1,4 +1,4 @@
-# AGENTS.md — AI Coding Assistant Guide for Array UI (array-ui)
+# AGENTS.md: AI Coding Assistant Guide for Array UI (array-ui)
 
 > **For AI Coding Assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity):**
 > This file contains the complete system prompt, rules, installation options, and component API reference for building interfaces with **Array UI** (`array-ui`).
@@ -389,8 +389,8 @@ Minimalist dashed container for empty states and zero-data screens.
 Editorial 4-column directory footer with category hints, highlights, disclaimer, and social pills.
 ```tsx
 <Footer
-  copyright={`© ${new Date().getFullYear()} Array UI — Built for curious systems engineers & AI agents. MIT Licensed.`}
-  disclaimer="Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs."
+  copyright={`© ${new Date().getFullYear()} Array UI. Built for systems engineers and autonomous coding agents. MIT Licensed.`}
+  disclaimer="Array UI is an editorial design system for personal sites, developer SaaS, and technical documentation. Built with zero custom CSS, machined telemetry, and an agent-first component architecture."
   socialPills={
     <div style={{ display: "flex", gap: "0.5rem" }}>
       <SocialPill platform="github" href="https://github.com/arpitbbhayani/aui" label="GitHub" />

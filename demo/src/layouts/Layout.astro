@@ -19,6 +19,10 @@ const {
   currentPath,
 } = Astro.props;
 
+const siteUrl = "https://ui.arpitbhayani.me";
+const pathname = Astro.url.pathname || currentPath || "/";
+const canonicalURL = new URL(pathname, siteUrl).href.replace(/\/$/, "") || siteUrl;
+
 const navLinks = [
   { label: "Overview", href: "/" },
   { label: "Components", href: "/components" },
@@ -127,38 +131,72 @@ const commandItems = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Array UI</title>
+    <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href="https://ui.arpitbhayani.me" />
+    <meta name="keywords" content="Array UI, array-ui, design system, systems engineering, developer tools, technical documentation, HTML explainers, developer SaaS, shadcn registry, React components, Astro components, Tailwind, llms.txt, AI coding agents" />
+    <meta name="author" content="Array UI" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e5000f'/><text x='16' y='23' font-family='sans-serif' font-size='20' font-weight='800' text-anchor='middle' fill='white'>a</text></svg>" />
     
-    <!-- AI Agent & LLM Discoverability (llmstxt.org) -->
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Array UI" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://ui.arpitbhayani.me/og-image.png" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://ui.arpitbhayani.me/og-image.png" />
+
+    <!-- AI Agent & LLM Discoverability (llmstxt.org & GEO) -->
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context (llms.txt)" />
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Complete LLM Documentation (llms-full.txt)" />
     <link rel="alternate" type="application/json" href="/r/registry.json" title="Array UI Registry Manifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <meta name="ai:llms-txt" content="https://ui.arpitbhayani.me/llms.txt" />
     <meta name="ai:llms-full" content="https://ui.arpitbhayani.me/llms-full.txt" />
     <meta name="ai:registry" content="https://ui.arpitbhayani.me/r/registry.json" />
     <meta name="ai:agent-instructions" content="https://ui.arpitbhayani.me/agents" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
-    <!-- Schema.org JSON-LD Structured Data -->
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Array UI",
-        "description": "Editorial, systems-engineering design system inspired by arpitbhayani.me. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution.",
-        "url": "https://ui.arpitbhayani.me",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Any",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
+    <!-- Schema.org JSON-LD Structured Data (GEO / Generative Engine Optimization) -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ui.arpitbhayani.me/#website",
+          "url": "https://ui.arpitbhayani.me",
+          "name": "Array UI",
+          "description": "One design system for personal sites, developer SaaS, and HTML explainer docs.",
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://ui.arpitbhayani.me/#software",
+          "name": "Array UI",
+          "applicationCategory": "DeveloperApplication",
+          "applicationSubCategory": "Design System & Component Library",
+          "operatingSystem": "Web",
+          "url": "https://ui.arpitbhayani.me",
+          "description": "Editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs. Zero custom CSS, machined telemetry, and an agent-first component architecture.",
+          "programmingLanguage": ["TypeScript", "React", "Astro", "CSS"],
+          "license": "https://opensource.org/licenses/MIT",
+          "codeRepository": "https://github.com/arpitbbhayani/aui",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
         }
-      }
-    </script>
+      ]
+    })} />
     <ThemeScript />
   </head>
   <body class="aui-body">
@@ -171,8 +209,8 @@ const commandItems = [
     <slot />
     <Footer
       columns={footerColumns}
-      copyright="Array UI — Built for curious systems engineers & AI agents. MIT Licensed."
-      disclaimer="Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution."
+      copyright={`© ${new Date().getFullYear()} Array UI. Built for systems engineers and autonomous coding agents. MIT Licensed.`}
+      disclaimer="Array UI is an editorial design system for personal sites, developer SaaS, and technical documentation. Built with zero custom CSS, machined telemetry, and an agent-first component architecture."
     >
       <div slot="socials" class="aui-social-pill-group">
         <SocialPill platform="github" href="https://github.com/arpitbbhayani/aui" label="GitHub" />

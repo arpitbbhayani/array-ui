@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
 
-# Agent & LLM entry points (llmstxt.org)
+# Sitemaps & Agent entry points (llmstxt.org)
+Sitemap: https://ui.arpitbhayani.me/sitemap.xml
 Sitemap: https://ui.arpitbhayani.me/llms.txt
 
 User-agent: GPTBot

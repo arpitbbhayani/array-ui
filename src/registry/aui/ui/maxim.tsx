@@ -28,10 +28,10 @@ export function Maxim({
       <p>{quote || children}</p>
       {(author || source) && (
         <cite className="block not-italic font-sans text-xs text-muted-foreground font-medium uppercase tracking-wider mt-2">
-          {author && <span>— {author}</span>}
+          {author && <span>- {author}</span>}
           {source && (
             <span>
-              {author ? ", " : "— "}
+              {author ? ", " : "- "}
               {sourceUrl ? (
                 <a
                   href={sourceUrl}

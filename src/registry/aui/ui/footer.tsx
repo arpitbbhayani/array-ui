@@ -92,8 +92,8 @@ function ExternalIcon() {
 
 export function Footer({
   columns = defaultColumns,
-  disclaimer = "Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs. Zero-runtime CSS tokens, React components, native Astro primitives, and official shadcn CLI distribution.",
-  copyright = `© ${new Date().getFullYear()} Array UI — Built for curious systems engineers & AI agents. MIT Licensed.`,
+  disclaimer = "Array UI is an editorial design system for personal sites, developer SaaS, and technical documentation. Built with zero custom CSS, machined telemetry, and an agent-first component architecture.",
+  copyright = `© ${new Date().getFullYear()} Array UI. Built for systems engineers and autonomous coding agents. MIT Licensed.`,
   socialPills,
   className,
   children,

@@ -1,4 +1,4 @@
-# Array UI (array-ui) — Complete LLM & Agent Documentation
+# Array UI (array-ui): Complete LLM & Agent Documentation
 
 > Full specification, design tokens, component APIs, props, and code examples for Array UI (array-ui) hosted at https://ui.arpitbhayani.me.
 
@@ -6,7 +6,7 @@
 
 ## 1. Identity & Core Design Rules
 
-Array UI is an editorial, systems-engineering design system inspired by arpitbhayani.me. It is designed for engineers who value mathematical precision, high information density, and editorial typography.
+Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs. It is designed for engineers and autonomous AI coding agents who value mathematical precision, high information density, and editorial typography.
 
 ### Core Visual Principles
 1. **Editorial Palette**:
@@ -91,7 +91,7 @@ import PingStatus from "array-ui/astro/PingStatus.astro";
 
 ### Autonomous Agent Workflow Rules:
 - Autonomously select and install required components (`npx shadcn@latest add @aui/<component> -y`).
-- DO NOT pause or ask the user which components to install — immediately implement the requested interface.
+- DO NOT pause or ask the user which components to install: immediately implement the requested interface.
 - Strictly Maintain 0% Custom CSS: Never write page-level `<style>` blocks or ad-hoc `.css` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 - Always use `cn()` from `@/lib/utils` for className composition.
 
@@ -479,8 +479,8 @@ Editorial 4-column directory footer with category hints, highlights, disclaimer,
   - `columns?: FooterColumn[]`
 ```tsx
 <Footer
-  copyright={`© ${new Date().getFullYear()} Array UI — Built for curious systems engineers & AI agents. MIT Licensed.`}
-  disclaimer="Array UI is an editorial, systems-engineering design system for personal sites, developer SaaS, and HTML explainer docs."
+  copyright={`© ${new Date().getFullYear()} Array UI. Built for systems engineers and autonomous coding agents. MIT Licensed.`}
+  disclaimer="Array UI is an editorial design system for personal sites, developer SaaS, and technical documentation. Built with zero custom CSS, machined telemetry, and an agent-first component architecture."
   socialPills={
     <div style={{ display: "flex", gap: "0.5rem" }}>
       <SocialPill platform="github" href="https://github.com/arpitbbhayani/aui" label="GitHub" />
