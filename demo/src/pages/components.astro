@@ -62,6 +62,7 @@ import {
   BenchmarkDelta,
   LatencyDistribution,
   ClusterState,
+  ArchitectureCanvas,
 } from "../../../dist/react.js";
 
 const sidebarGroups = [
@@ -786,6 +787,61 @@ const takeaways = [
                 { type: "normal", content: "}", oldNum: 46, newNum: 49, coverage: "covered" },
                 { type: "normal", content: "", oldNum: 47, newNum: 50 },
                 { type: "normal", content: "func (l *Log) Last() uint64 { return l.last }", oldNum: 48, newNum: 51, coverage: "covered" },
+              ]}
+            />
+          </Specimen>
+
+          <Specimen
+            id="architecture-canvas"
+            name="Architecture canvas (auto-layout)"
+            description="No coordinates needed: nodes are ranked and placed automatically, grouped into collapsible boundaries."
+            usage={`<ArchitectureCanvas
+  title="Checkout Service"
+  direction="LR"
+  groups={[
+    { id: "core", label: "Core", kind: "service" },
+    { id: "data", label: "Data", kind: "layer" },
+  ]}
+  nodes={[
+    { id: "web", label: "Web App" },
+    { id: "api", label: "API Gateway", group: "core" },
+    { id: "orders", label: "Orders", group: "core" },
+    { id: "pg", label: "Postgres", group: "data" },
+  ]}
+  connections={[
+    { from: "web", to: "api", label: "HTTPS" },
+    { from: "api", to: "orders", label: "gRPC" },
+    { from: "orders", to: "pg", label: "SQL" },
+  ]}
+/>`}
+            span={2}
+            shadcnName="architecture-canvas"
+          >
+            <ArchitectureCanvas
+              client:load
+              title="Checkout Service"
+              subtitle="auto-layout, grouped"
+              direction="LR"
+              groups={[
+                { id: "core", label: "Core", kind: "service" },
+                { id: "data", label: "Data", kind: "layer" },
+              ]}
+              nodes={[
+                { id: "web", label: "Web App", badge: "React", description: "Browser client for the storefront." },
+                { id: "api", label: "API Gateway", group: "core", badge: "Envoy", description: "TLS termination and rate limiting." },
+                { id: "auth", label: "Auth", group: "core", badge: "Go", description: "Session and token validation." },
+                { id: "orders", label: "Orders", group: "core", badge: "Go", description: "Order lifecycle and idempotency.", status: "warn" },
+                { id: "pg", label: "Postgres", group: "data", badge: "Primary", description: "System of record." },
+                { id: "redis", label: "Redis", group: "data", badge: "Cache", description: "Session and hot-key cache." },
+                { id: "stripe", label: "Stripe", badge: "External", description: "Payment processor." },
+              ]}
+              connections={[
+                { from: "web", to: "api", label: "HTTPS", animated: true },
+                { from: "api", to: "auth", label: "gRPC" },
+                { from: "api", to: "orders", label: "gRPC" },
+                { from: "auth", to: "redis", label: "GET" },
+                { from: "orders", to: "pg", label: "SQL" },
+                { from: "orders", to: "stripe", label: "charge", variant: "dashed" },
               ]}
             />
           </Specimen>

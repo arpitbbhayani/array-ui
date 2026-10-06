@@ -814,6 +814,29 @@ When asked to build, modify, or enhance interfaces using Array UI:
 - **Autonomous Execution**: Never ask the user which components to install. Autonomously choose the required components and execute installation with \`-y\`.
 
 
+### Architecture Views from a Repository (ArchitectureCanvas)
+Install: \`npx shadcn@latest add @aui/architecture-canvas -y\`. To turn a codebase into an interactive diagram:
+1. List components (services, packages, datastores, queues, external systems): one node per meaningful unit, 8 to 30 nodes.
+2. Give each node a stable \`id\`, short \`label\`, \`badge\` (language or kind), and one-line \`description\`.
+3. Set \`group\` to the owning package or service and declare it in \`groups\` (\`kind\`: service, layer, package, external). Groups collapse into one node.
+4. Add one connection per dependency (caller to callee) with a short \`label\`; use \`variant: "dashed"\` for async edges.
+5. Do NOT set \`x\`/\`y\`: the canvas auto-layouts (\`direction="LR"\` or \`"TB"\`). Explicit \`x\`/\`y\` still pins a node. Auto-layout targets about 40 nodes or fewer and does not nest groups.
+\`\`\`tsx
+<ArchitectureCanvas
+  title="Checkout Service"
+  groups={[{ id: "core", label: "Core", kind: "service" }]}
+  nodes={[
+    { id: "web", label: "Web App" },
+    { id: "api", label: "API Gateway", group: "core" },
+    { id: "orders", label: "Orders", group: "core" },
+  ]}
+  connections={[
+    { from: "web", to: "api", label: "HTTPS" },
+    { from: "api", to: "orders", label: "gRPC" },
+  ]}
+/>
+\`\`\`
+
 ## Machine-Readable Endpoints
 
 - [shadcn Registry Index](${BASE_URL}/r/registry.json): JSON manifest of all available registry components.
@@ -1709,6 +1732,31 @@ Interactive slider sandbox for mathematical formulas and live reactive system ca
   outputs={[
     { label: "Required Quorum (Q)", compute: (v) => Math.floor(v.nodes / 2) + 1 },
     { label: "Tolerable Failures (F)", compute: (v) => Math.floor((v.nodes - 1) / 2) },
+  ]}
+/>
+\`\`\`
+
+---
+
+## 7b. Architecture Views from a Repository (ArchitectureCanvas)
+Install: \`npx shadcn@latest add @aui/architecture-canvas -y\`. To turn a codebase into an interactive diagram:
+1. List components (services, packages, datastores, queues, external systems): one node per meaningful unit, 8 to 30 nodes.
+2. Give each node a stable \`id\`, short \`label\`, \`badge\` (language or kind), and one-line \`description\`.
+3. Set \`group\` to the owning package or service and declare it in \`groups\` (\`kind\`: service, layer, package, external). Groups collapse into one node.
+4. Add one connection per dependency (caller to callee) with a short \`label\`; use \`variant: "dashed"\` for async edges.
+5. Do NOT set \`x\`/\`y\`: the canvas auto-layouts (\`direction="LR"\` or \`"TB"\`). Explicit \`x\`/\`y\` still pins a node. Auto-layout targets about 40 nodes or fewer and does not nest groups.
+\`\`\`tsx
+<ArchitectureCanvas
+  title="Checkout Service"
+  groups={[{ id: "core", label: "Core", kind: "service" }]}
+  nodes={[
+    { id: "web", label: "Web App" },
+    { id: "api", label: "API Gateway", group: "core" },
+    { id: "orders", label: "Orders", group: "core" },
+  ]}
+  connections={[
+    { from: "web", to: "api", label: "HTTPS" },
+    { from: "api", to: "orders", label: "gRPC" },
   ]}
 />
 \`\`\`

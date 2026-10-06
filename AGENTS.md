@@ -653,6 +653,15 @@ Interactive system architecture and flow diagram canvas with animated traveling 
   ]}
 />
 ```
+**Auto-layout and groups.** Omit `x` and `y` and the canvas ranks and places nodes itself (`direction="LR"` or `"TB"`). Nodes that keep explicit `x`/`y` are left where you put them, so existing diagrams are unchanged. Add `groups={[{ id, label, kind?: "service" | "layer" | "package" | "external", defaultCollapsed? }]}` and set `group` on nodes to draw labeled boundaries; each group has a toggle that collapses it into one node and merges its edges. Auto-layout is a layered layout tuned for roughly 40 nodes or fewer, draws straight edges, and does not nest groups.
+
+##### Recipe: generate an architecture view from a repository
+1. Read the repo and list components (services, packages, datastores, queues, external systems). Use one node per meaningful unit, not per file. Prefer 8 to 30 nodes.
+2. Give each node a stable `id`, a short `label`, a `badge` (language, runtime, or kind), and a one-line `description`.
+3. Set `group` to the owning package or service, and declare it in `groups`. Mark third-party systems with `kind: "external"`.
+4. Add one connection per real dependency, from caller to callee, with a short `label` (protocol, topic, or call) and `variant: "dashed"` for async edges. Use `animated` sparingly for the main request path.
+5. Do not set `x` or `y`. Let auto-layout place nodes; use `direction="TB"` for layered architectures and `"LR"` for request flows.
+6. Put `metadata` on nodes for the inspector (owner, SLO, repo path).
 
 #### 32. `SequenceDiagram` (`@aui/sequence-diagram`)
 Interactive sequence lifelines walkthrough with playback scrubber, request/response arrows, and callout notes.

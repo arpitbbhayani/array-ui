@@ -1,23 +1,18 @@
 ---
-interface ArchitectureNodeItem {
-  id: string;
-  label: string;
-  badge?: string;
-  description?: string;
-  x: number;
-  y: number;
-  status?: "ok" | "warn" | "err" | "info";
-  metadata?: Record<string, string>;
-}
-
-interface ArchitectureConnectionItem {
-  from: string;
-  to: string;
-  label?: string;
-  animated?: boolean;
-  variant?: "solid" | "dashed";
-  status?: "ok" | "warn" | "err" | "primary";
-}
+import {
+  ARCH_GROUP_PAD,
+  ARCH_NODE_H,
+  ARCH_NODE_W,
+  collapseArchitecture,
+  groupBoxes,
+  initialCollapsedGroups,
+  layoutArchitecture,
+  routeEdges,
+  type ArchitectureConnectionItem,
+  type ArchitectureDirection,
+  type ArchitectureGroupItem,
+  type ArchitectureNodeItem,
+} from "../react/ArchitectureCanvas/layout";
 
 interface Props {
   title?: string;
@@ -25,6 +20,10 @@ interface Props {
   badge?: string;
   nodes: ArchitectureNodeItem[];
   connections?: ArchitectureConnectionItem[];
+  groups?: ArchitectureGroupItem[];
+  direction?: ArchitectureDirection;
+  /** Group ids to render collapsed. Defaults to groups with `defaultCollapsed`. */
+  collapsedGroups?: string[];
   class?: string;
 }
 
@@ -32,14 +31,60 @@ const {
   title = "System Architecture",
   subtitle,
   badge,
-  nodes = [],
-  connections = [],
+  nodes: inputNodes = [],
+  connections: inputConnections = [],
+  groups = [],
+  direction = "LR",
+  collapsedGroups,
   class: className = "",
   ...props
 } = Astro.props;
 
+const { nodes, connections } = collapseArchitecture(
+  inputNodes,
+  inputConnections,
+  groups,
+  collapsedGroups ?? initialCollapsedGroups(groups)
+);
+const layout = layoutArchitecture(nodes, connections, groups, direction);
+
 const nodeMap = new Map<string, ArchitectureNodeItem>();
 nodes.forEach((n) => nodeMap.set(n.id, n));
+
+const center = (id: string) => {
+  const n = nodeMap.get(id);
+  if (!n || !layout) return undefined;
+  if (n.x !== undefined && n.y !== undefined) {
+    return { x: (n.x / 100) * layout.width, y: (n.y / 100) * layout.height };
+  }
+  return layout.positions.get(id);
+};
+
+const pxEdges = layout ? routeEdges(connections, center) : [];
+const groupMap = new Map(groups.map((g) => [g.id, g]));
+
+type Box = { id: string; style: string };
+let groupBoxStyles: Box[] = [];
+if (layout) {
+  groupBoxStyles = groupBoxes(groups, nodes, center).map((b) => ({
+    id: b.id,
+    style: `left: ${b.x}px; top: ${b.y}px; width: ${b.w}px; height: ${b.h}px;`,
+  }));
+} else {
+  groupBoxStyles = groups.flatMap((g) => {
+    const m = nodes.filter((n) => n.group === g.id && n.x !== undefined && n.y !== undefined);
+    if (m.length === 0) return [];
+    const xs = m.map((n) => n.x as number);
+    const ys = m.map((n) => n.y as number);
+    const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+    return [
+      {
+        id: g.id,
+        style: `left: calc(${x0}% - ${ARCH_GROUP_PAD.x}px); top: calc(${y0}% - ${ARCH_GROUP_PAD.top}px); width: calc(${x1 - x0}% + ${ARCH_GROUP_PAD.x * 2}px); height: calc(${y1 - y0}% + ${ARCH_GROUP_PAD.top + ARCH_GROUP_PAD.bottom}px);`,
+      },
+    ];
+  });
+}
 ---
 
 <div class:list={["aui-arch-canvas", className]} {...props}>
@@ -52,99 +97,180 @@ nodes.forEach((n) => nodeMap.set(n.id, n));
   </div>
 
   <div class="aui-arch-viewport">
-    <svg class="aui-arch-svg-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <defs>
-        <marker
-          id="aui-arch-arrow-astro"
-          viewBox="0 0 10 10"
-          refX="6"
-          refY="5"
-          markerWidth="6"
-          markerHeight="6"
-          orient="auto-start-reverse"
-        >
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--aui-border-strong)" />
-        </marker>
-      </defs>
-
-      {connections.map((conn) => {
-        const src = nodeMap.get(conn.from);
-        const dst = nodeMap.get(conn.to);
-        if (!src || !dst) return null;
-
-        return (
-          <g>
-            <line
-              x1={`${src.x}%`}
-              y1={`${src.y}%`}
-              x2={`${dst.x}%`}
-              y2={`${dst.y}%`}
-              stroke="var(--aui-border-strong)"
-              stroke-width="1.5"
-              stroke-dasharray={conn.variant === "dashed" ? "4 4" : undefined}
-              marker-end="url(#aui-arch-arrow-astro)"
-            />
-            {conn.animated && (
-              <circle r="3" fill="var(--aui-primary)">
-                <animate
-                  attributeName="cx"
-                  from={`${src.x}%`}
-                  to={`${dst.x}%`}
-                  dur="2.4s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="cy"
-                  from={`${src.y}%`}
-                  to={`${dst.y}%`}
-                  dur="2.4s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  values="0;1;1;0"
-                  dur="2.4s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            )}
-          </g>
-        );
-      })}
-    </svg>
-
-    <div class="aui-arch-nodes-container">
-      {connections.map((conn) => {
-        if (!conn.label) return null;
-        const src = nodeMap.get(conn.from);
-        const dst = nodeMap.get(conn.to);
-        if (!src || !dst) return null;
-
-        const midX = (src.x + dst.x) / 2;
-        const midY = (src.y + dst.y) / 2;
-
-        return (
-          <div
-            class="aui-arch-edge-label-box"
-            style={`left: ${midX}%; top: ${midY}%;`}
-          >
-            {conn.label}
+    {layout ? (
+      <div class="aui-arch-nodes-container is-px" style={`width: ${layout.width}px; height: ${layout.height}px;`}>
+        {groupBoxStyles.map((b) => (
+          <div class:list={["aui-arch-group", groupMap.get(b.id)?.kind && `aui-arch-group-${groupMap.get(b.id)?.kind}`]} style={b.style}>
+            <div class="aui-arch-group-head">
+              <span class="aui-arch-group-label">{groupMap.get(b.id)?.label}</span>
+              {groupMap.get(b.id)?.kind && <span class="aui-arch-group-kind">{groupMap.get(b.id)?.kind}</span>}
+            </div>
           </div>
-        );
-      })}
+        ))}
 
-      {nodes.map((node) => (
-        <div
-          class="aui-arch-node"
-          style={`left: ${node.x}%; top: ${node.y}%;`}
-        >
-          <div class="aui-arch-node-top">
-            <span class="aui-arch-node-name">{node.label}</span>
-            {node.badge && <span class="aui-arch-node-badge">{node.badge}</span>}
-          </div>
-          {node.description && <p class="aui-arch-node-desc">{node.description}</p>}
+        <svg class="aui-arch-svg-layer" width={layout.width} height={layout.height} viewBox={`0 0 ${layout.width} ${layout.height}`}>
+          <defs>
+            <marker id="aui-arch-arrow-px" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--aui-border-strong)" />
+            </marker>
+          </defs>
+          {pxEdges.map((e) => {
+            const conn = connections[e.index];
+            return (
+              <g>
+                <line
+                  x1={e.x1}
+                  y1={e.y1}
+                  x2={e.x2}
+                  y2={e.y2}
+                  stroke="var(--aui-border-strong)"
+                  stroke-width="1.5"
+                  stroke-dasharray={conn.variant === "dashed" ? "4 4" : undefined}
+                  marker-end="url(#aui-arch-arrow-px)"
+                />
+                {conn.animated && (
+                  <circle r="3" fill="var(--aui-primary)">
+                    <animate attributeName="cx" from={e.x1} to={e.x2} dur="2.4s" repeatCount="indefinite" />
+                    <animate attributeName="cy" from={e.y1} to={e.y2} dur="2.4s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" />
+                  </circle>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+
+        {pxEdges.map((e) =>
+          connections[e.index].label ? (
+            <div class="aui-arch-edge-label-box" style={`left: ${e.mx}px; top: ${e.my}px;`}>
+              {connections[e.index].label}
+            </div>
+          ) : null
+        )}
+
+        {nodes.map((node) => {
+          const c = center(node.id);
+          if (!c) return null;
+          return (
+            <div
+              class:list={["aui-arch-node", "is-fixed", node.collapsedGroupId && "is-group", node.status && `is-${node.status}`]}
+              style={`left: ${c.x}px; top: ${c.y}px; width: ${ARCH_NODE_W}px; height: ${ARCH_NODE_H}px;`}
+            >
+              <div class="aui-arch-node-top">
+                <span class="aui-arch-node-name">{node.collapsedGroupId ? `+ ${node.label}` : node.label}</span>
+                {node.badge && <span class="aui-arch-node-badge">{node.badge}</span>}
+              </div>
+              {node.description && <p class="aui-arch-node-desc">{node.description}</p>}
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <>
+        <svg class="aui-arch-svg-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <marker
+              id="aui-arch-arrow-astro"
+              viewBox="0 0 10 10"
+              refX="6"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--aui-border-strong)" />
+            </marker>
+          </defs>
+
+          {connections.map((conn) => {
+            const src = nodeMap.get(conn.from);
+            const dst = nodeMap.get(conn.to);
+            if (!src || !dst) return null;
+
+            return (
+              <g>
+                <line
+                  x1={`${src.x}%`}
+                  y1={`${src.y}%`}
+                  x2={`${dst.x}%`}
+                  y2={`${dst.y}%`}
+                  stroke="var(--aui-border-strong)"
+                  stroke-width="1.5"
+                  stroke-dasharray={conn.variant === "dashed" ? "4 4" : undefined}
+                  marker-end="url(#aui-arch-arrow-astro)"
+                />
+                {conn.animated && (
+                  <circle r="3" fill="var(--aui-primary)">
+                    <animate
+                      attributeName="cx"
+                      from={`${src.x}%`}
+                      to={`${dst.x}%`}
+                      dur="2.4s"
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="cy"
+                      from={`${src.y}%`}
+                      to={`${dst.y}%`}
+                      dur="2.4s"
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      values="0;1;1;0"
+                      dur="2.4s"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+
+        <div class="aui-arch-nodes-container">
+          {groupBoxStyles.map((b) => (
+            <div class:list={["aui-arch-group", groupMap.get(b.id)?.kind && `aui-arch-group-${groupMap.get(b.id)?.kind}`]} style={b.style}>
+              <div class="aui-arch-group-head">
+                <span class="aui-arch-group-label">{groupMap.get(b.id)?.label}</span>
+                {groupMap.get(b.id)?.kind && <span class="aui-arch-group-kind">{groupMap.get(b.id)?.kind}</span>}
+              </div>
+            </div>
+          ))}
+
+          {connections.map((conn) => {
+            if (!conn.label) return null;
+            const src = nodeMap.get(conn.from);
+            const dst = nodeMap.get(conn.to);
+            if (!src || !dst) return null;
+
+            const midX = ((src.x as number) + (dst.x as number)) / 2;
+            const midY = ((src.y as number) + (dst.y as number)) / 2;
+
+            return (
+              <div
+                class="aui-arch-edge-label-box"
+                style={`left: ${midX}%; top: ${midY}%;`}
+              >
+                {conn.label}
+              </div>
+            );
+          })}
+
+          {nodes.map((node) => (
+            <div
+              class:list={["aui-arch-node", node.collapsedGroupId && "is-group", node.status && `is-${node.status}`]}
+              style={`left: ${node.x}%; top: ${node.y}%;`}
+            >
+              <div class="aui-arch-node-top">
+                <span class="aui-arch-node-name">{node.collapsedGroupId ? `+ ${node.label}` : node.label}</span>
+                {node.badge && <span class="aui-arch-node-badge">{node.badge}</span>}
+              </div>
+              {node.description && <p class="aui-arch-node-desc">{node.description}</p>}
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </>
+    )}
   </div>
 </div>
