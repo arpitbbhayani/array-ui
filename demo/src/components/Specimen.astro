@@ -99,7 +99,7 @@ const derivedHtml = usage
   {usage && (
     <div
       class="spec-usage-bar aui-stack aui-stack-xs"
-      style="display: none; background-color: var(--aui-bg-secondary); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); padding: 0.6rem 0.85rem; gap: 0.45rem; min-width: 0; margin-top: 0.5rem;"
+      style="display: none; background-color: var(--aui-code-bg); border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-md); padding: 0.6rem 0.85rem; gap: 0.45rem; min-width: 0; margin-top: 0.5rem;"
       data-nextjs={reactUsage}
       data-react={reactUsage}
       data-astro={astroUsage}
@@ -141,7 +141,10 @@ const derivedHtml = usage
           </button>
         </div>
       </div>
-      <pre class="aui-pre" style="margin: 0; padding: 0.4rem 0 0.2rem 0 !important; background: transparent !important; border: none !important; box-shadow: none !important; overflow-x: auto; max-height: 260px; overflow-y: auto; flex-grow: 1; white-space: pre; font-size: 0.82rem; line-height: 1.55; color: var(--aui-text-primary);"><code class="spec-code-text" style="font-family: inherit;">{reactUsage}</code></pre>
+      <pre
+        class="spec-code-pre"
+        style="margin: 0; padding: 0.4rem 0 0.2rem 0; background: transparent; border: none; box-shadow: none; overflow-x: auto; max-height: 260px; overflow-y: auto; flex-grow: 1; white-space: pre; font-family: var(--aui-font-mono); font-size: 0.84rem; line-height: 1.6; color: var(--aui-code-text);"
+      ><code class="spec-code-text" style="font-family: inherit; color: inherit; background: transparent;">{reactUsage}</code></pre>
     </div>
   )}
 </section>
