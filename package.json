@@ -76,7 +76,9 @@
     "dev": "npm run build:registry && astro dev --root demo --port 6145",
     "demo:build": "npm run build:registry && astro build --root demo",
     "demo:preview": "astro preview --root demo",
-    "vercel-build": "npm run build && npm run demo:build"
+    "vercel-build": "npm run build && npm run demo:build",
+    "cf:build": "npm run build && npm run demo:build",
+    "cf:deploy": "npx wrangler pages deploy demo/dist"
   },
   "keywords": [
     "design-system",
