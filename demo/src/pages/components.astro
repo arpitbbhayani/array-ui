@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo, StepNavDemo, SplitPaneDemo, LayoutDemo, TypographyDemo, ArchitectureCompactDemo } from "../components/Interactive";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
@@ -95,6 +95,8 @@ const sidebarGroups = [
       { label: "Ping status", href: "#ping-status" },
       { label: "Property grid", href: "#property-grid" },
       { label: "Diff block", href: "#diff-block" },
+      { label: "Architecture canvas", href: "#architecture-canvas" },
+      { label: "Architecture (compact)", href: "#architecture-compact" },
       { label: "File tree", href: "#file-tree" },
       { label: "Package manager", href: "#package-manager" },
       { label: "Terminal", href: "#terminal" },
@@ -148,18 +150,22 @@ const sidebarGroups = [
       { label: "Breadcrumbs", href: "#breadcrumbs" },
       { label: "Pagination", href: "#pagination" },
       { label: "Tabs", href: "#tabs" },
+      { label: "Step nav", href: "#step-nav" },
       { label: "Accordion", href: "#accordion" },
       { label: "Table of contents", href: "#toc" },
       { label: "Sidebar & navbar", href: "#sidebar" },
     ],
   },
   {
-    title: "[09] Content",
+    title: "[09] Content & Layout",
     links: [
       { label: "Hero", href: "#hero" },
       { label: "Maxim quote", href: "#maxim" },
       { label: "Takeaways box", href: "#takeaways" },
       { label: "Notice box", href: "#notice" },
+      { label: "Split pane", href: "#split-pane" },
+      { label: "Layout primitives", href: "#layout" },
+      { label: "Typography", href: "#typography" },
       { label: "Newsletter", href: "#newsletter" },
       { label: "Card", href: "#card" },
       { label: "Video embed", href: "#video-embed" },
@@ -724,9 +730,10 @@ const takeaways = [
           <Specimen
             id="diff-block"
             name="Diff block"
-            description="Unified git patch block with syntax additions and deletions."
+            description="Unified git patch block with status badges, line additions and deletions."
             usage={`<DiffBlock
   file="migrations/0042_cluster_status.sql"
+  status="modified"
   diff={\`@@ -12,7 +12,8 @@
  id: uuid PRIMARY KEY,
  created_at: timestamp NOT NULL DEFAULT now(),
@@ -741,6 +748,7 @@ const takeaways = [
             <DiffBlock
               client:load
               file="migrations/0042_cluster_status.sql"
+              status="modified"
               diff={`@@ -12,7 +12,8 @@
  id: uuid PRIMARY KEY,
  created_at: timestamp NOT NULL DEFAULT now(),
@@ -757,6 +765,7 @@ const takeaways = [
             description="Split view, folded context, word-level highlights, coverage rail, and inline notes."
             usage={`<DiffBlock
   file="raft/log.go"
+  status="modified"
   view="split"
   collapseContext={1}
   showCoverage
@@ -769,6 +778,7 @@ const takeaways = [
             <DiffBlock
               client:load
               file="raft/log.go"
+              status="modified"
               view="split"
               collapseContext={1}
               showCoverage
@@ -844,6 +854,29 @@ const takeaways = [
                 { from: "orders", to: "stripe", label: "charge", variant: "dashed" },
               ]}
             />
+          </Specimen>
+
+          <Specimen
+            id="architecture-compact"
+            name="Architecture canvas (compact & visited)"
+            description="Tighter padding, wrapped node labels, and visited completion checkmarks for walkthroughs and sidebars."
+            usage={`<ArchitectureCanvas
+  compact
+  wrapLabels
+  direction="LR"
+  title="Compact Walkthrough"
+  nodes={[
+    { id: "s1", label: "01. Auth Provider", visited: true, badge: "Done" },
+    { id: "s2", label: "02. Token Exchange", visited: true, badge: "Done" },
+    { id: "s3", label: "03. Session Store", badge: "Current", status: "warn" },
+    { id: "s4", label: "04. Database Hook", badge: "Pending" },
+  ]}
+  connections={[...]}
+/>`}
+            span={2}
+            shadcnName="architecture-canvas"
+          >
+            <ArchitectureCompactDemo client:load />
           </Specimen>
 
           <Specimen
@@ -1301,16 +1334,17 @@ const takeaways = [
           <Specimen
             id="stat"
             name="Stat card"
+            description="Dense metric card with values, descriptions, and color accents."
             usage={`<StatCard value="99.98%" label="Availability" description="last 30 days rolling" />
-<StatCard value="42 ms" label="p99 Latency" description="eu-west-1 ingress" />
-<StatCard value="1.2M" label="Throughput" description="req/sec peak" />`}
+<StatCard value="+412" label="Lines added" accent="emerald" />
+<StatCard value="−89" label="Lines removed" accent="rose" />`}
             span={2}
             shadcnName="stat-card"
           >
             <div class="aui-grid aui-grid-cols-3" style="gap:0.75rem;">
               <StatCard value="99.98%" label="Availability" description="last 30 days" />
-              <StatCard value="42 ms" label="p99 Latency" description="eu-west-1" />
-              <StatCard value="1.2M" label="Throughput" description="req/sec peak" />
+              <StatCard value="+412" label="Lines added" accent="emerald" />
+              <StatCard value="−89" label="Lines removed" accent="rose" />
             </div>
           </Specimen>
 
@@ -1470,6 +1504,24 @@ const takeaways = [
           </Specimen>
 
           <Specimen
+            id="step-nav"
+            name="Step nav"
+            description="Walkthrough and tutorial step navigation bar with step counter, keyboard hints, and badge slot."
+            usage={`<StepNav
+  current={currentStep}
+  total={totalSteps}
+  onPrev={() => setStep(s => s - 1)}
+  onNext={() => setStep(s => s + 1)}
+  badge={<Badge variant="primary">Core logic</Badge>}
+  showKeyboardHints
+/>`}
+            span={2}
+            shadcnName="step-nav"
+          >
+            <StepNavDemo client:load />
+          </Specimen>
+
+          <Specimen
             id="accordion"
             name="Accordion"
             usage={`<Accordion
@@ -1625,6 +1677,52 @@ const takeaways = [
             <NoticeBox title="Slides and notes live in" driveUrl="https://drive.google.com" driveLabel="this Drive folder">
               <span slot="footer">Open with <code class="aui-code">npx deckrun &lt;file&gt;</code></span>
             </NoticeBox>
+          </Specimen>
+
+          <Specimen
+            id="split-pane"
+            name="Split pane"
+            description="Two-column responsive layout with sticky aside, ratio presets, and mobile column stacking."
+            usage={`<SplitPane aside={<AsideContent />} stickyFirst ratio="1/1">
+  <MainContent />
+</SplitPane>`}
+            span={2}
+            shadcnName="split-pane"
+          >
+            <SplitPaneDemo client:load />
+          </Specimen>
+
+          <Specimen
+            id="layout"
+            name="Layout primitives"
+            description="Structural layout primitives (Container, Stack, Row, Grid) for composition without ad-hoc CSS."
+            usage={`<Stack gap="sm">
+  <Row justify="between" align="center">
+    <span>Row</span>
+    <Badge variant="green">Active</Badge>
+  </Row>
+  <Grid cols={3} gap="xs">
+    <div>Col 1</div>
+    <div>Col 2</div>
+    <div>Col 3</div>
+  </Grid>
+</Stack>`}
+            span={2}
+            shadcnName="layout"
+          >
+            <LayoutDemo client:load />
+          </Specimen>
+
+          <Specimen
+            id="typography"
+            name="Typography"
+            description="Editorial typography with signature Space Grotesk tracking and Assistant body styling."
+            usage={`<Heading level={3}>PR Walkthrough: Core Engine</Heading>
+<Lead>A guided architectural walkthrough of storage engine changes across 4 files.</Lead>`}
+            span={2}
+            shadcnName="typography"
+          >
+            <TypographyDemo client:load />
           </Specimen>
 
           <Specimen

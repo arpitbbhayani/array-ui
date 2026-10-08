@@ -50,31 +50,34 @@ const categories = [
   {
     tag: "[08]",
     title: "Navigation",
-    desc: "Underline tab bars, collapsible hairline accordions, breadcrumb trails, pagination bars, and scroll-spy table of contents.",
+    desc: "Underline tab bars, collapsible hairline accordions, breadcrumb trails, step navigation, and scroll-spy table of contents.",
     href: "/components#tabs",
-    pills: ["Tabs", "Accordion", "Breadcrumbs", "Pagination", "TableOfContents", "Sidebar"],
+    pills: ["Tabs", "Accordion", "Breadcrumbs", "StepNav", "Pagination", "TableOfContents", "Sidebar"],
   },
   {
     tag: "[09]",
-    title: "Editorial & Media",
-    desc: "Engineering maxim quotes, takeaways callouts, profile hero sections, interactive social pills, and course cards.",
+    title: "Editorial, Layout & Media",
+    desc: "Split-pane layouts, container stacks, engineering maxim quotes, takeaways callouts, profile hero sections, and social pills.",
     href: "/components#callouts",
-    pills: ["Maxim", "TakeawaysBox", "Hero", "CourseCard", "SocialPill", "VideoEmbed", "Gutter", "Divider"],
+    pills: ["SplitPane", "Stack", "Row", "Grid", "Heading", "Lead", "Maxim", "TakeawaysBox", "Hero", "CourseCard", "SocialPill", "VideoEmbed", "Gutter", "Divider"],
   },
 ];
 
 const registryHighlights = [
   { name: "button", title: "Button", category: "Actions", desc: "Signature tactile action button with crimson primary variant." },
-  { name: "badge", title: "Badge", category: "Actions", desc: "Monospace status pills (green, amber, red, blue, outline)." },
+  { name: "badge", title: "Badge", category: "Actions", desc: "Monospace status pills (green, amber, red, blue, violet, cyan, pink, outline)." },
   { name: "card", title: "Card", category: "Surfaces", desc: "Flat card surface with 1px hairline border and structured subcomponents." },
   { name: "terminal", title: "Terminal", category: "Developer", desc: "Machined telemetry terminal with bash command dots and styled outputs." },
   { name: "diff-block", title: "DiffBlock", category: "Developer", desc: "Unified git patch viewer with line gutters, additions, and deletions." },
+  { name: "split-pane", title: "SplitPane", category: "Layout", desc: "Two-column responsive layout with sticky aside and ratio presets." },
+  { name: "step-nav", title: "StepNav", category: "Navigation", desc: "Walkthrough step navigation bar with keyboard hints." },
+  { name: "progress", title: "Progress", category: "Feedback", desc: "Machined linear progress bar with value indicator and color tints." },
   { name: "ping-status", title: "PingStatus", category: "Developer", desc: "Live pulsing heartbeat indicator with status and latency." },
   { name: "property-grid", title: "PropertyGrid", category: "Developer", desc: "Key-value metadata inspector with one-click copy functionality." },
   { name: "gutter", title: "Gutter", category: "Layout", desc: "Whitespace blank spacing primitive with named scale presets (2xs to 4xl) and horizontal/vertical axes." },
   { name: "maxim", title: "Maxim", category: "Editorial", desc: "Amber quotation callout box for engineering principles." },
   { name: "takeaways-box", title: "TakeawaysBox", category: "Editorial", desc: "Crimson bulleted key takeaways callout." },
-  { name: "stat-card", title: "StatCard", category: "Telemetry", desc: "Metric display card for dashboards and telemetry." },
+  { name: "stat-card", title: "StatCard", category: "Telemetry", desc: "Metric display card for dashboards and telemetry with emerald/rose accents." },
 ];
 
 const agentQuickstartPrompt = `Set up and build with Array UI (array-ui) in this project:
