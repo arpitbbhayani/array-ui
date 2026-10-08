@@ -16,6 +16,8 @@ export interface ArchitectureNodeItem {
   visited?: boolean;
 }
 
+export type ArchitectureEdgeRouting = "smoothstep" | "bezier" | "straight";
+
 export interface ArchitectureConnectionItem {
   from: string;
   to: string;
@@ -23,6 +25,7 @@ export interface ArchitectureConnectionItem {
   animated?: boolean;
   variant?: "solid" | "dashed";
   status?: "ok" | "warn" | "err" | "primary";
+  routing?: ArchitectureEdgeRouting;
 }
 
 export interface ArchitectureGroupItem {
@@ -464,12 +467,131 @@ export interface PxEdge {
   y2: number;
   mx: number;
   my: number;
+  path: string;
+}
+
+/** Computes an SVG path data string and midpoint for straight, bezier, or smoothstep (orthogonal with rounded corners) edges. */
+export function buildEdgePath(
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  routing: ArchitectureEdgeRouting = "smoothstep",
+  direction: ArchitectureDirection = "LR",
+  borderRadius: number = 8
+): { path: string; mx: number; my: number } {
+  if (routing === "straight") {
+    return {
+      path: `M ${x1} ${y1} L ${x2} ${y2}`,
+      mx: (x1 + x2) / 2,
+      my: (y1 + y2) / 2,
+    };
+  }
+
+  if (routing === "bezier") {
+    if (direction === "LR") {
+      const dx = Math.max(32, Math.abs(x2 - x1) * 0.5);
+      const cx1 = x1 + dx;
+      const cy1 = y1;
+      const cx2 = x2 - dx;
+      const cy2 = y2;
+      return {
+        path: `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my: (y1 + y2) / 2,
+      };
+    } else {
+      const dy = Math.max(32, Math.abs(y2 - y1) * 0.5);
+      const cx1 = x1;
+      const cy1 = y1 + dy;
+      const cx2 = x2;
+      const cy2 = y2 - dy;
+      return {
+        path: `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my: (y1 + y2) / 2,
+      };
+    }
+  }
+
+  // "smoothstep" - orthogonal step routing with rounded corners
+  if (direction === "LR") {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+
+    // Normal forward step
+    if (dx >= 12) {
+      const mx = x1 + dx / 2;
+      const r = Math.min(borderRadius, Math.abs(dx) / 2, Math.abs(dy) / 2);
+      if (r <= 1 || Math.abs(dy) <= 2) {
+        return {
+          path: `M ${x1} ${y1} L ${mx} ${y1} L ${mx} ${y2} L ${x2} ${y2}`,
+          mx,
+          my: (y1 + y2) / 2,
+        };
+      }
+      const sy = dy > 0 ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${mx - r} ${y1} Q ${mx} ${y1} ${mx} ${y1 + r * sy} L ${mx} ${y2 - r * sy} Q ${mx} ${y2} ${mx + r} ${y2} L ${x2} ${y2}`,
+        mx,
+        my: (y1 + y2) / 2,
+      };
+    } else {
+      // Loop around / backward edge
+      const r = Math.min(borderRadius, 12);
+      const offset = 32;
+      const midY = dy >= 0 ? Math.max(y1, y2) + offset : Math.min(y1, y2) - offset;
+      const sy1 = midY > y1 ? 1 : -1;
+      const sy2 = y2 > midY ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${x1 + 16} ${y1} Q ${x1 + 16 + r} ${y1} ${x1 + 16 + r} ${y1 + r * sy1} L ${x1 + 16 + r} ${midY - r * sy1} Q ${x1 + 16 + r} ${midY} ${x1 + 16} ${midY} L ${x2 - 16} ${midY} Q ${x2 - 16 - r} ${midY} ${x2 - 16 - r} ${midY + r * sy2} L ${x2 - 16 - r} ${y2 - r * sy2} Q ${x2 - 16 - r} ${y2} ${x2 - 16} ${y2} L ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my: midY,
+      };
+    }
+  } else {
+    // TB direction
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+
+    if (dy >= 12) {
+      const my = y1 + dy / 2;
+      const r = Math.min(borderRadius, Math.abs(dx) / 2, Math.abs(dy) / 2);
+      if (r <= 1 || Math.abs(dx) <= 2) {
+        return {
+          path: `M ${x1} ${y1} L ${x1} ${my} L ${x2} ${my} L ${x2} ${y2}`,
+          mx: (x1 + x2) / 2,
+          my,
+        };
+      }
+      const sx = dx > 0 ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${x1} ${my - r} Q ${x1} ${my} ${x1 + r * sx} ${my} L ${x2 - r * sx} ${my} Q ${x2} ${my} ${x2} ${my + r} L ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my,
+      };
+    } else {
+      // Loop around in TB
+      const r = Math.min(borderRadius, 12);
+      const offset = 36;
+      const midX = dx >= 0 ? Math.max(x1, x2) + offset : Math.min(x1, x2) - offset;
+      const sx1 = midX > x1 ? 1 : -1;
+      const sx2 = x2 > midX ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${x1} ${y1 + 16} Q ${x1} ${y1 + 16 + r} ${x1 + r * sx1} ${y1 + 16 + r} L ${midX - r * sx1} ${y1 + 16 + r} Q ${midX} ${y1 + 16 + r} ${midX} ${y1 + 16} L ${midX} ${y2 - 16} Q ${midX} ${y2 - 16 - r} ${midX + r * sx2} ${y2 - 16 - r} L ${x2 - r * sx2} ${y2 - 16 - r} Q ${x2} ${y2 - 16 - r} ${x2} ${y2 - 16} L ${x2} ${y2}`,
+        mx: midX,
+        my: (y1 + y2) / 2,
+      };
+    }
+  }
 }
 
 /** Edge segments in px, clipped to node boxes. Opposite edges between the same pair are offset apart. */
 export function routeEdges(
   connections: ArchitectureConnectionItem[],
-  center: (id: string) => { x: number; y: number } | undefined
+  center: (id: string) => { x: number; y: number } | undefined,
+  defaultRouting: ArchitectureEdgeRouting = "smoothstep",
+  direction: ArchitectureDirection = "LR"
 ): PxEdge[] {
   const pairs = new Set(connections.map((c) => `${c.from}\u0000${c.to}`));
   const hw = ARCH_NODE_W / 2;
@@ -490,16 +612,32 @@ export function routeEdges(
     }
     const ac = { x: a.x + ox, y: a.y + oy };
     const bc = { x: b.x + ox, y: b.y + oy };
-    const start = clipToRect(ac.x, ac.y, bc.x, bc.y, hw, hh);
-    const end = clipToRect(bc.x, bc.y, ac.x, ac.y, hw + 3, hh + 3);
+
+    let start = clipToRect(ac.x, ac.y, bc.x, bc.y, hw, hh);
+    let end = clipToRect(bc.x, bc.y, ac.x, ac.y, hw + 3, hh + 3);
+
+    const routing = c.routing ?? defaultRouting;
+    if (routing !== "straight") {
+      if (direction === "LR" && b.x >= a.x + hw) {
+        start = { x: a.x + hw, y: a.y + oy };
+        end = { x: b.x - hw - 3, y: b.y + oy };
+      } else if (direction === "TB" && b.y >= a.y + hh) {
+        start = { x: a.x + ox, y: a.y + hh };
+        end = { x: b.x + ox, y: b.y - hh - 3 };
+      }
+    }
+
+    const geom = buildEdgePath(start.x, start.y, end.x, end.y, routing, direction);
+
     edges.push({
       index,
       x1: start.x,
       y1: start.y,
       x2: end.x,
       y2: end.y,
-      mx: (start.x + end.x) / 2,
-      my: (start.y + end.y) / 2,
+      mx: geom.mx,
+      my: geom.my,
+      path: geom.path,
     });
   });
   return edges;

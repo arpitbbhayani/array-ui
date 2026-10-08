@@ -131,7 +131,7 @@ export const StateMachine = React.forwardRef<HTMLDivElement, StateMachineProps>(
 
           {history.length > 1 && (
             <div className="pt-2 border-t border-border flex flex-wrap gap-2 items-center">
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground">
                 Transition Trail:
               </span>
               {history.map((h, i) => (

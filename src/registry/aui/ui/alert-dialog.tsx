@@ -124,7 +124,7 @@ export function AlertDialog({
         {confirmationPhrase && (
           <div className="mt-4 p-3 rounded-lg border border-border bg-muted/40 space-y-2">
             <p className="text-xs text-muted-foreground">
-              Please type <code className="font-mono font-semibold text-primary px-1 py-0.5 rounded bg-muted">{confirmationPhrase}</code> to confirm:
+              Please type <code className="font-mono font-medium text-primary px-1 py-0.5 rounded bg-muted">{confirmationPhrase}</code> to confirm:
             </p>
             <input
               type="text"

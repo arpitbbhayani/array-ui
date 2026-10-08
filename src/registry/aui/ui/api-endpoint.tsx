@@ -85,13 +85,13 @@ export function ApiEndpoint({
         <div className="flex items-center gap-2.5 flex-wrap min-w-0">
           <span
             className={cn(
-              "font-mono text-[11px] font-bold tracking-wider px-2 py-0.5 rounded border uppercase",
+              "font-mono text-[11px] font-medium tracking-wider px-2 py-0.5 rounded border uppercase",
               getMethodStyle()
             )}
           >
             {methodUpper}
           </span>
-          <span className="font-mono text-sm font-semibold text-foreground break-all">
+          <span className="font-mono text-sm font-medium text-foreground break-all">
             {path}
           </span>
           {badge && <span>{badge}</span>}
@@ -131,7 +131,7 @@ export function ApiEndpoint({
 
         {params && params.length > 0 && (
           <div>
-            <div className="font-mono text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-2">
+            <div className="font-mono text-xs uppercase tracking-wider font-medium text-muted-foreground mb-2">
               Parameters
             </div>
             <div className="rounded border border-border overflow-x-auto">
@@ -147,7 +147,7 @@ export function ApiEndpoint({
                 <tbody className="divide-y divide-border">
                   {params.map((p, idx) => (
                     <tr key={idx} className="hover:bg-muted/30">
-                      <td className="px-3 py-2 font-mono font-semibold text-foreground">
+                      <td className="px-3 py-2 font-mono font-medium text-foreground">
                         {p.name}
                       </td>
                       <td className="px-3 py-2 font-mono text-muted-foreground">
@@ -155,7 +155,7 @@ export function ApiEndpoint({
                       </td>
                       <td className="px-3 py-2">
                         {p.required ? (
-                          <span className="font-mono text-[10px] uppercase font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">
+                          <span className="font-mono text-[10px] uppercase font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded">
                             req
                           </span>
                         ) : (
@@ -177,7 +177,7 @@ export function ApiEndpoint({
 
         {responses && responses.length > 0 && (
           <div>
-            <div className="font-mono text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-2">
+            <div className="font-mono text-xs uppercase tracking-wider font-medium text-muted-foreground mb-2">
               Responses
             </div>
             <div className="flex border-b border-border gap-1 mb-2">

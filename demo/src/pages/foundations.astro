@@ -205,7 +205,7 @@ const baseInvariants = [
       <!-- Geometry, Radius & Hairlines -->
       <Specimen id="elevation" name="Borders, Radius & Elevation" description="1px hairlines everywhere, flat card surfaces, and restrained shadows.">
         <div class="aui-stack aui-stack-xs" style="margin-bottom: 1.25rem;">
-          <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Corner Radius</div>
+          <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 500; letter-spacing: 0.05em;">Corner Radius</div>
           <div class="aui-row aui-row-sm aui-flex-wrap">
             {radii.map((r) => (
               <Card hoverable={false} style={`border-radius: var(${r.v}); padding: 0.5rem 0.85rem; font-size: 0.82rem; font-weight: 600; text-align: center; background-color: var(--aui-bg-primary);`}>{r.label}</Card>
@@ -213,7 +213,7 @@ const baseInvariants = [
           </div>
         </div>
         <div class="aui-stack aui-stack-xs">
-          <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Shadows (Subtle Restraint)</div>
+          <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 500; letter-spacing: 0.05em;">Shadows (Subtle Restraint)</div>
           <div class="aui-row aui-row-sm aui-flex-wrap">
             {shadows.map((s) => (
               <Card hoverable={false} style={`box-shadow: var(${s.v}); padding: 0.5rem 0.85rem; font-size: 0.82rem; font-weight: 600; text-align: center; background-color: var(--aui-bg-primary);`}>{s.label}</Card>
@@ -241,7 +241,7 @@ const baseInvariants = [
       <Specimen id="spacing" name="Mathematical Spacing & Layout Rhythm" description="Predictable proportional spacing scale from 2xs (4px) to 4xl (128px) for Gutter spacers, Stack gaps, and Row flow." span={2}>
         <div class="aui-stack" style="gap: 1.25rem;">
           <div class="aui-stack aui-stack-xs">
-            <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Spacing Scale (Gutter & Gaps)</div>
+            <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 500; letter-spacing: 0.05em;">Spacing Scale (Gutter & Gaps)</div>
             <div class="aui-grid aui-grid-cols-2" style="gap: 0.75rem;">
               {spacingScale.filter(s => s.name !== "none").map((s) => (
                 <Card
@@ -266,7 +266,7 @@ const baseInvariants = [
           </div>
 
           <div class="aui-stack aui-stack-xs">
-            <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 700;">Layout Flow Primitives & Rules</div>
+            <div class="aui-font-mono" style="font-size: 0.72rem; text-transform: uppercase; color: var(--aui-text-muted); font-weight: 500; letter-spacing: 0.05em;">Layout Flow Primitives & Rules</div>
             <div class="aui-grid aui-grid-cols-2" style="gap: 0.75rem;">
               {layoutFlows.map((f) => (
                 <Card hoverable={false} style="padding: 0.75rem 1rem; background-color: var(--aui-bg-primary);">

@@ -85,6 +85,14 @@ small,
   letter-spacing: 0.018em;
 }
 
+/* Monospace Calibration: In fixed-width fonts (IBM Plex Mono), weights at 600/700
+   bleed heavily and collapse glyph counters. Cap monospace bold weights at 500 (medium)
+   for crisp, machined legibility across the system. */
+:where(code, pre, kbd, samp, .aui-font-mono, [class*="aui-font-mono"], .font-mono, [class*="aui-code"], [class*="aui-terminal"], [class*="aui-diff"], [class*="aui-badge"], [class*="aui-arch-"]) :is(strong, b, [style*="font-weight: 700"], [style*="font-weight: 800"], [style*="font-weight: 600"], [style*="font-weight: bold"]) {
+  font-weight: 500 !important;
+  letter-spacing: -0.01em;
+}
+
 /* Accessible focus outline (surgical laser indicator for navigation links and standalone buttons) */
 .aui-body a:focus-visible,
 .aui-theme-root a:focus-visible,
@@ -218,7 +226,7 @@ pre *::selection,
 .aui-index-tag {
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.08em;
   color: var(--aui-primary);
   text-transform: uppercase;

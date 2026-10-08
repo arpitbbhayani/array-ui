@@ -61,7 +61,7 @@ export function ConceptWalkthrough({
         <div className="p-6 flex flex-col justify-between border-b md:border-b-0 md:border-r border-border bg-card">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="font-mono text-xs uppercase font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">
+              <span className="font-mono text-xs uppercase font-medium text-primary bg-primary/10 px-2 py-0.5 rounded">
                 {activeStepData.badge || `Stage ${stepIdx + 1}`}
               </span>
               <span className="font-mono text-xs text-muted-foreground">
@@ -84,7 +84,7 @@ export function ConceptWalkthrough({
           </div>
 
           <div className="flex items-center justify-between pt-4 border-t border-border">
-            <span className="font-mono text-xs text-muted-foreground font-semibold">
+            <span className="font-mono text-xs text-muted-foreground font-medium">
               Step {stepIdx + 1} of {steps.length}
             </span>
             <div className="flex items-center gap-2">

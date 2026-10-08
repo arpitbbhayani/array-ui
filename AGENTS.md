@@ -596,11 +596,11 @@ Compact documentation version switcher and runtime environment selector.
 />
 ```
 
-#### 23. `Canvas` (`@aui/canvas`)
-Engineering diagram frame with dotted coordinate grid and hairline border.
+#### 23. `Canvas` (`@aui/canvas`) — Artboard Frame
+Engineering diagram frame and artboard with dotted or ruled coordinate grid and hairline border. Use this ONLY as a framing container for wrapping custom illustrations, ASCII schemas, or freeform HTML. For node-and-edge graphs or system architectures, use `ArchitectureCanvas`.
 ```tsx
 <Canvas title="Storage Engine Architecture" variant="grid">
-  <div>Technical diagram content...</div>
+  <div>Custom visual diagram content...</div>
 </Canvas>
 ```
 
@@ -706,12 +706,21 @@ Interactive slider sandbox for mathematical formulas and live reactive system ca
 />
 ```
 
-#### 31. `ArchitectureCanvas` (`@aui/architecture-canvas`)
-Interactive system architecture and flow diagram canvas with animated traveling packets, directional connections, and node inspector.
+#### 31. `ArchitectureCanvas` (`@aui/architecture-canvas`) — Primary Diagram Primitive
+Unified interactive system architecture, DAG, and flow diagram canvas with orthogonal routing, animated traveling packets, port handles, zoom controls, and compact walkthrough mode.
+
+> **Canvas Selection Rule for AI Agents**:
+> - **Always use `ArchitectureCanvas`** for all system architectures, service maps, workflows, and PR walkthroughs.
+> - Pass `compact` (and optionally `wrapLabels`) whenever embedding in split-panes, sidebars, or narrow containers.
+> - For advanced freeform infinite-canvas node dragging with React Flow, use `ReactFlowCanvas` (`@aui/reactflow-canvas`).
+> - For a raw coordinate artboard frame wrapping custom HTML/visuals, use `Canvas` (`@aui/canvas`).
+
 ```tsx
 <ArchitectureCanvas
   title="Distributed Write Path"
   subtitle="Microservice & Message Queue Architecture"
+  routing="smoothstep" // "smoothstep" (orthogonal) | "bezier" | "straight"
+  showControls // zoom in/out/reset buttons
   nodes={[
     { id: "client", label: "Client App", x: 15, y: 50, badge: "Web/Mobile" },
     { id: "gateway", label: "Envoy Gateway", x: 40, y: 50, badge: "TLS / Rate Limit" },
@@ -727,7 +736,7 @@ Interactive system architecture and flow diagram canvas with animated traveling 
   ]}
 />
 ```
-**Auto-layout and groups.** Omit `x` and `y` and the canvas ranks and places nodes itself (`direction="LR"` or `"TB"`). Nodes that keep explicit `x`/`y` are left where you put them, so existing diagrams are unchanged. Add `groups={[{ id, label, kind?: "service" | "layer" | "package" | "external", defaultCollapsed? }]}` and set `group` on nodes to draw labeled boundaries; each group has a toggle that collapses it into one node and merges its edges. Auto-layout is a layered layout tuned for roughly 40 nodes or fewer, draws straight edges, and does not nest groups.
+**Auto-layout and groups.** Omit `x` and `y` and the canvas ranks and places nodes itself (`direction="LR"` or `"TB"`). Nodes that keep explicit `x`/`y` are left where you put them. Add `groups={[{ id, label, kind?: "service" | "layer" | "package" | "external" }]}` and set `group` on nodes to draw labeled boundaries; each group has a toggle that collapses it into one node and merges its edges.
 
 **Walkthrough & Sidebar Layouts.** Supports `compact` prop (renders tighter padding and font sizes for embedding in sidebars or split-panes), `minWidth` / `minHeight` for viewport dimensions, and `wrapLabels` for multiline text wrapping. Nodes also support `visited?: boolean` to render a completed/read step badge with green checkmark indicator.
 

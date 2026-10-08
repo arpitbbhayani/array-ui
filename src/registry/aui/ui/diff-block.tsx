@@ -400,7 +400,7 @@ export function DiffBlock({
             {effectiveStatus && (
               <span
                 className={cn(
-                  "text-[0.68rem] font-mono uppercase px-1.5 py-0.5 rounded-xs font-semibold tracking-wider",
+                  "text-[0.68rem] font-mono uppercase px-1.5 py-0.5 rounded-xs font-medium tracking-wider",
                   effectiveStatus === "added" && "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
                   effectiveStatus === "deleted" && "bg-rose-500/15 text-rose-400 border border-rose-500/30",
                   effectiveStatus === "renamed" && "bg-amber-500/15 text-amber-400 border border-amber-500/30",

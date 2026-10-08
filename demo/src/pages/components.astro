@@ -64,6 +64,8 @@ import {
   ClusterState,
   ArchitectureCanvas,
 } from "../../../dist/react.js";
+import { ReactFlowCanvas } from "../../../dist/reactflow.js";
+import "@xyflow/react/dist/style.css";
 
 const sidebarGroups = [
   {
@@ -74,7 +76,7 @@ const sidebarGroups = [
       { label: "Param table", href: "#param-table" },
       { label: "Feature matrix", href: "#feature-matrix" },
       { label: "Version selector", href: "#version-selector" },
-      { label: "Canvas", href: "#canvas" },
+      { label: "Canvas (Artboard)", href: "#canvas" },
     ],
   },
   {
@@ -96,7 +98,7 @@ const sidebarGroups = [
       { label: "Property grid", href: "#property-grid" },
       { label: "Diff block", href: "#diff-block" },
       { label: "Architecture canvas", href: "#architecture-canvas" },
-      { label: "Architecture (compact)", href: "#architecture-compact" },
+      { label: "React Flow canvas", href: "#reactflow-canvas" },
       { label: "File tree", href: "#file-tree" },
       { label: "Package manager", href: "#package-manager" },
       { label: "Terminal", href: "#terminal" },
@@ -216,7 +218,7 @@ const takeaways = [
     <div class="aui-mobile-only">
       <Card hoverable={false} style="margin: 1rem 0; padding: 0.5rem 0.85rem; background-color: var(--aui-bg-secondary);">
         <div class="aui-row-between aui-flex-wrap" style="gap: 0.5rem;">
-          <span class="aui-font-mono" style="font-size: 0.78rem; font-weight: 600; color: var(--aui-text-muted);">Jump to component:</span>
+          <span class="aui-font-mono" style="font-size: 0.78rem; font-weight: 500; color: var(--aui-text-muted);">Jump to component:</span>
           <select class="aui-select" style="font-size: 0.82rem; padding: 0.25rem 0.5rem; max-width: 240px;" onchange="if(this.value) window.location.hash = this.value;">
             <option value="">Select component...</option>
             {sidebarGroups.map((g) => (
@@ -404,8 +406,8 @@ const takeaways = [
 
           <Specimen
             id="canvas"
-            name="Canvas"
-            description="Engineering coordinate drafting canvas with dotted grid, corner markers, and title bar."
+            name="Canvas (Artboard frame)"
+            description="Engineering coordinate drafting artboard with dotted grid, corner markers, and title bar for embedding custom visual mockups or raw content."
             usage={`<Canvas title="Raft Consensus Replication Flow" variant="grid">
   <div style={{ padding: "1.25rem 0.75rem", display: "flex", justifyContent: "space-around", alignItems: "center" }}>
     <div>Leader: node-01 (Term 5)</div>
@@ -418,8 +420,8 @@ const takeaways = [
             <Canvas client:load title="Raft Consensus Replication Flow" variant="grid">
               <div style="padding: 1.25rem 0.75rem; display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
                 <div style="border: 1px solid var(--aui-primary); background: var(--aui-bg-secondary); border-radius: var(--aui-radius-md); padding: 0.75rem 1rem; font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; min-width: 140px; box-shadow: 0 0 0 1px var(--aui-primary);">
-                  <div style="color: var(--aui-primary); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">● Leader</div>
-                  <div style="font-weight: 600; color: var(--aui-text-primary); margin-top: 0.2rem;">node-01 (Term 5)</div>
+                  <div style="color: var(--aui-primary); font-weight: 500; letter-spacing: -0.01em; font-size: 0.72rem; text-transform: uppercase;">● Leader</div>
+                  <div style="font-weight: 500; letter-spacing: -0.01em; color: var(--aui-text-primary); margin-top: 0.2rem;">node-01 (Term 5)</div>
                   <div style="font-size: 0.7rem; color: var(--aui-text-muted); margin-top: 0.15rem;">Commit: 94,820</div>
                 </div>
                 <div style="font-family: var(--aui-font-mono); font-size: 0.72rem; color: var(--aui-text-muted); text-align: center; display: flex; flex-direction: column; align-items: center;">
@@ -428,8 +430,8 @@ const takeaways = [
                   <span>0.4ms ping</span>
                 </div>
                 <div style="border: 1px solid var(--aui-border-color); background: var(--aui-bg-secondary); border-radius: var(--aui-radius-md); padding: 0.75rem 1rem; font-family: var(--aui-font-mono); font-size: 0.8rem; text-align: center; min-width: 140px;">
-                  <div style="color: var(--aui-success); font-weight: 700; font-size: 0.72rem; text-transform: uppercase;">○ Follower</div>
-                  <div style="font-weight: 600; color: var(--aui-text-primary); margin-top: 0.2rem;">node-02 (Term 5)</div>
+                  <div style="color: var(--aui-success); font-weight: 500; letter-spacing: -0.01em; font-size: 0.72rem; text-transform: uppercase;">○ Follower</div>
+                  <div style="font-weight: 500; letter-spacing: -0.01em; color: var(--aui-text-primary); margin-top: 0.2rem;">node-02 (Term 5)</div>
                   <div style="font-size: 0.7rem; color: var(--aui-text-muted); margin-top: 0.15rem;">Match: 94,820</div>
                 </div>
               </div>
@@ -803,11 +805,14 @@ const takeaways = [
 
           <Specimen
             id="architecture-canvas"
-            name="Architecture canvas (auto-layout)"
-            description="No coordinates needed: nodes are ranked and placed automatically, grouped into collapsible boundaries."
-            usage={`<ArchitectureCanvas
+            name="Architecture canvas"
+            description="Unified auto-laid-out DAG with React Flow-inspired smoothstep orthogonal routing, port handles, zoom controls, and compact walkthrough mode."
+            usage={`// Standard architecture diagram
+<ArchitectureCanvas
   title="Checkout Service"
   direction="LR"
+  routing="smoothstep"
+  showControls
   groups={[
     { id: "core", label: "Core", kind: "service" },
     { id: "data", label: "Data", kind: "layer" },
@@ -819,19 +824,24 @@ const takeaways = [
     { id: "pg", label: "Postgres", group: "data" },
   ]}
   connections={[
-    { from: "web", to: "api", label: "HTTPS" },
+    { from: "web", to: "api", label: "HTTPS", animated: true },
     { from: "api", to: "orders", label: "gRPC" },
     { from: "orders", to: "pg", label: "SQL" },
   ]}
-/>`}
+/>
+
+// Compact walkthrough variant (for sidebars & split panes)
+<ArchitectureCanvas compact wrapLabels nodes={steps} connections={edges} />`}
             span={2}
             shadcnName="architecture-canvas"
           >
             <ArchitectureCanvas
               client:load
               title="Checkout Service"
-              subtitle="auto-layout, grouped"
+              subtitle="smoothstep orthogonal routing · zoom controls"
               direction="LR"
+              routing="smoothstep"
+              showControls
               groups={[
                 { id: "core", label: "Core", kind: "service" },
                 { id: "data", label: "Data", kind: "layer" },
@@ -854,29 +864,59 @@ const takeaways = [
                 { from: "orders", to: "stripe", label: "charge", variant: "dashed" },
               ]}
             />
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--aui-border-color);">
+              <div style="font-family: var(--aui-font-mono); font-size: 0.8rem; color: var(--aui-text-muted); margin-bottom: 0.75rem;">
+                Compact variant (<code style="color: var(--aui-primary);">compact wrapLabels</code>) for sidebars & split panes:
+              </div>
+              <ArchitectureCompactDemo client:load />
+            </div>
           </Specimen>
 
           <Specimen
-            id="architecture-compact"
-            name="Architecture canvas (compact & visited)"
-            description="Tighter padding, wrapped node labels, and visited completion checkmarks for walkthroughs and sidebars."
-            usage={`<ArchitectureCanvas
-  compact
-  wrapLabels
+            id="reactflow-canvas"
+            name="React Flow canvas (interactive node editor)"
+            description="Infinite-canvas node graph editor powered by React Flow with Array UI tokens, custom nodes, handles, and pan/zoom controls."
+            usage={`<ReactFlowCanvas
+  title="Interactive Pipeline Topology"
   direction="LR"
-  title="Compact Walkthrough"
-  nodes={[
-    { id: "s1", label: "01. Auth Provider", visited: true, badge: "Done" },
-    { id: "s2", label: "02. Token Exchange", visited: true, badge: "Done" },
-    { id: "s3", label: "03. Session Store", badge: "Current", status: "warn" },
-    { id: "s4", label: "04. Database Hook", badge: "Pending" },
+  defaultRouting="smoothstep"
+  groups={[
+    { id: "core", label: "Core Services", kind: "service" },
   ]}
-  connections={[...]}
+  nodes={[
+    { id: "ingest", label: "Ingest Gateway", badge: "Go", description: "Edge TLS termination & rate limit" },
+    { id: "worker", label: "Stream Worker", group: "core", badge: "Rust", description: "Partitioned event processor" },
+    { id: "store", label: "Storage Engine", group: "core", badge: "LSM", status: "ok", description: "Append-only commit ledger" },
+  ]}
+  connections={[
+    { from: "ingest", to: "worker", label: "gRPC", animated: true },
+    { from: "worker", to: "store", label: "WAL", animated: true },
+  ]}
+  height={420}
 />`}
             span={2}
-            shadcnName="architecture-canvas"
+            shadcnName="reactflow-canvas"
           >
-            <ArchitectureCompactDemo client:load />
+            <ReactFlowCanvas
+              client:load
+              title="Interactive Pipeline Topology"
+              subtitle="powered by @xyflow/react · draggable nodes · pan & zoom"
+              direction="LR"
+              defaultRouting="smoothstep"
+              groups={[
+                { id: "core", label: "Core Services", kind: "service" },
+              ]}
+              nodes={[
+                { id: "ingest", label: "Ingest Gateway", badge: "Go", description: "Edge TLS termination & rate limit" },
+                { id: "worker", label: "Stream Worker", group: "core", badge: "Rust", description: "Partitioned event processor" },
+                { id: "store", label: "Storage Engine", group: "core", badge: "LSM", status: "ok", description: "Append-only commit ledger" },
+              ]}
+              connections={[
+                { from: "ingest", to: "worker", label: "gRPC", animated: true },
+                { from: "worker", to: "store", label: "WAL", animated: true },
+              ]}
+              height={420}
+            />
           </Specimen>
 
           <Specimen

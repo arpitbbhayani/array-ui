@@ -33,26 +33,26 @@ export function TradeoffMatrix({
     const lower = score.toLowerCase();
     if (lower === "high" || lower === "great" || lower === "low latency" || lower === "low cost") {
       return (
-        <span className="inline-flex items-center gap-1 font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500">
+        <span className="inline-flex items-center gap-1 font-mono text-xs font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500">
           ● {score}
         </span>
       );
     }
     if (lower === "med" || lower === "medium" || lower === "fair" || lower === "moderate") {
       return (
-        <span className="inline-flex items-center gap-1 font-mono text-xs font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-500">
+        <span className="inline-flex items-center gap-1 font-mono text-xs font-medium px-2 py-0.5 rounded bg-amber-500/10 text-amber-500">
           ▲ {score}
         </span>
       );
     }
     if (lower === "low" || lower === "poor" || lower === "high complexity" || lower === "high cost") {
       return (
-        <span className="inline-flex items-center gap-1 font-mono text-xs font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-500">
+        <span className="inline-flex items-center gap-1 font-mono text-xs font-medium px-2 py-0.5 rounded bg-rose-500/10 text-rose-500">
           ▼ {score}
         </span>
       );
     }
-    return <span className="font-mono text-xs font-semibold">{score}</span>;
+    return <span className="font-mono text-xs font-medium">{score}</span>;
   };
 
   return (
@@ -72,18 +72,18 @@ export function TradeoffMatrix({
         <table className="w-full border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-border bg-muted/20">
-              <th className="p-3.5 font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <th className="p-3.5 font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Candidate Option
               </th>
               {dimensions.map((dim) => (
                 <th
                   key={dim}
-                  className="p-3.5 font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground"
+                  className="p-3.5 font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground"
                 >
                   {dim}
                 </th>
               ))}
-              <th className="p-3.5 font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <th className="p-3.5 font-mono text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Key Advantages & Trade-Offs
               </th>
             </tr>

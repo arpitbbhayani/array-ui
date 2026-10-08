@@ -39,11 +39,11 @@ export function PipelineFlow({
             )}
           >
             <div className="flex items-center justify-between gap-1.5 mb-1.5">
-              <span className="font-mono text-sm font-bold text-foreground">
+              <span className="font-mono text-sm font-medium text-foreground">
                 {stage.title}
               </span>
               {stage.badge && (
-                <span className="font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+                <span className="font-mono text-xs font-medium px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
                   {stage.badge}
                 </span>
               )}
@@ -54,7 +54,7 @@ export function PipelineFlow({
               </p>
             )}
             {stage.metric && (
-              <div className="font-mono text-sm font-semibold text-emerald-500 mt-auto">
+              <div className="font-mono text-sm font-medium text-emerald-500 mt-auto">
                 {stage.metric}
               </div>
             )}

@@ -65,7 +65,7 @@ export function StatCard({
       {(description || trend) && (
         <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
           {description && <div>{description}</div>}
-          {trend && <div className="font-mono text-emerald-500 font-semibold">{trend}</div>}
+          {trend && <div className="font-mono text-emerald-500 font-medium">{trend}</div>}
         </div>
       )}
     </div>

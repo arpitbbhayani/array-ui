@@ -85,7 +85,7 @@ export function SequenceDiagram({
         <span className="font-heading font-bold text-base text-foreground">{title}</span>
         {interactiveScrubber && (
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold text-muted-foreground px-2 py-0.5 rounded border border-border bg-card">
+            <span className="font-mono text-xs font-medium text-muted-foreground px-2 py-0.5 rounded border border-border bg-card">
               Step {currentStep + 1} of {steps.length}
             </span>
             <button
@@ -123,7 +123,7 @@ export function SequenceDiagram({
           {actors.map((actor, idx) => (
             <div
               key={idx}
-              className="px-4 py-2 bg-card border border-border rounded-md font-mono text-sm font-bold text-foreground text-center min-w-[120px] shadow-xs"
+              className="px-4 py-2 bg-card border border-border rounded-md font-mono text-sm font-medium text-foreground text-center min-w-[120px] shadow-xs"
             >
               {actor}
             </div>
@@ -175,7 +175,7 @@ export function SequenceDiagram({
                     </span>
                     <span
                       className={cn(
-                        "bg-card border border-border rounded px-2.5 py-0.5 font-mono text-xs font-semibold text-foreground whitespace-nowrap z-10 shadow-xs",
+                        "bg-card border border-border rounded px-2.5 py-0.5 font-mono text-xs font-medium text-foreground whitespace-nowrap z-10 shadow-xs",
                         isActive && "border-primary bg-primary/10 text-primary ring-1 ring-primary"
                       )}
                     >

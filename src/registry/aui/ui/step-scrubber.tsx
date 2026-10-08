@@ -123,7 +123,7 @@ export function StepScrubber({
               goToStep(parseInt(e.target.value, 10));
             }}
           />
-          <span className="font-mono text-xs font-semibold text-muted-foreground whitespace-nowrap">
+          <span className="font-mono text-xs font-medium text-muted-foreground whitespace-nowrap">
             {currentStep + 1} / {totalSteps}
           </span>
         </div>

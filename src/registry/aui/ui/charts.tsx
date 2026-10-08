@@ -234,7 +234,7 @@ export function AreaChart({
               transform: hoverIndex > data.length / 2 ? "translate(-105%, 10%)" : "translate(10%, 10%)",
             }}
           >
-            <div className="font-mono font-semibold text-muted-foreground border-b border-border pb-1 mb-1">
+            <div className="font-mono font-medium text-muted-foreground border-b border-border pb-1 mb-1">
               {String(data[hoverIndex][index] || "")}
             </div>
             {categories.map((cat, i) => {
@@ -244,7 +244,7 @@ export function AreaChart({
                 <div key={cat} className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c.stroke }} />
                   <span className="text-foreground">{cat}:</span>
-                  <span className="font-mono font-bold text-foreground">
+                  <span className="font-mono font-medium text-foreground">
                     {valueFormatter(Number(data[hoverIndex][cat]) || 0)}
                   </span>
                 </div>

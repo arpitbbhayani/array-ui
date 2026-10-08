@@ -73,10 +73,10 @@ export function ParamSandbox({
       {...props}
     >
       <div className="flex items-center gap-2.5 px-4 py-2.5 border-b border-border bg-muted/30">
-        <span className="font-mono text-xs uppercase font-bold text-muted-foreground">
+        <span className="font-mono text-xs uppercase font-medium text-muted-foreground">
           Formula:
         </span>
-        <code className="font-mono text-xs font-semibold text-foreground">
+        <code className="font-mono text-xs font-medium text-foreground">
           {formula}
         </code>
       </div>
@@ -89,7 +89,7 @@ export function ParamSandbox({
                 <span className="font-mono font-medium text-foreground">
                   {inp.label}
                 </span>
-                <span className="font-mono font-bold text-primary">
+                <span className="font-mono font-medium text-primary">
                   {values[inp.id] ?? inp.defaultValue ?? inp.min} {inp.unit ?? ""}
                 </span>
               </div>
@@ -117,7 +117,7 @@ export function ParamSandbox({
               <span className="font-mono text-xs text-muted-foreground">
                 {out.label}
               </span>
-              <span className="font-mono text-base font-bold text-foreground">
+              <span className="font-mono text-base font-medium text-foreground">
                 {getOutputValue(out)}
               </span>
             </div>

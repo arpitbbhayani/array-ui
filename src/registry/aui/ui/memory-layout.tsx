@@ -85,7 +85,7 @@ export function MemoryLayout({
                 onClick={() => setSelectedIndex(idx)}
                 title={`${seg.name} (${seg.bytes} bytes, ${seg.offset ?? ""})`}
               >
-                <span className="font-mono text-sm font-bold truncate w-full text-center block">
+                <span className="font-mono text-sm font-medium truncate w-full text-center block">
                   {seg.name}
                 </span>
                 <span className="font-mono text-xs opacity-85 truncate w-full text-center block">
@@ -101,35 +101,35 @@ export function MemoryLayout({
         <div className="p-4 bg-card text-sm">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground block mb-1">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground block mb-1">
                 Field
               </span>
-              <span className="font-mono font-semibold text-foreground">
+              <span className="font-mono font-medium text-foreground">
                 {activeSeg.name}
               </span>
             </div>
             <div>
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground block mb-1">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground block mb-1">
                 Offset
               </span>
-              <span className="font-mono font-semibold text-foreground">
+              <span className="font-mono font-medium text-foreground">
                 {activeSeg.offset ?? "—"}
               </span>
             </div>
             <div>
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground block mb-1">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground block mb-1">
                 Size
               </span>
-              <span className="font-mono font-semibold text-foreground">
+              <span className="font-mono font-medium text-foreground">
                 {activeSeg.bytes} bytes ({activeSeg.bytes * 8} bits)
               </span>
             </div>
             {activeSeg.type && (
               <div>
-                <span className="font-mono text-xs uppercase font-bold text-muted-foreground block mb-1">
+                <span className="font-mono text-xs uppercase font-medium text-muted-foreground block mb-1">
                   Type
                 </span>
-                <span className="font-mono font-semibold text-blue-500">
+                <span className="font-mono font-medium text-blue-500">
                   {activeSeg.type}
                 </span>
               </div>
@@ -137,7 +137,7 @@ export function MemoryLayout({
           </div>
           {activeSeg.description && (
             <div className="mt-3 pt-3 border-t border-border">
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground block mb-1">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground block mb-1">
                 Description
               </span>
               <p className="text-muted-foreground">{activeSeg.description}</p>

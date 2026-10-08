@@ -32,7 +32,7 @@ export function Slider({
     <div className={cn("flex flex-col gap-2 w-full", disabled && "opacity-50 pointer-events-none", className)}>
       <div className="flex items-center justify-between text-xs font-medium">
         {label && <span className="text-foreground">{label}</span>}
-        <span className="font-mono text-primary font-semibold">{valueFormatter(value)}</span>
+        <span className="font-mono text-primary font-medium">{valueFormatter(value)}</span>
       </div>
 
       <div className="relative flex items-center select-none touch-none w-full h-5">

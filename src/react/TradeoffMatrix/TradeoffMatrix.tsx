@@ -44,7 +44,7 @@ export const TradeoffMatrix = React.forwardRef<HTMLDivElement, TradeoffMatrixPro
       if (lower === "low" || lower === "poor" || lower === "high complexity" || lower === "high cost") {
         return <span className="aui-tradeoff-score-pill aui-tradeoff-score-low">▼ {score}</span>;
       }
-      return <span className="font-mono text-xs font-semibold">{score}</span>;
+      return <span className="font-mono text-xs font-medium">{score}</span>;
     };
 
     return (

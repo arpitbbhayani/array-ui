@@ -3,6 +3,7 @@ import {
   ARCH_GROUP_PAD,
   ARCH_NODE_H,
   ARCH_NODE_W,
+  buildEdgePath,
   collapseArchitecture,
   groupBoxes,
   initialCollapsedGroups,
@@ -10,6 +11,7 @@ import {
   routeEdges,
   type ArchitectureConnectionItem,
   type ArchitectureDirection,
+  type ArchitectureEdgeRouting,
   type ArchitectureGroupItem,
   type ArchitectureNodeItem,
 } from "../react/ArchitectureCanvas/layout";
@@ -22,6 +24,8 @@ interface Props {
   connections?: ArchitectureConnectionItem[];
   groups?: ArchitectureGroupItem[];
   direction?: ArchitectureDirection;
+  routing?: ArchitectureEdgeRouting;
+  showHandles?: boolean;
   /** Group ids to render collapsed. Defaults to groups with `defaultCollapsed`. */
   collapsedGroups?: string[];
   class?: string;
@@ -35,6 +39,8 @@ const {
   connections: inputConnections = [],
   groups = [],
   direction = "LR",
+  routing = "smoothstep",
+  showHandles = true,
   collapsedGroups,
   class: className = "",
   ...props
@@ -60,7 +66,7 @@ const center = (id: string) => {
   return layout.positions.get(id);
 };
 
-const pxEdges = layout ? routeEdges(connections, center) : [];
+const pxEdges = layout ? routeEdges(connections, center, routing, direction) : [];
 const groupMap = new Map(groups.map((g) => [g.id, g]));
 
 type Box = { id: string; style: string };
@@ -118,21 +124,18 @@ if (layout) {
             const conn = connections[e.index];
             return (
               <g>
-                <line
-                  x1={e.x1}
-                  y1={e.y1}
-                  x2={e.x2}
-                  y2={e.y2}
+                <path
+                  d={e.path}
+                  fill="none"
+                  class:list={["aui-arch-edge", conn.animated && "is-animated"]}
                   stroke="var(--aui-border-strong)"
                   stroke-width="1.5"
                   stroke-dasharray={conn.variant === "dashed" ? "4 4" : undefined}
                   marker-end="url(#aui-arch-arrow-px)"
                 />
                 {conn.animated && (
-                  <circle r="3" fill="var(--aui-primary)">
-                    <animate attributeName="cx" from={e.x1} to={e.x2} dur="2.4s" repeatCount="indefinite" />
-                    <animate attributeName="cy" from={e.y1} to={e.y2} dur="2.4s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" />
+                  <circle r="3.5" fill="var(--aui-primary)">
+                    <animateMotion path={e.path} dur="2.4s" repeatCount="indefinite" />
                   </circle>
                 )}
               </g>
@@ -156,6 +159,21 @@ if (layout) {
               class:list={["aui-arch-node", "is-fixed", node.collapsedGroupId && "is-group", node.status && `is-${node.status}`]}
               style={`left: ${c.x}px; top: ${c.y}px; width: ${ARCH_NODE_W}px; height: ${ARCH_NODE_H}px;`}
             >
+              {showHandles && !node.collapsedGroupId && (
+                <>
+                  {direction === "TB" ? (
+                    <>
+                      <span class="aui-arch-handle aui-arch-handle-top" aria-hidden="true" />
+                      <span class="aui-arch-handle aui-arch-handle-bottom" aria-hidden="true" />
+                    </>
+                  ) : (
+                    <>
+                      <span class="aui-arch-handle aui-arch-handle-left" aria-hidden="true" />
+                      <span class="aui-arch-handle aui-arch-handle-right" aria-hidden="true" />
+                    </>
+                  )}
+                </>
+              )}
               <div class="aui-arch-node-top">
                 <span class="aui-arch-node-name">{node.collapsedGroupId ? `+ ${node.label}` : node.label}</span>
                 {node.badge && <span class="aui-arch-node-badge">{node.badge}</span>}
@@ -187,40 +205,30 @@ if (layout) {
             const dst = nodeMap.get(conn.to);
             if (!src || !dst) return null;
 
+            const edgeRouting = conn.routing ?? routing;
+            const geom = buildEdgePath(
+              src.x as number,
+              src.y as number,
+              dst.x as number,
+              dst.y as number,
+              edgeRouting,
+              direction
+            );
+
             return (
               <g>
-                <line
-                  x1={`${src.x}%`}
-                  y1={`${src.y}%`}
-                  x2={`${dst.x}%`}
-                  y2={`${dst.y}%`}
+                <path
+                  d={geom.path}
+                  fill="none"
+                  class:list={["aui-arch-edge", conn.animated && "is-animated"]}
                   stroke="var(--aui-border-strong)"
                   stroke-width="1.5"
                   stroke-dasharray={conn.variant === "dashed" ? "4 4" : undefined}
                   marker-end="url(#aui-arch-arrow-astro)"
                 />
                 {conn.animated && (
-                  <circle r="3" fill="var(--aui-primary)">
-                    <animate
-                      attributeName="cx"
-                      from={`${src.x}%`}
-                      to={`${dst.x}%`}
-                      dur="2.4s"
-                      repeatCount="indefinite"
-                    />
-                    <animate
-                      attributeName="cy"
-                      from={`${src.y}%`}
-                      to={`${dst.y}%`}
-                      dur="2.4s"
-                      repeatCount="indefinite"
-                    />
-                    <animate
-                      attributeName="opacity"
-                      values="0;1;1;0"
-                      dur="2.4s"
-                      repeatCount="indefinite"
-                    />
+                  <circle r="3.5" fill="var(--aui-primary)">
+                    <animateMotion path={geom.path} dur="2.4s" repeatCount="indefinite" />
                   </circle>
                 )}
               </g>
@@ -244,13 +252,20 @@ if (layout) {
             const dst = nodeMap.get(conn.to);
             if (!src || !dst) return null;
 
-            const midX = ((src.x as number) + (dst.x as number)) / 2;
-            const midY = ((src.y as number) + (dst.y as number)) / 2;
+            const edgeRouting = conn.routing ?? routing;
+            const geom = buildEdgePath(
+              src.x as number,
+              src.y as number,
+              dst.x as number,
+              dst.y as number,
+              edgeRouting,
+              direction
+            );
 
             return (
               <div
                 class="aui-arch-edge-label-box"
-                style={`left: ${midX}%; top: ${midY}%;`}
+                style={`left: ${geom.mx}%; top: ${geom.my}%;`}
               >
                 {conn.label}
               </div>
@@ -262,6 +277,21 @@ if (layout) {
               class:list={["aui-arch-node", node.collapsedGroupId && "is-group", node.status && `is-${node.status}`]}
               style={`left: ${node.x}%; top: ${node.y}%;`}
             >
+              {showHandles && !node.collapsedGroupId && (
+                <>
+                  {direction === "TB" ? (
+                    <>
+                      <span class="aui-arch-handle aui-arch-handle-top" aria-hidden="true" />
+                      <span class="aui-arch-handle aui-arch-handle-bottom" aria-hidden="true" />
+                    </>
+                  ) : (
+                    <>
+                      <span class="aui-arch-handle aui-arch-handle-left" aria-hidden="true" />
+                      <span class="aui-arch-handle aui-arch-handle-right" aria-hidden="true" />
+                    </>
+                  )}
+                </>
+              )}
               <div class="aui-arch-node-top">
                 <span class="aui-arch-node-name">{node.collapsedGroupId ? `+ ${node.label}` : node.label}</span>
                 {node.badge && <span class="aui-arch-node-badge">{node.badge}</span>}

@@ -48,7 +48,7 @@ export function DocStepper({
             <div className="flex flex-col items-center flex-shrink-0 z-10">
               <div
                 className={cn(
-                  "w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-bold border transition-colors",
+                  "w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-medium border transition-colors",
                   isCompleted && "bg-card border-emerald-500 text-emerald-500",
                   isActive && "bg-primary border-primary text-primary-foreground shadow-xs ring-4 ring-primary/20",
                   !isCompleted && !isActive && "bg-card border-border text-muted-foreground"

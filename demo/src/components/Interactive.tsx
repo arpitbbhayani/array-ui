@@ -553,13 +553,13 @@ export function SplitPaneDemo() {
         ratio="1/1"
         aside={
           <div style={{ padding: "0.85rem", background: "var(--aui-bg-secondary)", height: "100%" }}>
-            <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--aui-text-muted)", fontFamily: "var(--aui-font-mono)", fontWeight: 600 }}>Sticky Aside</span>
+            <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--aui-text-muted)", fontFamily: "var(--aui-font-mono)", fontWeight: 500 }}>Sticky Aside</span>
             <p style={{ margin: "0.35rem 0 0", fontSize: "0.82rem", color: "var(--aui-text-muted)" }}>Architecture canvas or sticky file tree stays pinned while user scrolls walkthrough explanation.</p>
           </div>
         }
       >
         <div style={{ padding: "0.85rem", background: "var(--aui-card-bg)" }}>
-          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--aui-text-muted)", fontFamily: "var(--aui-font-mono)", fontWeight: 600 }}>Main Walkthrough Column</span>
+          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--aui-text-muted)", fontFamily: "var(--aui-font-mono)", fontWeight: 500 }}>Main Walkthrough Column</span>
           <p style={{ margin: "0.35rem 0 0", fontSize: "0.82rem", color: "var(--aui-text-muted)" }}>Code diffs and step details stack cleanly on mobile viewports.</p>
         </div>
       </SplitPane>
@@ -600,8 +600,9 @@ export function ArchitectureCompactDemo() {
       compact
       wrapLabels
       direction="LR"
+      routing="bezier"
       title="Compact Walkthrough"
-      subtitle="with visited step badges"
+      subtitle="cubic bezier routing · visited step badges"
       nodes={[
         { id: "step1", label: "01. Auth Provider", visited: true, badge: "Done", description: "Configured OAuth provider." },
         { id: "step2", label: "02. Token Exchange", visited: true, badge: "Done", description: "JWT validation and parsing." },

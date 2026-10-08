@@ -33,7 +33,7 @@ export function Canvas({
     >
       {(title || badge) && (
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/30 font-mono text-xs">
-          <div className="flex items-center gap-2 font-semibold text-foreground">
+          <div className="flex items-center gap-2 font-medium tracking-tight text-foreground">
             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
             <span>{title}</span>
           </div>

@@ -46,7 +46,7 @@ export function AnalogyCard({
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div className="p-5 flex flex-col border-b md:border-b-0 md:border-r border-border bg-card">
           <div className="flex items-center gap-2 mb-3">
-            <span className="font-mono text-xs uppercase font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20">
+            <span className="font-mono text-xs uppercase font-medium px-2 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20">
               {analogyBadge}
             </span>
             <h4 className="font-heading font-bold text-base text-foreground m-0">
@@ -59,7 +59,7 @@ export function AnalogyCard({
 
           {mappingPoints.length > 0 && (
             <div className="flex flex-col gap-2 mt-auto pt-3 border-t border-border">
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground">
                 Metaphor Component:
               </span>
               {mappingPoints.map((pt, idx) => (
@@ -74,7 +74,7 @@ export function AnalogyCard({
 
         <div className="p-5 flex flex-col bg-background">
           <div className="flex items-center gap-2 mb-3">
-            <span className="font-mono text-xs uppercase font-bold px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+            <span className="font-mono text-xs uppercase font-medium px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
               {conceptBadge}
             </span>
             <h4 className="font-heading font-bold text-base text-foreground m-0">
@@ -87,13 +87,13 @@ export function AnalogyCard({
 
           {mappingPoints.length > 0 && (
             <div className="flex flex-col gap-2 mt-auto pt-3 border-t border-border">
-              <span className="font-mono text-xs uppercase font-bold text-muted-foreground">
+              <span className="font-mono text-xs uppercase font-medium text-muted-foreground">
                 Corresponds In Software To:
               </span>
               {mappingPoints.map((pt, idx) => (
                 <div key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
                   <span className="text-primary font-bold">↳</span>
-                  <span className="font-mono text-xs font-semibold text-foreground">
+                  <span className="font-mono text-xs font-medium text-foreground">
                     {pt.concept}
                   </span>
                 </div>

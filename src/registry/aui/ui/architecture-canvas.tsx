@@ -21,6 +21,8 @@ export interface ArchitectureNodeItem {
   visited?: boolean;
 }
 
+export type ArchitectureEdgeRouting = "smoothstep" | "bezier" | "straight";
+
 export interface ArchitectureConnectionItem {
   from: string;
   to: string;
@@ -28,6 +30,7 @@ export interface ArchitectureConnectionItem {
   animated?: boolean;
   variant?: "solid" | "dashed";
   status?: "ok" | "warn" | "err" | "primary";
+  routing?: ArchitectureEdgeRouting;
 }
 
 export interface ArchitectureGroupItem {
@@ -469,12 +472,127 @@ export interface PxEdge {
   y2: number;
   mx: number;
   my: number;
+  path: string;
+}
+
+/** Computes an SVG path data string and midpoint for straight, bezier, or smoothstep (orthogonal with rounded corners) edges. */
+export function buildEdgePath(
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  routing: ArchitectureEdgeRouting = "smoothstep",
+  direction: ArchitectureDirection = "LR",
+  borderRadius: number = 8
+): { path: string; mx: number; my: number } {
+  if (routing === "straight") {
+    return {
+      path: `M ${x1} ${y1} L ${x2} ${y2}`,
+      mx: (x1 + x2) / 2,
+      my: (y1 + y2) / 2,
+    };
+  }
+
+  if (routing === "bezier") {
+    if (direction === "LR") {
+      const dx = Math.max(32, Math.abs(x2 - x1) * 0.5);
+      const cx1 = x1 + dx;
+      const cy1 = y1;
+      const cx2 = x2 - dx;
+      const cy2 = y2;
+      return {
+        path: `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my: (y1 + y2) / 2,
+      };
+    } else {
+      const dy = Math.max(32, Math.abs(y2 - y1) * 0.5);
+      const cx1 = x1;
+      const cy1 = y1 + dy;
+      const cx2 = x2;
+      const cy2 = y2 - dy;
+      return {
+        path: `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my: (y1 + y2) / 2,
+      };
+    }
+  }
+
+  // "smoothstep" - orthogonal step routing with rounded corners
+  if (direction === "LR") {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+
+    if (dx >= 12) {
+      const mx = x1 + dx / 2;
+      const r = Math.min(borderRadius, Math.abs(dx) / 2, Math.abs(dy) / 2);
+      if (r <= 1 || Math.abs(dy) <= 2) {
+        return {
+          path: `M ${x1} ${y1} L ${mx} ${y1} L ${mx} ${y2} L ${x2} ${y2}`,
+          mx,
+          my: (y1 + y2) / 2,
+        };
+      }
+      const sy = dy > 0 ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${mx - r} ${y1} Q ${mx} ${y1} ${mx} ${y1 + r * sy} L ${mx} ${y2 - r * sy} Q ${mx} ${y2} ${mx + r} ${y2} L ${x2} ${y2}`,
+        mx,
+        my: (y1 + y2) / 2,
+      };
+    } else {
+      const r = Math.min(borderRadius, 12);
+      const offset = 32;
+      const midY = dy >= 0 ? Math.max(y1, y2) + offset : Math.min(y1, y2) - offset;
+      const sy1 = midY > y1 ? 1 : -1;
+      const sy2 = y2 > midY ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${x1 + 16} ${y1} Q ${x1 + 16 + r} ${y1} ${x1 + 16 + r} ${y1 + r * sy1} L ${x1 + 16 + r} ${midY - r * sy1} Q ${x1 + 16 + r} ${midY} ${x1 + 16} ${midY} L ${x2 - 16} ${midY} Q ${x2 - 16 - r} ${midY} ${x2 - 16 - r} ${midY + r * sy2} L ${x2 - 16 - r} ${y2 - r * sy2} Q ${x2 - 16 - r} ${y2} ${x2 - 16} ${y2} L ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my: midY,
+      };
+    }
+  } else {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+
+    if (dy >= 12) {
+      const my = y1 + dy / 2;
+      const r = Math.min(borderRadius, Math.abs(dx) / 2, Math.abs(dy) / 2);
+      if (r <= 1 || Math.abs(dx) <= 2) {
+        return {
+          path: `M ${x1} ${y1} L ${x1} ${my} L ${x2} ${my} L ${x2} ${y2}`,
+          mx: (x1 + x2) / 2,
+          my,
+        };
+      }
+      const sx = dx > 0 ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${x1} ${my - r} Q ${x1} ${my} ${x1 + r * sx} ${my} L ${x2 - r * sx} ${my} Q ${x2} ${my} ${x2} ${my + r} L ${x2} ${y2}`,
+        mx: (x1 + x2) / 2,
+        my,
+      };
+    } else {
+      const r = Math.min(borderRadius, 12);
+      const offset = 36;
+      const midX = dx >= 0 ? Math.max(x1, x2) + offset : Math.min(x1, x2) - offset;
+      const sx1 = midX > x1 ? 1 : -1;
+      const sx2 = x2 > midX ? 1 : -1;
+      return {
+        path: `M ${x1} ${y1} L ${x1} ${y1 + 16} Q ${x1} ${y1 + 16 + r} ${x1 + r * sx1} ${y1 + 16 + r} L ${midX - r * sx1} ${y1 + 16 + r} Q ${midX} ${y1 + 16 + r} ${midX} ${y1 + 16} L ${midX} ${y2 - 16} Q ${midX} ${y2 - 16 - r} ${midX + r * sx2} ${y2 - 16 - r} L ${x2 - r * sx2} ${y2 - 16 - r} Q ${x2} ${y2 - 16 - r} ${x2} ${y2 - 16} L ${x2} ${y2}`,
+        mx: midX,
+        my: (y1 + y2) / 2,
+      };
+    }
+  }
 }
 
 /** Edge segments in px, clipped to node boxes. Opposite edges between the same pair are offset apart. */
 export function routeEdges(
   connections: ArchitectureConnectionItem[],
-  center: (id: string) => { x: number; y: number } | undefined
+  center: (id: string) => { x: number; y: number } | undefined,
+  defaultRouting: ArchitectureEdgeRouting = "smoothstep",
+  direction: ArchitectureDirection = "LR"
 ): PxEdge[] {
   const pairs = new Set(connections.map((c) => `${c.from}\u0000${c.to}`));
   const hw = ARCH_NODE_W / 2;
@@ -495,16 +613,32 @@ export function routeEdges(
     }
     const ac = { x: a.x + ox, y: a.y + oy };
     const bc = { x: b.x + ox, y: b.y + oy };
-    const start = clipToRect(ac.x, ac.y, bc.x, bc.y, hw, hh);
-    const end = clipToRect(bc.x, bc.y, ac.x, ac.y, hw + 3, hh + 3);
+
+    let start = clipToRect(ac.x, ac.y, bc.x, bc.y, hw, hh);
+    let end = clipToRect(bc.x, bc.y, ac.x, ac.y, hw + 3, hh + 3);
+
+    const routing = c.routing ?? defaultRouting;
+    if (routing !== "straight") {
+      if (direction === "LR" && b.x >= a.x + hw) {
+        start = { x: a.x + hw, y: a.y + oy };
+        end = { x: b.x - hw - 3, y: b.y + oy };
+      } else if (direction === "TB" && b.y >= a.y + hh) {
+        start = { x: a.x + ox, y: a.y + hh };
+        end = { x: b.x + ox, y: b.y - hh - 3 };
+      }
+    }
+
+    const geom = buildEdgePath(start.x, start.y, end.x, end.y, routing, direction);
+
     edges.push({
       index,
       x1: start.x,
       y1: start.y,
       x2: end.x,
       y2: end.y,
-      mx: (start.x + end.x) / 2,
-      my: (start.y + end.y) / 2,
+      mx: geom.mx,
+      my: geom.my,
+      path: geom.path,
     });
   });
   return edges;
@@ -522,6 +656,12 @@ export interface ArchitectureCanvasProps extends React.HTMLAttributes<HTMLDivEle
   direction?: ArchitectureDirection;
   selectedNodeId?: string;
   onNodeSelect?: (nodeId: string) => void;
+  /** Edge routing algorithm: "smoothstep" (orthogonal with rounded corners), "bezier" (smooth spline), or "straight". Default "smoothstep". */
+  routing?: ArchitectureEdgeRouting;
+  /** Whether to show canvas navigation / zoom controls (+, -, reset). Default false. */
+  showControls?: boolean;
+  /** Whether to show connection port handles on nodes. Default true. */
+  showHandles?: boolean;
   /** Compact mode for narrow sidebars or split panes. Reduces viewport padding and default min-height. */
   compact?: boolean;
   /** Minimum width for the viewport canvas or container. */
@@ -549,6 +689,9 @@ export function ArchitectureCanvas({
   direction = "LR",
   selectedNodeId: controlledSelected,
   onNodeSelect,
+  routing = "smoothstep",
+  showControls = false,
+  showHandles = true,
   compact = false,
   minWidth,
   minHeight,
@@ -560,6 +703,11 @@ export function ArchitectureCanvas({
   const [internalSelected, setInternalSelected] = React.useState<string | null>(
     inputNodes.length > 0 ? inputNodes[0].id : null
   );
+  const [zoom, setZoom] = React.useState(1);
+
+  const handleZoomIn = () => setZoom((z) => Math.min(2.0, Math.round((z + 0.15) * 100) / 100));
+  const handleZoomOut = () => setZoom((z) => Math.max(0.5, Math.round((z - 0.15) * 100) / 100));
+  const handleZoomReset = () => setZoom(1);
 
   const { nodes, connections } = React.useMemo(
     () => collapseArchitecture(inputNodes, inputConnections, groups, collapsed),
@@ -597,7 +745,7 @@ export function ArchitectureCanvas({
     return layout.positions.get(id);
   };
 
-  const pxEdges = layout ? routeEdges(connections, center) : [];
+  const pxEdges = layout ? routeEdges(connections, center, routing, direction) : [];
   const pxGroups = layout ? groupBoxes(groups, nodes, center) : [];
   const groupMap = new Map(groups.map((g) => [g.id, g]));
 
@@ -646,7 +794,7 @@ export function ArchitectureCanvas({
           >
             -
           </button>
-          <span className="font-bold text-foreground">{g.label}</span>
+          <span className="font-semibold text-foreground">{g.label}</span>
           {g.kind && <span className="uppercase tracking-wider text-[0.68rem]">{g.kind}</span>}
         </div>
       </div>
@@ -671,11 +819,26 @@ export function ArchitectureCanvas({
         onClick={() => handleNodeClick(node.id, node.collapsedGroupId)}
         title={node.label}
       >
+        {showHandles && !node.collapsedGroupId && (
+          <>
+            {direction === "TB" ? (
+              <>
+                <span className="absolute -top-1 left-1/2 -translate-x-1/2 size-2 rounded-full bg-background border border-border pointer-events-none" aria-hidden="true" />
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 size-2 rounded-full bg-background border border-border pointer-events-none" aria-hidden="true" />
+              </>
+            ) : (
+              <>
+                <span className="absolute -left-1 top-1/2 -translate-y-1/2 size-2 rounded-full bg-background border border-border pointer-events-none" aria-hidden="true" />
+                <span className="absolute -right-1 top-1/2 -translate-y-1/2 size-2 rounded-full bg-background border border-border pointer-events-none" aria-hidden="true" />
+              </>
+            )}
+          </>
+        )}
         <div className="flex items-center justify-between gap-2 mb-1">
           <div className="flex items-center gap-1.5 min-w-0">
             {isVisited && (
               <span
-                className="inline-flex items-center justify-center size-3.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold shrink-0"
+                className="inline-flex items-center justify-center size-3.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold shrink-0"
                 title="Visited"
                 aria-label="Visited"
               >
@@ -684,7 +847,7 @@ export function ArchitectureCanvas({
             )}
             <span
               className={cn(
-                "font-mono text-sm font-bold text-foreground",
+                "font-mono text-sm font-medium tracking-tight text-foreground",
                 wrapLabels ? "whitespace-normal break-words leading-tight" : "truncate"
               )}
               title={node.label}
@@ -693,7 +856,7 @@ export function ArchitectureCanvas({
             </span>
           </div>
           {node.badge && (
-            <span className="font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-muted-foreground shrink-0">
+            <span className="font-mono text-xs font-medium px-1.5 py-0.5 rounded bg-muted text-muted-foreground shrink-0">
               {node.badge}
             </span>
           )}
@@ -706,7 +869,7 @@ export function ArchitectureCanvas({
   };
 
   const labelClass =
-    "absolute -translate-x-1/2 -translate-y-1/2 bg-background border border-border rounded px-2 py-0.5 font-mono text-xs font-semibold text-foreground shadow-xs z-30";
+    "absolute -translate-x-1/2 -translate-y-1/2 bg-background border border-border rounded px-2 py-0.5 font-mono text-xs font-medium text-foreground shadow-xs z-30";
 
   const viewportMinHeight = minHeight !== undefined ? minHeight : compact ? "240px" : "380px";
   const viewportMinWidth = minWidth !== undefined ? minWidth : undefined;
@@ -738,7 +901,16 @@ export function ArchitectureCanvas({
         }}
       >
         {layout ? (
-          <div className="relative z-20 mx-auto" style={{ width: layout.width, height: layout.height }}>
+          <div
+            className="relative z-20 mx-auto"
+            style={{
+              width: layout.width,
+              height: layout.height,
+              transform: zoom !== 1 ? `scale(${zoom})` : undefined,
+              transformOrigin: "top left",
+              transition: "transform 0.15s ease-out",
+            }}
+          >
             {pxGroups.map((b) => renderGroup(b.id, { left: b.x, top: b.y, width: b.w, height: b.h }))}
 
             <svg
@@ -760,21 +932,18 @@ export function ArchitectureCanvas({
                 const isActive = activeNodeId === conn.from || activeNodeId === conn.to;
                 return (
                   <g key={`edge-${e.index}`}>
-                    <line
-                      x1={e.x1}
-                      y1={e.y1}
-                      x2={e.x2}
-                      y2={e.y2}
+                    <path
+                      d={e.path}
+                      fill="none"
+                      className={cn(conn.animated && "animate-pulse")}
                       stroke={isActive ? "hsl(var(--primary))" : "hsl(var(--border))"}
                       strokeWidth={isActive ? 2 : 1.5}
                       strokeDasharray={conn.variant === "dashed" ? "4 4" : undefined}
                       markerEnd={isActive ? "url(#aui-reg-arrow-px-active)" : "url(#aui-reg-arrow-px)"}
                     />
                     {conn.animated && (
-                      <circle r="3" className="fill-primary">
-                        <animate attributeName="cx" from={e.x1} to={e.x2} dur="2.4s" repeatCount="indefinite" />
-                        <animate attributeName="cy" from={e.y1} to={e.y2} dur="2.4s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" />
+                      <circle r="3.5" className="fill-primary">
+                        <animateMotion path={e.path} dur="2.4s" repeatCount="indefinite" />
                       </circle>
                     )}
                   </g>
@@ -833,24 +1002,30 @@ export function ArchitectureCanvas({
 
                 const isConnActive = activeNodeId === conn.from || activeNodeId === conn.to;
                 const strokeColor = isConnActive ? "hsl(var(--primary))" : "hsl(var(--border))";
+                const edgeRouting = conn.routing ?? routing;
+                const geom = buildEdgePath(
+                  src.x as number,
+                  src.y as number,
+                  dst.x as number,
+                  dst.y as number,
+                  edgeRouting,
+                  direction
+                );
 
                 return (
                   <g key={`edge-${idx}`}>
-                    <line
-                      x1={`${src.x}%`}
-                      y1={`${src.y}%`}
-                      x2={`${dst.x}%`}
-                      y2={`${dst.y}%`}
+                    <path
+                      d={geom.path}
+                      fill="none"
+                      className={cn(conn.animated && "animate-pulse")}
                       stroke={strokeColor}
-                      strokeWidth={isConnActive ? "2" : "1.5"}
+                      strokeWidth={isConnActive ? 2 : 1.5}
                       strokeDasharray={conn.variant === "dashed" ? "4 4" : undefined}
                       markerEnd={isConnActive ? "url(#aui-reg-arrow-active)" : "url(#aui-reg-arrow)"}
                     />
                     {conn.animated && (
-                      <circle r="3" className="fill-primary">
-                        <animate attributeName="cx" from={`${src.x}%`} to={`${dst.x}%`} dur="2.4s" repeatCount="indefinite" />
-                        <animate attributeName="cy" from={`${src.y}%`} to={`${dst.y}%`} dur="2.4s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" />
+                      <circle r="3.5" className="fill-primary">
+                        <animateMotion path={geom.path} dur="2.4s" repeatCount="indefinite" />
                       </circle>
                     )}
                   </g>
@@ -858,7 +1033,14 @@ export function ArchitectureCanvas({
               })}
             </svg>
 
-            <div className="relative z-20 w-full min-w-[640px] h-full min-h-[320px]">
+            <div
+              className="relative z-20 w-full min-w-[640px] h-full min-h-[320px]"
+              style={{
+                transform: zoom !== 1 ? `scale(${zoom})` : undefined,
+                transformOrigin: "top left",
+                transition: "transform 0.15s ease-out",
+              }}
+            >
               {pctGroups.map((g) => renderGroup(g.id, g.style))}
 
               {connections.map((conn, idx) => {
@@ -867,11 +1049,18 @@ export function ArchitectureCanvas({
                 const dst = nodeMap.get(conn.to);
                 if (!src || !dst) return null;
 
-                const midX = ((src.x as number) + (dst.x as number)) / 2;
-                const midY = ((src.y as number) + (dst.y as number)) / 2;
+                const edgeRouting = conn.routing ?? routing;
+                const geom = buildEdgePath(
+                  src.x as number,
+                  src.y as number,
+                  dst.x as number,
+                  dst.y as number,
+                  edgeRouting,
+                  direction
+                );
 
                 return (
-                  <div key={`label-${idx}`} className={labelClass} style={{ left: `${midX}%`, top: `${midY}%` }}>
+                  <div key={`label-${idx}`} className={labelClass} style={{ left: `${geom.mx}%`, top: `${geom.my}%` }}>
                     {conn.label}
                   </div>
                 );
@@ -881,16 +1070,48 @@ export function ArchitectureCanvas({
             </div>
           </>
         )}
+
+        {showControls && (
+          <div className="absolute bottom-3 right-3 inline-flex items-center bg-card border border-border rounded-md shadow-xs z-30 overflow-hidden" role="toolbar" aria-label="Canvas zoom controls">
+            <button
+              type="button"
+              className="inline-flex items-center justify-center size-6.5 text-muted-foreground hover:text-foreground hover:bg-muted font-mono text-sm font-medium border-r border-border"
+              onClick={handleZoomIn}
+              title="Zoom in"
+              aria-label="Zoom in"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center size-6.5 text-muted-foreground hover:text-foreground hover:bg-muted font-mono text-sm font-medium border-r border-border"
+              onClick={handleZoomOut}
+              title="Zoom out"
+              aria-label="Zoom out"
+            >
+              −
+            </button>
+            <button
+              type="button"
+              className="px-1.5 font-mono text-[0.7rem] text-muted-foreground hover:text-foreground hover:bg-muted"
+              onClick={handleZoomReset}
+              title="Reset zoom"
+              aria-label="Reset zoom"
+            >
+              {Math.round(zoom * 100)}%
+            </button>
+          </div>
+        )}
       </div>
 
       {activeNode && (
         <div className="p-3.5 bg-card border-t border-border flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-sm font-bold text-foreground">
+            <span className="font-mono text-sm font-medium text-foreground">
               Inspecting: {activeNode.label}
             </span>
             {activeNode.badge && (
-              <span className="font-mono text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground font-semibold">
+              <span className="font-mono text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground font-medium">
                 {activeNode.badge}
               </span>
             )}

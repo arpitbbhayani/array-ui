@@ -53,7 +53,7 @@ export const AnalogyCard = React.forwardRef<HTMLDivElement, AnalogyCardProps>(
 
             {mappingPoints.length > 0 && (
               <div className="aui-analogy-points">
-                <span className="font-mono text-xs uppercase font-bold text-muted-foreground mb-1">
+                <span className="font-mono text-xs uppercase font-medium text-muted-foreground mb-1">
                   Metaphor Component:
                 </span>
                 {mappingPoints.map((pt, idx) => (
@@ -77,13 +77,13 @@ export const AnalogyCard = React.forwardRef<HTMLDivElement, AnalogyCardProps>(
 
             {mappingPoints.length > 0 && (
               <div className="aui-analogy-points">
-                <span className="font-mono text-xs uppercase font-bold text-muted-foreground mb-1">
+                <span className="font-mono text-xs uppercase font-medium text-muted-foreground mb-1">
                   Corresponds In Software To:
                 </span>
                 {mappingPoints.map((pt, idx) => (
                   <div key={idx} className="aui-analogy-point-item">
                     <span className="aui-analogy-point-bullet">↳</span>
-                    <span className="font-mono text-xs font-semibold text-foreground">
+                    <span className="font-mono text-xs font-medium text-foreground">
                       {pt.concept}
                     </span>
                   </div>

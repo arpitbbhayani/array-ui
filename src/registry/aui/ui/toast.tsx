@@ -46,7 +46,7 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
       >
         {!children && (
           <span
-            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-muted font-mono text-[11px] font-bold mt-[1px] shadow-[0_0_8px_currentColor]"
+            className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-muted font-mono text-[11px] font-medium mt-[1px] shadow-[0_0_8px_currentColor]"
             aria-hidden="true"
           >
             {glyph[variant]}

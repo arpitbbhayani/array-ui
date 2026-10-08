@@ -128,7 +128,7 @@ export function VersionSelector({
         <button
           type="button"
           className={cn(
-            "inline-flex items-center gap-1.5 font-mono text-xs font-semibold px-2.5 py-1.5 rounded border border-border bg-card text-foreground cursor-pointer transition-colors hover:bg-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/40 select-none",
+            "inline-flex items-center gap-1.5 font-mono text-xs font-medium px-2.5 py-1.5 rounded border border-border bg-card text-foreground cursor-pointer transition-colors hover:bg-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/40 select-none",
             isOpen && "border-primary ring-2 ring-primary/40",
             disabled && "opacity-50 cursor-not-allowed"
           )}

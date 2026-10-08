@@ -594,6 +594,15 @@ const componentsConfig: ComponentDef[] = [
     category: "Interactive Explorables",
   },
   {
+    name: "reactflow-canvas",
+    title: "ReactFlowCanvas",
+    description: "Interactive infinite-canvas node diagram powered by React Flow with Array UI tokens, handles, and styling.",
+    file: "src/registry/aui/ui/reactflow-canvas.tsx",
+    target: "ui/reactflow-canvas.tsx",
+    category: "Interactive Explorables",
+    dependencies: ["@xyflow/react"],
+  },
+  {
     name: "sequence-diagram",
     title: "SequenceDiagram",
     description: "Interactive sequence protocol walkthrough with step scrubber playback, lifelines, and callout notes.",

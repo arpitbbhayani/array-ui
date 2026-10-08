@@ -34,7 +34,7 @@ export function FeatureMatrix({
     }
     if (val === "partial") {
       return (
-        <span className="font-mono text-[10px] font-semibold text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+        <span className="font-mono text-[10px] font-medium text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
           Partial
         </span>
       );
@@ -68,7 +68,7 @@ export function FeatureMatrix({
                 <tr key={idx} className="bg-muted/20">
                   <td
                     colSpan={columns.length + 1}
-                    className="px-4 py-2 text-left font-mono text-xs uppercase font-bold text-muted-foreground tracking-wider"
+                    className="px-4 py-2 text-left font-mono text-xs uppercase font-medium text-muted-foreground tracking-wider"
                   >
                     {row.category}
                   </td>

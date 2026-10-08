@@ -53,12 +53,12 @@ export function ClusterState({
       {...props}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="font-mono text-xs font-bold text-foreground">
+        <span className="font-mono text-xs font-medium text-foreground">
           {title}
         </span>
         <div
           className={cn(
-            "font-mono text-xs font-semibold px-2 py-0.5 rounded border",
+            "font-mono text-xs font-medium px-2 py-0.5 rounded border",
             isQuorumReached
               ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
               : "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20"
@@ -79,7 +79,7 @@ export function ClusterState({
             onClick={() => onNodeClick?.(node.id)}
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="font-mono text-sm font-bold text-foreground">
+              <span className="font-mono text-sm font-medium text-foreground">
                 {node.id}
               </span>
               <span
@@ -93,7 +93,7 @@ export function ClusterState({
             </div>
             <span
               className={cn(
-                "font-mono text-xs font-bold uppercase tracking-wider mb-1",
+                "font-mono text-xs font-medium uppercase tracking-wider mb-1",
                 node.role === "leader" ? "text-primary" : "text-muted-foreground"
               )}
             >
@@ -105,7 +105,7 @@ export function ClusterState({
               </span>
             )}
             {node.latency && (
-              <span className="font-mono text-xs text-muted-foreground font-semibold">
+              <span className="font-mono text-xs text-muted-foreground font-medium">
                 {node.latency}
               </span>
             )}

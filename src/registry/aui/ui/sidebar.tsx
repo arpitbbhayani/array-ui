@@ -77,7 +77,7 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
               groups.map((group, gi) => (
                 <div key={gi} className="space-y-1">
                   {group.title && !collapsed && (
-                    <p className="px-3 font-mono text-[0.7rem] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                    <p className="px-3 font-mono text-[0.7rem] font-medium text-muted-foreground uppercase tracking-wider mb-2">
                       {group.title}
                     </p>
                   )}

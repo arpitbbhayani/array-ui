@@ -1422,7 +1422,8 @@ ol.aui-stack {
   gap: 0.35rem;
   border-radius: var(--aui-radius-sm);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   padding: 0.2rem 0.55rem;
   line-height: 1.2;
   text-decoration: none !important;
@@ -3246,7 +3247,7 @@ a.aui-badge-interactive:not(.aui-badge-primary):hover {
 .aui-input-shortcut {
   font-family: var(--aui-font-mono);
   font-size: 0.76rem;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: var(--aui-radius-sm);
   background: var(--aui-bg-tertiary);
   border: 1px solid var(--aui-border-color);
@@ -3377,7 +3378,7 @@ a.aui-badge-interactive:not(.aui-badge-primary):hover {
 .aui-table-wrapper { margin: 1rem 0; overflow-x: auto; border: 1px solid var(--aui-border-color); border-radius: var(--aui-radius-lg); box-shadow: var(--aui-card-highlight, inset 0 0 0 0 transparent), var(--aui-box-shadow); background-color: var(--aui-bg-secondary); }
 .aui-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
 .aui-table th, .aui-table td, .aui-table-head, .aui-table-cell { padding: 0.65rem 0.95rem; border-bottom: 1px solid var(--aui-border-color); }
-.aui-table th, .aui-table-head { background-color: var(--aui-bg-tertiary); font-family: var(--aui-font-mono); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aui-text-muted); text-align: left; }
+.aui-table th, .aui-table-head { background-color: var(--aui-bg-tertiary); font-family: var(--aui-font-mono); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--aui-text-muted); text-align: left; }
 .aui-table td, .aui-table-cell { font-variant-numeric: tabular-nums; color: var(--aui-text-primary); }
 .aui-table tbody tr:last-child td, .aui-table-body tr:last-child .aui-table-cell { border-bottom: none; }
 .aui-table tbody tr:hover td, .aui-table-body tr:hover .aui-table-cell, .aui-table-row:hover { background-color: var(--aui-clickable-hover); color: var(--aui-text-secondary); }
@@ -3438,7 +3439,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   padding: 0.1rem 0.42rem;
   font-family: var(--aui-font-mono);
   font-size: 0.74rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
   color: var(--aui-text-secondary);
   background-color: var(--aui-bg-tertiary);
@@ -3950,7 +3951,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   text-transform: uppercase;
   padding: 0.1rem 0.35rem;
   border-radius: var(--aui-radius-xs, 2px);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.04em;
   margin-left: 0.25rem;
 }
@@ -3994,8 +3995,8 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   font-size: 0.75rem;
 }
 
-.aui-diff-stat-add { color: var(--aui-success); font-weight: 600; }
-.aui-diff-stat-del { color: var(--aui-danger); font-weight: 600; }
+.aui-diff-stat-add { color: var(--aui-success); font-weight: 500; }
+.aui-diff-stat-del { color: var(--aui-danger); font-weight: 500; }
 
 .aui-diff-content {
   overflow-x: auto;
@@ -4055,7 +4056,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   user-select: none;
   width: 1.25rem;
   flex-shrink: 0;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .aui-diff-text {
@@ -4237,7 +4238,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-filetree-item.is-selected {
   background-color: var(--aui-bg-tertiary);
   color: var(--aui-text-secondary);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .aui-filetree-icon {
@@ -4854,7 +4855,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   border-radius: var(--aui-radius-pill);
   font-family: var(--aui-font-mono);
   font-size: clamp(0.68rem, 1.25vw, 0.82rem);
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   background-color: var(--aui-primary-soft);
@@ -4881,7 +4882,7 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-cover-badge {
   font-family: var(--aui-font-mono);
   font-size: clamp(0.68rem, 1.25vw, 0.82rem);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-primary-accent);
   background-color: var(--aui-primary-soft);
   padding: 0.22rem 0.6rem;
@@ -6008,7 +6009,8 @@ pre.aui-pre,
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
@@ -6071,7 +6073,7 @@ pre.aui-pre,
 .aui-api-method {
   font-family: var(--aui-font-mono);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.05em;
   padding: 0.2rem 0.55rem;
   border-radius: var(--aui-radius-sm);
@@ -6112,14 +6114,15 @@ pre.aui-pre,
 .aui-api-path {
   font-family: var(--aui-font-mono);
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
   word-break: break-all;
 }
 
 .aui-api-path-param {
   color: var(--aui-primary);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .aui-api-actions {
@@ -6163,7 +6166,7 @@ pre.aui-pre,
 .aui-api-section-title {
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--aui-text-muted);
@@ -6195,7 +6198,7 @@ pre.aui-pre,
 .aui-api-tab-btn.is-active {
   color: var(--aui-text-primary);
   border-bottom-color: var(--aui-primary);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .aui-api-code-block {
@@ -6249,7 +6252,7 @@ pre.aui-pre,
   justify-content: center;
   font-family: var(--aui-font-mono);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 500;
   background-color: var(--aui-bg-secondary);
   border: 1px solid var(--aui-border-color);
   color: var(--aui-text-muted);
@@ -6354,7 +6357,7 @@ pre.aui-pre,
   padding: 0.65rem 0.85rem;
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--aui-text-muted);
@@ -6381,7 +6384,8 @@ pre.aui-pre,
 .aui-param-name {
   font-family: var(--aui-font-mono);
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
   background-color: var(--aui-code-bg);
   padding: 0.15rem 0.35rem;
@@ -6398,7 +6402,7 @@ pre.aui-pre,
 .aui-param-badge-req {
   font-family: var(--aui-font-mono);
   font-size: 0.74rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   color: var(--aui-primary);
   background-color: var(--aui-primary-soft);
@@ -6539,7 +6543,7 @@ pre.aui-pre,
   padding: 0.28rem 0.6rem;
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-primary);
   background-color: var(--aui-bg-secondary);
   border: 1px solid var(--aui-border-color);
@@ -6571,7 +6575,7 @@ pre.aui-pre,
   align-items: center;
   font-family: var(--aui-font-mono);
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 0.08rem 0.35rem;
@@ -6636,7 +6640,7 @@ pre.aui-pre,
 }
 
 .aui-version-item.is-selected {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-secondary);
 }
 
@@ -6655,7 +6659,7 @@ pre.aui-pre,
 .aui-version-select {
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 0.28rem 1.6rem 0.28rem 0.6rem;
   border-radius: var(--aui-radius-sm);
   border: 1px solid var(--aui-border-color);
@@ -6756,7 +6760,8 @@ pre.aui-pre,
 .aui-memory-block-name {
   font-family: var(--aui-font-mono);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6800,7 +6805,7 @@ pre.aui-pre,
 .aui-memory-inspector-label {
   font-family: var(--aui-font-mono);
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -6809,7 +6814,7 @@ pre.aui-pre,
 .aui-memory-inspector-value {
   font-family: var(--aui-font-mono);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
@@ -6858,14 +6863,15 @@ pre.aui-pre,
 .aui-pipeline-stage-title {
   font-family: var(--aui-font-mono);
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
 .aui-pipeline-stage-badge {
   font-family: var(--aui-font-mono);
   font-size: 0.74rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 0.12rem 0.38rem;
   border-radius: var(--aui-radius-sm);
   background-color: var(--aui-bg-tertiary);
@@ -6882,7 +6888,7 @@ pre.aui-pre,
 .aui-pipeline-stage-metric {
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-success);
 }
 
@@ -6965,14 +6971,15 @@ pre.aui-pre,
 .aui-benchmark-metric-name {
   font-family: var(--aui-font-mono);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
 .aui-benchmark-delta-badge {
   font-family: var(--aui-font-mono);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.15rem 0.45rem;
   border-radius: var(--aui-radius-sm);
   display: inline-flex;
@@ -7037,7 +7044,7 @@ pre.aui-pre,
 .aui-benchmark-bar-value {
   font-family: var(--aui-font-mono);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-primary);
   width: 100px;
   text-align: right;
@@ -7064,7 +7071,8 @@ pre.aui-pre,
 .aui-latency-dist-title {
   font-family: var(--aui-font-mono);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
@@ -7092,7 +7100,7 @@ pre.aui-pre,
   justify-content: center;
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-primary);
   transition: opacity 0.2s ease;
 }
@@ -7130,7 +7138,7 @@ pre.aui-pre,
 }
 
 .aui-latency-pill-val {
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
@@ -7218,7 +7226,7 @@ pre.aui-pre,
 .aui-scrubber-counter {
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-muted);
   white-space: nowrap;
 }
@@ -7265,14 +7273,15 @@ pre.aui-pre,
 .aui-cluster-title {
   font-family: var(--aui-font-mono);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
 .aui-cluster-quorum-badge {
   font-family: var(--aui-font-mono);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.2rem 0.55rem;
   border-radius: var(--aui-radius-sm);
   background-color: var(--aui-success-soft);
@@ -7335,7 +7344,7 @@ pre.aui-pre,
 .aui-cluster-node-id {
   font-family: var(--aui-font-mono);
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
@@ -7358,7 +7367,7 @@ pre.aui-pre,
 .aui-cluster-node-role {
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--aui-text-muted);
@@ -7397,7 +7406,7 @@ pre.aui-pre,
 .aui-sandbox-formula-badge {
   font-family: var(--aui-font-mono);
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   color: var(--aui-text-muted);
 }
@@ -7405,7 +7414,7 @@ pre.aui-pre,
 .aui-sandbox-formula-code {
   font-family: var(--aui-font-mono);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
@@ -7443,14 +7452,14 @@ pre.aui-pre,
 .aui-sandbox-input-label {
   font-family: var(--aui-font-mono);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
 .aui-sandbox-input-val {
   font-family: var(--aui-font-mono);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-primary);
 }
 
@@ -7486,7 +7495,7 @@ pre.aui-pre,
 .aui-sandbox-output-val {
   font-family: var(--aui-font-mono);
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
@@ -7905,7 +7914,7 @@ pre.aui-pre,
 
 .aui-alert-dialog-code {
   font-family: var(--aui-font-mono);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-primary);
   background-color: var(--aui-bg-tertiary);
   padding: 0.1rem 0.3rem;
@@ -8002,7 +8011,7 @@ pre.aui-pre,
 .aui-secret-copied-label {
   font-family: var(--aui-font-mono);
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* --- Sidebar Extensions --- */
@@ -8300,7 +8309,7 @@ pre.aui-pre,
 .aui-slider-readout {
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-primary);
 }
 
@@ -8470,7 +8479,7 @@ pre.aui-pre,
 .aui-chart-tooltip-title {
   font-family: var(--aui-font-mono);
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-text-muted);
   border-bottom: 1px solid var(--aui-border-color);
   padding-bottom: 0.25rem;
@@ -8498,7 +8507,7 @@ pre.aui-pre,
 .aui-chart-tooltip-val {
   margin-left: auto;
   font-family: var(--aui-font-mono);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-primary);
 }
 
@@ -8751,7 +8760,7 @@ pre.aui-pre,
 .aui-datatable-selected-count {
   font-family: var(--aui-font-mono);
   font-size: 0.76rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--aui-primary);
 }
 
@@ -8921,14 +8930,15 @@ pre.aui-pre,
   background-color: rgba(16, 185, 129, 0.2);
   color: #10b981;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 500;
   flex-shrink: 0;
 }
 
 .aui-arch-node-name {
   font-family: var(--aui-font-mono);
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -8945,8 +8955,8 @@ pre.aui-pre,
 
 .aui-arch-node-badge {
   font-family: var(--aui-font-mono);
-  font-size: 0.74rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 500;
   padding: 0.12rem 0.4rem;
   border-radius: var(--aui-radius-sm);
   background-color: var(--aui-bg-tertiary);
@@ -9022,7 +9032,8 @@ pre.aui-pre,
 }
 
 .aui-arch-group-label {
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
@@ -9056,8 +9067,9 @@ pre.aui-pre,
   border-radius: var(--aui-radius-sm);
   padding: 0.15rem 0.5rem;
   font-family: var(--aui-font-mono);
-  font-size: 0.76rem;
-  font-weight: 600;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
   white-space: nowrap;
   box-shadow: var(--aui-shadow-xs);
@@ -9077,8 +9089,9 @@ pre.aui-pre,
 
 .aui-arch-inspector-title {
   font-family: var(--aui-font-mono);
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
@@ -9099,7 +9112,142 @@ pre.aui-pre,
 }
 
 .aui-arch-meta-item strong {
+  font-weight: 500;
   color: var(--aui-text-primary);
+}
+
+.aui-arch-edge {
+  transition: stroke var(--aui-transition-fast), stroke-width var(--aui-transition-fast);
+}
+
+.aui-arch-edge.is-animated {
+  stroke-dasharray: 6 4;
+  animation: aui-arch-flow 1.2s linear infinite;
+}
+
+@keyframes aui-arch-flow {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.aui-arch-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: var(--aui-bg-primary);
+  border: 1px solid var(--aui-border-strong);
+  box-sizing: border-box;
+  z-index: 4;
+  pointer-events: none;
+  transition: var(--aui-transition-fast);
+}
+
+.aui-arch-handle-left {
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.aui-arch-handle-right {
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.aui-arch-handle-top {
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.aui-arch-handle-bottom {
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.aui-arch-node:hover .aui-arch-handle,
+.aui-arch-node.is-selected .aui-arch-handle {
+  border-color: var(--aui-primary);
+  background-color: var(--aui-primary);
+}
+
+.aui-arch-controls {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--aui-bg-secondary);
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-md);
+  box-shadow: var(--aui-shadow-xs);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.aui-arch-control-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--aui-border-color);
+  color: var(--aui-text-muted);
+  font-family: var(--aui-font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--aui-transition-fast);
+  line-height: 1;
+}
+
+.aui-arch-control-btn:last-child {
+  border-right: none;
+}
+
+.aui-arch-control-btn:hover {
+  background-color: var(--aui-bg-tertiary);
+  color: var(--aui-text-primary);
+}
+
+.aui-arch-control-reset {
+  width: auto;
+  padding: 0 0.45rem;
+  font-size: 0.7rem;
+}
+
+/* React Flow Array UI integration */
+.aui-rf-canvas {
+  width: 100%;
+  height: 480px;
+  background-color: var(--aui-bg-primary);
+  border: 1px solid var(--aui-border-color);
+  border-radius: var(--aui-radius-lg);
+  overflow: hidden;
+}
+
+.react-flow__handle.aui-rf-handle {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--aui-bg-primary);
+  border: 1px solid var(--aui-border-strong);
+  transition: var(--aui-transition-fast);
+}
+
+.react-flow__handle.aui-rf-handle:hover,
+.react-flow__node.selected .react-flow__handle.aui-rf-handle {
+  background-color: var(--aui-primary);
+  border-color: var(--aui-primary);
 }
 
 /* 2. SequenceDiagram */
@@ -9139,7 +9287,7 @@ pre.aui-pre,
 .aui-seq-step-pill {
   font-family: var(--aui-font-mono);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-muted);
   padding: 0.2rem 0.55rem;
   background-color: var(--aui-bg-secondary);
@@ -9168,7 +9316,8 @@ pre.aui-pre,
   border-radius: var(--aui-radius-md);
   font-family: var(--aui-font-mono);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
   text-align: center;
   min-width: 110px;
@@ -9242,7 +9391,8 @@ pre.aui-pre,
   padding: 0.2rem 0.6rem;
   font-family: var(--aui-font-mono);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
   white-space: nowrap;
   z-index: 2;
@@ -9292,7 +9442,7 @@ pre.aui-pre,
 .aui-fsm-active-badge {
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.2rem 0.6rem;
   border-radius: var(--aui-radius-sm);
   background-color: var(--aui-primary-soft);
@@ -9343,7 +9493,8 @@ pre.aui-pre,
 .aui-fsm-node-label {
   font-family: var(--aui-font-mono);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--aui-text-primary);
 }
 
@@ -9351,7 +9502,7 @@ pre.aui-pre,
   font-family: var(--aui-font-mono);
   font-size: 0.72rem;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--aui-text-muted);
 }
 
@@ -9372,7 +9523,7 @@ pre.aui-pre,
 .aui-fsm-triggers-title {
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--aui-text-muted);
@@ -9429,7 +9580,7 @@ pre.aui-pre,
   gap: 0.4rem;
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   color: var(--aui-primary);
   background-color: var(--aui-primary-soft);
@@ -9476,7 +9627,7 @@ pre.aui-pre,
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
   color: var(--aui-text-muted);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .aui-concept-visual-stage {
@@ -9534,7 +9685,7 @@ pre.aui-pre,
   padding: 0.75rem 1rem;
   font-family: var(--aui-font-mono);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--aui-text-muted);
@@ -9570,7 +9721,7 @@ pre.aui-pre,
   gap: 0.35rem;
   font-family: var(--aui-font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   padding: 0.15rem 0.45rem;
   border-radius: var(--aui-radius-sm);
 }
@@ -9670,7 +9821,7 @@ pre.aui-pre,
 .aui-analogy-col-badge {
   font-family: var(--aui-font-mono);
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   padding: 0.15rem 0.45rem;
   border-radius: var(--aui-radius-sm);

@@ -6,6 +6,7 @@ import {
   ARCH_GROUP_PAD,
   ARCH_NODE_H,
   ARCH_NODE_W,
+  buildEdgePath,
   collapseArchitecture,
   groupBoxes,
   initialCollapsedGroups,
@@ -13,6 +14,7 @@ import {
   routeEdges,
   type ArchitectureConnectionItem,
   type ArchitectureDirection,
+  type ArchitectureEdgeRouting,
   type ArchitectureGroupItem,
   type ArchitectureNodeItem,
 } from "./layout";
@@ -20,6 +22,7 @@ import {
 export type {
   ArchitectureConnectionItem,
   ArchitectureDirection,
+  ArchitectureEdgeRouting,
   ArchitectureGroupItem,
   ArchitectureNodeItem,
 } from "./layout";
@@ -36,6 +39,12 @@ export interface ArchitectureCanvasProps extends React.HTMLAttributes<HTMLDivEle
   direction?: ArchitectureDirection;
   selectedNodeId?: string;
   onNodeSelect?: (nodeId: string) => void;
+  /** Edge routing algorithm: "smoothstep" (orthogonal with rounded corners), "bezier" (smooth spline), or "straight". Default "smoothstep". */
+  routing?: ArchitectureEdgeRouting;
+  /** Whether to show canvas navigation / zoom controls (+, -, reset). Default false. */
+  showControls?: boolean;
+  /** Whether to show connection port handles on nodes. Default true. */
+  showHandles?: boolean;
   /** Compact mode for narrow sidebars or split panes. Reduces viewport padding and default min-height. */
   compact?: boolean;
   /** Minimum width for the viewport canvas or container. */
@@ -69,6 +78,9 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
       direction = "LR",
       selectedNodeId: controlledSelected,
       onNodeSelect,
+      routing = "smoothstep",
+      showControls = false,
+      showHandles = true,
       compact = false,
       minWidth,
       minHeight,
@@ -82,6 +94,11 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
     const [internalSelected, setInternalSelected] = useState<string | null>(
       inputNodes.length > 0 ? inputNodes[0].id : null
     );
+    const [zoom, setZoom] = useState(1);
+
+    const handleZoomIn = () => setZoom((z) => Math.min(2.0, Math.round((z + 0.15) * 100) / 100));
+    const handleZoomOut = () => setZoom((z) => Math.max(0.5, Math.round((z - 0.15) * 100) / 100));
+    const handleZoomReset = () => setZoom(1);
 
     const { nodes, connections } = useMemo(
       () => collapseArchitecture(inputNodes, inputConnections, groups, collapsed),
@@ -119,7 +136,7 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
       return layout.positions.get(id);
     };
 
-    const pxEdges = layout ? routeEdges(connections, center) : [];
+    const pxEdges = layout ? routeEdges(connections, center, routing, direction) : [];
     const pxGroups = layout ? groupBoxes(groups, nodes, center) : [];
     const groupMap = new Map(groups.map((g) => [g.id, g]));
 
@@ -185,6 +202,21 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
           onClick={() => handleNodeClick(node.id, node.collapsedGroupId)}
           title={node.label}
         >
+          {showHandles && !node.collapsedGroupId && (
+            <>
+              {direction === "TB" ? (
+                <>
+                  <span className="aui-arch-handle aui-arch-handle-top" aria-hidden="true" />
+                  <span className="aui-arch-handle aui-arch-handle-bottom" aria-hidden="true" />
+                </>
+              ) : (
+                <>
+                  <span className="aui-arch-handle aui-arch-handle-left" aria-hidden="true" />
+                  <span className="aui-arch-handle aui-arch-handle-right" aria-hidden="true" />
+                </>
+              )}
+            </>
+          )}
           <div className="aui-arch-node-top">
             <div className="aui-arch-node-title-group" style={{ display: "flex", alignItems: "center", gap: "0.35rem", minWidth: 0 }}>
               {isVisited && (
@@ -229,7 +261,13 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
           {layout ? (
             <div
               className="aui-arch-nodes-container is-px"
-              style={{ width: layout.width, height: layout.height }}
+              style={{
+                width: layout.width,
+                height: layout.height,
+                transform: zoom !== 1 ? `scale(${zoom})` : undefined,
+                transformOrigin: "top left",
+                transition: "transform 0.15s ease-out",
+              }}
             >
               {pxGroups.map((b) =>
                 renderGroup(b.id, { left: b.x, top: b.y, width: b.w, height: b.h })
@@ -247,21 +285,18 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
                   const isActive = activeNodeId === conn.from || activeNodeId === conn.to;
                   return (
                     <g key={`edge-${e.index}`}>
-                      <line
-                        x1={e.x1}
-                        y1={e.y1}
-                        x2={e.x2}
-                        y2={e.y2}
+                      <path
+                        d={e.path}
+                        fill="none"
+                        className={cn("aui-arch-edge", conn.animated && "is-animated")}
                         stroke={isActive ? "var(--aui-primary)" : "var(--aui-border-strong)"}
                         strokeWidth={isActive ? 2 : 1.5}
                         strokeDasharray={conn.variant === "dashed" ? "4 4" : undefined}
                         markerEnd={isActive ? "url(#aui-arch-arrow-px-active)" : "url(#aui-arch-arrow-px)"}
                       />
                       {conn.animated && (
-                        <circle r="3" fill="var(--aui-primary)">
-                          <animate attributeName="cx" from={e.x1} to={e.x2} dur="2.4s" repeatCount="indefinite" />
-                          <animate attributeName="cy" from={e.y1} to={e.y2} dur="2.4s" repeatCount="indefinite" />
-                          <animate attributeName="opacity" values="0;1;1;0" dur="2.4s" repeatCount="indefinite" />
+                        <circle r="3.5" fill="var(--aui-primary)">
+                          <animateMotion path={e.path} dur="2.4s" repeatCount="indefinite" />
                         </circle>
                       )}
                     </g>
@@ -320,41 +355,30 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
 
                   const isConnActive = activeNodeId === conn.from || activeNodeId === conn.to;
                   const strokeColor = isConnActive ? "var(--aui-primary)" : "var(--aui-border-strong)";
+                  const edgeRouting = conn.routing ?? routing;
+                  const geom = buildEdgePath(
+                    src.x as number,
+                    src.y as number,
+                    dst.x as number,
+                    dst.y as number,
+                    edgeRouting,
+                    direction
+                  );
 
                   return (
                     <g key={`edge-${idx}`}>
-                      <line
-                        x1={`${src.x}%`}
-                        y1={`${src.y}%`}
-                        x2={`${dst.x}%`}
-                        y2={`${dst.y}%`}
+                      <path
+                        d={geom.path}
+                        fill="none"
+                        className={cn("aui-arch-edge", conn.animated && "is-animated")}
                         stroke={strokeColor}
-                        strokeWidth={isConnActive ? "2" : "1.5"}
+                        strokeWidth={isConnActive ? 2 : 1.5}
                         strokeDasharray={conn.variant === "dashed" ? "4 4" : undefined}
                         markerEnd={isConnActive ? "url(#aui-arch-arrow-active)" : "url(#aui-arch-arrow)"}
                       />
                       {conn.animated && (
-                        <circle r="3" fill="var(--aui-primary)">
-                          <animate
-                            attributeName="cx"
-                            from={`${src.x}%`}
-                            to={`${dst.x}%`}
-                            dur="2.4s"
-                            repeatCount="indefinite"
-                          />
-                          <animate
-                            attributeName="cy"
-                            from={`${src.y}%`}
-                            to={`${dst.y}%`}
-                            dur="2.4s"
-                            repeatCount="indefinite"
-                          />
-                          <animate
-                            attributeName="opacity"
-                            values="0;1;1;0"
-                            dur="2.4s"
-                            repeatCount="indefinite"
-                          />
+                        <circle r="3.5" fill="var(--aui-primary)">
+                          <animateMotion path={geom.path} dur="2.4s" repeatCount="indefinite" />
                         </circle>
                       )}
                     </g>
@@ -362,7 +386,14 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
                 })}
               </svg>
 
-              <div className="aui-arch-nodes-container">
+              <div
+                className="aui-arch-nodes-container"
+                style={{
+                  transform: zoom !== 1 ? `scale(${zoom})` : undefined,
+                  transformOrigin: "top left",
+                  transition: "transform 0.15s ease-out",
+                }}
+              >
                 {pctGroups.map((g) => renderGroup(g.id, g.style))}
 
                 {connections.map((conn, idx) => {
@@ -371,14 +402,21 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
                   const dst = nodeMap.get(conn.to);
                   if (!src || !dst) return null;
 
-                  const midX = ((src.x as number) + (dst.x as number)) / 2;
-                  const midY = ((src.y as number) + (dst.y as number)) / 2;
+                  const edgeRouting = conn.routing ?? routing;
+                  const geom = buildEdgePath(
+                    src.x as number,
+                    src.y as number,
+                    dst.x as number,
+                    dst.y as number,
+                    edgeRouting,
+                    direction
+                  );
 
                   return (
                     <div
                       key={`label-${idx}`}
                       className="aui-arch-edge-label-box"
-                      style={{ left: `${midX}%`, top: `${midY}%` }}
+                      style={{ left: `${geom.mx}%`, top: `${geom.my}%` }}
                     >
                       {conn.label}
                     </div>
@@ -390,6 +428,38 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
                 )}
               </div>
             </>
+          )}
+
+          {showControls && (
+            <div className="aui-arch-controls" role="toolbar" aria-label="Canvas zoom controls">
+              <button
+                type="button"
+                className="aui-arch-control-btn"
+                onClick={handleZoomIn}
+                title="Zoom in"
+                aria-label="Zoom in"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                className="aui-arch-control-btn"
+                onClick={handleZoomOut}
+                title="Zoom out"
+                aria-label="Zoom out"
+              >
+                −
+              </button>
+              <button
+                type="button"
+                className="aui-arch-control-btn aui-arch-control-reset"
+                onClick={handleZoomReset}
+                title="Reset zoom"
+                aria-label="Reset zoom"
+              >
+                {Math.round(zoom * 100)}%
+              </button>
+            </div>
           )}
         </div>
 

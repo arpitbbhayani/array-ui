@@ -45,12 +45,12 @@ export function BenchmarkDelta({
         return (
           <div key={idx} className="space-y-2 pb-3 border-b border-border last:border-b-0 last:pb-0">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-semibold text-foreground">
+              <span className="font-mono text-xs font-medium text-foreground">
                 {item.name}
               </span>
               <span
                 className={cn(
-                  "font-mono text-xs font-bold px-1.5 py-0.5 rounded",
+                  "font-mono text-xs font-medium px-1.5 py-0.5 rounded",
                   isPositive
                     ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                     : "bg-rose-500/10 text-rose-600 dark:text-rose-400"
@@ -77,7 +77,7 @@ export function BenchmarkDelta({
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[11px] font-semibold text-foreground w-16 flex-shrink-0">
+                <span className="font-mono text-[11px] font-medium text-foreground w-16 flex-shrink-0">
                   {item.candidateLabel ?? "Candidate"}
                 </span>
                 <div className="flex-1 h-3 rounded bg-muted overflow-hidden border border-border/50">
@@ -86,7 +86,7 @@ export function BenchmarkDelta({
                     style={{ width: `${candidatePct}%` }}
                   />
                 </div>
-                <span className="font-mono text-xs font-bold text-primary w-20 text-right flex-shrink-0">
+                <span className="font-mono text-xs font-medium text-primary w-20 text-right flex-shrink-0">
                   {item.candidateDisplay}
                 </span>
               </div>

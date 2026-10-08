@@ -41,14 +41,14 @@ export function ParamTable({ items, className, ...props }: ParamTableProps) {
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span
                     className={cn(
-                      "font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-foreground",
+                      "font-mono text-xs font-medium px-1.5 py-0.5 rounded bg-muted text-foreground",
                       item.deprecated && "line-through opacity-60"
                     )}
                   >
                     {item.name}
                   </span>
                   {item.required ? (
-                    <span className="font-mono text-[10px] uppercase font-bold text-primary bg-primary/10 px-1 rounded">
+                    <span className="font-mono text-[10px] uppercase font-medium text-primary bg-primary/10 px-1 rounded">
                       req
                     </span>
                   ) : (

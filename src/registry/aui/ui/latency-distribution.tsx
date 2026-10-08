@@ -51,7 +51,7 @@ export function LatencyDistribution({
       {...props}
     >
       <div className="flex items-center justify-between">
-        <span className="font-mono text-xs font-bold text-foreground">
+        <span className="font-mono text-xs font-medium text-foreground">
           {title}
         </span>
         {sla && (
@@ -67,7 +67,7 @@ export function LatencyDistribution({
           return (
             <div
               key={idx}
-              className="h-full border-r border-border/50 last:border-r-0 flex items-center justify-center font-mono text-xs font-bold"
+              className="h-full border-r border-border/50 last:border-r-0 flex items-center justify-center font-mono text-xs font-medium"
               style={{
                 width: `${widthPct}%`,
                 backgroundColor: `color-mix(in srgb, ${color} 20%, transparent)`,
