@@ -138,19 +138,23 @@ Tactile action button with signature crimson primary, secondary, outline, ghost,
 *Sizes*: `sm`, `default`/`md`, `lg`, `icon`.
 
 #### 2. `Badge` (`@aui/badge`)
-Machined status pill with monospace typography and color variants.
+Machined status pill with monospace typography and color variants. Supports `href` (renders `<a>`) and `interactive`.
 ```tsx
 <Badge variant="green">Healthy</Badge>
 <Badge variant="amber">Degraded</Badge>
 <Badge variant="red">Outage</Badge>
 <Badge variant="primary">Active</Badge>
-<Badge variant="outline">v0.1.3</Badge>
+<Badge variant="violet">Core logic</Badge>
+<Badge variant="cyan">Wiring</Badge>
+<Badge variant="pink">Experiments</Badge>
+<Badge variant="outline" href="https://github.com" interactive>v0.1.6</Badge>
 ```
+*Variants*: `primary`, `default`, `secondary`, `outline`, `green`, `amber`, `red`, `blue`, `violet`, `cyan`, `pink`, `destructive`, `dark`, `light`.
 
 #### 3. `Card` (`@aui/card`)
-Flat card surface with 1px hairline border and structured subcomponents.
+Flat card surface with 1px hairline border, structured subcomponents, and optional hover/interaction feedback.
 ```tsx
-<Card>
+<Card hoverable interactive>
   <CardHeader>
     <CardTitle>Distributed Consensus</CardTitle>
     <CardDescription>Raft state machine replication</CardDescription>
@@ -164,6 +168,7 @@ Flat card surface with 1px hairline border and structured subcomponents.
   </CardFooter>
 </Card>
 ```
+*Props*: `hoverable?: boolean`, `interactive?: boolean`.
 
 #### 4. `Input` (`@aui/input`)
 Machined text input with subtle focus ring and optional keyboard shortcut badge.
@@ -239,6 +244,71 @@ Whitespace blank spacing component between UI elements (e.g. space between navba
 *Orientations*: `vertical` (default), `horizontal` (or `axis="x" | "y"`).
 *Alias*: `Spacer`
 
+#### 11. `Progress` (`@aui/progress`)
+Machined linear progress bar with value indicator and status tints.
+```tsx
+<Progress value={65} max={100} label="Migration Progress" showValue variant="primary" size="md" />
+```
+*Variants*: `primary`, `success`, `info`, `warning`.
+*Sizes*: `sm`, `md`, `lg`.
+
+#### 12. `SplitPane` (`@aui/split-pane`)
+Two-column responsive layout with sticky aside column, ratio presets, and mobile stacking.
+```tsx
+<SplitPane aside={<ArchitectureCanvas nodes={nodes} connections={conns} compact />} stickyFirst ratio="5/7">
+  <article>
+    <Heading level={2}>Step 1: Core Logic</Heading>
+    <DiffBlock file="src/index.ts" diff={patch} status="modified" />
+  </article>
+</SplitPane>
+```
+
+#### 13. `Layout` (`@aui/layout`)
+System layout primitives (`Container`, `Stack`, `Row`, `Grid`) for composing layouts without raw ad-hoc CSS.
+```tsx
+<Container size="xl">
+  <Stack gap="lg">
+    <Row justify="between" align="center">
+      <Heading level={1}>Dashboard</Heading>
+      <ThemeToggle />
+    </Row>
+    <Grid cols={4} gap="md">
+      <StatCard value="99.9%" label="Uptime" />
+    </Grid>
+  </Stack>
+</Container>
+```
+
+#### 14. `Typography` (`@aui/typography`)
+Editorial typography primitives with signature Space Grotesk tracking and Assistant body styling.
+```tsx
+<Heading level={1}>PR Walkthrough</Heading>
+<Lead>A guided walkthrough of architectural changes across 4 files.</Lead>
+```
+
+#### 15. `StepNav` (`@aui/step-nav`)
+Walkthrough and tutorial step navigation bar with position counter, keycaps, and next/prev controls.
+```tsx
+<StepNav
+  current={currentStep}
+  total={steps.length}
+  onPrev={() => setStep(s => s - 1)}
+  onNext={() => setStep(s => s + 1)}
+  badge={<Badge variant="primary">Core logic</Badge>}
+  showKeyboardHints
+/>
+```
+
+#### 16. `ThemeToggle` (`@aui/theme-toggle`) & `ThemeScript` (`@aui/theme-script`)
+Light and dark mode switch and SSR bootstrapping script that loads Google Fonts automatically.
+```tsx
+// In layout.tsx head:
+<ThemeScript /> // Injects theme script + preconnect/stylesheet for Google Fonts
+
+// In UI:
+<ThemeToggle variant="ghost" size="sm" />
+```
+
 ### Developer Primitives
 
 #### 1. `Terminal`
@@ -257,16 +327,17 @@ Machined telemetry terminal with bash command dots and styled outputs.
 - Line types: `string` (defaults to command `$ `), or `{ text: string, kind?: "cmd" | "out" | "ok" | "err" }`.
 
 #### 2. `DiffBlock`
-Unified git patch inspector with line gutters, additions, and deletions.
+Unified git patch inspector with line gutters, additions, deletions, and header status badges.
 ```tsx
 <DiffBlock
   file="migrations/0042_status.sql"
+  status="modified" // "added" | "deleted" | "renamed" | "modified"
   diff={`@@ -12,4 +12,4 @@
 -status: varchar(32) DEFAULT 'pending',
 +status: cluster_status NOT NULL DEFAULT 'provisioning',`}
 />
 ```
-Review-mode props (all optional): `view="split"` for side-by-side, `collapseContext={3}` to fold unchanged lines beyond N around each change, `showCoverage` to paint a coverage rail from each line's `coverage` (`"covered" | "uncovered" | "partial"`), `highlightWords` (default true) for word-level highlights in paired -/+ lines. Pass `lines` instead of `diff` to attach `coverage`, `segments`, or a `note` string per line.
+Review-mode props (all optional): `status` / `fileStatus` for file lifecycle badges, `view="split"` for side-by-side, `collapseContext={3}` to fold unchanged lines beyond N around each change, `showCoverage` to paint a coverage rail from each line's `coverage` (`"covered" | "uncovered" | "partial"`), `highlightWords` (default true) for word-level highlights in paired -/+ lines. Pass `lines` instead of `diff` to attach `coverage`, `segments`, or a `note` string per line. Meta rows render cleanly without line number gutters.
 
 #### 3. `PingStatus`
 Pulsing heartbeat indicator with status and latency.
@@ -373,10 +444,13 @@ Card for cohorts, courses, and open source projects.
 ```
 
 #### 12. `StatCard`
-Metric display card for dashboards and telemetry.
+Metric display card for dashboards and telemetry with optional value accent colors.
 ```tsx
 <StatCard value="99.98%" label="Uptime" description="rolling 30 days" />
+<StatCard value="+412" label="lines added" accent="emerald" />
+<StatCard value="−89" label="lines removed" accent="rose" />
 ```
+*Accents*: `emerald` / `green`, `rose` / `red`, `amber`, `blue`, `violet`, `cyan`, `pink`.
 
 #### 13. `EmptyState`
 Minimalist dashed container for empty states and zero-data screens.
@@ -654,6 +728,8 @@ Interactive system architecture and flow diagram canvas with animated traveling 
 />
 ```
 **Auto-layout and groups.** Omit `x` and `y` and the canvas ranks and places nodes itself (`direction="LR"` or `"TB"`). Nodes that keep explicit `x`/`y` are left where you put them, so existing diagrams are unchanged. Add `groups={[{ id, label, kind?: "service" | "layer" | "package" | "external", defaultCollapsed? }]}` and set `group` on nodes to draw labeled boundaries; each group has a toggle that collapses it into one node and merges its edges. Auto-layout is a layered layout tuned for roughly 40 nodes or fewer, draws straight edges, and does not nest groups.
+
+**Walkthrough & Sidebar Layouts.** Supports `compact` prop (renders tighter padding and font sizes for embedding in sidebars or split-panes), `minWidth` / `minHeight` for viewport dimensions, and `wrapLabels` for multiline text wrapping. Nodes also support `visited?: boolean` to render a completed/read step badge with green checkmark indicator.
 
 ##### Recipe: generate an architecture view from a repository
 1. Read the repo and list components (services, packages, datastores, queues, external systems). Use one node per meaningful unit, not per file. Prefer 8 to 30 nodes.
@@ -978,8 +1054,11 @@ Find components by the job you are doing. A component can appear under more than
 In addition to the shadcn registry CLI, the direct repository package (`array-ui`) exports 72+ native components for React (`array-ui/nextjs`, `array-ui/react`) and Astro (`array-ui/astro/*`):
 - **Inputs & Forms**: `Button`, `Input`, `Select`, `Textarea`, `Switch`, `Checkbox`, `SearchBox`, `SegmentedControl`, `VersionSelector`, `Combobox`, `SecretInput`, `MultiSelect`, `Slider`
 - **Navigation**: `Breadcrumbs`, `Tabs`, `Pagination`, `Accordion`, `TableOfContents`, `Sidebar`, `Navbar`
+- **Layout & Structure**: `SplitPane`, `Container`, `Stack`, `Row`, `Grid`, `Gutter`, `Divider`
+- **Typography & Walkthrough**: `Heading`, `Lead`, `StepNav`
+- **Theme & System**: `ThemeProvider`, `ThemeToggle`, `ThemeScript`
 - **Feedback & Loading**: `Alert`, `AlertDialog`, `Toast`, `Progress`, `Spinner`, `Skeleton`, `EmptyState`, `Modal`, `Drawer`, `Tooltip`, `Popover`
-- **Data Display & Tables**: `Table`, `DataTable`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `Divider`, `Gutter`, `DatePicker`, `DateRangePicker`
+- **Data Display & Tables**: `Table`, `DataTable`, `Timeline`, `StatCard`, `DiffBlock`, `Terminal`, `PropertyGrid`, `FileTree`, `Avatar`, `AvatarGroup`, `Badge`, `Kbd`, `DatePicker`, `DateRangePicker`
 - **Telemetry & Charts**: `AreaChart`, `BarChart`, `Sparkline`, `LatencyDistribution`, `BenchmarkDelta`
 - **Technical Documentation**: `ApiEndpoint`, `DocStepper`, `ParamTable`, `FeatureMatrix`, `Canvas`
 - **Interactive Systems Explorables**: `MemoryLayout`, `PipelineFlow`, `StepScrubber`, `ClusterState`, `ParamSandbox`

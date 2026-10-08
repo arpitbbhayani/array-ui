@@ -12,6 +12,8 @@ export interface ArchitectureNodeItem {
   metadata?: Record<string, string>;
   /** Id of an entry in `groups`. */
   group?: string;
+  /** Whether this node has been visited / completed. Renders a checkmark or filled dot. */
+  visited?: boolean;
 }
 
 export interface ArchitectureConnectionItem {

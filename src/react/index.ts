@@ -81,3 +81,7 @@ export * from "./StateMachine/StateMachine";
 export * from "./ConceptWalkthrough/ConceptWalkthrough";
 export * from "./TradeoffMatrix/TradeoffMatrix";
 export * from "./AnalogyCard/AnalogyCard";
+export * from "./SplitPane";
+export * from "./Layout";
+export * from "./Typography";
+export * from "./StepNav";

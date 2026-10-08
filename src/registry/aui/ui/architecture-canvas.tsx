@@ -17,6 +17,8 @@ export interface ArchitectureNodeItem {
   metadata?: Record<string, string>;
   /** Id of an entry in `groups`. */
   group?: string;
+  /** Whether this node has been visited / completed. Renders a checkmark or filled dot. */
+  visited?: boolean;
 }
 
 export interface ArchitectureConnectionItem {
@@ -520,6 +522,14 @@ export interface ArchitectureCanvasProps extends React.HTMLAttributes<HTMLDivEle
   direction?: ArchitectureDirection;
   selectedNodeId?: string;
   onNodeSelect?: (nodeId: string) => void;
+  /** Compact mode for narrow sidebars or split panes. Reduces viewport padding and default min-height. */
+  compact?: boolean;
+  /** Minimum width for the viewport canvas or container. */
+  minWidth?: number | string;
+  /** Minimum height for the viewport canvas or container. Default 380px (or 240px if compact). */
+  minHeight?: number | string;
+  /** Whether to wrap node labels instead of single-line truncation. Default false. */
+  wrapLabels?: boolean;
 }
 
 const STATUS_BORDER: Record<ArchitectureStatus, string> = {
@@ -539,6 +549,10 @@ export function ArchitectureCanvas({
   direction = "LR",
   selectedNodeId: controlledSelected,
   onNodeSelect,
+  compact = false,
+  minWidth,
+  minHeight,
+  wrapLabels = false,
   className,
   ...props
 }: ArchitectureCanvasProps) {
@@ -641,6 +655,7 @@ export function ArchitectureCanvas({
 
   const renderNode = (node: (typeof nodes)[number], style: React.CSSProperties, fixed: boolean) => {
     const isSelected = node.id === activeNodeId;
+    const isVisited = node.visited;
     return (
       <div
         key={node.id}
@@ -649,17 +664,36 @@ export function ArchitectureCanvas({
           fixed ? "overflow-hidden px-3 py-2.5" : "min-w-[160px] max-w-[240px] p-3.5",
           node.collapsedGroupId && "border-dashed",
           node.status && STATUS_BORDER[node.status],
+          !node.status && isVisited && "border-l-[3px] border-l-emerald-500/70",
           isSelected && "border-primary ring-2 ring-primary bg-primary/5"
         )}
         style={style}
         onClick={() => handleNodeClick(node.id, node.collapsedGroupId)}
+        title={node.label}
       >
         <div className="flex items-center justify-between gap-2 mb-1">
-          <span className="font-mono text-sm font-bold text-foreground truncate">
-            {node.collapsedGroupId ? `+ ${node.label}` : node.label}
-          </span>
+          <div className="flex items-center gap-1.5 min-w-0">
+            {isVisited && (
+              <span
+                className="inline-flex items-center justify-center size-3.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold shrink-0"
+                title="Visited"
+                aria-label="Visited"
+              >
+                ✓
+              </span>
+            )}
+            <span
+              className={cn(
+                "font-mono text-sm font-bold text-foreground",
+                wrapLabels ? "whitespace-normal break-words leading-tight" : "truncate"
+              )}
+              title={node.label}
+            >
+              {node.collapsedGroupId ? `+ ${node.label}` : node.label}
+            </span>
+          </div>
           {node.badge && (
-            <span className="font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+            <span className="font-mono text-xs font-semibold px-1.5 py-0.5 rounded bg-muted text-muted-foreground shrink-0">
               {node.badge}
             </span>
           )}
@@ -673,6 +707,9 @@ export function ArchitectureCanvas({
 
   const labelClass =
     "absolute -translate-x-1/2 -translate-y-1/2 bg-background border border-border rounded px-2 py-0.5 font-mono text-xs font-semibold text-foreground shadow-xs z-30";
+
+  const viewportMinHeight = minHeight !== undefined ? minHeight : compact ? "240px" : "380px";
+  const viewportMinWidth = minWidth !== undefined ? minWidth : undefined;
 
   return (
     <div
@@ -690,7 +727,16 @@ export function ArchitectureCanvas({
         {badge && <div>{badge}</div>}
       </div>
 
-      <div className="relative min-h-[380px] w-full overflow-x-auto overflow-y-hidden bg-background p-6">
+      <div
+        className={cn(
+          "relative w-full overflow-x-auto overflow-y-hidden bg-background",
+          compact ? "p-3.5" : "p-6"
+        )}
+        style={{
+          minHeight: viewportMinHeight,
+          minWidth: viewportMinWidth,
+        }}
+      >
         {layout ? (
           <div className="relative z-20 mx-auto" style={{ width: layout.width, height: layout.height }}>
             {pxGroups.map((b) => renderGroup(b.id, { left: b.x, top: b.y, width: b.w, height: b.h }))}

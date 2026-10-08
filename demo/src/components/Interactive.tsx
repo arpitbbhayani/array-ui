@@ -31,6 +31,15 @@ import {
   DateRangePicker,
   DataTable,
   ParamSandbox,
+  Badge,
+  StepNav,
+  SplitPane,
+  Stack,
+  Row,
+  Grid,
+  Heading,
+  Lead,
+  ArchitectureCanvas,
 } from "../../../dist/react.js";
 
 
@@ -519,5 +528,94 @@ export function ParamSandboxDemo() {
     />
   );
 }
+
+export function StepNavDemo() {
+  const [step, setStep] = useState(1);
+  const total = 4;
+  return (
+    <div style={{ width: "100%", maxWidth: "560px" }}>
+      <StepNav
+        current={step}
+        total={total}
+        onPrev={() => setStep((s) => Math.max(1, s - 1))}
+        onNext={() => setStep((s) => Math.min(total, s + 1))}
+        badge={<Badge variant="primary">Core logic</Badge>}
+        showKeyboardHints
+      />
+    </div>
+  );
+}
+
+export function SplitPaneDemo() {
+  return (
+    <div style={{ width: "100%", border: "1px solid var(--aui-border-light)", borderRadius: "var(--aui-radius-sm)", overflow: "hidden" }}>
+      <SplitPane
+        ratio="1/1"
+        aside={
+          <div style={{ padding: "0.85rem", background: "var(--aui-bg-secondary)", height: "100%" }}>
+            <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--aui-text-muted)", fontFamily: "var(--aui-font-mono)", fontWeight: 600 }}>Sticky Aside</span>
+            <p style={{ margin: "0.35rem 0 0", fontSize: "0.82rem", color: "var(--aui-text-muted)" }}>Architecture canvas or sticky file tree stays pinned while user scrolls walkthrough explanation.</p>
+          </div>
+        }
+      >
+        <div style={{ padding: "0.85rem", background: "var(--aui-card-bg)" }}>
+          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--aui-text-muted)", fontFamily: "var(--aui-font-mono)", fontWeight: 600 }}>Main Walkthrough Column</span>
+          <p style={{ margin: "0.35rem 0 0", fontSize: "0.82rem", color: "var(--aui-text-muted)" }}>Code diffs and step details stack cleanly on mobile viewports.</p>
+        </div>
+      </SplitPane>
+    </div>
+  );
+}
+
+export function LayoutDemo() {
+  return (
+    <div style={{ width: "100%" }}>
+      <Stack gap="sm">
+        <Row justify="between" align="center" style={{ padding: "0.45rem 0.75rem", background: "var(--aui-bg-secondary)", border: "1px solid var(--aui-border-light)" }}>
+          <span style={{ fontSize: "0.82rem", fontWeight: 600 }}>Row (justify="between")</span>
+          <Badge variant="green">Active</Badge>
+        </Row>
+        <Grid cols={3} gap="xs">
+          <div style={{ padding: "0.45rem", background: "var(--aui-bg-secondary)", border: "1px solid var(--aui-border-light)", fontSize: "0.78rem", textAlign: "center" }}>Grid Col 1</div>
+          <div style={{ padding: "0.45rem", background: "var(--aui-bg-secondary)", border: "1px solid var(--aui-border-light)", fontSize: "0.78rem", textAlign: "center" }}>Grid Col 2</div>
+          <div style={{ padding: "0.45rem", background: "var(--aui-bg-secondary)", border: "1px solid var(--aui-border-light)", fontSize: "0.78rem", textAlign: "center" }}>Grid Col 3</div>
+        </Grid>
+      </Stack>
+    </div>
+  );
+}
+
+export function TypographyDemo() {
+  return (
+    <div style={{ width: "100%" }}>
+      <Heading level={3}>PR Walkthrough: Core Engine</Heading>
+      <Lead>A guided architectural walkthrough of storage engine changes across 4 files.</Lead>
+    </div>
+  );
+}
+
+export function ArchitectureCompactDemo() {
+  return (
+    <ArchitectureCanvas
+      compact
+      wrapLabels
+      direction="LR"
+      title="Compact Walkthrough"
+      subtitle="with visited step badges"
+      nodes={[
+        { id: "step1", label: "01. Auth Provider", visited: true, badge: "Done", description: "Configured OAuth provider." },
+        { id: "step2", label: "02. Token Exchange", visited: true, badge: "Done", description: "JWT validation and parsing." },
+        { id: "step3", label: "03. Session Store", badge: "Current", status: "warn", description: "Redis session caching." },
+        { id: "step4", label: "04. Database Hook", badge: "Pending", description: "Postgres user upsert." },
+      ]}
+      connections={[
+        { from: "step1", to: "step2", label: "token", status: "ok" },
+        { from: "step2", to: "step3", label: "session", animated: true },
+        { from: "step3", to: "step4", label: "upsert", variant: "dashed" },
+      ]}
+    />
+  );
+}
+
 
 

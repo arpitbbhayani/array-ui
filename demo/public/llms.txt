@@ -98,6 +98,13 @@ Install: `npx shadcn@latest add @aui/architecture-canvas -y`. To turn a codebase
 - [Accordion](https://ui.arpitbhayani.me/r/accordion.json): Collapsible hairline accordion sections for FAQs and structured content. `npx shadcn@latest add @aui/accordion -y`
 - [Dropdown](https://ui.arpitbhayani.me/r/dropdown.json): Minimal click-trigger dropdown menu with click outside dismissal and actions. `npx shadcn@latest add @aui/dropdown -y`
 - [Gutter](https://ui.arpitbhayani.me/r/gutter.json): Component-driven whitespace blank spacing primitive between UI elements (e.g. navbar and content). `npx shadcn@latest add @aui/gutter -y`
+- [Progress](https://ui.arpitbhayani.me/r/progress.json): Machined linear progress bar with percentage indicator and status color variants. `npx shadcn@latest add @aui/progress -y`
+- [SplitPane](https://ui.arpitbhayani.me/r/split-pane.json): Responsive two-column split layout with sticky aside, ratio presets, and mobile stacking. `npx shadcn@latest add @aui/split-pane -y`
+- [Layout](https://ui.arpitbhayani.me/r/layout.json): Foundational layout primitives (Container, Stack, Row, Grid) without hand-written CSS. `npx shadcn@latest add @aui/layout -y`
+- [Typography](https://ui.arpitbhayani.me/r/typography.json): Editorial typography primitives (Heading H1-H6, Lead paragraph) with signature Space Grotesk tracking. `npx shadcn@latest add @aui/typography -y`
+- [StepNav](https://ui.arpitbhayani.me/r/step-nav.json): Guided walkthrough step navigation bar with previous/next actions, position badge, and keyboard shortcuts. `npx shadcn@latest add @aui/step-nav -y`
+- [ThemeToggle](https://ui.arpitbhayani.me/r/theme-toggle.json): Tactile light and dark theme mode toggle button with Sun and Moon icons. `npx shadcn@latest add @aui/theme-toggle -y`
+- [ThemeScript](https://ui.arpitbhayani.me/r/theme-script.json): Early theme bootstrapping script and Google Fonts loader to prevent flash of unstyled content (FOUC). `npx shadcn@latest add @aui/theme-script -y`
 
 ### Developer & Telemetry Primitives
 - [Terminal](https://ui.arpitbhayani.me/r/terminal.json): Machined telemetry terminal with bash command dots and styled outputs. `npx shadcn@latest add @aui/terminal -y`

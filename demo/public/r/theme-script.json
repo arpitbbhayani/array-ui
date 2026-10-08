@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-script",
+  "type": "registry:ui",
+  "title": "ThemeScript",
+  "description": "Early theme bootstrapping script and Google Fonts loader to prevent flash of unstyled content (FOUC).",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/theme-script.tsx",
+      "content": "import * as React from \"react\";\n\nexport const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var m=t||(d?'dark':'light');document.documentElement.setAttribute('data-theme',m);document.documentElement.classList.toggle('dark',m==='dark');}catch(e){}})();`;\n\nexport const GOOGLE_FONTS_HREF =\n  \"https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Assistant:wght@400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap\";\n\nexport interface ThemeScriptProps {\n  /** Also load Array UI signature Google Fonts (Space Grotesk, Assistant, Lora, IBM Plex Mono). Default true. */\n  fonts?: boolean;\n}\n\nexport function ThemeFonts() {\n  return (\n    <>\n      <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />\n      <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossOrigin=\"anonymous\" />\n      <link rel=\"stylesheet\" href={GOOGLE_FONTS_HREF} />\n    </>\n  );\n}\n\nexport function ThemeScript({ fonts = true }: ThemeScriptProps) {\n  return (\n    <>\n      {fonts && <ThemeFonts />}\n      <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />\n    </>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

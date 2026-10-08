@@ -20,6 +20,7 @@ interface RegistryItem {
   registryDependencies?: string[];
   files?: RegistryFile[];
   cssVars?: Record<string, any>;
+  css?: Record<string, any>;
 }
 
 const themeItem: RegistryItem = {
@@ -35,6 +36,10 @@ const themeItem: RegistryItem = {
     "class-variance-authority",
   ],
   registryDependencies: [],
+  css: {
+    "@import":
+      "url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap')",
+  },
   cssVars: {
     theme: {
       "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
@@ -289,6 +294,62 @@ const componentsConfig: ComponentDef[] = [
     file: "src/registry/aui/ui/gutter.tsx",
     target: "ui/gutter.tsx",
     dependencies: ["class-variance-authority"],
+    category: "Core Primitives",
+  },
+  {
+    name: "progress",
+    title: "Progress",
+    description: "Machined linear progress bar with percentage indicator and status color variants.",
+    file: "src/registry/aui/ui/progress.tsx",
+    target: "ui/progress.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "split-pane",
+    title: "SplitPane",
+    description: "Responsive two-column split layout with sticky aside, ratio presets, and mobile stacking.",
+    file: "src/registry/aui/ui/split-pane.tsx",
+    target: "ui/split-pane.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "layout",
+    title: "Layout",
+    description: "Foundational layout primitives (Container, Stack, Row, Grid) without hand-written CSS.",
+    file: "src/registry/aui/ui/layout.tsx",
+    target: "ui/layout.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "typography",
+    title: "Typography",
+    description: "Editorial typography primitives (Heading H1-H6, Lead paragraph) with signature Space Grotesk tracking.",
+    file: "src/registry/aui/ui/typography.tsx",
+    target: "ui/typography.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "step-nav",
+    title: "StepNav",
+    description: "Guided walkthrough step navigation bar with previous/next actions, position badge, and keyboard shortcuts.",
+    file: "src/registry/aui/ui/step-nav.tsx",
+    target: "ui/step-nav.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "theme-toggle",
+    title: "ThemeToggle",
+    description: "Tactile light and dark theme mode toggle button with Sun and Moon icons.",
+    file: "src/registry/aui/ui/theme-toggle.tsx",
+    target: "ui/theme-toggle.tsx",
+    category: "Core Primitives",
+  },
+  {
+    name: "theme-script",
+    title: "ThemeScript",
+    description: "Early theme bootstrapping script and Google Fonts loader to prevent flash of unstyled content (FOUC).",
+    file: "src/registry/aui/ui/theme-script.tsx",
+    target: "ui/theme-script.tsx",
     category: "Core Primitives",
   },
 

@@ -28,10 +28,15 @@ export type DiffRow =
   | { kind: "pair"; left?: DiffLine; right?: DiffLine }
   | { kind: "fold"; rows: DiffRow[]; count: number };
 
+export type DiffFileStatus = "added" | "deleted" | "renamed" | "modified";
+
 export interface DiffBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   file?: string;
   diff?: string;
   lines?: DiffLine[];
+  /** File status badge shown in the header ('added' | 'deleted' | 'renamed' | 'modified'). */
+  status?: DiffFileStatus;
+  fileStatus?: DiffFileStatus;
   /** `unified` (default) or side-by-side `split`. */
   view?: DiffView;
   /** Keep N unchanged lines around each change and fold the rest. `false` shows everything. */
@@ -251,6 +256,16 @@ function CoverageRail({ coverage, show }: { coverage?: DiffCoverage; show: boole
 }
 
 function UnifiedLine({ l, showCoverage }: { l: DiffLine; showCoverage: boolean }) {
+  if (l.type === "meta") {
+    return (
+      <>
+        <div className="aui-diff-line-meta-row select-none">
+          <span>{renderText(l)}</span>
+        </div>
+        {l.note && <div className="aui-diff-note">{l.note}</div>}
+      </>
+    );
+  }
   return (
     <>
       <div className={cn("aui-diff-line", LINE_CLASS[l.type])}>
@@ -269,6 +284,13 @@ function UnifiedLine({ l, showCoverage }: { l: DiffLine; showCoverage: boolean }
 
 function SplitHalf({ l, side, showCoverage }: { l?: DiffLine; side: "left" | "right"; showCoverage: boolean }) {
   if (!l) return <div className="aui-diff-half aui-diff-half-empty" />;
+  if (l.type === "meta") {
+    return (
+      <div className="aui-diff-line-meta-row select-none">
+        <span>{renderText(l)}</span>
+      </div>
+    );
+  }
   return (
     <div className={cn("aui-diff-half", LINE_CLASS[l.type])}>
       {side === "right" && <CoverageRail coverage={l.coverage} show={showCoverage} />}
@@ -313,6 +335,8 @@ export const DiffBlock = React.forwardRef<HTMLDivElement, DiffBlockProps>(
   (
     {
       file,
+      status,
+      fileStatus,
       diff,
       lines: customLines,
       view = "unified",
@@ -329,6 +353,7 @@ export const DiffBlock = React.forwardRef<HTMLDivElement, DiffBlockProps>(
     const adds = customLines ? customLines.filter((l) => l.type === "add").length : parsed.adds;
     const dels = customLines ? customLines.filter((l) => l.type === "del").length : parsed.dels;
     const rows = buildDiffRows(lines, { view, collapseContext, highlightWords });
+    const effectiveStatus = status || fileStatus;
 
     return (
       <div
@@ -341,6 +366,11 @@ export const DiffBlock = React.forwardRef<HTMLDivElement, DiffBlockProps>(
             <div className="aui-diff-file">
               <FileIcon size={14} />
               <span>{file}</span>
+              {effectiveStatus && (
+                <span className={cn("aui-diff-status-badge", `is-${effectiveStatus}`)}>
+                  {effectiveStatus === "added" ? "+ added" : effectiveStatus === "deleted" ? "− deleted" : effectiveStatus}
+                </span>
+              )}
             </div>
             <div className="aui-diff-stats">
               {adds > 0 && <span className="aui-diff-stat-add">+{adds}</span>}

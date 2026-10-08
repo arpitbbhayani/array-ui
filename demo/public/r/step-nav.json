@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "step-nav",
+  "type": "registry:ui",
+  "title": "StepNav",
+  "description": "Guided walkthrough step navigation bar with previous/next actions, position badge, and keyboard shortcuts.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/step-nav.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Button } from \"./button\";\nimport { Badge } from \"./badge\";\nimport { Kbd } from \"./kbd\";\n\nexport interface StepNavProps extends React.HTMLAttributes<HTMLElement> {\n  /** 0-indexed current step index. */\n  current: number;\n  /** Total count of steps. */\n  total: number;\n  /** Callback fired when previous button is clicked. */\n  onPrev?: () => void;\n  /** Callback fired when next button is clicked. */\n  onNext?: () => void;\n  /** Custom label for previous button. Default \"← Previous\". */\n  prevLabel?: React.ReactNode;\n  /** Custom label for next button. Default \"Next →\". */\n  nextLabel?: React.ReactNode;\n  /** Custom label for next button when on the last step. Default \"Last step\". */\n  lastLabel?: React.ReactNode;\n  /** Explicitly disable previous button. */\n  prevDisabled?: boolean;\n  /** Explicitly disable next button. */\n  nextDisabled?: boolean;\n  /** Optional secondary badge next to the position counter (e.g. step category or kind). */\n  badge?: React.ReactNode;\n  /** Show keyboard arrow keycaps. Default true. */\n  showKeyboardHints?: boolean;\n  /** Keyboard shortcuts hint icons. Default [\"←\", \"→\"]. */\n  keyboardHints?: [string, string];\n}\n\nexport const StepNav = React.forwardRef<HTMLElement, StepNavProps>(\n  (\n    {\n      current,\n      total,\n      onPrev,\n      onNext,\n      prevLabel = \"← Previous\",\n      nextLabel = \"Next →\",\n      lastLabel = \"Last step\",\n      prevDisabled,\n      nextDisabled,\n      badge,\n      showKeyboardHints = true,\n      keyboardHints = [\"←\", \"→\"],\n      className,\n      ...props\n    },\n    ref\n  ) => {\n    const isFirst = current <= 0;\n    const isLast = current >= total - 1;\n\n    return (\n      <nav\n        ref={ref}\n        aria-label=\"Step navigation\"\n        className={cn(\"flex flex-wrap items-center justify-between gap-3 my-2\", className)}\n        {...props}\n      >\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          onClick={onPrev}\n          disabled={prevDisabled !== undefined ? prevDisabled : isFirst}\n        >\n          {prevLabel}\n        </Button>\n\n        <div className=\"flex items-center gap-2\">\n          <Badge>\n            Step {current + 1} of {total}\n          </Badge>\n          {badge}\n          {showKeyboardHints && (\n            <span className=\"hidden items-center gap-1 md:flex\">\n              <Kbd>{keyboardHints[0]}</Kbd>\n              <Kbd>{keyboardHints[1]}</Kbd>\n            </span>\n          )}\n        </div>\n\n        <Button\n          size=\"sm\"\n          onClick={onNext}\n          disabled={nextDisabled !== undefined ? nextDisabled : isLast}\n        >\n          {isLast ? lastLabel : nextLabel}\n        </Button>\n      </nav>\n    );\n  }\n);\nStepNav.displayName = \"StepNav\";\n",
+      "type": "registry:ui"
+    }
+  ]
+}

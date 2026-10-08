@@ -16,6 +16,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 }) => {
   const { resolvedTheme, toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [, setTick] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -36,12 +37,21 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     );
   }
 
-  const isDark = resolvedTheme === "dark";
+  const isDocDark =
+    typeof window !== "undefined" &&
+    (document.documentElement.classList.contains("dark") ||
+      document.documentElement.getAttribute("data-theme") === "dark");
+  const isDark = resolvedTheme ? resolvedTheme === "dark" : isDocDark;
+
+  const handleToggle = () => {
+    toggleTheme();
+    setTick((t) => t + 1);
+  };
 
   return (
     <button
       type="button"
-      onClick={toggleTheme}
+      onClick={handleToggle}
       className={`aui-theme-toggle ${className}`}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       title={isDark ? "Switch to light theme" : "Switch to dark theme"}

@@ -27,10 +27,15 @@ export type DiffRow =
   | { kind: "pair"; left?: DiffLine; right?: DiffLine }
   | { kind: "fold"; rows: DiffRow[]; count: number };
 
+export type DiffFileStatus = "added" | "deleted" | "renamed" | "modified";
+
 export interface DiffBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   file?: string;
   diff?: string;
   lines?: DiffLine[];
+  /** File status badge shown in the header ('added' | 'deleted' | 'renamed' | 'modified'). */
+  status?: DiffFileStatus;
+  fileStatus?: DiffFileStatus;
   /** `unified` (default) or side-by-side `split`. */
   view?: DiffView;
   /** Keep N unchanged lines around each change and fold the rest. `false` shows everything. */
@@ -271,6 +276,16 @@ function Note({ children }: { children: React.ReactNode }) {
 }
 
 function UnifiedLine({ l, showCoverage }: { l: DiffLine; showCoverage: boolean }) {
+  if (l.type === "meta") {
+    return (
+      <>
+        <div className="flex items-center px-4 py-1 text-xs italic text-zinc-500 bg-[#121217]/60 border-y border-[#24242c]/50 font-mono select-none">
+          <span>{renderText(l)}</span>
+        </div>
+        {l.note && <Note>{l.note}</Note>}
+      </>
+    );
+  }
   return (
     <>
       <div className={cn("flex items-start px-2 py-0.5 rounded-xs transition-colors whitespace-pre", LINE_STYLE[l.type])}>
@@ -289,6 +304,13 @@ function UnifiedLine({ l, showCoverage }: { l: DiffLine; showCoverage: boolean }
 
 function SplitHalf({ l, side, showCoverage }: { l?: DiffLine; side: "left" | "right"; showCoverage: boolean }) {
   if (!l) return <div className="bg-zinc-900/60" />;
+  if (l.type === "meta") {
+    return (
+      <div className="flex items-center px-4 py-1 text-xs italic text-zinc-500 bg-[#121217]/60 border-y border-[#24242c]/50 font-mono select-none">
+        <span>{renderText(l)}</span>
+      </div>
+    );
+  }
   return (
     <div
       className={cn(
@@ -339,6 +361,8 @@ function Rows({ rows, showCoverage }: { rows: DiffRow[]; showCoverage: boolean }
 
 export function DiffBlock({
   file,
+  status,
+  fileStatus,
   diff,
   lines: customLines,
   view = "unified",
@@ -359,6 +383,7 @@ export function DiffBlock({
     () => buildDiffRows(lines, { view, collapseContext, highlightWords }),
     [lines, view, collapseContext, highlightWords]
   );
+  const effectiveStatus = status || fileStatus;
 
   return (
     <div
@@ -370,8 +395,23 @@ export function DiffBlock({
     >
       {file && (
         <div className="flex items-center justify-between px-3.5 py-2 bg-[#121217] border-b border-[#24242c] text-xs">
-          <span className="text-zinc-300 font-medium">{file}</span>
-          <div className="flex items-center gap-2 font-mono text-[0.75rem]">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-zinc-300 font-medium truncate">{file}</span>
+            {effectiveStatus && (
+              <span
+                className={cn(
+                  "text-[0.68rem] font-mono uppercase px-1.5 py-0.5 rounded-xs font-semibold tracking-wider",
+                  effectiveStatus === "added" && "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+                  effectiveStatus === "deleted" && "bg-rose-500/15 text-rose-400 border border-rose-500/30",
+                  effectiveStatus === "renamed" && "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+                  effectiveStatus === "modified" && "bg-zinc-700/30 text-zinc-400 border border-zinc-700/50"
+                )}
+              >
+                {effectiveStatus === "added" ? "+ added" : effectiveStatus === "deleted" ? "− deleted" : effectiveStatus}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2 font-mono text-[0.75rem] shrink-0">
             {adds > 0 && <span className="text-emerald-400">+{adds}</span>}
             {dels > 0 && <span className="text-rose-400">-{dels}</span>}
           </div>

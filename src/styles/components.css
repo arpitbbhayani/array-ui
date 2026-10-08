@@ -129,6 +129,43 @@
   }
 }
 
+/* Split Pane Layout */
+.aui-split-pane {
+  display: grid;
+  grid-template-columns: minmax(320px, 5fr) minmax(0, 7fr);
+  gap: var(--aui-space-6, 1.5rem);
+  align-items: start;
+  width: 100%;
+}
+.aui-split-aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aui-space-3, 0.75rem);
+  min-width: 0;
+  width: 100%;
+}
+.aui-split-aside.is-sticky,
+.aui-sticky {
+  position: sticky;
+  top: 1rem;
+}
+.aui-split-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  gap: var(--aui-space-4, 1rem);
+}
+@media (max-width: 980px) {
+  .aui-split-pane {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .aui-split-aside.is-sticky,
+  .aui-sticky {
+    position: static;
+  }
+}
+
 /* Layout & Flow Primitives */
 .aui-stack {
   display: flex;
@@ -249,6 +286,14 @@ ol.aui-stack {
   color: var(--aui-text-muted);
   line-height: 1.55;
   margin: 0;
+}
+
+.aui-lead {
+  font-family: var(--aui-font-sans);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--aui-text-muted);
+  margin: 0 0 1rem;
 }
 
 /* Floating HUD / Keyboard Shortcuts Dock */
@@ -2675,6 +2720,33 @@ ol.aui-stack {
 }
 
 /* ==========================================================================
+   Step Navigation
+   ========================================================================== */
+.aui-step-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+.aui-step-nav-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.aui-step-nav-kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+@media (max-width: 640px) {
+  .aui-step-nav-kbd {
+    display: none;
+  }
+}
+
+/* ==========================================================================
    Pagination
    ========================================================================== */
 .aui-pagination {
@@ -3737,10 +3809,10 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
 .aui-gradient-text { background: linear-gradient(95deg, var(--aui-c-red), var(--aui-c-violet)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
 /* Accent helpers (opt-in): tint a stat value or card hover */
-.aui-accent-red { --aui-accent: var(--aui-c-red); }
+.aui-accent-red, .aui-accent-rose { --aui-accent: var(--aui-c-red); }
 .aui-accent-blue { --aui-accent: var(--aui-c-blue); }
 .aui-accent-violet { --aui-accent: var(--aui-c-violet); }
-.aui-accent-green { --aui-accent: var(--aui-c-green); }
+.aui-accent-green, .aui-accent-emerald { --aui-accent: var(--aui-c-green); }
 .aui-accent-amber { --aui-accent: var(--aui-c-amber); }
 .aui-accent-pink { --aui-accent: var(--aui-c-pink); }
 .aui-accent-cyan { --aui-accent: var(--aui-c-cyan); }
@@ -3870,6 +3942,49 @@ code.aui-code { border: 1px solid var(--aui-border-color); border-radius: var(--
   display: flex;
   align-items: center;
   gap: 0.4rem;
+}
+
+.aui-diff-status-badge {
+  font-family: var(--aui-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--aui-radius-xs, 2px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-left: 0.25rem;
+}
+.aui-diff-status-badge.is-added {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--aui-success, #10b981);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.aui-diff-status-badge.is-deleted {
+  background-color: rgba(244, 63, 94, 0.15);
+  color: var(--aui-danger, #f43f5e);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+.aui-diff-status-badge.is-renamed {
+  background-color: rgba(204, 153, 0, 0.15);
+  color: var(--aui-accent-yellow, #cc9900);
+  border: 1px solid rgba(204, 153, 0, 0.3);
+}
+.aui-diff-status-badge.is-modified {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--aui-text-muted);
+  border: 1px solid var(--aui-border-color);
+}
+
+.aui-diff-line-meta-row {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--aui-diff-muted, #8b8a95);
+  background-color: rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .aui-diff-stats {
@@ -8781,6 +8896,35 @@ pre.aui-pre,
   margin-bottom: 0.35rem;
 }
 
+.aui-arch-viewport.is-compact {
+  min-height: 240px;
+  padding: 0.85rem;
+}
+
+.aui-arch-nodes-container.is-compact {
+  min-width: 0;
+  min-height: 0;
+}
+
+.aui-arch-node.is-visited,
+.aui-arch-node.is-done {
+  border-left: 3px solid var(--aui-success, #10b981);
+}
+
+.aui-arch-node-visited-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
 .aui-arch-node-name {
   font-family: var(--aui-font-mono);
   font-size: 0.92rem;
@@ -8789,6 +8933,14 @@ pre.aui-pre,
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.aui-arch-node-name.is-wrapped {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+  line-height: 1.25;
 }
 
 .aui-arch-node-badge {

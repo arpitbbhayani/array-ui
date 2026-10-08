@@ -6,7 +6,7 @@ export interface StatCardProps extends React.HTMLAttributes<HTMLDivElement> {
   label: React.ReactNode;
   description?: React.ReactNode;
   trend?: React.ReactNode;
-  accent?: "red" | "blue" | "violet" | "green" | "amber" | "pink" | "cyan";
+  accent?: "red" | "rose" | "blue" | "violet" | "green" | "emerald" | "amber" | "pink" | "cyan";
 }
 
 export const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(

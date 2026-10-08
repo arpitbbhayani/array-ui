@@ -36,6 +36,14 @@ export interface ArchitectureCanvasProps extends React.HTMLAttributes<HTMLDivEle
   direction?: ArchitectureDirection;
   selectedNodeId?: string;
   onNodeSelect?: (nodeId: string) => void;
+  /** Compact mode for narrow sidebars or split panes. Reduces viewport padding and default min-height. */
+  compact?: boolean;
+  /** Minimum width for the viewport canvas or container. */
+  minWidth?: number | string;
+  /** Minimum height for the viewport canvas or container. Default 380px (or 240px if compact). */
+  minHeight?: number | string;
+  /** Whether to wrap node labels instead of single-line truncation. Default false. */
+  wrapLabels?: boolean;
 }
 
 const PX_MARKERS = (
@@ -61,6 +69,10 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
       direction = "LR",
       selectedNodeId: controlledSelected,
       onNodeSelect,
+      compact = false,
+      minWidth,
+      minHeight,
+      wrapLabels = false,
       className,
       ...props
     },
@@ -157,6 +169,7 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
 
     const renderNode = (node: (typeof nodes)[number], style: React.CSSProperties, fixed: boolean) => {
       const isSelected = node.id === activeNodeId;
+      const isVisited = node.visited;
       return (
         <div
           key={node.id}
@@ -165,15 +178,30 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
             fixed && "is-fixed",
             node.collapsedGroupId && "is-group",
             node.status && `is-${node.status}`,
+            isVisited && "is-visited is-done",
             isSelected && "is-selected"
           )}
           style={style}
           onClick={() => handleNodeClick(node.id, node.collapsedGroupId)}
+          title={node.label}
         >
           <div className="aui-arch-node-top">
-            <span className="aui-arch-node-name">
-              {node.collapsedGroupId ? `+ ${node.label}` : node.label}
-            </span>
+            <div className="aui-arch-node-title-group" style={{ display: "flex", alignItems: "center", gap: "0.35rem", minWidth: 0 }}>
+              {isVisited && (
+                <span className="aui-arch-node-visited-icon" aria-label="Visited" title="Visited">
+                  ✓
+                </span>
+              )}
+              <span
+                className={cn(
+                  "aui-arch-node-name",
+                  wrapLabels && "is-wrapped"
+                )}
+                title={node.label}
+              >
+                {node.collapsedGroupId ? `+ ${node.label}` : node.label}
+              </span>
+            </div>
             {node.badge && <span className="aui-arch-node-badge">{node.badge}</span>}
           </div>
           {node.description && <p className="aui-arch-node-desc">{node.description}</p>}
@@ -191,7 +219,13 @@ export const ArchitectureCanvas = React.forwardRef<HTMLDivElement, ArchitectureC
           {badge && <div className="aui-canvas-badge">{badge}</div>}
         </div>
 
-        <div className="aui-arch-viewport">
+        <div
+          className={cn("aui-arch-viewport", compact && "is-compact")}
+          style={{
+            minHeight: minHeight !== undefined ? minHeight : compact ? "240px" : undefined,
+            minWidth: minWidth !== undefined ? minWidth : undefined,
+          }}
+        >
           {layout ? (
             <div
               className="aui-arch-nodes-container is-px"

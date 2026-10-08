@@ -10,6 +10,9 @@
     "class-variance-authority"
   ],
   "registryDependencies": [],
+  "css": {
+    "@import": "url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap')"
+  },
   "cssVars": {
     "theme": {
       "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",

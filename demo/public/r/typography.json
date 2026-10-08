@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography",
+  "type": "registry:ui",
+  "title": "Typography",
+  "description": "Editorial typography primitives (Heading H1-H6, Lead paragraph) with signature Space Grotesk tracking.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/typography.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {\n  level?: 1 | 2 | 3 | 4 | 5 | 6;\n  as?: React.ElementType;\n  size?: \"display\" | \"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\";\n}\n\nconst HEADING_SIZES = {\n  display: \"text-4xl md:text-5xl font-extrabold tracking-tight\",\n  h1: \"text-3xl md:text-4xl font-bold tracking-tight\",\n  h2: \"text-2xl md:text-3xl font-bold tracking-tight\",\n  h3: \"text-xl md:text-2xl font-bold\",\n  h4: \"text-lg md:text-xl font-bold\",\n  h5: \"text-base font-semibold\",\n  h6: \"text-sm font-semibold uppercase tracking-wider\",\n};\n\nexport const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(\n  ({ level = 1, as, size, className, children, ...props }, ref) => {\n    const Component = (as || `h${level}`) as React.ElementType;\n    const sizeKey = size || (`h${level}` as keyof typeof HEADING_SIZES);\n\n    return (\n      <Component\n        ref={ref}\n        className={cn(\n          \"font-heading text-foreground\",\n          HEADING_SIZES[sizeKey] || HEADING_SIZES.h1,\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  }\n);\nHeading.displayName = \"Heading\";\n\nexport const H1 = React.forwardRef<HTMLHeadingElement, Omit<HeadingProps, \"level\">>(\n  (props, ref) => <Heading ref={ref} level={1} {...props} />\n);\nH1.displayName = \"H1\";\n\nexport const H2 = React.forwardRef<HTMLHeadingElement, Omit<HeadingProps, \"level\">>(\n  (props, ref) => <Heading ref={ref} level={2} {...props} />\n);\nH2.displayName = \"H2\";\n\nexport const H3 = React.forwardRef<HTMLHeadingElement, Omit<HeadingProps, \"level\">>(\n  (props, ref) => <Heading ref={ref} level={3} {...props} />\n);\nH3.displayName = \"H3\";\n\nexport const H4 = React.forwardRef<HTMLHeadingElement, Omit<HeadingProps, \"level\">>(\n  (props, ref) => <Heading ref={ref} level={4} {...props} />\n);\nH4.displayName = \"H4\";\n\nexport interface LeadProps extends React.HTMLAttributes<HTMLParagraphElement> {\n  as?: React.ElementType;\n}\n\nexport const Lead = React.forwardRef<HTMLParagraphElement, LeadProps>(\n  ({ as: Component = \"p\", className, children, ...props }, ref) => {\n    return (\n      <Component\n        ref={ref}\n        className={cn(\"text-lg md:text-xl text-muted-foreground leading-relaxed\", className)}\n        {...props}\n      >\n        {children}\n      </Component>\n    );\n  }\n);\nLead.displayName = \"Lead\";\n",
+      "type": "registry:ui"
+    }
+  ]
+}

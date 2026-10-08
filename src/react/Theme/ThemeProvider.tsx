@@ -104,21 +104,39 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
-    // Return fallback if used outside provider
+    const isDocDark =
+      typeof window !== "undefined" &&
+      (document.documentElement.classList.contains("dark") ||
+        document.documentElement.getAttribute("data-theme") === "dark");
     return {
-      theme: "light",
-      resolvedTheme: "light",
-      setTheme: () => {},
+      theme: isDocDark ? "dark" : "light",
+      resolvedTheme: isDocDark ? "dark" : "light",
+      setTheme: (t) => {
+        if (typeof window !== "undefined") {
+          const isDark =
+            t === "dark" ||
+            (t === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.setAttribute(
+            "data-theme",
+            isDark ? "dark" : "light"
+          );
+          document.documentElement.classList.toggle("dark", isDark);
+          try {
+            localStorage.setItem("theme", t);
+          } catch {}
+        }
+      },
       toggleTheme: () => {
         if (typeof window !== "undefined") {
-          const current = document.documentElement.getAttribute("data-theme") || "light";
+          const current =
+            document.documentElement.classList.contains("dark") ||
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "dark"
+              : "light";
           const next = current === "dark" ? "light" : "dark";
           document.documentElement.setAttribute("data-theme", next);
-          if (next === "dark") {
-            document.documentElement.classList.add("dark");
-          } else {
-            document.documentElement.classList.remove("dark");
-          }
+          document.documentElement.classList.toggle("dark", next === "dark");
           try {
             localStorage.setItem("theme", next);
           } catch {}
