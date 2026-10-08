@@ -2,5 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "array-ui",
   "compatibility_date": "2024-10-01",
-  "pages_build_output_dir": "./demo/dist"
+  "assets": {
+    "directory": "./demo/dist"
+  }
 }
