@@ -2,12 +2,14 @@ import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils/cn";
+import { Spinner } from "../Spinner/Spinner";
 
 export type ButtonColor =
   | "red"
   | "green"
   | "blue"
   | "amber"
+  | "yellow"
   | "violet"
   | "pink"
   | "cyan"
@@ -48,6 +50,7 @@ export const buttonVariants = cva("aui-btn", {
       green: "aui-btn-solid aui-btn-color-green",
       blue: "aui-btn-solid aui-btn-color-blue",
       amber: "aui-btn-solid aui-btn-color-amber",
+      yellow: "aui-btn-solid aui-btn-color-yellow",
       violet: "aui-btn-solid aui-btn-color-violet",
       pink: "aui-btn-solid aui-btn-color-pink",
       cyan: "aui-btn-solid aui-btn-color-cyan",
@@ -79,6 +82,12 @@ export interface ButtonProps
   rel?: string;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  loading?: boolean;
+  isLoading?: boolean;
+  loadingText?: React.ReactNode;
+  spinner?: React.ReactNode;
   fullWidth?: boolean;
   asChild?: boolean;
 }
@@ -94,11 +103,18 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       rel,
       icon,
       iconPosition = "left",
+      leftIcon,
+      rightIcon,
+      loading = false,
+      isLoading = false,
+      loadingText,
+      spinner,
       fullWidth = false,
       asChild = false,
       children,
       className,
       disabled,
+      onClick,
       ...props
     },
     ref
@@ -118,6 +134,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       "green",
       "blue",
       "amber",
+      "yellow",
       "violet",
       "pink",
       "cyan",
@@ -130,26 +147,18 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       color || (isColorVariant ? (normalizedVariant as ButtonColor) : undefined);
     const effectiveVariant = isColorVariant ? "solid" : normalizedVariant;
 
+    const loadingActive = Boolean(loading || isLoading);
+    const isDisabled = Boolean(disabled || loadingActive);
+
     const classNames = cn(
       "aui-btn",
       effectiveVariant && `aui-btn-${effectiveVariant}`,
       effectiveColor && `aui-btn-color-${effectiveColor}`,
       normalizedSize && `aui-btn-${normalizedSize}`,
       fullWidth && "aui-btn-full",
-      disabled && "is-disabled",
+      isDisabled && "is-disabled",
+      loadingActive && "is-loading",
       className
-    );
-
-    const content = (
-      <>
-        {icon && iconPosition === "left" && (
-          <span className="icon aui-btn-icon-left">{icon}</span>
-        )}
-        {children && <span>{children}</span>}
-        {icon && iconPosition === "right" && (
-          <span className="icon aui-btn-icon-right">{icon}</span>
-        )}
-      </>
     );
 
     if (asChild) {
@@ -160,6 +169,49 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       );
     }
 
+    const spinnerElement = spinner || (
+      <Spinner
+        size={normalizedSize === "lg" ? "md" : "sm"}
+        className="aui-btn-spinner"
+      />
+    );
+
+    const effectiveLeftIcon = loadingActive
+      ? (iconPosition === "right" && !leftIcon ? undefined : spinnerElement)
+      : leftIcon || (iconPosition === "left" ? icon : undefined);
+
+    const effectiveRightIcon = loadingActive
+      ? (iconPosition === "right" && !leftIcon ? spinnerElement : undefined)
+      : rightIcon || (iconPosition === "right" ? icon : undefined);
+
+    const effectiveChildren = loadingActive && loadingText ? loadingText : children;
+    const hasChildren =
+      effectiveChildren !== undefined &&
+      effectiveChildren !== null &&
+      effectiveChildren !== "";
+
+    const isIconOnly = !hasChildren && Boolean(effectiveLeftIcon || effectiveRightIcon);
+
+    const content = isIconOnly ? (
+      <span className="aui-btn-icon" aria-hidden="true">
+        {effectiveLeftIcon || effectiveRightIcon}
+      </span>
+    ) : (
+      <>
+        {effectiveLeftIcon && (
+          <span className="aui-btn-icon aui-btn-icon-left" aria-hidden="true">
+            {effectiveLeftIcon}
+          </span>
+        )}
+        {hasChildren && <span className="aui-btn-label">{effectiveChildren}</span>}
+        {effectiveRightIcon && (
+          <span className="aui-btn-icon aui-btn-icon-right" aria-hidden="true">
+            {effectiveRightIcon}
+          </span>
+        )}
+      </>
+    );
+
     if (href) {
       return (
         <a
@@ -168,7 +220,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           target={target}
           rel={target === "_blank" && !rel ? "noopener noreferrer" : rel}
           className={classNames}
-          aria-disabled={disabled}
+          aria-disabled={isDisabled}
+          aria-busy={loadingActive ? "true" : undefined}
+          onClick={isDisabled ? (e) => e.preventDefault() : onClick}
         >
           {content}
         </a>
@@ -180,7 +234,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type="button"
         className={classNames}
-        disabled={disabled}
+        disabled={isDisabled}
+        aria-busy={loadingActive ? "true" : undefined}
+        onClick={onClick}
         {...props}
       >
         {content}
@@ -190,3 +246,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
+

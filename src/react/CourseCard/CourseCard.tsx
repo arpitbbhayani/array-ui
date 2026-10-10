@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "../Card/Card";
-import { Button } from "../Button/Button";
-import { Badge } from "../Badge/Badge";
+import { Button, type ButtonVariant, type ButtonColor } from "../Button/Button";
+import { Badge, type BadgeVariant } from "../Badge/Badge";
 import { cn } from "../../utils/cn";
 
 export interface CourseCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -9,8 +9,11 @@ export interface CourseCardProps extends React.HTMLAttributes<HTMLDivElement> {
   description: string;
   href: string;
   badge?: string;
+  badgeVariant?: BadgeVariant;
   tags?: string[];
   ctaText?: string;
+  ctaVariant?: ButtonVariant;
+  ctaColor?: ButtonColor;
 }
 
 export const CourseCard = React.forwardRef<HTMLDivElement, CourseCardProps>(
@@ -20,8 +23,11 @@ export const CourseCard = React.forwardRef<HTMLDivElement, CourseCardProps>(
       description,
       href,
       badge,
+      badgeVariant = "primary",
       tags = [],
       ctaText = "Details →",
+      ctaVariant = "primary",
+      ctaColor,
       className,
       ...props
     },
@@ -38,7 +44,7 @@ export const CourseCard = React.forwardRef<HTMLDivElement, CourseCardProps>(
           <h3 className="aui-project-card-title">
             <a href={href}>{title}</a>
           </h3>
-          {badge && <Badge variant="primary">{badge}</Badge>}
+          {badge && <Badge variant={badgeVariant}>{badge}</Badge>}
         </div>
 
         <p className="aui-project-card-desc">{description}</p>
@@ -55,7 +61,7 @@ export const CourseCard = React.forwardRef<HTMLDivElement, CourseCardProps>(
 
         <div className="aui-project-card-footer">
           <span />
-          <Button href={href} variant="primary" size="sm">
+          <Button href={href} variant={ctaVariant} color={ctaColor} size="sm">
             {ctaText}
           </Button>
         </div>

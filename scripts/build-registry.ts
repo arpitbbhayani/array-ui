@@ -1148,16 +1148,24 @@ import PingStatus from "array-ui/astro/PingStatus.astro";
 ## 3. Core UI & Action Primitives
 
 ### 1. Button (\`@aui/button\`)
-Signature tactile action button with signature crimson primary, secondary, outline, ghost, and destructive variants.
+Signature tactile action button with signature crimson primary, secondary, outline, ghost, and destructive variants. Supports optional icons and loading spinner state.
 - Endpoint: \`${BASE_URL}/r/button.json\`
 - Props:
   - \`variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive" | "link"\` (default: "primary")
   - \`size?: "default" | "sm" | "lg" | "icon"\` (default: "default")
+  - \`icon?: ReactNode\` (optional action/plus/spinner icon)
+  - \`iconPosition?: "left" | "right"\` (default: "left")
+  - \`leftIcon?: ReactNode\`
+  - \`rightIcon?: ReactNode\`
+  - \`loading?: boolean\` (shows animated spinner and disables button)
+  - \`loadingText?: ReactNode\`
   - \`asChild?: boolean\`
 \`\`\`tsx
 <Button variant="primary">Deploy canary</Button>
-<Button variant="secondary" size="sm">Rollback</Button>
-<Button variant="outline">View audit log</Button>
+<Button variant="primary" icon={<PlusIcon />}>New Cluster</Button>
+<Button variant="secondary" rightIcon={<ArrowRightIcon />}>Continue</Button>
+<Button variant="primary" loading>Deploying...</Button>
+<Button variant="secondary" size="icon" icon={<PlusIcon />} />
 <Button variant="destructive" size="sm">Terminate</Button>
 \`\`\`
 

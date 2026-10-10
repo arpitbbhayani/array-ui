@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo, StepNavDemo, SplitPaneDemo, LayoutDemo, TypographyDemo, ArchitectureCompactDemo, SideNavDemo, TopNavDemo } from "../components/Interactive";
+import { ButtonDemo, TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo, StepNavDemo, SplitPaneDemo, LayoutDemo, TypographyDemo, ArchitectureCompactDemo, SideNavDemo, TopNavDemo } from "../components/Interactive";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
@@ -1001,10 +1001,10 @@ const takeaways = [
             name="Button"
             description="High-precision tactile variants, sizes and states."
             usage={`<Button variant="primary" size="md">Deploy</Button>
-<Button variant="secondary" size="md">Documentation</Button>
-<Button variant="danger" size="sm">Terminate</Button>
-<Button variant="outline" size="sm">Outline</Button>
-<Button variant="ghost" size="sm">Ghost</Button>`}
+<Button variant="primary" icon={<PlusIcon />}>New Cluster</Button>
+<Button variant="secondary" rightIcon={<ArrowRightIcon />}>Continue</Button>
+<Button variant="primary" loading>Deploying...</Button>
+<Button variant="secondary" size="icon" icon={<PlusIcon />} />`}
             span={2}
             shadcnName="button"
           >
@@ -1018,12 +1018,16 @@ const takeaways = [
               <Button variant="ghost">Ghost</Button>
               <Button variant="primary" disabled>Disabled</Button>
             </div>
+            <div class="spec-label">Optional Icons & Loading (React Interactive Demo)</div>
+            <div style="margin-bottom:1rem;">
+              <ButtonDemo client:load />
+            </div>
             <div class="spec-label">Sizes</div>
             <div class="aui-btn-group" style="margin-bottom:1rem;">
               <Button size="sm" variant="primary">Small</Button>
               <Button size="md" variant="primary">Medium</Button>
               <Button size="lg" variant="primary">Large</Button>
-              <Button size="sm" variant="secondary"><Spinner size="sm" /> Loading</Button>
+              <Button size="sm" variant="secondary" loading>Loading</Button>
             </div>
             <div class="spec-label">Colors (Solid)</div>
             <div class="aui-btn-group" style="margin-bottom:1rem;">
@@ -1976,8 +1980,10 @@ const takeaways = [
                 description="Zero to production: RESP protocol, event loops, multithreading, and persistence."
                 href="https://dicedb.io"
                 badge="Open Source"
+                badgeVariant="amber"
                 tags={["Go", "Redis", "Internals"]}
                 ctaText="Explore code →"
+                ctaColor="amber"
               />
             </div>
           </Specimen>

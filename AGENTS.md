@@ -126,16 +126,19 @@ import PingStatus from "array-ui/astro/PingStatus.astro";
 ### Core UI & Action Primitives
 
 #### 1. `Button` (`@aui/button`)
-Tactile action button with signature crimson primary, secondary, outline, ghost, and danger variants.
+Tactile action button with signature crimson primary, secondary, outline, ghost, and danger variants. Supports optional icons (`icon`, `leftIcon`, `rightIcon`, `iconPosition`) and loading spinner state (`loading`, `loadingText`, `spinner`).
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>
-<Button variant="secondary" size="md">Documentation</Button>
-<Button variant="outline" size="sm">Small Outline</Button>
-<Button variant="ghost">Ghost</Button>
+<Button variant="primary" icon={<PlusIcon />}>New Cluster</Button>
+<Button variant="secondary" rightIcon={<ArrowRightIcon />}>Continue</Button>
+<Button variant="primary" loading>Deploying...</Button>
+<Button variant="secondary" size="icon" icon={<PlusIcon />} />
 <Button variant="destructive" size="sm">Terminate</Button>
 ```
 *Variants*: `primary` (signature crimson), `secondary`, `outline`, `ghost`, `destructive`, `link`.
 *Sizes*: `sm`, `default`/`md`, `lg`, `icon`.
+*Props*: `icon?: ReactNode`, `iconPosition?: "left" | "right"`, `leftIcon?: ReactNode`, `rightIcon?: ReactNode`, `loading?: boolean`, `loadingText?: ReactNode`, `spinner?: ReactNode`.
+
 
 #### 2. `Badge` (`@aui/badge`)
 Machined status pill with monospace typography and color variants. Supports `href` (renders `<a>`) and `interactive`.

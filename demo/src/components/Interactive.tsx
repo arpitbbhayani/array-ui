@@ -42,8 +42,42 @@ import {
   ArchitectureCanvas,
   SideNav,
   TopNav,
+  PlusIcon,
+  ArrowRightIcon,
 } from "../../../dist/react.js";
 
+export function ButtonDemo() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSimulate = () => {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1800);
+  };
+
+  return (
+    <div className="aui-btn-group">
+      <Button variant="primary" size="sm" leftIcon={<PlusIcon />}>
+        Create Cluster
+      </Button>
+      <Button variant="secondary" size="sm" rightIcon={<ArrowRightIcon />}>
+        View Telemetry
+      </Button>
+      <Button
+        variant="primary"
+        size="sm"
+        loading={loading}
+        loadingText="Replicating..."
+        onClick={handleSimulate}
+      >
+        Trigger Replicate
+      </Button>
+      <Button color="amber" size="sm">
+        Explore Code →
+      </Button>
+      <Button variant="secondary" size="icon" icon={<PlusIcon />} aria-label="Add peer" />
+    </div>
+  );
+}
 
 export function ModalDemo() {
   const [open, setOpen] = useState(false);

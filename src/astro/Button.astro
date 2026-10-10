@@ -12,6 +12,7 @@ interface Props {
     | "green"
     | "blue"
     | "amber"
+    | "yellow"
     | "violet"
     | "pink"
     | "cyan"
@@ -23,6 +24,7 @@ interface Props {
     | "green"
     | "blue"
     | "amber"
+    | "yellow"
     | "violet"
     | "pink"
     | "cyan"
@@ -30,12 +32,14 @@ interface Props {
     | "warning"
     | "info"
     | "danger";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "icon";
   href?: string;
   target?: string;
   rel?: string;
   fullWidth?: boolean;
   className?: string;
+  loading?: boolean;
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -48,6 +52,8 @@ const {
   rel,
   fullWidth = false,
   className = "",
+  loading = false,
+  disabled = false,
   ...rest
 } = Astro.props;
 
@@ -56,6 +62,7 @@ const isColorVariant = [
   "green",
   "blue",
   "amber",
+  "yellow",
   "violet",
   "pink",
   "cyan",
@@ -66,13 +73,16 @@ const isColorVariant = [
 
 const effectiveColor = color || (isColorVariant ? variant : undefined);
 const effectiveVariant = isColorVariant ? "solid" : variant;
+const isDisabled = Boolean(disabled || loading);
 
 const classNames = [
   "aui-btn",
   effectiveVariant ? `aui-btn-${effectiveVariant}` : "",
   effectiveColor ? `aui-btn-color-${effectiveColor}` : "",
-  `aui-btn-${size}`,
+  size === "icon" ? "aui-btn-icon-only" : `aui-btn-${size}`,
   fullWidth ? "aui-btn-full" : "",
+  isDisabled ? "is-disabled" : "",
+  loading ? "is-loading" : "",
   className,
 ].filter(Boolean).join(" ");
 ---
@@ -84,13 +94,36 @@ const classNames = [
       target={target}
       rel={target === "_blank" && !rel ? "noopener noreferrer" : rel}
       class={classNames}
+      aria-disabled={isDisabled}
+      aria-busy={loading ? "true" : undefined}
       {...rest}
     >
+      {loading ? (
+        <span class="aui-spinner aui-spinner-sm aui-btn-spinner" role="status" aria-label="Loading" />
+      ) : (
+        <slot name="left-icon" />
+        <slot name="icon" />
+      )}
       <slot />
+      {!loading && <slot name="right-icon" />}
     </a>
   ) : (
-    <button type="button" class={classNames} {...rest}>
+    <button
+      type="button"
+      class={classNames}
+      disabled={isDisabled}
+      aria-busy={loading ? "true" : undefined}
+      {...rest}
+    >
+      {loading ? (
+        <span class="aui-spinner aui-spinner-sm aui-btn-spinner" role="status" aria-label="Loading" />
+      ) : (
+        <slot name="left-icon" />
+        <slot name="icon" />
+      )}
       <slot />
+      {!loading && <slot name="right-icon" />}
     </button>
   )
 }
+

@@ -8,8 +8,11 @@ interface Props {
   description: string;
   href: string;
   badge?: string;
+  badgeVariant?: any;
   tags?: string[];
   ctaText?: string;
+  ctaVariant?: any;
+  ctaColor?: any;
   className?: string;
 }
 
@@ -18,8 +21,11 @@ const {
   description,
   href,
   badge,
+  badgeVariant = "primary",
   tags = [],
   ctaText = "Details →",
+  ctaVariant = "primary",
+  ctaColor,
   className = "",
 } = Astro.props;
 ---
@@ -29,7 +35,7 @@ const {
     <h3 class="aui-project-card-title">
       <a href={href}>{title}</a>
     </h3>
-    {badge && <Badge variant="primary">{badge}</Badge>}
+    {badge && <Badge variant={badgeVariant}>{badge}</Badge>}
   </div>
 
   <p class="aui-project-card-desc">{description}</p>
@@ -46,7 +52,7 @@ const {
 
   <div class="aui-project-card-footer">
     <span></span>
-    <Button href={href} variant="primary" size="sm">
+    <Button href={href} variant={ctaVariant} color={ctaColor} size="sm">
       {ctaText}
     </Button>
   </div>

@@ -562,6 +562,19 @@ ol.aui-stack {
   display: flex;
 }
 
+.aui-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.aui-btn-icon svg {
+  width: 1em;
+  height: 1em;
+}
+
 .aui-btn-icon-left {
   display: inline-flex;
   align-items: center;
@@ -574,11 +587,39 @@ ol.aui-stack {
   margin-left: 0.15rem;
 }
 
+.aui-btn-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.aui-btn .aui-spinner,
+.aui-btn .aui-btn-spinner {
+  border-color: color-mix(in srgb, currentColor 28%, transparent);
+  border-top-color: currentColor;
+}
+
+.aui-btn-spinner {
+  animation: aui-spin 0.7s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.aui-btn.is-loading {
+  cursor: wait;
+}
+
+.aui-btn:hover .aui-spinner,
+.aui-btn:hover .aui-btn-spinner,
+.aui-btn:hover svg.aui-btn-spinner {
+  transform: none;
+}
+
+
 /* Color Palette Buttons */
 .aui-btn-color-red, .aui-btn-color-danger, .aui-btn-red { --btn-c: var(--aui-c-red); }
 .aui-btn-color-green, .aui-btn-color-success, .aui-btn-green, .aui-btn-success { --btn-c: var(--aui-c-green); }
 .aui-btn-color-blue, .aui-btn-color-info, .aui-btn-blue, .aui-btn-info { --btn-c: var(--aui-c-blue); }
-.aui-btn-color-amber, .aui-btn-color-warning, .aui-btn-amber, .aui-btn-warning { --btn-c: var(--aui-c-amber); }
+.aui-btn-color-amber, .aui-btn-color-warning, .aui-btn-color-yellow, .aui-btn-amber, .aui-btn-warning, .aui-btn-yellow { --btn-c: var(--aui-c-amber); }
 .aui-btn-color-violet, .aui-btn-violet { --btn-c: var(--aui-c-violet); }
 .aui-btn-color-pink, .aui-btn-pink { --btn-c: var(--aui-c-pink); }
 .aui-btn-color-cyan, .aui-btn-cyan { --btn-c: var(--aui-c-cyan); }
@@ -591,6 +632,7 @@ ol.aui-stack {
 .aui-btn.aui-btn-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .aui-btn.aui-btn-blue:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .aui-btn.aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn.aui-btn-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .aui-btn.aui-btn-violet:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .aui-btn.aui-btn-pink:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .aui-btn.aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
@@ -609,6 +651,7 @@ ol.aui-stack {
 .aui-btn.aui-btn-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .aui-btn.aui-btn-blue:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .aui-btn.aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn.aui-btn-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .aui-btn.aui-btn-violet:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .aui-btn.aui-btn-pink:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .aui-btn.aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
@@ -628,23 +671,53 @@ ol.aui-stack {
   transform: translateY(0);
 }
 
-/* High-contrast text for high-luminance solid buttons in dark mode */
-[data-theme="dark"] .aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-[data-theme="dark"] .aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-[data-theme="dark"] .aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-[data-theme="dark"] .aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-[data-theme="dark"] .aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-[data-theme="dark"] .aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+/* High-contrast dark carbon text for high-luminance solid buttons in BOTH light & dark mode */
+.aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-color-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
+.aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost) {
+  background-color: var(--btn-c);
+  color: #0c0c11 !important;
+  border-color: color-mix(in srgb, var(--btn-c) 80%, #000000);
+  font-weight: 600;
+}
+
+.aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-color-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
+.aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover {
+  background-color: color-mix(in srgb, var(--btn-c) 90%, #000000);
+  border-color: color-mix(in srgb, var(--btn-c) 75%, #000000);
+  color: #0c0c11 !important;
+  transform: translateY(-1px);
+}
+
+.aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-color-yellow:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active,
+.aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):active {
+  background-color: color-mix(in srgb, var(--btn-c) 78%, #000000);
+  color: #0c0c11 !important;
+  transform: translateY(0);
+}
+
+/* Dark mode specific high-luminance buttons */
 [data-theme="dark"] .aui-btn-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 [data-theme="dark"] .aui-btn-color-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 [data-theme="dark"] .aui-btn-success:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 [data-theme="dark"] .aui-btn-color-success:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-.dark .aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-.dark .aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-.dark .aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-.dark .aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-.dark .aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
-.dark .aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .dark .aui-btn-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .dark .aui-btn-color-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
 .dark .aui-btn-success:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost),
@@ -653,22 +726,10 @@ ol.aui-stack {
   font-weight: 600;
 }
 
-[data-theme="dark"] .aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-[data-theme="dark"] .aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-[data-theme="dark"] .aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-[data-theme="dark"] .aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-[data-theme="dark"] .aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-[data-theme="dark"] .aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 [data-theme="dark"] .aui-btn-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 [data-theme="dark"] .aui-btn-color-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 [data-theme="dark"] .aui-btn-success:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 [data-theme="dark"] .aui-btn-color-success:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-.dark .aui-btn-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-.dark .aui-btn-color-amber:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-.dark .aui-btn-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-.dark .aui-btn-color-warning:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-.dark .aui-btn-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
-.dark .aui-btn-color-cyan:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .dark .aui-btn-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .dark .aui-btn-color-green:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
 .dark .aui-btn-success:not(.aui-btn-outline):not(.aui-btn-light):not(.aui-btn-ghost):hover,
@@ -676,13 +737,13 @@ ol.aui-stack {
   color: #0c0c11 !important;
 }
 
-
 /* Light / Soft Colored Buttons */
 .aui-btn-light[class*="aui-btn-color-"],
 .aui-btn-light.aui-btn-red,
 .aui-btn-light.aui-btn-green,
 .aui-btn-light.aui-btn-blue,
 .aui-btn-light.aui-btn-amber,
+.aui-btn-light.aui-btn-yellow,
 .aui-btn-light.aui-btn-violet,
 .aui-btn-light.aui-btn-pink,
 .aui-btn-light.aui-btn-cyan,
@@ -699,6 +760,7 @@ ol.aui-stack {
 .aui-btn-light.aui-btn-green:hover,
 .aui-btn-light.aui-btn-blue:hover,
 .aui-btn-light.aui-btn-amber:hover,
+.aui-btn-light.aui-btn-yellow:hover,
 .aui-btn-light.aui-btn-violet:hover,
 .aui-btn-light.aui-btn-pink:hover,
 .aui-btn-light.aui-btn-cyan:hover,
@@ -711,12 +773,60 @@ ol.aui-stack {
   transform: translateY(-1px);
 }
 
+/* Light mode readable text for amber/yellow soft-tint buttons */
+.aui-btn-light.aui-btn-amber,
+.aui-btn-light.aui-btn-color-amber,
+.aui-btn-light.aui-btn-yellow,
+.aui-btn-light.aui-btn-color-yellow,
+.aui-btn-light.aui-btn-warning,
+.aui-btn-light.aui-btn-color-warning {
+  background-color: rgba(217, 119, 6, 0.12);
+  color: #92400e !important;
+  border-color: rgba(217, 119, 6, 0.32);
+}
+
+.aui-btn-light.aui-btn-amber:hover,
+.aui-btn-light.aui-btn-color-amber:hover,
+.aui-btn-light.aui-btn-yellow:hover,
+.aui-btn-light.aui-btn-color-yellow:hover,
+.aui-btn-light.aui-btn-warning:hover,
+.aui-btn-light.aui-btn-color-warning:hover {
+  background-color: rgba(217, 119, 6, 0.18);
+  color: #78350f !important;
+  border-color: rgba(217, 119, 6, 0.45);
+}
+
+[data-theme="dark"] .aui-btn-light.aui-btn-amber,
+.dark .aui-btn-light.aui-btn-amber,
+[data-theme="dark"] .aui-btn-light.aui-btn-color-amber,
+.dark .aui-btn-light.aui-btn-color-amber,
+[data-theme="dark"] .aui-btn-light.aui-btn-yellow,
+.dark .aui-btn-light.aui-btn-yellow,
+[data-theme="dark"] .aui-btn-light.aui-btn-warning,
+.dark .aui-btn-light.aui-btn-warning {
+  background-color: rgba(245, 158, 11, 0.14);
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+[data-theme="dark"] .aui-btn-light.aui-btn-amber:hover,
+.dark .aui-btn-light.aui-btn-amber:hover,
+[data-theme="dark"] .aui-btn-light.aui-btn-yellow:hover,
+.dark .aui-btn-light.aui-btn-yellow:hover,
+[data-theme="dark"] .aui-btn-light.aui-btn-warning:hover,
+.dark .aui-btn-light.aui-btn-warning:hover {
+  background-color: rgba(245, 158, 11, 0.22);
+  color: #fef08a !important;
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
 /* Outline Colored Buttons */
 .aui-btn-outline[class*="aui-btn-color-"],
 .aui-btn-outline.aui-btn-red,
 .aui-btn-outline.aui-btn-green,
 .aui-btn-outline.aui-btn-blue,
 .aui-btn-outline.aui-btn-amber,
+.aui-btn-outline.aui-btn-yellow,
 .aui-btn-outline.aui-btn-violet,
 .aui-btn-outline.aui-btn-pink,
 .aui-btn-outline.aui-btn-cyan,
@@ -733,6 +843,7 @@ ol.aui-stack {
 .aui-btn-outline.aui-btn-green:hover,
 .aui-btn-outline.aui-btn-blue:hover,
 .aui-btn-outline.aui-btn-amber:hover,
+.aui-btn-outline.aui-btn-yellow:hover,
 .aui-btn-outline.aui-btn-violet:hover,
 .aui-btn-outline.aui-btn-pink:hover,
 .aui-btn-outline.aui-btn-cyan:hover,
@@ -745,12 +856,50 @@ ol.aui-stack {
   transform: translateY(-1px);
 }
 
+.aui-btn-outline.aui-btn-amber,
+.aui-btn-outline.aui-btn-color-amber,
+.aui-btn-outline.aui-btn-yellow,
+.aui-btn-outline.aui-btn-color-yellow,
+.aui-btn-outline.aui-btn-warning,
+.aui-btn-outline.aui-btn-color-warning {
+  color: #92400e !important;
+  border-color: rgba(217, 119, 6, 0.45);
+}
+
+.aui-btn-outline.aui-btn-amber:hover,
+.aui-btn-outline.aui-btn-yellow:hover,
+.aui-btn-outline.aui-btn-warning:hover {
+  background-color: rgba(217, 119, 6, 0.1);
+  border-color: #b45309;
+  color: #78350f !important;
+}
+
+[data-theme="dark"] .aui-btn-outline.aui-btn-amber,
+.dark .aui-btn-outline.aui-btn-amber,
+[data-theme="dark"] .aui-btn-outline.aui-btn-yellow,
+.dark .aui-btn-outline.aui-btn-yellow,
+[data-theme="dark"] .aui-btn-outline.aui-btn-warning,
+.dark .aui-btn-outline.aui-btn-warning {
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+[data-theme="dark"] .aui-btn-outline.aui-btn-amber:hover,
+.dark .aui-btn-outline.aui-btn-amber:hover,
+[data-theme="dark"] .aui-btn-outline.aui-btn-yellow:hover,
+.dark .aui-btn-outline.aui-btn-yellow:hover {
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: #fbbf24;
+  color: #fef08a !important;
+}
+
 /* Ghost Colored Buttons */
 .aui-btn-ghost[class*="aui-btn-color-"],
 .aui-btn-ghost.aui-btn-red,
 .aui-btn-ghost.aui-btn-green,
 .aui-btn-ghost.aui-btn-blue,
 .aui-btn-ghost.aui-btn-amber,
+.aui-btn-ghost.aui-btn-yellow,
 .aui-btn-ghost.aui-btn-violet,
 .aui-btn-ghost.aui-btn-pink,
 .aui-btn-ghost.aui-btn-cyan,
@@ -767,6 +916,7 @@ ol.aui-stack {
 .aui-btn-ghost.aui-btn-green:hover,
 .aui-btn-ghost.aui-btn-blue:hover,
 .aui-btn-ghost.aui-btn-amber:hover,
+.aui-btn-ghost.aui-btn-yellow:hover,
 .aui-btn-ghost.aui-btn-violet:hover,
 .aui-btn-ghost.aui-btn-pink:hover,
 .aui-btn-ghost.aui-btn-cyan:hover,
@@ -775,6 +925,39 @@ ol.aui-stack {
 .aui-btn-ghost.aui-btn-warning:hover {
   background-color: color-mix(in srgb, var(--btn-c) 12%, transparent);
   color: var(--btn-c) !important;
+}
+
+.aui-btn-ghost.aui-btn-amber,
+.aui-btn-ghost.aui-btn-color-amber,
+.aui-btn-ghost.aui-btn-yellow,
+.aui-btn-ghost.aui-btn-color-yellow,
+.aui-btn-ghost.aui-btn-warning,
+.aui-btn-ghost.aui-btn-color-warning {
+  color: #92400e !important;
+}
+
+.aui-btn-ghost.aui-btn-amber:hover,
+.aui-btn-ghost.aui-btn-yellow:hover,
+.aui-btn-ghost.aui-btn-warning:hover {
+  background-color: rgba(217, 119, 6, 0.12);
+  color: #78350f !important;
+}
+
+[data-theme="dark"] .aui-btn-ghost.aui-btn-amber,
+.dark .aui-btn-ghost.aui-btn-amber,
+[data-theme="dark"] .aui-btn-ghost.aui-btn-yellow,
+.dark .aui-btn-ghost.aui-btn-yellow,
+[data-theme="dark"] .aui-btn-ghost.aui-btn-warning,
+.dark .aui-btn-ghost.aui-btn-warning {
+  color: #fbbf24 !important;
+}
+
+[data-theme="dark"] .aui-btn-ghost.aui-btn-amber:hover,
+.dark .aui-btn-ghost.aui-btn-amber:hover,
+[data-theme="dark"] .aui-btn-ghost.aui-btn-yellow:hover,
+.dark .aui-btn-ghost.aui-btn-yellow:hover {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fef08a !important;
 }
 
 .aui-btn-group {
