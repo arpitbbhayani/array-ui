@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Specimen from "../components/Specimen.astro";
-import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo, StepNavDemo, SplitPaneDemo, LayoutDemo, TypographyDemo, ArchitectureCompactDemo } from "../components/Interactive";
+import { TableDemo, ModalDemo, PaginationDemo, SegmentedDemo, ToastDemo, FormDemo, SelectDemo, SwitchCheckboxDemo, SearchBoxDemo, DropdownDemo, ComboboxDemo, DrawerDemo, AlertDialogDemo, SecretInputDemo, MultiSelectDemo, SliderDemo, PopoverDemo, ChartsDemo, DatePickerDemo, DataTableDemo, ParamSandboxDemo, StepNavDemo, SplitPaneDemo, LayoutDemo, TypographyDemo, ArchitectureCompactDemo, SideNavDemo, TopNavDemo } from "../components/Interactive";
 
 import Sidebar from "../../../src/astro/Sidebar.astro";
 import Hero from "../../../src/astro/Hero.astro";
@@ -155,6 +155,7 @@ const sidebarGroups = [
       { label: "Step nav", href: "#step-nav" },
       { label: "Accordion", href: "#accordion" },
       { label: "Table of contents", href: "#toc" },
+      { label: "SideNav (Left/Right)", href: "#side-nav" },
       { label: "Sidebar & navbar", href: "#sidebar" },
     ],
   },
@@ -1605,6 +1606,72 @@ const takeaways = [
                 { depth: 2, slug: "benchmarks", text: "Performance & Recovery Benchmarks" },
               ]}
             />
+          </Specimen>
+
+          <Specimen
+            id="side-nav"
+            name="SideNav (Left/Right Navigation Rail)"
+            description="Left or right-docked vertical navigation rail with brand identity logo, vertical tab menu with signature crimson active rail, user profile card, and logout action trigger."
+            usage={`<SideNav
+  side="left" // "left" | "right"
+  brand={{
+    logo: "A",
+    name: "Console",
+    subtitle: "quorum v2.4",
+    badge: "PRO",
+  }}
+  items={[
+    { label: "Overview", icon: "⌂", active: true },
+    { label: "Clusters", icon: "◎", badge: "3" },
+    { label: "Deployments", icon: "▲" },
+    { label: "Settings", icon: "⚙" },
+  ]}
+  user={{
+    name: "Arpit Bhayani",
+    email: "arpit@arpitbhayani.me",
+    role: "Principal SRE",
+  }}
+  onLogout={() => handleLogout()}
+/>`}
+            span={2}
+          >
+            <SideNavDemo client:load />
+          </Specimen>
+
+          <Specimen
+            id="topnav"
+            name="TopNav"
+            description="Header navigation bar with brand logo, links, multi-tier dropdowns, right actions, user profile, and theme selector."
+            usage={`<TopNav
+  brand={{
+    logo: <LogoIcon />,
+    title: "Array Control Plane",
+    subtitle: "us-east-1 · primary",
+    badge: <Badge variant="green">Live</Badge>,
+  }}
+  links={[
+    { label: "Quorum", active: true },
+    {
+      label: "Resources",
+      items: [
+        { label: "Architecture Docs", description: "Consensus specifications" },
+        { label: "REST / gRPC Reference", description: "Endpoints & parameters" },
+      ],
+    },
+    { label: "Telemetry" },
+  ]}
+  rightActions={<Button variant="primary" size="sm">+ New Node</Button>}
+  user={{
+    name: "Arpit Bhayani",
+    email: "arpit@arpitbhayani.me",
+    role: "Principal Engineer",
+  }}
+  onLogout={() => handleLogout()}
+  showThemeToggle={true}
+/>`}
+            span={2}
+          >
+            <TopNavDemo client:load />
           </Specimen>
 
           <Specimen

@@ -1,0 +1,261 @@
+---
+export interface TopNavBrand {
+  name: string;
+  subtitle?: string;
+  logo?: string;
+  href?: string;
+  badge?: string;
+}
+
+export interface TopNavDropdownItem {
+  id?: string;
+  label: string;
+  href?: string;
+  description?: string;
+  active?: boolean;
+}
+
+export interface TopNavLink {
+  id?: string;
+  label: string;
+  href?: string;
+  active?: boolean;
+  badge?: string;
+  items?: TopNavDropdownItem[];
+}
+
+export interface TopNavUser {
+  name: string;
+  email?: string;
+  avatar?: string;
+  initials?: string;
+  role?: string;
+  href?: string;
+}
+
+interface Props {
+  brand?: TopNavBrand;
+  links?: TopNavLink[];
+  user?: TopNavUser;
+  logoutHref?: string;
+  logoutLabel?: string;
+  sticky?: boolean;
+  maxWidth?: "xl" | "lg" | "full";
+  className?: string;
+}
+
+const {
+  brand,
+  links = [],
+  user,
+  logoutHref = "/logout",
+  logoutLabel = "Log out",
+  sticky = true,
+  maxWidth = "xl",
+  className = "",
+} = Astro.props;
+
+const maxWidthClass =
+  maxWidth === "full"
+    ? "aui-topnav-container-full"
+    : maxWidth === "lg"
+    ? "aui-topnav-container-lg"
+    : "aui-topnav-container-xl";
+---
+
+<header class={`aui-topnav ${sticky ? "aui-topnav-sticky" : ""} ${className}`}>
+  <div class={`aui-topnav-container ${maxWidthClass}`}>
+    <!-- Left Section: Brand & Navigation Links -->
+    <div class="aui-topnav-left">
+      <slot name="brand">
+        {brand && (
+          <a href={brand.href || "/"} class="aui-topnav-brand">
+            {brand.logo && (
+              <div class="aui-topnav-logo">
+                <Fragment set:html={brand.logo} />
+              </div>
+            )}
+            <div class="aui-topnav-brand-meta">
+              <span class="aui-topnav-title">{brand.name}</span>
+              {brand.subtitle && (
+                <span class="aui-topnav-subtitle">{brand.subtitle}</span>
+              )}
+            </div>
+            {brand.badge && (
+              <span style="margin-left: 0.25rem;">{brand.badge}</span>
+            )}
+          </a>
+        )}
+      </slot>
+
+      <slot name="links">
+        {links.length > 0 && (
+          <nav class="aui-topnav-links" aria-label="Main Navigation">
+            {links.map((link) => (
+              <a
+                href={link.href || "#"}
+                class={`aui-topnav-link ${link.active ? "is-active" : ""}`}
+              >
+                <span>{link.label}</span>
+                {link.badge && <span>{link.badge}</span>}
+              </a>
+            ))}
+          </nav>
+        )}
+      </slot>
+
+      <slot />
+    </div>
+
+    <!-- Right Section: Actions, User, Theme Toggle -->
+    <div class="aui-topnav-right">
+      <slot name="actions" />
+
+      <slot name="theme-toggle" />
+
+      <slot name="user">
+        {user && (
+          <div class="aui-topnav-user-trigger">
+            <div class="aui-topnav-user-avatar">
+              {user.avatar ? (
+                <img src={user.avatar} alt={user.name} style="width: 100%; height: 100%; object-fit: cover;" />
+              ) : (
+                user.initials || user.name.slice(0, 2).toUpperCase()
+              )}
+            </div>
+            <span class="aui-topnav-user-name">{user.name}</span>
+          </div>
+        )}
+      </slot>
+
+      <slot name="logout">
+        {user && logoutHref && (
+          <a
+            href={logoutHref}
+            class="aui-topnav-link"
+            title={logoutLabel}
+            aria-label={logoutLabel}
+            style="padding: 0.35rem 0.5rem;"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </a>
+        )}
+      </slot>
+
+      <!-- Mobile menu burger toggle button -->
+      <button
+        type="button"
+        class="aui-topnav-burger"
+        aria-label="Toggle navigation"
+        onclick="const m = this.closest('.aui-topnav').querySelector('.aui-topnav-mobile-menu'); if (m) m.classList.toggle('is-open');"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Collapsible Menu Drawer -->
+  <div class="aui-topnav-mobile-menu">
+    {links.map((link) => (
+      <div class="aui-topnav-mobile-section">
+        <a
+          href={link.href || "#"}
+          class={`aui-topnav-mobile-link ${link.active ? "is-active" : ""}`}
+        >
+          <span>{link.label}</span>
+          {link.badge && <span>{link.badge}</span>}
+        </a>
+        {link.items && link.items.length > 0 && (
+          <div class="aui-topnav-mobile-subgroup">
+            {link.items.map((sub) => (
+              <a
+                href={sub.href || "#"}
+                class={`aui-topnav-mobile-sublink ${sub.active ? "is-active" : ""}`}
+              >
+                <span class="aui-topnav-mobile-sublink-title">{sub.label}</span>
+                {sub.description && (
+                  <span class="aui-topnav-mobile-sublink-desc">{sub.description}</span>
+                )}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+
+    {user && (
+      <div class="aui-topnav-mobile-section">
+        <div class="aui-topnav-mobile-user">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="aui-topnav-user-avatar">
+              {user.avatar ? (
+                <img src={user.avatar} alt={user.name} style="width: 100%; height: 100%; object-fit: cover;" />
+              ) : (
+                user.initials || user.name.slice(0, 2).toUpperCase()
+              )}
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 0.88rem; font-weight: 700; color: var(--aui-text-secondary);">{user.name}</span>
+              {user.email && (
+                <span style="font-size: 0.76rem; color: var(--aui-text-muted);">{user.email}</span>
+              )}
+            </div>
+          </div>
+          {logoutHref && (
+            <a
+              href={logoutHref}
+              class="aui-topnav-link"
+              style="color: var(--aui-accent-rose, #f43f5e); padding: 0.4rem 0.6rem;"
+              title={logoutLabel}
+              aria-label={logoutLabel}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+    )}
+  </div>
+</header>

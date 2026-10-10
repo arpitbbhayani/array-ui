@@ -40,6 +40,8 @@ import {
   Heading,
   Lead,
   ArchitectureCanvas,
+  SideNav,
+  TopNav,
 } from "../../../dist/react.js";
 
 
@@ -618,5 +620,216 @@ export function ArchitectureCompactDemo() {
   );
 }
 
+export function SideNavDemo() {
+  const [side, setSide] = useState<"left" | "right">("left");
+  const [activeTab, setActiveTab] = useState("overview");
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
+  const navItems = [
+    { id: "overview", label: "Overview", icon: "⌂", active: activeTab === "overview", onClick: () => setActiveTab("overview") },
+    { id: "clusters", label: "Quorum Clusters", icon: "◎", badge: "3", active: activeTab === "clusters", onClick: () => setActiveTab("clusters") },
+    { id: "telemetry", label: "Live Telemetry", icon: "⚡", active: activeTab === "telemetry", onClick: () => setActiveTab("telemetry") },
+    { id: "deployments", label: "Deployments", icon: "▲", active: activeTab === "deployments", onClick: () => setActiveTab("deployments") },
+    { id: "security", label: "Credentials & Keys", icon: "⚿", active: activeTab === "security", onClick: () => setActiveTab("security") },
+    { id: "settings", label: "Settings", icon: "⚙", active: activeTab === "settings", onClick: () => setActiveTab("settings") },
+  ];
 
+  return (
+    <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ fontSize: "0.82rem", color: "var(--aui-text-muted)" }}>Dock Placement:</span>
+          <Button
+            size="sm"
+            variant={side === "left" ? "primary" : "secondary"}
+            onClick={() => setSide("left")}
+          >
+            Left Dock (side="left")
+          </Button>
+          <Button
+            size="sm"
+            variant={side === "right" ? "primary" : "secondary"}
+            onClick={() => setSide("right")}
+          >
+            Right Dock (side="right")
+          </Button>
+        </div>
+        {statusMessage && (
+          <span style={{ fontSize: "0.8rem", color: "var(--aui-primary)", fontFamily: "var(--aui-font-mono)" }}>
+            {statusMessage}
+          </span>
+        )}
+      </div>
+
+      <div
+        style={{
+          width: "100%",
+          height: "440px",
+          border: "1px solid var(--aui-border-color)",
+          borderRadius: "var(--aui-radius-lg)",
+          backgroundColor: "var(--aui-bg-primary)",
+          display: "flex",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        {side === "left" && (
+          <SideNav
+            side="left"
+            brand={{
+              logo: "A",
+              name: "Array Console",
+              subtitle: "us-east-1 · quorum v2.4",
+              badge: "PRO",
+              href: "#",
+            }}
+            items={navItems}
+            user={{
+              name: "Arpit Bhayani",
+              email: "arpit@arpitbhayani.me",
+              role: "Principal SRE",
+            }}
+            onLogout={() => {
+              setStatusMessage("Logged out at " + new Date().toLocaleTimeString());
+              setTimeout(() => setStatusMessage(null), 4000);
+            }}
+          />
+        )}
+
+        <div style={{ flex: 1, padding: "1.5rem", overflowY: "auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <h4 style={{ margin: 0, fontSize: "1.1rem", fontFamily: "var(--aui-font-heading)", fontWeight: 700, color: "var(--aui-text-secondary)" }}>
+              Workspace Content Area
+            </h4>
+            <Badge variant="green">Active Tab: {activeTab}</Badge>
+          </div>
+          <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--aui-text-muted)", lineHeight: 1.6 }}>
+            The <code>SideNav</code> component renders a vertical navigation rail docked either to the <strong>left</strong> or <strong>right</strong> edge. It includes a brand identity header, vertical tabs with signature crimson indicators, and a user profile card with tactile logout trigger.
+          </p>
+        </div>
+
+        {side === "right" && (
+          <SideNav
+            side="right"
+            brand={{
+              logo: "A",
+              name: "Array Console",
+              subtitle: "us-east-1 · quorum v2.4",
+              badge: "PRO",
+              href: "#",
+            }}
+            items={navItems}
+            user={{
+              name: "Arpit Bhayani",
+              email: "arpit@arpitbhayani.me",
+              role: "Principal SRE",
+            }}
+            onLogout={() => {
+              setStatusMessage("Logged out at " + new Date().toLocaleTimeString());
+              setTimeout(() => setStatusMessage(null), 4000);
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function TopNavDemo() {
+  const [activeTab, setActiveTab] = useState("clusters");
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  return (
+    <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1rem" }}>
+      {statusMessage && (
+        <div style={{ padding: "0.5rem 0.75rem", background: "var(--aui-bg-secondary)", border: "1px solid var(--aui-border-color)", borderRadius: "var(--aui-radius-md)", fontSize: "0.82rem", color: "var(--aui-primary)" }}>
+          {statusMessage}
+        </div>
+      )}
+
+      <div style={{ border: "1px solid var(--aui-border-color)", borderRadius: "var(--aui-radius-md)", overflow: "hidden", background: "var(--aui-bg-surface)" }}>
+        <TopNav
+          sticky={false}
+          maxWidth="full"
+          brand={{
+            logo: "A",
+            title: "Array Control Plane",
+            subtitle: "us-east-1 · primary",
+            badge: <Badge variant="green">Live</Badge>,
+            href: "#",
+          }}
+          links={[
+            {
+              id: "clusters",
+              label: "Quorum",
+              active: activeTab === "clusters",
+              onClick: () => setActiveTab("clusters"),
+            },
+            {
+              id: "resources",
+              label: "Resources",
+              items: [
+                { id: "docs", label: "Architecture Docs", description: "Consensus and Raft specifications", onClick: () => setStatusMessage("Navigated to Architecture Docs") },
+                { id: "api", label: "REST / gRPC Reference", description: "Endpoints, parameters, and telemetry", onClick: () => setStatusMessage("Navigated to API Reference") },
+                { divider: true, label: "" },
+                { id: "status", label: "System Health Status", description: "Cluster uptime and node latency", onClick: () => setStatusMessage("Navigated to System Health") },
+              ],
+            },
+            {
+              id: "telemetry",
+              label: "Telemetry",
+              active: activeTab === "telemetry",
+              onClick: () => setActiveTab("telemetry"),
+            },
+            {
+              id: "deployments",
+              label: "Deployments",
+              badge: <Badge variant="cyan">v2.4</Badge>,
+              active: activeTab === "deployments",
+              onClick: () => setActiveTab("deployments"),
+            },
+          ]}
+          rightActions={
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                setStatusMessage("Created new cluster node!");
+                setTimeout(() => setStatusMessage(null), 3000);
+              }}
+            >
+              + New Node
+            </Button>
+          }
+          user={{
+            name: "Arpit Bhayani",
+            email: "arpit@arpitbhayani.me",
+            role: "Principal Engineer",
+          }}
+          userMenuItems={[
+            { label: "Profile & Keys", onClick: () => setStatusMessage("Opened Profile & Keys") },
+            { label: "Quorum Permissions", onClick: () => setStatusMessage("Opened Quorum Permissions") },
+            { label: "Billing & Subscriptions", onClick: () => setStatusMessage("Opened Billing") },
+          ]}
+          onLogout={() => {
+            setStatusMessage("Logged out at " + new Date().toLocaleTimeString());
+            setTimeout(() => setStatusMessage(null), 4000);
+          }}
+          showThemeToggle={true}
+        />
+
+        <div style={{ padding: "1.75rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <h4 style={{ margin: 0, fontSize: "1.05rem", fontFamily: "var(--aui-font-heading)", fontWeight: 700, color: "var(--aui-text-secondary)" }}>
+              Header Viewport Sandbox
+            </h4>
+            <Badge variant="primary">Active: {activeTab}</Badge>
+          </div>
+          <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--aui-text-muted)", lineHeight: 1.6 }}>
+            The <code>TopNav</code> component renders an editorial navigation header bar with brand logo icon, title & subtitle, navigation links with multi-tier nested dropdown menus, actionable right-side triggers, tactile user profile avatar dropdown with logout, and an integrated theme switch selector.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

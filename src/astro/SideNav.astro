@@ -1,0 +1,186 @@
+---
+export interface SideNavBrand {
+  name: string;
+  subtitle?: string;
+  logo?: string;
+  href?: string;
+  badge?: string;
+}
+
+export interface SideNavItem {
+  id?: string;
+  label: string;
+  href?: string;
+  icon?: string;
+  active?: boolean;
+  badge?: string;
+}
+
+export interface SideNavGroup {
+  title?: string;
+  items: SideNavItem[];
+}
+
+export interface SideNavUser {
+  name: string;
+  email?: string;
+  avatar?: string;
+  initials?: string;
+  role?: string;
+  href?: string;
+}
+
+interface Props {
+  side?: "left" | "right";
+  fixed?: boolean;
+  sticky?: boolean;
+  collapsed?: boolean;
+  brand?: SideNavBrand;
+  items?: SideNavItem[];
+  groups?: SideNavGroup[];
+  user?: SideNavUser;
+  logoutHref?: string;
+  logoutLabel?: string;
+  className?: string;
+}
+
+const {
+  side = "left",
+  fixed = false,
+  sticky = false,
+  collapsed = false,
+  brand,
+  items,
+  groups,
+  user,
+  logoutHref = "/logout",
+  logoutLabel = "Log out",
+  className = "",
+} = Astro.props;
+
+const menuGroups: SideNavGroup[] = groups
+  ? groups
+  : items
+  ? [{ items }]
+  : [];
+---
+
+<nav
+  class={`aui-sidenav ${side === "right" ? "aui-sidenav-right" : "aui-sidenav-left"} ${fixed ? "aui-sidenav-fixed" : ""} ${sticky ? "aui-sidenav-sticky" : ""} ${collapsed ? "aui-sidenav-collapsed" : ""} ${className}`}
+  aria-label="Side Navigation"
+>
+  <!-- Header / Brand -->
+  <slot name="header">
+    {brand && (
+      <div class="aui-sidenav-header">
+        <a href={brand.href || "/"} class="aui-sidenav-brand" title={brand.name}>
+          {brand.logo && (
+            <div class="aui-sidenav-logo">
+              <Fragment set:html={brand.logo} />
+            </div>
+          )}
+          {!collapsed && (
+            <div class="aui-sidenav-brand-meta">
+              <div class="aui-sidenav-brand-title">
+                {brand.name}
+                {brand.badge && (
+                  <span class="aui-sidenav-item-badge" style="margin-left: 0.4rem;">
+                    {brand.badge}
+                  </span>
+                )}
+              </div>
+              {brand.subtitle && (
+                <div class="aui-sidenav-brand-subtitle">{brand.subtitle}</div>
+              )}
+            </div>
+          )}
+        </a>
+      </div>
+    )}
+  </slot>
+
+  <!-- Body / Vertical Tab Menu -->
+  <div class="aui-sidenav-body" role="tablist">
+    <slot>
+      {menuGroups.map((group) => (
+        <div class="aui-sidenav-group">
+          {group.title && !collapsed && (
+            <p class="aui-sidenav-group-title">{group.title}</p>
+          )}
+          {group.items.map((item) => (
+            <a
+              href={item.href || "#"}
+              class={`aui-sidenav-item ${item.active ? "is-active" : ""}`}
+              role="tab"
+              aria-selected={item.active ? "true" : "false"}
+              title={collapsed ? item.label : undefined}
+            >
+              {item.icon && (
+                <span class="aui-sidenav-item-icon">
+                  <Fragment set:html={item.icon} />
+                </span>
+              )}
+              {!collapsed && (
+                <span class="aui-sidenav-item-label">{item.label}</span>
+              )}
+              {!collapsed && item.badge && (
+                <span class="aui-sidenav-item-badge">{item.badge}</span>
+              )}
+            </a>
+          ))}
+        </div>
+      ))}
+    </slot>
+  </div>
+
+  <!-- Footer / Profile & Logout -->
+  <slot name="footer">
+    {user && (
+      <div class="aui-sidenav-footer">
+        <div class="aui-sidenav-profile">
+          <a href={user.href || "#"} class="aui-sidenav-profile-info" title={user.name}>
+            <div class="aui-sidenav-avatar">
+              {user.avatar ? (
+                <img src={user.avatar} alt={user.name} />
+              ) : (
+                user.initials || user.name.slice(0, 2).toUpperCase()
+              )}
+            </div>
+            {!collapsed && (
+              <div class="aui-sidenav-profile-text">
+                <div class="aui-sidenav-profile-name">{user.name}</div>
+                {user.email ? (
+                  <div class="aui-sidenav-profile-email">{user.email}</div>
+                ) : user.role ? (
+                  <div class="aui-sidenav-profile-email">{user.role}</div>
+                ) : null}
+              </div>
+            )}
+          </a>
+          <a
+            href={logoutHref}
+            class="aui-sidenav-logout-btn"
+            title={logoutLabel}
+            aria-label={logoutLabel}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    )}
+  </slot>
+</nav>

@@ -967,6 +967,72 @@ Dense SaaS data table with search filtering, multi-row selection, sorting, and p
 />
 ```
 
+#### 41. `SideNav` (`@aui/side-nav`)
+Left/right vertical navigation rail with brand logo, vertical tab menu, user profile card, and logout action.
+```tsx
+<SideNav
+  side="left" // "left" | "right"
+  brand={{
+    logo: "A",
+    name: "Console",
+    subtitle: "v1.4.2",
+    badge: "PRO",
+    href: "/",
+  }}
+  items={[
+    { label: "Overview", href: "/overview", active: true },
+    { label: "Clusters", href: "/clusters", badge: "3" },
+    { label: "Deployments", href: "/deployments" },
+    { label: "Settings", href: "/settings" },
+  ]}
+  user={{
+    name: "Arpit Bhayani",
+    email: "arpit@arpitbhayani.me",
+    role: "Admin",
+  }}
+  onLogout={() => console.log("Logout clicked")}
+/>
+```
+
+#### 42. `TopNav` (`@aui/top-nav`)
+Top navigation header bar with brand logo, nav links, dropdown menus, user profile trigger, and integrated theme selector.
+```tsx
+<TopNav
+  brand={{
+    logo: <LogoIcon />,
+    title: "Array Control Plane",
+    subtitle: "us-east-1 · primary",
+    badge: <Badge variant="green">Live</Badge>,
+    href: "/",
+  }}
+  links={[
+    { label: "Quorum", href: "/quorum", active: true },
+    {
+      label: "Resources",
+      items: [
+        { label: "Architecture Docs", href: "/docs", description: "Consensus specifications" },
+        { label: "REST Reference", href: "/api", description: "Endpoints & parameters" },
+      ],
+    },
+    { label: "Telemetry", href: "/telemetry" },
+  ]}
+  rightActions={<Button variant="primary" size="sm">+ New Node</Button>}
+  user={{
+    name: "Arpit Bhayani",
+    email: "arpit@arpitbhayani.me",
+    role: "Principal Engineer",
+  }}
+  userMenuItems={[
+    { label: "Profile & Keys", href: "/profile" },
+    { label: "Settings", href: "/settings" },
+  ]}
+  onLogout={() => handleLogout()}
+  showThemeToggle={true}
+  sticky={true}
+  maxWidth="xl" // "xl" | "lg" | "full"
+/>
+```
+
 ### Layout & Utility Classes
 
 - `.aui-container-md`: Intermediate max-width (900px) container for forms, reading, and account pages.

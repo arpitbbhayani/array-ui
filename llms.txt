@@ -161,6 +161,8 @@ Install: `npx shadcn@latest add @aui/architecture-canvas -y`. To turn a codebase
 - [Charts](https://ui.arpitbhayani.me/r/charts.json): Lightweight SVG-based telemetry charts (AreaChart, BarChart, Sparkline) with crosshair and hover tooltips. `npx shadcn@latest add @aui/charts -y`
 - [DatePicker](https://ui.arpitbhayani.me/r/date-picker.json): Calendar date picker and date range picker with monospace display and quick range presets. `npx shadcn@latest add @aui/date-picker -y`
 - [DataTable](https://ui.arpitbhayani.me/r/data-table.json): Dense SaaS data table with search filtering, multi-row selection, sorting, and pagination. `npx shadcn@latest add @aui/data-table -y`
+- [SideNav](https://ui.arpitbhayani.me/r/side-nav.json): Left/right vertical navigation rail with brand logo, vertical tab menu, user profile card, and logout action. `npx shadcn@latest add @aui/side-nav -y`
+- [TopNav](https://ui.arpitbhayani.me/r/top-nav.json): Top navigation header bar with brand logo, navigation links, dropdown menus, user profile trigger, and theme selector. `npx shadcn@latest add @aui/top-nav -y`
 
 ## Components by Use Case
 

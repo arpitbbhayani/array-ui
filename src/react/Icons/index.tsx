@@ -227,6 +227,7 @@ export const CloseIcon: React.FC<IconProps> = ({ size = 24, strokeWidth = 2, ...
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
+export const XIcon = CloseIcon;
 
 export const CopyIcon: React.FC<IconProps> = ({ size = 16, strokeWidth = 2, ...props }) => (
   <svg
@@ -568,5 +569,39 @@ export const CalendarIcon: React.FC<IconProps> = ({ size = 16, strokeWidth = 2, 
   </svg>
 );
 
+export const LogOutIcon: React.FC<IconProps> = ({ size = 16, strokeWidth = 2, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+);
 
-
+export const UserIcon: React.FC<IconProps> = ({ size = 16, strokeWidth = 2, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);

@@ -732,6 +732,22 @@ const componentsConfig: ComponentDef[] = [
     target: "ui/data-table.tsx",
     category: "SaaS & Control Plane",
   },
+  {
+    name: "side-nav",
+    title: "SideNav",
+    description: "Left/right vertical navigation rail with brand logo, vertical tab menu, user profile card, and logout action.",
+    file: "src/registry/aui/ui/side-nav.tsx",
+    target: "ui/side-nav.tsx",
+    category: "SaaS & Control Plane",
+  },
+  {
+    name: "top-nav",
+    title: "TopNav",
+    description: "Top navigation header bar with brand logo, navigation links, dropdown menus, user profile trigger, and theme selector.",
+    file: "src/registry/aui/ui/top-nav.tsx",
+    target: "ui/top-nav.tsx",
+    category: "SaaS & Control Plane",
+  },
 ];
 
 
