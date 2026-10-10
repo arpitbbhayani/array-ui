@@ -896,7 +896,7 @@ When asked to build, modify, or enhance interfaces using Array UI:
 - **Amber (#cc9900)**: Exclusively for engineering maxim quotes and warnings.
 - **Emerald (#10b981)**: Operational status, ping dots, and diff additions.
 - **Rose (#f43f5e)**: Errors, outages, and diff deletions.
-- **Typography**: Assistant bold headings and body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
+- **Typography**: Assistant semi-bold (600) headings and body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
 - **Autonomous Execution**: Never ask the user which components to install. Autonomously choose the required components and execute installation with \`-y\`.
 
 
@@ -1066,7 +1066,7 @@ Array UI is an editorial, systems-engineering design system for personal sites, 
      - Emerald (\`#10b981\`): Used for operational health, ping dots, and git diff additions.
      - Rose (\`#f43f5e\`): Used for errors, outages, and git diff deletions.
 2. **Typography**:
-   - Headings: Assistant (bold, relaxed tracking -0.015em, aligned with body typography).
+   - Headings: Assistant (semi-bold 600, relaxed tracking -0.015em, aligned with body typography).
    - Body: Assistant (dense, 15px base size).
    - Pull Quotes / Maxims: Lora (italic serif).
    - Code & Telemetry: IBM Plex Mono / system monospace.

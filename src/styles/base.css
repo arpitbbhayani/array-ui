@@ -85,6 +85,18 @@ small,
   letter-spacing: 0.018em;
 }
 
+/* Header & Heading Calibration: In Assistant, 700 (bold) bleeds heavily.
+   Calibrate bold for header font and headings one shade lighter to 600 (semi-bold)
+   for crisp, machined editorial precision. */
+:where(h1, h2, h3, h4, h5, h6, .aui-heading, [class*="aui-h1"], [class*="aui-h2"], [class*="aui-h3"], [class*="aui-h4"], [class*="aui-h5"], [class*="aui-h6"]) {
+  font-family: var(--aui-font-heading);
+  font-weight: 600;
+}
+
+:where(h1, h2, h3, h4, h5, h6, .aui-heading, [class*="aui-h1"], [class*="aui-h2"], [class*="aui-h3"], [class*="aui-h4"], [class*="aui-h5"], [class*="aui-h6"]) :is(strong, b, [style*="font-weight: 700"], [style*="font-weight: 800"], [style*="font-weight: bold"]) {
+  font-weight: 600 !important;
+}
+
 /* Monospace Calibration: In fixed-width fonts (IBM Plex Mono), weights at 600/700
    bleed heavily and collapse glyph counters. Cap monospace bold weights at 500 (medium)
    for crisp, machined legibility across the system. */

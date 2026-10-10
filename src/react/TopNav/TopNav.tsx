@@ -386,7 +386,7 @@ export const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
                     )}
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
-                    <span style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--aui-text-secondary)" }}>
+                    <span style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--aui-text-secondary)" }}>
                       {user.name}
                     </span>
                     {user.email && (

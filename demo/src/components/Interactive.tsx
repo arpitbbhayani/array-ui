@@ -732,7 +732,7 @@ export function SideNavDemo() {
 
         <div style={{ flex: 1, padding: "1.5rem", overflowY: "auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <h4 style={{ margin: 0, fontSize: "1.1rem", fontFamily: "var(--aui-font-heading)", fontWeight: 700, color: "var(--aui-text-secondary)" }}>
+            <h4 style={{ margin: 0, fontSize: "1.1rem", fontFamily: "var(--aui-font-heading)", fontWeight: 600, color: "var(--aui-text-secondary)" }}>
               Workspace Content Area
             </h4>
             <Badge variant="green">Active Tab: {activeTab}</Badge>
@@ -854,7 +854,7 @@ export function TopNavDemo() {
 
         <div style={{ padding: "1.75rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <h4 style={{ margin: 0, fontSize: "1.05rem", fontFamily: "var(--aui-font-heading)", fontWeight: 700, color: "var(--aui-text-secondary)" }}>
+            <h4 style={{ margin: 0, fontSize: "1.05rem", fontFamily: "var(--aui-font-heading)", fontWeight: 600, color: "var(--aui-text-secondary)" }}>
               Header Viewport Sandbox
             </h4>
             <Badge variant="primary">Active: {activeTab}</Badge>
