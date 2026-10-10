@@ -18,7 +18,7 @@ export default defineConfig({
   dts: false,
   splitting: false,
   sourcemap: true,
-  clean: true,
+  clean: false,
   external: ["react", "react-dom", "astro", "@xyflow/react"],
   async onSuccess() {
     // Ensure dist directory exists

@@ -36,7 +36,19 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     }
   });
 
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return defaultTheme === "dark" ? "dark" : "light";
+    try {
+      const saved = localStorage.getItem(storageKey) as Theme | null;
+      const initial = saved || defaultTheme;
+      if (initial === "system") {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      return initial === "dark" ? "dark" : "light";
+    } catch {
+      return defaultTheme === "dark" ? "dark" : "light";
+    }
+  });
 
   useEffect(() => {
     const root = document.documentElement;
@@ -88,10 +100,30 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   };
 
   const toggleTheme = () => {
-    setThemeState((prev) => {
-      const current = prev === "system" ? resolvedTheme : prev;
-      return current === "dark" ? "light" : "dark";
-    });
+    const root = typeof window !== "undefined" ? document.documentElement : null;
+    const isCurrentDark =
+      resolvedTheme === "dark" ||
+      (root ? root.getAttribute("data-theme") === "dark" || root.classList.contains("dark") : false);
+    const next: "light" | "dark" = isCurrentDark ? "light" : "dark";
+
+    if (root) {
+      root.setAttribute("data-theme", next);
+      if (next === "dark") {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+    }
+
+    try {
+      localStorage.setItem(storageKey, next);
+    } catch {}
+
+    setResolvedTheme(next);
+    setThemeState(next);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("aui:theme-change", { detail: { theme: next } }));
+    }
   };
 
   return (

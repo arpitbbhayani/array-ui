@@ -85,3 +85,4 @@ export * from "./SplitPane";
 export * from "./Layout";
 export * from "./Typography";
 export * from "./StepNav";
+export * from "./DevToolbar/DevToolbar";

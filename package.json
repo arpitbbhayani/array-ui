@@ -69,8 +69,8 @@
     "src"
   ],
   "scripts": {
-    "build:registry": "tsx scripts/build-registry.ts",
-    "build": "tsup && tsc --emitDeclarationOnly && npm run build:registry",
+    "build:registry": "npx tsx scripts/build-registry.ts",
+    "build": "tsup && npm run build:registry",
     "prepublishOnly": "npm run build",
     "prepare": "npm run build",
     "dev": "npm run build:registry && astro dev --root demo --port 6145",

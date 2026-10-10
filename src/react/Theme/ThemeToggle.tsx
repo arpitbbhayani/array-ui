@@ -57,7 +57,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       title={isDark ? "Switch to light theme" : "Switch to dark theme"}
       {...props}
     >
-      {isDark ? <MoonIcon size={size} /> : <SunIcon size={size} />}
+      {isDark ? <SunIcon size={size} /> : <MoonIcon size={size} />}
     </button>
   );
 };
