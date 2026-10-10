@@ -522,14 +522,14 @@ ol.aui-stack {
 
 [data-theme="dark"] .aui-btn-danger:hover,
 .dark .aui-btn-danger:hover {
-  background-color: #ff6b7a;
-  border-color: #ff6b7a;
+  background-color: #dc2626;
+  border-color: #dc2626;
 }
 
 [data-theme="dark"] .aui-btn-danger:active,
 .dark .aui-btn-danger:active {
-  background-color: #e6394a;
-  border-color: #e6394a;
+  background-color: #b91c1c;
+  border-color: #b91c1c;
 }
 
 .aui-btn-link {
@@ -893,8 +893,8 @@ ol.aui-stack {
 }
 
 .aui-nav-title {
-  font-family: var(--aui-font-serif);
-  font-style: italic;
+  font-family: var(--aui-font-heading);
+  font-style: normal;
   font-size: 1.45rem;
   font-weight: 700;
   color: var(--aui-text-secondary) !important;

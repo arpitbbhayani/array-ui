@@ -111,12 +111,12 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
 
 # Aesthetic Rules:
 - Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
-- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #2c2c38 in dark).
+- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #27272c in dark).
 - Accents:
-  - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
+  - Signature Crimson (#e5000f in light, #e60012 in dark) ONLY for primary action buttons, active tabs, and focus rings.
   - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, IBM Plex Mono code.
+- Typography: Assistant bold headings and body (15px base), Lora italic serif quotes, IBM Plex Mono code.
 - Always use cn() from @/lib/utils for custom classes.`;
 ---
 
@@ -317,13 +317,13 @@ const universalAgentPrompt = `You are an expert engineer building UI with Array 
 - Strictly Maintain 0% Custom CSS: Never write page-level \`<style>\` blocks or ad-hoc \`.css\` files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 
 # Aesthetic Rules:
-- Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
-- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #2c2c38 in dark).
+- Palette: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#111113).
+- Hairline borders: Single 1px borders everywhere (#dfded9 in light, #27272c in dark).
 - Accents:
-  - Signature Crimson (#e5000f in light, #ff3344 in dark) ONLY for primary action buttons, active tabs, and focus rings.
+  - Signature Crimson (#e5000f in light, #e60012 in dark) ONLY for primary action buttons, active tabs, and focus rings.
   - Amber (#cc9900) exclusively for engineering maxim quotes and warnings.
   - Emerald (#10b981) for operational status & diff additions; Rose (#f43f5e) for outages & diff deletions.
-- Typography: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (15px base), Lora italic serif quotes, IBM Plex Mono code.
+- Typography: Assistant bold headings and body (15px base), Lora italic serif quotes, IBM Plex Mono code.
 - Always use cn() from @/lib/utils for custom classes.`,
     cursor: `# Array UI (.cursorrules / .cursor/rules/array-ui.mdc)
 You are an expert engineer building interfaces with Array UI (array-ui).
@@ -339,10 +339,10 @@ You are an expert engineer building interfaces with Array UI (array-ui).
 - Strictly Maintain 0% Custom CSS: Never write page-level <style> blocks or ad-hoc .css files. All layout, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes.
 
 ## Design Constraints
-- 1px hairline borders everywhere (#dfded9 in light, #2c2c38 in dark).
-- Paper canvas light mode (#f9f8f5), obsidian carbon dark mode (#121215).
-- Signature crimson (#e5000f light, #ff3344 dark) strictly for primary action buttons and active indicators.
-- Headings: Space Grotesk / Plus Jakarta Sans (relaxed tracking -0.015em).
+- 1px hairline borders everywhere (#dfded9 in light, #27272c in dark).
+- Paper canvas light mode (#f9f8f5), obsidian carbon dark mode (#111113).
+- Signature crimson (#e5000f light, #e60012 dark) strictly for primary action buttons and active indicators.
+- Headings: Assistant (relaxed tracking -0.015em, aligned with body font).
 - Body: Assistant (15px dense). Quotes: Lora italic serif. Monospace: IBM Plex Mono.
 - Flat tinted surfaces, dense tables, machined telemetry. Never inject arbitrary gradients or heavy shadows.`,
     claude: `# Claude Code Guidelines: Array UI (array-ui)
@@ -359,10 +359,10 @@ npx shadcn@latest add @aui/<component> -y
 
 ## Styling & Typography
 - Strictly Maintain 0% Custom CSS: No page-level <style> blocks or ad-hoc .css files; 100% component and token driven.
-- 1px hairline borders (#dfded9 light, #2c2c38 dark).
-- Paper light canvas (#f9f8f5), obsidian carbon dark canvas (#121215).
-- Headings: Space Grotesk (bold, relaxed tracking -0.015em). Body: Assistant (15px).
-- Signature crimson (#e5000f light, #ff3344 dark) reserved for primary actions.
+- 1px hairline borders (#dfded9 light, #27272c dark).
+- Paper light canvas (#f9f8f5), obsidian carbon dark canvas (#111113).
+- Headings: Assistant (bold, relaxed tracking -0.015em). Body: Assistant (15px).
+- Signature crimson (#e5000f light, #e60012 dark) reserved for primary actions.
 - Amber (#cc9900) exclusively for engineering maxims.
 - Always import cn() from "@/lib/utils" for className composition.`,
     windsurf: `# Windsurf Cascade Rules: Array UI (array-ui)
@@ -371,7 +371,7 @@ npx shadcn@latest add @aui/<component> -y
 - Manifest: https://ui.arpitbhayani.me/llms.txt
 - Execution Rule: Autonomously install @aui components via CLI (npx shadcn@latest add @aui/<name> -y). Do not halt for confirmation.
 - 0% Custom CSS Rule: Never write page-level <style> blocks. Build exclusively using Array UI components and system utility classes.
-- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#121215), crimson accent for primary actions only, Space Grotesk/Assistant/Lora/IBM Plex Mono typography.`,
+- Aesthetics: 1px hairline borders, paper canvas (#f9f8f5) & obsidian carbon (#111113), crimson accent for primary actions only, Assistant/Lora/IBM Plex Mono typography.`,
     cli: `# 1. Configure components.json:
 # Under "registries", add:
 # "@aui": "https://ui.arpitbhayani.me/r/{name}.json"

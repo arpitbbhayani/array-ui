@@ -47,25 +47,25 @@
   [data-theme="dark"],
   .dark {
     /* Base shadcn HSL channels themed with aui Dark (Obsidian Carbon) */
-    --background: 240 8% 8%;           /* #121215 */
-    --foreground: 240 10% 88%;         /* #dcdce5 */
-    --card: 240 11% 11.5%;             /* #1a1a20 */
-    --card-foreground: 240 10% 88%;    /* #dcdce5 */
-    --popover: 240 11% 11.5%;          /* #1a1a20 */
-    --popover-foreground: 240 10% 88%; /* #dcdce5 */
-    --primary: 355 100% 60%;           /* #ff3344 */
+    --background: 240 6% 7%;           /* #111113 */
+    --foreground: 240 5% 85%;          /* #d6d6dc */
+    --card: 240 5% 10%;                /* #18181b */
+    --card-foreground: 240 5% 85%;     /* #d6d6dc */
+    --popover: 240 5% 10%;             /* #18181b */
+    --popover-foreground: 240 5% 85%;  /* #d6d6dc */
+    --primary: 355 100% 45%;           /* #e60012 */
     --primary-foreground: 0 0% 100%;   /* #ffffff */
-    --secondary: 240 11% 15%;          /* #22222a */
-    --secondary-foreground: 240 14% 98%;/* #fafafc */
-    --muted: 240 11% 15%;              /* #22222a */
-    --muted-foreground: 236 9% 65%;    /* #9d9eae */
-    --accent: 240 11% 15%;             /* #22222a */
-    --accent-foreground: 240 14% 98%;  /* #fafafc */
-    --destructive: 0 63% 31%;          /* #7f1d1d */
+    --secondary: 240 5% 14%;           /* #222226 */
+    --secondary-foreground: 240 5% 98%;/* #fbfbfe */
+    --muted: 240 5% 14%;               /* #222226 */
+    --muted-foreground: 240 4% 57%;    /* #8c8c98 */
+    --accent: 240 5% 14%;              /* #222226 */
+    --accent-foreground: 240 5% 98%;   /* #fbfbfe */
+    --destructive: 0 84% 60%;          /* #ef4444 */
     --destructive-foreground: 0 0% 100%;
-    --border: 240 12% 20%;             /* #2c2c38 */
-    --input: 240 12% 20%;              /* #2c2c38 */
-    --ring: 355 100% 60%;              /* #ff3344 */
+    --border: 240 5% 16%;              /* #27272c */
+    --input: 240 5% 16%;               /* #27272c */
+    --ring: 355 100% 45%;              /* #e60012 */
 
     /* aui dark token bridge */
     --aui-primary: hsl(var(--primary));
@@ -74,7 +74,7 @@
     --aui-bg-secondary: hsl(var(--card));
     --aui-bg-tertiary: hsl(var(--muted));
     --aui-text-primary: hsl(var(--foreground));
-    --aui-text-secondary: hsl(var(--card-foreground));
+    --aui-text-secondary: hsl(var(--secondary-foreground));
     --aui-text-muted: hsl(var(--muted-foreground));
     --aui-border-color: hsl(var(--border));
     --aui-border-light: hsl(var(--border) / 0.7);

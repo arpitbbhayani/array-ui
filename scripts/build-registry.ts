@@ -29,7 +29,7 @@ const themeItem: RegistryItem = {
   type: "registry:style",
   title: "Array UI Theme",
   description:
-    "The arpitbhayani.me look: paper light & obsidian carbon themes, Space Grotesk & Lora typography, signature crimson accent (#e5000f), and systems engineering aesthetics.",
+    "The arpitbhayani.me look: paper light & obsidian carbon themes, Assistant & Lora typography, signature crimson accent (#e5000f), and systems engineering aesthetics.",
   dependencies: [
     "clsx",
     "tailwind-merge",
@@ -43,7 +43,7 @@ const themeItem: RegistryItem = {
   cssVars: {
     theme: {
       "font-sans": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      "font-heading": "'Space Grotesk', 'Plus Jakarta Sans', 'Assistant', sans-serif",
+      "font-heading": "'Assistant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       "font-serif": "'Lora', Georgia, Cambria, serif",
       "font-mono": "'IBM Plex Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace",
       "radius-sm": "calc(var(--radius) - 4px)",
@@ -91,24 +91,24 @@ const themeItem: RegistryItem = {
       ring: "356 100% 45%",
     },
     dark: {
-      background: "240 8% 8%",           /* #121215 */
-      foreground: "240 10% 88%",         /* #dcdce5 */
-      card: "240 11% 11.5%",             /* #1a1a20 */
-      "card-foreground": "240 10% 88%",
-      popover: "240 11% 11.5%",
-      "popover-foreground": "240 10% 88%",
-      primary: "355 100% 60%",           /* #ff3344 */
+      background: "240 6% 7%",           /* #111113 */
+      foreground: "240 5% 85%",          /* #d6d6dc */
+      card: "240 5% 10%",                /* #18181b */
+      "card-foreground": "240 5% 85%",
+      popover: "240 5% 10%",
+      "popover-foreground": "240 5% 85%",
+      primary: "355 100% 45%",           /* #e60012 */
       "primary-foreground": "0 0% 100%",
-      secondary: "240 11% 15%",          /* #22222a */
-      "secondary-foreground": "240 14% 98%",
-      muted: "240 11% 15%",
-      "muted-foreground": "236 9% 65%",  /* #9d9eae */
-      accent: "240 11% 15%",
-      "accent-foreground": "240 14% 98%",
-      destructive: "0 63% 31%",          /* #7f1d1d */
-      border: "240 12% 20%",             /* #2c2c38 */
-      input: "240 12% 20%",
-      ring: "355 100% 60%",
+      secondary: "240 5% 14%",           /* #222226 */
+      "secondary-foreground": "240 5% 98%",
+      muted: "240 5% 14%",
+      "muted-foreground": "240 4% 57%",  /* #8c8c98 */
+      accent: "240 5% 14%",
+      "accent-foreground": "240 5% 98%",
+      destructive: "0 84% 60%",          /* #ef4444 */
+      border: "240 5% 16%",              /* #27272c */
+      input: "240 5% 16%",
+      ring: "355 100% 45%",
     },
   },
 };
@@ -874,13 +874,13 @@ When asked to build, modify, or enhance interfaces using Array UI:
 
 ### 2. Strict Invariants (0% Custom CSS Rule)
 - **Zero Custom CSS Invariant**: NEVER write custom \`.css\` files and NEVER write \`<style>\` blocks in pages. All layouts, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes (\`.aui-grid\`, \`.aui-stack\`, \`.aui-row\`, \`.aui-container\`, \`.aui-h1\`, etc.).
-- **Palette**: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#121215).
-- **Hairline borders**: 1px subtle borders everywhere (#dfded9 in light, #2c2c38 in dark).
-- **Signature Crimson (#e5000f light, #ff3344 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
+- **Palette**: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#111113).
+- **Hairline borders**: 1px subtle borders everywhere (#dfded9 in light, #27272c in dark).
+- **Signature Crimson (#e5000f light, #e60012 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
 - **Amber (#cc9900)**: Exclusively for engineering maxim quotes and warnings.
 - **Emerald (#10b981)**: Operational status, ping dots, and diff additions.
 - **Rose (#f43f5e)**: Errors, outages, and diff deletions.
-- **Typography**: Space Grotesk / Plus Jakarta Sans bold headings, Assistant body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
+- **Typography**: Assistant bold headings and body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
 - **Autonomous Execution**: Never ask the user which components to install. Autonomously choose the required components and execute installation with \`-y\`.
 
 
@@ -1043,14 +1043,14 @@ Array UI is an editorial, systems-engineering design system for personal sites, 
 ### Core Visual Principles
 1. **Editorial Palette**:
    - Light mode: Paper canvas (\`#f9f8f5\`), warm hairline borders (\`#dfded9\` / \`rgb(223, 222, 217)\`), dark carbon text (\`#2b2a30\`).
-   - Dark mode: Obsidian carbon (\`#121215\`), crisp border (\`#2c2c38\` / \`rgb(44, 44, 56)\`), soft readable white (\`#dcdce5\`).
+   - Dark mode: Obsidian carbon (\`#111113\`), crisp border (\`#27272c\` / \`rgb(39, 39, 44)\`), soft readable white (\`#d6d6dc\`).
    - Accents:
-     - Signature Crimson (\`#e5000f\` light, \`#ff3344\` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
+     - Signature Crimson (\`#e5000f\` light, \`#e60012\` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
      - Amber (\`#cc9900\`): Used exclusively for engineering maxim quotes and warning callouts.
      - Emerald (\`#10b981\`): Used for operational health, ping dots, and git diff additions.
      - Rose (\`#f43f5e\`): Used for errors, outages, and git diff deletions.
 2. **Typography**:
-   - Headings: Space Grotesk or Plus Jakarta Sans (bold, relaxed tracking -0.015em).
+   - Headings: Assistant (bold, relaxed tracking -0.015em, aligned with body typography).
    - Body: Assistant (dense, 15px base size).
    - Pull Quotes / Maxims: Lora (italic serif).
    - Code & Telemetry: IBM Plex Mono / system monospace.

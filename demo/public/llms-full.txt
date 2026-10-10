@@ -11,14 +11,14 @@ Array UI is an editorial, systems-engineering design system for personal sites, 
 ### Core Visual Principles
 1. **Editorial Palette**:
    - Light mode: Paper canvas (`#f9f8f5`), warm hairline borders (`#dfded9` / `rgb(223, 222, 217)`), dark carbon text (`#2b2a30`).
-   - Dark mode: Obsidian carbon (`#121215`), crisp border (`#2c2c38` / `rgb(44, 44, 56)`), soft readable white (`#dcdce5`).
+   - Dark mode: Obsidian carbon (`#111113`), crisp border (`#27272c` / `rgb(39, 39, 44)`), soft readable white (`#d6d6dc`).
    - Accents:
-     - Signature Crimson (`#e5000f` light, `#ff3344` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
+     - Signature Crimson (`#e5000f` light, `#e60012` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
      - Amber (`#cc9900`): Used exclusively for engineering maxim quotes and warning callouts.
      - Emerald (`#10b981`): Used for operational health, ping dots, and git diff additions.
      - Rose (`#f43f5e`): Used for errors, outages, and git diff deletions.
 2. **Typography**:
-   - Headings: Space Grotesk or Plus Jakarta Sans (bold, relaxed tracking -0.015em).
+   - Headings: Assistant (bold, relaxed tracking -0.015em, aligned with body typography).
    - Body: Assistant (dense, 15px base size).
    - Pull Quotes / Maxims: Lora (italic serif).
    - Code & Telemetry: IBM Plex Mono / system monospace.

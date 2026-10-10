@@ -43,7 +43,7 @@ export const auiTailwindPreset = {
       colors: auiTailwindColors,
       fontFamily: {
         sans: ["var(--aui-font-sans)", "Assistant", "-apple-system", "sans-serif"],
-        heading: ["var(--aui-font-heading)", "Plus Jakarta Sans", "Assistant", "sans-serif"],
+        heading: ["var(--aui-font-heading)", "Assistant", "-apple-system", "sans-serif"],
         serif: ["var(--aui-font-serif)", "Lora", "Georgia", "serif"],
         mono: ["var(--aui-font-mono)", "IBM Plex Mono", "Geist Mono", "monospace"],
       },
@@ -115,7 +115,7 @@ export const auiShadcnPreset = {
       },
       fontFamily: {
         sans: ["var(--aui-font-sans)", "Assistant", "-apple-system", "sans-serif"],
-        heading: ["var(--aui-font-heading)", "Plus Jakarta Sans", "Assistant", "sans-serif"],
+        heading: ["var(--aui-font-heading)", "Assistant", "-apple-system", "sans-serif"],
         serif: ["var(--aui-font-serif)", "Lora", "Georgia", "serif"],
         mono: ["var(--aui-font-mono)", "IBM Plex Mono", "Geist Mono", "monospace"],
       },
