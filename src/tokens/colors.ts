@@ -42,10 +42,10 @@ export const colors = {
     boxShadow: "rgba(0, 0, 0, 0.5)",
     clickableActive: "#27272e",
     gridColor: "rgba(255, 255, 255, 0.025)",
-    primary: "#e60012",
-    primaryHover: "#f02838",
-    primaryActive: "#cc0010",
-    primaryAccent: "#ff3847",
+    primary: "#ff3344",
+    primaryHover: "#ff4d5a",
+    primaryActive: "#e6192b",
+    primaryAccent: "#ff6b76",
   },
 };
 

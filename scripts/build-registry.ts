@@ -97,7 +97,7 @@ const themeItem: RegistryItem = {
       "card-foreground": "240 5% 85%",
       popover: "240 5% 10%",
       "popover-foreground": "240 5% 85%",
-      primary: "355 100% 45%",           /* #e60012 */
+      primary: "355 100% 60%",           /* #ff3344 */
       "primary-foreground": "0 0% 100%",
       secondary: "240 5% 14%",           /* #222226 */
       "secondary-foreground": "240 5% 98%",
@@ -108,7 +108,7 @@ const themeItem: RegistryItem = {
       destructive: "0 84% 60%",          /* #ef4444 */
       border: "240 5% 16%",              /* #27272c */
       input: "240 5% 16%",
-      ring: "355 100% 45%",
+      ring: "355 100% 60%",
     },
   },
 };
@@ -892,7 +892,7 @@ When asked to build, modify, or enhance interfaces using Array UI:
 - **Zero Custom CSS Invariant**: NEVER write custom \`.css\` files and NEVER write \`<style>\` blocks in pages. All layouts, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes (\`.aui-grid\`, \`.aui-stack\`, \`.aui-row\`, \`.aui-container\`, \`.aui-h1\`, etc.).
 - **Palette**: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#111113).
 - **Hairline borders**: 1px subtle borders everywhere (#dfded9 in light, #27272c in dark).
-- **Signature Crimson (#e5000f light, #e60012 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
+- **Signature Crimson (#e5000f light, #ff3344 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
 - **Amber (#cc9900)**: Exclusively for engineering maxim quotes and warnings.
 - **Emerald (#10b981)**: Operational status, ping dots, and diff additions.
 - **Rose (#f43f5e)**: Errors, outages, and diff deletions.
@@ -1061,7 +1061,7 @@ Array UI is an editorial, systems-engineering design system for personal sites, 
    - Light mode: Paper canvas (\`#f9f8f5\`), warm hairline borders (\`#dfded9\` / \`rgb(223, 222, 217)\`), dark carbon text (\`#2b2a30\`).
    - Dark mode: Obsidian carbon (\`#111113\`), crisp border (\`#27272c\` / \`rgb(39, 39, 44)\`), soft readable white (\`#d6d6dc\`).
    - Accents:
-     - Signature Crimson (\`#e5000f\` light, \`#e60012\` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
+     - Signature Crimson (\`#e5000f\` light, \`#ff3344\` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
      - Amber (\`#cc9900\`): Used exclusively for engineering maxim quotes and warning callouts.
      - Emerald (\`#10b981\`): Used for operational health, ping dots, and git diff additions.
      - Rose (\`#f43f5e\`): Used for errors, outages, and git diff deletions.

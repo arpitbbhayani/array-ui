@@ -37,7 +37,7 @@ When asked to build, modify, or enhance interfaces using Array UI:
 - **Zero Custom CSS Invariant**: NEVER write custom `.css` files and NEVER write `<style>` blocks in pages. All layouts, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes (`.aui-grid`, `.aui-stack`, `.aui-row`, `.aui-container`, `.aui-h1`, etc.).
 - **Palette**: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#111113).
 - **Hairline borders**: 1px subtle borders everywhere (#dfded9 in light, #27272c in dark).
-- **Signature Crimson (#e5000f light, #e60012 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
+- **Signature Crimson (#e5000f light, #ff3344 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
 - **Amber (#cc9900)**: Exclusively for engineering maxim quotes and warnings.
 - **Emerald (#10b981)**: Operational status, ping dots, and diff additions.
 - **Rose (#f43f5e)**: Errors, outages, and diff deletions.

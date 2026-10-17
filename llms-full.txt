@@ -13,7 +13,7 @@ Array UI is an editorial, systems-engineering design system for personal sites, 
    - Light mode: Paper canvas (`#f9f8f5`), warm hairline borders (`#dfded9` / `rgb(223, 222, 217)`), dark carbon text (`#2b2a30`).
    - Dark mode: Obsidian carbon (`#111113`), crisp border (`#27272c` / `rgb(39, 39, 44)`), soft readable white (`#d6d6dc`).
    - Accents:
-     - Signature Crimson (`#e5000f` light, `#e60012` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
+     - Signature Crimson (`#e5000f` light, `#ff3344` dark): Reserved strictly for primary action buttons, active navigation indicators, and key focus rings.
      - Amber (`#cc9900`): Used exclusively for engineering maxim quotes and warning callouts.
      - Emerald (`#10b981`): Used for operational health, ping dots, and git diff additions.
      - Rose (`#f43f5e`): Used for errors, outages, and git diff deletions.

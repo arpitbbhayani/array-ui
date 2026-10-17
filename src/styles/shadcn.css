@@ -53,7 +53,7 @@
     --card-foreground: 240 5% 85%;     /* #d6d6dc */
     --popover: 240 5% 10%;             /* #18181b */
     --popover-foreground: 240 5% 85%;  /* #d6d6dc */
-    --primary: 355 100% 45%;           /* #e60012 */
+    --primary: 355 100% 60%;           /* #ff3344 */
     --primary-foreground: 0 0% 100%;   /* #ffffff */
     --secondary: 240 5% 14%;           /* #222226 */
     --secondary-foreground: 240 5% 98%;/* #fbfbfe */
@@ -65,7 +65,7 @@
     --destructive-foreground: 0 0% 100%;
     --border: 240 5% 16%;              /* #27272c */
     --input: 240 5% 16%;               /* #27272c */
-    --ring: 355 100% 45%;              /* #e60012 */
+    --ring: 355 100% 60%;              /* #ff3344 */
 
     /* aui dark token bridge */
     --aui-primary: hsl(var(--primary));
