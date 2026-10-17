@@ -122,7 +122,7 @@ export const Footer = React.forwardRef<HTMLElement, FooterProps>(
                           )}
                           <span>{link.label}</span>
                           {link.hint && (
-                            <span className="aui-link-hint">{link.hint}</span>
+                            <span className="aui-link-hint">({link.hint})</span>
                           )}
                         </a>
                       </li>

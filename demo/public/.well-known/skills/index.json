@@ -1,0 +1,38 @@
+{
+  "skills": [
+    {
+      "name": "array-ui",
+      "description": "The Array UI (array-ui) editorial design system, the arpitbhayani.me systems engineering look (paper light #faf9f5, obsidian carbon #111113, Assistant body & headings, Lora quotes, IBM Plex Mono telemetry, 1px hairlines, signature crimson #e5000f light / #ff3344 dark, 0% custom CSS). Use when building, restyling, or scaffolding UI for personal sites, engineering blogs, SaaS dashboards, systems explainers, or when adding @aui components via shadcn CLI.",
+      "files": [
+        "SKILL.md",
+        "references/components.md",
+        "references/recipes.md",
+        "references/tokens.css"
+      ]
+    },
+    {
+      "name": "array-ui-review",
+      "description": "Review UI code or a running page against the Array UI rules (0% custom CSS, hairline borders, Assistant typography, signature crimson, tooltip wrapping) and report violations with file and line. Pairs with the array-ui skill.",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "ape-design",
+      "description": "Editorial systems design system from arpitbhayani.me (Array UI). Enforces 0% custom CSS, Assistant typography, hairline borders, PageShell scaffolding, and arpitbhayani.me footer aesthetic.",
+      "files": [
+        "SKILL.md",
+        "references/components.md",
+        "references/recipes.md",
+        "references/tokens.css"
+      ]
+    },
+    {
+      "name": "ape-design-review",
+      "description": "Audit UI against Array UI / ape-design rules and report broken invariants with exact file and line.",
+      "files": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

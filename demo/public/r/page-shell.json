@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-shell",
+  "type": "registry:ui",
+  "title": "Page Shell",
+  "description": "The holistic frame every page sits in: background, navbar slot, centered max-w-6xl main payload, and footer.",
+  "registryDependencies": [
+    "https://ui.arpitbhayani.me/r/aui.json"
+  ],
+  "files": [
+    {
+      "path": "ui/page-shell.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface PageShellProps extends React.HTMLAttributes<HTMLDivElement> {\n  navbar?: React.ReactNode;\n  footer?: React.ReactNode;\n  maxWidth?: \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"6xl\" | \"full\";\n  children: React.ReactNode;\n}\n\nconst maxWidthMap = {\n  sm: \"max-w-2xl\",\n  md: \"max-w-4xl\",\n  lg: \"max-w-5xl\",\n  xl: \"max-w-6xl\",\n  \"2xl\": \"max-w-7xl\",\n  \"6xl\": \"max-w-6xl\",\n  full: \"max-w-full\",\n};\n\nexport function PageShell({\n  navbar,\n  footer,\n  maxWidth = \"6xl\",\n  children,\n  className,\n  ...props\n}: PageShellProps) {\n  return (\n    <div\n      className={cn(\n        \"min-h-screen flex flex-col bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-foreground\",\n        className\n      )}\n      {...props}\n    >\n      {navbar}\n      <main\n        className={cn(\n          \"flex-1 w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12\",\n          maxWidthMap[maxWidth]\n        )}\n      >\n        {children}\n      </main>\n      {footer}\n    </div>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

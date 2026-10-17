@@ -4,6 +4,8 @@
 
 Array UI is built for engineers and autonomous AI coding assistants (Cursor, Claude Code, Windsurf, Codex, Antigravity) who need machine-readable specifications, copy-paste prompts, and instant component installations.
 
+Agent skills: `npx skills add https://ui.arpitbhayani.me` installs `array-ui` and `array-ui-review` into Claude Code, Cursor, Windsurf, Codex, and other agents.
+
 ## Autonomous Integration Guide for AI Agents
 
 When asked to build, modify, or enhance interfaces using Array UI:
@@ -21,27 +23,30 @@ When asked to build, modify, or enhance interfaces using Array UI:
     }
   }
   ```
-  2. Install design tokens: `npx shadcn@latest add @aui/aui -y`
-  3. Autonomously install needed components: `npx shadcn@latest add @aui/<component> -y` (e.g. `@aui/button`, `@aui/card`, `@aui/terminal`, `@aui/ping-status`)
-  4. Import directly: `import { Button } from "@/components/ui/button";`
+  2. Install design tokens & base font layer: `npx shadcn@latest add @aui/aui -y`
+  3. Autonomously install needed components: `npx shadcn@latest add @aui/page-shell @aui/navbar @aui/footer @aui/button @aui/card @aui/terminal @aui/ping-status @aui/tooltip -y`
+  4. Import directly: `import { PageShell } from "@/components/ui/page-shell";`
 
 - **If the project uses Astro or direct npm package**:
   Use **Mode B (Direct Package Dependency)**.
   1. Install package: `npm install array-ui` (or `pnpm add array-ui` / `bun add array-ui`)
   2. Setup styles in root layout: `import "array-ui/styles.css";`
   3. Import components:
-     - React / Next.js: `import { Button, Terminal, DiffBlock, PingStatus, Card } from "array-ui/nextjs";`
+     - React / Next.js: `import { PageShell, Button, Terminal, DiffBlock, PingStatus, Card } from "array-ui/nextjs";`
      - Astro: `import Terminal from "array-ui/astro/Terminal.astro";`
 
-### 2. Strict Invariants (0% Custom CSS Rule)
+### 2. Strict Invariants (0% Custom CSS & Aesthetic Rules)
 - **Zero Custom CSS Invariant**: NEVER write custom `.css` files and NEVER write `<style>` blocks in pages. All layouts, spacing, and styling MUST be driven exclusively by Array UI components and foundational utility classes (`.aui-grid`, `.aui-stack`, `.aui-row`, `.aui-container`, `.aui-h1`, etc.).
-- **Palette**: Paper canvas in light mode (#f9f8f5), obsidian carbon in dark mode (#111113).
+- **Mandatory Font Enforcement**: ALWAYS ensure Google Fonts are loaded in `globals.css` or root `<head>` (`Assistant`, `IBM Plex Mono`, `Lora`) and `body { font-family: var(--font-sans) }`. Never allow fallback to Arial/Inter.
+- **PageShell Invariant**: Always frame full pages in `<PageShell navbar={<Navbar ... />} footer={<Footer ... />}>`.
+- **Palette**: Paper canvas in light mode (#faf9f5), obsidian carbon in dark mode (#111113).
 - **Hairline borders**: 1px subtle borders everywhere (#dfded9 in light, #27272c in dark).
 - **Signature Crimson (#e5000f light, #ff3344 dark)**: Reserved strictly for primary action buttons, active navigation, and key focus rings.
 - **Amber (#cc9900)**: Exclusively for engineering maxim quotes and warnings.
 - **Emerald (#10b981)**: Operational status, ping dots, and diff additions.
 - **Rose (#f43f5e)**: Errors, outages, and diff deletions.
 - **Typography**: Assistant bold headings and body (dense, 15px base), Lora italic serif pull quotes/maxims, IBM Plex Mono code.
+- **Action Clarity (Tooltip Invariant)**: Wrap every action button, theme toggle, copy button, and status dot in `<Tooltip content="...">`.
 - **Autonomous Execution**: Never ask the user which components to install. Autonomously choose the required components and execute installation with `-y`.
 
 

@@ -39,6 +39,7 @@ body.aui-body {
   max-width: 100%;
 }
 
+body,
 body.aui-body,
 .aui-theme-root {
   font-size: 15px;

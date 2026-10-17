@@ -88,3 +88,4 @@ export * from "./StepNav";
 export * from "./SideNav";
 export * from "./TopNav";
 export * from "./DevToolbar/DevToolbar";
+export * from "../registry/aui/ui/page-shell";

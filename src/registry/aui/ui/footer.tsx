@@ -102,7 +102,7 @@ export function Footer({
   return (
     <footer
       className={cn(
-        "w-full border-t border-border bg-card/60 backdrop-blur-xs py-12 px-4 sm:px-6 lg:px-8 mt-12",
+        "w-full border-t border-border bg-background py-14 px-4 sm:px-6 lg:px-8 mt-16 font-sans",
         className
       )}
       {...props}
@@ -112,7 +112,7 @@ export function Footer({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             {columns.map((col, idx) => (
               <div key={idx} className="space-y-3">
-                <h4 className="font-heading font-bold text-xs tracking-wider uppercase text-muted-foreground/80">
+                <h4 className="font-mono font-bold text-xs tracking-wider uppercase text-muted-foreground/75 mb-3.5">
                   {col.heading}
                 </h4>
                 <ul className="space-y-2 text-sm">
@@ -123,22 +123,20 @@ export function Footer({
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
                         className={cn(
-                          "group flex items-center justify-between text-muted-foreground hover:text-foreground transition-colors py-0.5",
-                          link.isHighlight && "text-primary font-medium hover:underline",
+                          "group inline-flex items-center gap-1.5 text-sm text-foreground/85 hover:text-primary transition-all duration-150 hover:translate-x-0.5 py-0.5",
+                          link.isHighlight && "text-primary font-semibold hover:underline",
                           link.isRss && "text-[#ff8c00] hover:text-[#ffa033] font-medium"
                         )}
                       >
-                        <span className="flex items-center gap-1.5">
-                          {link.isRss && <RssIcon />}
-                          {link.icon}
-                          <span>{link.label}</span>
-                          {link.external && <ExternalIcon />}
-                        </span>
+                        {link.isRss && <RssIcon />}
+                        {link.icon}
+                        <span>{link.label}</span>
                         {link.hint && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded border border-border bg-muted/60 text-muted-foreground group-hover:text-foreground transition-colors font-mono">
-                            {link.hint}
+                          <span className="text-[11px] font-mono text-muted-foreground/60 transition-colors group-hover:text-muted-foreground">
+                            ({link.hint})
                           </span>
                         )}
+                        {link.external && <ExternalIcon />}
                       </a>
                     </li>
                   ))}
@@ -151,12 +149,12 @@ export function Footer({
         {children}
 
         {disclaimer && (
-          <div className="border-t border-border/60 py-6 text-xs text-muted-foreground leading-relaxed">
+          <div className="border-t border-border/70 py-4 text-xs text-muted-foreground/80 leading-relaxed font-sans">
             {disclaimer}
           </div>
         )}
 
-        <div className="border-t border-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        <div className="border-t border-border/70 pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground font-sans">
           <div>{copyright}</div>
           {socialPills && (
             <div className="flex flex-wrap items-center gap-2">{socialPills}</div>

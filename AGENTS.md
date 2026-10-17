@@ -28,16 +28,31 @@
    - Minimal elevation/shadows; prefer flat, tinted card surfaces (`bg-muted/30` or `var(--aui-bg-secondary)`).
    - Information-dense layouts: compact margins, dense tables, machined telemetry.
    - **Never** inject arbitrary gradients, neon colors, or rounded bouncy buttons.
-4. **Strict Zero Custom CSS Invariant (0% Custom CSS Rule)**:
+4. **Mandatory Font Enforcement (Enforce First)**:
+   - Ensure Google Fonts are loaded via `@import` in `globals.css` or `<ThemeScript fonts />` in `<head>`.
+   - Set `body { font-family: var(--font-sans, "Assistant", sans-serif); }`. Never allow a page to render in system Arial / Inter.
+5. **Frame Every Page in `<PageShell>`**:
+   - Wrap every page in `<PageShell navbar={<Navbar ... />} footer={<Footer ... />}>`.
+   - Automatically guarantees centered `max-w-6xl` bounds, full viewport height, and eliminates layout guesswork.
+6. **Strict Zero Custom CSS Invariant (0% Custom CSS Rule)**:
    - **Custom CSS Proportion MUST ALWAYS REMAIN 0%**: When creating or modifying the landing page, documentation, or any application screen, **never** create custom `.css` files, and **never** write `<style>` blocks in `.astro`, `.tsx`, `.jsx`, or `.html` files.
-   - **100% Component & Token Driven**: All layouts, responsive grids, typography, spacing, and telemetry must be built exclusively using native Array UI components (`Card`, `Button`, `Table`, `Badge`, `CodeBlock`, `Terminal`, `PingStatus`, `DiffBlock`, etc.) and system utility classes (`.aui-grid`, `.aui-stack`, `.aui-row`, `.aui-container`, `.aui-h1`, etc.).
+   - **100% Component & Token Driven**: All layouts, responsive grids, typography, spacing, and telemetry must be built exclusively using native Array UI components (`PageShell`, `Card`, `Button`, `Table`, `Badge`, `CodeBlock`, `Terminal`, `PingStatus`, `DiffBlock`, etc.) and system utility classes (`.aui-grid`, `.aui-stack`, `.aui-row`, `.aui-container`, `.aui-h1`, etc.).
    - **No ad-hoc page-level styles**: If a layout pattern or primitive is missing, expand or enhance the core design system in `src/` rather than hacking page-specific styles. Every page must remain 100% free of custom CSS.
 
 ---
 
-## 2. Two Installation Modes
+## 2. Agent Skills & Installation Modes
 
-Determine whether the user is in a **shadcn/ui** project or a **direct package** project.
+### Instant Agent Skill Installation
+Install Array UI skills directly into Claude Code, Cursor, Windsurf, Codex, and other agents:
+```bash
+npx skills add https://ui.arpitbhayani.me
+```
+Installs:
+- `array-ui`: The complete design system builder skill.
+- `array-ui-review`: Automated rule auditor reporting violations with file and line.
+
+---
 
 ### Mode A: shadcn CLI Registry (Recommended for Next.js / Vite / Tailwind)
 No package is required from npm. Pure Tailwind + TypeScript components are copied directly into the project:
@@ -53,9 +68,9 @@ No package is required from npm. Pure Tailwind + TypeScript components are copie
 }
 ```
 
-2. Install the design tokens:
+2. Install the design tokens & base font layer:
 ```bash
-npx shadcn@latest add @aui/aui
+npx shadcn@latest add @aui/aui -y
 ```
 
 3. Add any component as needed:
