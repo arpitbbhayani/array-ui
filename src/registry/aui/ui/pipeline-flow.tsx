@@ -64,9 +64,9 @@ export function PipelineFlow({
             <div className="flex flex-col items-center justify-center relative w-10 flex-shrink-0">
               <div className="w-full h-0.5 bg-border relative">
                 {animated && (
-                  <div className="absolute -top-[3px] w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary animate-pulse z-10" />
                 )}
-                <span className="absolute -right-1 -top-2 text-xs text-muted-foreground">
+                <span className="absolute -right-1 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
                   ►
                 </span>
               </div>
